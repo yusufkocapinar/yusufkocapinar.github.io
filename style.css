@@ -1,19 +1,16 @@
-/* FONT İMPORT (Sadece Modern Montserrat Kaldı) */
+/* FONT İMPORT */
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;700;800&display=swap');
 
 :root {
     --accent-color: #c3b091; /* Altın Sarısı */
     --text-color: #eaeaea;
-    /* Cam kenarlığı rengi */
     --glass-border: rgba(255, 255, 255, 0.15);
-    /* Kart arka planı (Hafif beyazımsı şeffaf) */
     --card-bg: rgba(255, 255, 255, 0.05);
 }
 
 body {
     margin: 0;
     padding: 0;
-    /* TÜM SİTEDE ARTIK BU MODERN FONT GEÇERLİ */
     font-family: 'Montserrat', sans-serif;
     color: var(--text-color);
     overflow-x: hidden;
@@ -31,7 +28,7 @@ html {
     width: 100%;
     height: 100%;
     z-index: -1;
-    /* ETNİK GÖRSEL LİNKİ BURAYA */
+    /* Senin görselin */
     background-image: url('https://i.pinimg.com/1200x/64/2b/71/642b7177987e8a830d236ad709a46938.jpg'); 
     background-size: cover;
     background-position: center;
@@ -49,71 +46,65 @@ html {
     padding: 20px;
 }
 
-/* YENİ: HERO ARTIK BİR BUZLU CAM KART! */
+/* HERO CAM KART */
 .hero-content {
     animation: fadeInUp 1.5s ease-out;
-    
-    /* Glassmorphism Efektleri */
     background: var(--card-bg);
-    backdrop-filter: blur(15px); /* Arkadaki deseni bulanıklaştır */
+    backdrop-filter: blur(15px);
     -webkit-backdrop-filter: blur(15px);
     border: 1px solid var(--glass-border);
-    padding: 50px; /* İç boşluk */
-    border-radius: 25px; /* Köşeleri yuvarlat */
-    max-width: 500px; /* Çok genişlemesin */
-    box-shadow: 0 10px 30px rgba(0,0,0,0.5); /* Derinlik gölgesi */
+    padding: 50px;
+    border-radius: 25px;
+    max-width: 500px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
 }
 
 .profile-img {
     width: 160px;
     height: 160px;
-    border-radius: 15px;
+    border-radius: 15px; /* Modern kare */
     object-fit: cover;
-    border: 3px solid var(--accent-color); /* Çerçeveyi altın yaptık */
+    border: 3px solid var(--accent-color);
     margin-bottom: 25px;
 }
 
-/* YENİ FONT AYARLARI BURADA */
 .hero-fullscreen h1 {
-    /* Artık o eski font yok, Montserrat var */
-    font-weight: 800; /* Çok kalın (Bold) */
+    font-weight: 800;
     font-size: 2.5rem;
-    text-transform: uppercase; /* Hepsi BÜYÜK HARF */
+    text-transform: uppercase;
     margin: 0;
     color: #fff;
-    letter-spacing: 2px; /* Harf aralığını açtık */
+    letter-spacing: 2px;
     text-shadow: 0 2px 10px rgba(0,0,0,0.5);
 }
 
 .title {
-    color: #1a120b; /* GÜNCELLENDİ: Siyaha yakın koyu kahve */
-    font-size: 1.2rem; /* Biraz daha büyüttük ki net okunsun */
+    color: #1a120b; /* Koyu Kahve */
+    font-size: 1.2rem;
     letter-spacing: 2px;
     text-transform: uppercase;
     margin-top: 10px;
-    font-weight: 800; /* Daha kalın (Bold) yaptık */
-    /* Koyu yazının arkasına çok hafif beyaz ışık verelim ki camda patlasın */
+    font-weight: 800;
     text-shadow: 0 1px 15px rgba(255,255,255,0.4); 
 }
-}
+
+/* --- HATA BURADAYDI, FAZLADAN } VARDI, SİLDİM --- */
 
 /* Aşağı Kaydır Oku */
 .scroll-indicator {
     position: absolute;
-    bottom: 30px; /* En alttan 30px yukarıda */
+    bottom: 30px;
     left: 50%;
     transform: translateX(-50%);
-    z-index: 10; /* En üstte görünsün */
-    
-    /* Tasarım Ayarları */
+    z-index: 10;
     opacity: 0.9;
     animation: bounce 2s infinite;
     font-size: 0.9rem;
-    color: var(--text-color); /* Yazı açık renk kalsın ki zeminde görünsün */
+    color: var(--text-color);
     text-transform: uppercase;
     letter-spacing: 2px;
     font-weight: bold;
-    text-shadow: 0 2px 5px rgba(0,0,0,0.8); /* Gölge ekledik */
+    text-shadow: 0 2px 5px rgba(0,0,0,0.8);
 }
 .scroll-indicator i {
     display: block;
@@ -124,7 +115,7 @@ html {
 .main-wrapper {
     min-height: 100vh;
     background: rgba(18, 18, 18, 0.85);
-    backdrop-filter: blur(20px); /* Buranın bulanıklığını artırdık */
+    backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
     border-top: 1px solid var(--glass-border);
     padding-top: 80px;
@@ -141,7 +132,6 @@ html {
     padding-right: 100px;
 }
 
-/* Başlıklar */
 h2 {
     color: var(--accent-color);
     border-bottom: 2px solid var(--accent-color);
@@ -224,11 +214,10 @@ h2 {
     position: relative;
 }
 
-/* Tooltip (İpucu kutusu) */
 .nav-item::before {
     content: attr(data-tooltip);
     position: absolute;
-    right: 65px; /* Butonun solunda çıksın */
+    right: 65px;
     background: var(--accent-color);
     color: #121212;
     padding: 5px 15px;
@@ -253,7 +242,6 @@ h2 {
     transform: translateX(0);
 }
 
-/* Footer */
 .footer-section {
     margin-top: 60px;
     text-align: center;
@@ -271,7 +259,6 @@ h2 {
     color: var(--accent-color);
 }
 
-/* Mobil Uyum */
 @media (max-width: 768px) {
     .container { padding-right: 30px; }
     .hero-fullscreen h1 { font-size: 1.8rem; }
@@ -289,11 +276,10 @@ h2 {
     }
     .nav-item { border: none; background: transparent; width: 40px; height: 40px; }
     .nav-item:hover { background: transparent; color: var(--accent-color); box-shadow: none;}
-    .nav-item::before { display: none; } /* Mobilde tooltip gizle */
-    .scroll-indicator { bottom: 100px; } /* Mobilde menünün üstünde kalsın */
+    .nav-item::before { display: none; }
+    .scroll-indicator { bottom: 100px; }
 }
 
-/* Animasyonlar */
 @keyframes fadeInUp {
     from { opacity: 0; transform: translateY(50px) scale(0.9); }
     to { opacity: 1; transform: translateY(0) scale(1); }
