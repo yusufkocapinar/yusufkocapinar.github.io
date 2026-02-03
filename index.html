@@ -11,66 +11,62 @@
 </head>
 <body>
 
-    <nav class="floating-nav">
-        <a href="#about" class="nav-item" data-tooltip="Hakkımda">
-            <i class="fas fa-user"></i>
-        </a>
-        <a href="#blog" class="nav-item" data-tooltip="Yazılar">
-            <i class="fas fa-pen-nib"></i>
-        </a>
-        <a href="#projects" class="nav-item" data-tooltip="Projeler">
-            <i class="fas fa-flask"></i>
-        </a>
-        <a href="#contact" class="nav-item" data-tooltip="İletişim">
-            <i class="fas fa-envelope"></i>
-        </a>
-    </nav>
+    <div class="bg-image"></div>
 
-    <div class="container">
-        
-        <header class="hero-section" id="about">
+    <header class="hero-fullscreen" id="home">
+        <div class="hero-content">
             <img src="profil.png" alt="Yusuf Kocapınar" class="profile-img">
             <h1>Yusuf Kocapınar</h1>
-            <p class="title">Yakında Yayında!</p>
-        </header>
+            <p class="title">Biyomühendislik | Fizik | Teknoloji</p>
+            <div class="scroll-indicator">
+                <span>Aşağı Kaydır</span>
+                <i class="fas fa-chevron-down"></i>
+            </div>
+        </div>
+    </header>
 
-        <main>
-            
+    <div class="main-wrapper">
+        
+        <nav class="floating-nav">
+            <a href="#home" class="nav-item" data-tooltip="Ana Sayfa"><i class="fas fa-home"></i></a>
+            <a href="#blog" class="nav-item" data-tooltip="Yazılar"><i class="fas fa-pen-nib"></i></a>
+            <a href="#projects" class="nav-item" data-tooltip="Projeler"><i class="fas fa-flask"></i></a>
+            <a href="#contact" class="nav-item" data-tooltip="İletişim"><i class="fas fa-envelope"></i></a>
+        </nav>
+
+        <main class="container">
             <section id="blog">
-                <h2>Son Paylaşımlar</h2>
-                
-                <article class="card">
-                    <span class="date">3 Şubat 2026</span>
-                    <h3>Fizik 1: Dönel Hareket Analizi</h3>
-                    <p>Dönel hareketin temelleri, tork ve eylemsizlik momenti üzerine incelemelerim.</p>
-                    <a href="#" class="read-more">Devamını Oku</a>
-                </article>
-
-                <article class="card">
-                    <span class="date">28 Ocak 2026</span>
-                    <h3>Biyomühendislik ve Gelecek</h3>
-                    <p>Laboratuvar notlarım ve biyoteknolojideki yeni gelişmeler.</p>
-                    <a href="#" class="read-more">Devamını Oku</a>
-                </article>
+                <h2>Son Notlar</h2>
+                <div class="card-grid">
+                    <article class="card">
+                        <span class="date">3 Şubat 2026</span>
+                        <h3>Fizik 1: Dönel Hareket</h3>
+                        <p>Eylemsizlik momenti ve tork üzerine analizler.</p>
+                        <a href="#" class="read-more">Okumaya Başla</a>
+                    </article>
+                    
+                    <article class="card">
+                        <span class="date">28 Ocak 2026</span>
+                        <h3>Biyomühendislik Vizyonu</h3>
+                        <p>Geleceğin teknolojileri üzerine düşünceler.</p>
+                        <a href="#" class="read-more">Okumaya Başla</a>
+                    </article>
+                </div>
             </section>
 
             <section id="projects">
                 <h2>Projeler</h2>
                 <div class="card">
                     <h3>Marmara Cansağlığı Kulübü</h3>
-                    <p>Bilimsel ve Akademik Çalışmalar Birimi organizasyon notları ve etkinlik takvimi.</p>
+                    <p>Bilimsel ve Akademik Çalışmalar Birimi organizasyon notları.</p>
                 </div>
             </section>
 
-            <section id="contact" style="text-align: center; margin-top: 50px; opacity: 0.7;">
-                <p>Bana Ulaşın</p>
-                <div style="font-size: 1.5rem; letter-spacing: 15px;">
-                    <a href="#" style="color:var(--accent-color)"><i class="fab fa-github"></i></a>
-                    <a href="#" style="color:var(--accent-color)"><i class="fab fa-linkedin"></i></a>
-                    <a href="#" style="color:var(--accent-color)"><i class="fab fa-twitter"></i></a>
-                </div>
+            <section id="contact" class="footer-section">
+                <a href="#"><i class="fab fa-github"></i></a>
+                <a href="#"><i class="fab fa-linkedin"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
             </section>
-
         </main>
     </div>
 

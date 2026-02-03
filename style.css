@@ -1,69 +1,173 @@
-/* Genel Ayarlar */
+/* FONT İMPORT (Seçtiğin Elegant Font) */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600&display=swap');
+
 :root {
-    --bg-color: #121212;
-    --card-bg: rgba(255, 255, 255, 0.03); /* Cam efekti için şeffaf */
-    --text-color: #e0e0e0;
-    --accent-color: #c3b091; /* YENİ RENGİN: Antique Brass */
-    --font-main: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    --accent-color: #c3b091; /* Altın Sarısı */
+    --text-color: #eaeaea;
+    --glass-border: rgba(255, 255, 255, 0.15);
 }
 
 body {
     margin: 0;
     padding: 0;
-    font-family: var(--font-main);
-    /* Arka plan: Derinlik katan gradyan */
-    background: radial-gradient(circle at top center, #1e2226, #000000);
-    background-attachment: fixed;
+    font-family: 'Montserrat', sans-serif;
     color: var(--text-color);
-    line-height: 1.6;
+    overflow-x: hidden; /* Yan kaymayı engelle */
 }
 
 html {
-    scroll-behavior: smooth; /* Butonlara basınca kayarak gitmesi için */
+    scroll-behavior: smooth;
 }
 
-/* Ana Düzen */
-.container {
-    max-width: 800px; /* Okuma kolaylığı için biraz daralttık */
-    margin: 0 auto;
-    padding: 20px;
-    padding-right: 80px; /* Sağdaki bar için boşluk */
+/* --- KATMAN 1: SABİT ARKA PLAN (ETNİK DESEN) --- */
+.bg-image {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    /* BURAYA KENDİ GÖRSEL LİNKİNİ KOYACAKSIN */
+    background-image: url('https://images.unsplash.com/photo-1590074251034-78d7890f5a9f?q=80&w=2070&auto=format&fit=crop'); 
+    background-size: cover;
+    background-position: center;
+    /* Resmi biraz karartalım ki yazılar okunsun */
+    filter: brightness(0.6); 
 }
 
-/* YENİ: Üst Profil Alanı (Hero Section) */
-.hero-section {
+/* --- KATMAN 2: HERO (TAM EKRAN GİRİŞ) --- */
+.hero-fullscreen {
+    height: 100vh; /* Ekranın %100 yüksekliği */
+    display: flex;
+    align-items: center;
+    justify-content: center;
     text-align: center;
-    padding: 60px 0 40px 0;
-    animation: fadeIn 1s ease-in;
+    position: relative;
+}
+
+.hero-content {
+    animation: fadeInUp 1.5s ease-out;
 }
 
 .profile-img {
-    width: 160px;
-    height: 160px;
+    width: 180px;
+    height: 180px;
     border-radius: 15px;
     object-fit: cover;
+    border: 3px solid rgba(195, 176, 145, 0.5);
+    box-shadow: 0 0 30px rgba(0,0,0,0.5);
     margin-bottom: 20px;
-    /* Fotoğrafa hafif bir "glow" (parlama) verelim */
-    box-shadow: 0 0 25px rgba(195, 176, 145, 0.2);
-    border: 2px solid rgba(195, 176, 145, 0.3);
 }
 
-.hero-section h1 {
-    font-size: 2.5rem;
-    margin: 10px 0;
-    font-weight: 300; /* İnce ve zarif yazı */
-    letter-spacing: 2px;
+.hero-fullscreen h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 3.5rem;
+    font-style: italic;
+    margin: 0;
+    color: #fff;
+    text-shadow: 0 4px 10px rgba(0,0,0,0.7);
 }
 
 .title {
     color: var(--accent-color);
-    font-size: 1.1rem;
+    font-size: 1.2rem;
+    letter-spacing: 3px;
     text-transform: uppercase;
-    letter-spacing: 1px;
-    margin-top: 0;
+    margin-top: 10px;
+    font-weight: 600;
+    text-shadow: 0 2px 5px rgba(0,0,0,0.8);
 }
 
-/* YENİ: Sağ Dikey Navigasyon Barı */
+/* Aşağı Kaydır Oku */
+.scroll-indicator {
+    position: absolute;
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    opacity: 0.8;
+    animation: bounce 2s infinite;
+    font-size: 0.9rem;
+    color: var(--accent-color);
+}
+.scroll-indicator i {
+    display: block;
+    margin-top: 5px;
+}
+
+/* --- KATMAN 3: ANA İÇERİK (BLUR EFEKTİ BURADA) --- */
+.main-wrapper {
+    /* Bu alan Hero'dan sonra başlar */
+    min-height: 100vh;
+    background: rgba(18, 18, 18, 0.85); /* Siyahın şeffaf hali */
+    backdrop-filter: blur(15px); /* İŞTE SİHİR: Arkadaki resmi bulanıklaştırır */
+    -webkit-backdrop-filter: blur(15px);
+    border-top: 1px solid var(--glass-border);
+    padding-top: 80px; /* İçerik hemen tavana yapışmasın */
+    padding-bottom: 80px;
+    position: relative;
+    z-index: 2;
+    box-shadow: 0 -20px 50px rgba(0,0,0,0.8); /* Gölgeli geçiş */
+}
+
+.container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 30px;
+    padding-right: 100px; /* Sağ bar için boşluk */
+}
+
+/* Başlıklar */
+h2 {
+    font-family: 'Playfair Display', serif;
+    color: var(--accent-color);
+    border-bottom: 2px solid var(--accent-color);
+    display: inline-block;
+    padding-bottom: 10px;
+    margin-bottom: 40px;
+    font-size: 2rem;
+}
+
+/* Kartlar (Glassmorphism Devam Ediyor) */
+.card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+}
+
+.card {
+    background: rgba(255, 255, 255, 0.05); /* Daha koyu cam */
+    border: 1px solid var(--glass-border);
+    padding: 30px;
+    border-radius: 15px;
+    transition: transform 0.3s, border-color 0.3s, background 0.3s;
+}
+
+.card:hover {
+    transform: translateY(-10px);
+    border-color: var(--accent-color);
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.card h3 {
+    margin-top: 10px;
+    font-size: 1.4rem;
+}
+
+.read-more {
+    display: inline-block;
+    margin-top: 20px;
+    color: var(--accent-color);
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 0.9rem;
+    transition: letter-spacing 0.3s;
+}
+.read-more:hover {
+    letter-spacing: 2px;
+}
+
+/* Navigasyon Barı (Hala sabit ve sağda) */
 .floating-nav {
     position: fixed;
     right: 30px;
@@ -71,126 +175,73 @@ html {
     transform: translateY(-50%);
     display: flex;
     flex-direction: column;
-    gap: 15px;
+    gap: 20px;
     z-index: 100;
 }
 
 .nav-item {
     width: 50px;
     height: 50px;
-    background: rgba(255, 255, 255, 0.05);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 50%; /* Yuvarlak butonlar */
+    border-radius: 50%;
+    background: rgba(0, 0, 0, 0.6);
+    border: 1px solid var(--accent-color);
+    color: var(--accent-color);
     display: flex;
     align-items: center;
     justify-content: center;
-    color: var(--text-color);
     text-decoration: none;
+    transition: all 0.3s;
     font-size: 1.2rem;
-    transition: all 0.3s;
-    position: relative;
-}
-
-/* Tooltip (Üzerine gelince ne olduğu yazsın) */
-.nav-item::before {
-    content: attr(data-tooltip);
-    position: absolute;
-    right: 60px;
-    background: var(--accent-color);
-    color: #000;
-    padding: 5px 10px;
-    border-radius: 5px;
-    font-size: 0.8rem;
-    opacity: 0;
-    visibility: hidden;
-    transition: all 0.3s;
-    white-space: nowrap;
-    font-weight: bold;
 }
 
 .nav-item:hover {
     background: var(--accent-color);
     color: #000;
-    transform: scale(1.1);
     box-shadow: 0 0 15px var(--accent-color);
 }
 
-.nav-item:hover::before {
-    opacity: 1;
-    visibility: visible;
-    right: 70px; /* Hafif kayarak gelme efekti */
-}
-
-/* İçerik Başlıkları */
-h2 {
-    border-left: 4px solid var(--accent-color);
-    padding-left: 15px;
+/* Footer İkonları */
+.footer-section {
     margin-top: 60px;
-    margin-bottom: 30px;
-    color: var(--text-color);
-    font-weight: 300;
+    text-align: center;
+    border-top: 1px solid rgba(255,255,255,0.1);
+    padding-top: 30px;
 }
-
-/* Kart Tasarımı (Glassmorphism) */
-.card {
-    background: var(--card-bg);
-    backdrop-filter: blur(15px);
-    -webkit-backdrop-filter: blur(15px);
-    padding: 25px;
-    margin-bottom: 25px;
-    border-radius: 10px;
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    transition: transform 0.3s, border-color 0.3s;
-}
-
-.card:hover {
-    transform: translateY(-5px);
-    border-color: var(--accent-color);
-}
-
-.date {
-    display: block;
-    font-size: 0.8rem;
+.footer-section a {
     color: #888;
-    margin-bottom: 10px;
+    font-size: 1.5rem;
+    margin: 0 15px;
+    transition: color 0.3s;
 }
-
-.read-more {
-    display: inline-block;
-    margin-top: 15px;
+.footer-section a:hover {
     color: var(--accent-color);
-    text-decoration: none;
-    font-weight: bold;
-    border-bottom: 1px dashed var(--accent-color);
 }
 
-/* Mobilde Sağ Barı Aşağı Alalım */
+/* Mobil Uyum */
 @media (max-width: 768px) {
-    .container {
-        padding-right: 20px;
-    }
+    .container { padding-right: 30px; }
+    .hero-fullscreen h1 { font-size: 2.5rem; }
     .floating-nav {
-        right: auto;
-        bottom: 20px;
         top: auto;
-        left: 50%;
-        transform: translateX(-50%);
-        flex-direction: row; /* Yan yana dizilsin */
-        background: rgba(0,0,0,0.8);
+        bottom: 20px;
+        right: 50%;
+        transform: translateX(50%);
+        flex-direction: row;
+        background: rgba(0,0,0,0.9);
         padding: 10px 20px;
         border-radius: 30px;
-        backdrop-filter: blur(10px);
-        width: max-content;
+        border: 1px solid var(--accent-color);
     }
-    .nav-item::before {
-        display: none; /* Mobilde tooltip kapalı olsun */
-    }
+    .nav-item { border: none; background: transparent; width: 40px; height: 40px; }
 }
 
-/* Animasyon */
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(-20px); }
+/* Animasyonlar */
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(30px); }
     to { opacity: 1; transform: translateY(0); }
+}
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {transform: translateX(-50%) translateY(0);}
+    40% {transform: translateX(-50%) translateY(-10px);}
+    60% {transform: translateX(-50%) translateY(-5px);}
 }
