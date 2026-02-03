@@ -30,30 +30,76 @@
         
         <nav class="floating-nav">
             <a href="#home" class="nav-item" data-tooltip="Ana Sayfa"><i class="fas fa-home"></i></a>
-            <a href="#blog" class="nav-item" data-tooltip="Yazılar"><i class="fas fa-pen-nib"></i></a>
+            <a href="javascript:void(0)" onclick="openBlog()" class="nav-item" data-tooltip="Yazılar">
+                <i class="fas fa-pen-nib"></i>
+            </a>
             <a href="#projects" class="nav-item" data-tooltip="Projeler"><i class="fas fa-flask"></i></a>
             <a href="#contact" class="nav-item" data-tooltip="İletişim"><i class="fas fa-envelope"></i></a>
         </nav>
 
         <main class="container">
-            <section id="blog">
-                <h2>Son Notlar</h2>
-                <div class="card-grid">
-                    <article class="card">
-                        <span class="date">3 Şubat 2026</span>
-                        <h3>Fizik 1: Dönel Hareket</h3>
-                        <p>Eylemsizlik momenti ve tork üzerine analizler.</p>
-                        <a href="#" class="read-more">Okumaya Başla</a>
-                    </article>
-                    
-                    <article class="card">
-                        <span class="date">28 Ocak 2026</span>
-                        <h3>Biyomühendislik Vizyonu</h3>
-                        <p>Geleceğin teknolojileri üzerine düşünceler.</p>
-                        <a href="#" class="read-more">Okumaya Başla</a>
-                    </article>
+            <div id="blog-modal" class="modal-overlay">
+        <div class="modal-window">
+            
+            <div class="modal-header">
+                <div class="window-controls">
+                    <span class="dot red" onclick="closeBlog()"></span>
+                    <span class="dot yellow"></span>
+                    <span class="dot green"></span>
                 </div>
-            </section>
+                <div class="window-title">Yazılarım / Notlar</div>
+                <div class="window-spacer"></div> </div>
+
+            <div id="files-view" class="modal-content active-view">
+                
+                <div class="file-item" onclick="openPost('post1')">
+                    <div class="file-icon">
+                        <i class="fas fa-file-alt"></i>
+                    </div>
+                    <div class="file-name">Fizik_1_Donel_Hareket.txt</div>
+                    <div class="file-date">3 KB</div>
+                </div>
+
+                <div class="file-item" onclick="openPost('post2')">
+                    <div class="file-icon">
+                        <i class="fas fa-file-code"></i>
+                    </div>
+                    <div class="file-name">Biyomuhendislik_Vizyon.md</div>
+                    <div class="file-date">5 KB</div>
+                </div>
+
+                <div class="file-item">
+                    <div class="file-icon">
+                        <i class="fas fa-folder"></i>
+                    </div>
+                    <div class="file-name">Projeler</div>
+                    <div class="file-date">Klasör</div>
+                </div>
+
+            </div>
+
+            <div id="reader-view" class="modal-content hidden-view">
+                <button class="back-btn" onclick="showFiles()"><i class="fas fa-arrow-left"></i> Geri Dön</button>
+                
+                <div id="post1" class="post-content">
+                    <h2>Fizik 1: Dönel Hareket ve Tork</h2>
+                    <p class="meta">3 Şubat 2026 • 21:45</p>
+                    <hr>
+                    <p>Dönel hareketin temelleri üzerine aldığım notlar burada yer alacak...</p>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                </div>
+
+                <div id="post2" class="post-content">
+                    <h2>Biyomühendislik Vizyonu</h2>
+                    <p class="meta">28 Ocak 2026 • 14:30</p>
+                    <hr>
+                    <p>Biyoteknolojinin geleceği ve yapay zeka entegrasyonu...</p>
+                    <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+                </div>
+            </div>
+
+        </div>
+    </div>
 
             <section id="projects">
                 <h2>Projeler</h2>
@@ -144,3 +190,44 @@
     </script>
 </body>
 </html>
+
+<script>
+    // --- BLOG MODAL SİSTEMİ ---
+    const modal = document.getElementById('blog-modal');
+    const filesView = document.getElementById('files-view');
+    const readerView = document.getElementById('reader-view');
+    const allPosts = document.querySelectorAll('.post-content');
+
+    // 1. Pencereyi Aç
+    function openBlog() {
+        modal.classList.add('open');
+        showFiles(); // Her açılışta ana dizine dön
+    }
+
+    // 2. Pencereyi Kapat (Kırmızı Nokta)
+    function closeBlog() {
+        modal.classList.remove('open');
+    }
+
+    // 3. Bir Yazıyı Aç
+    function openPost(postId) {
+        // Dosyaları gizle, okuyucuyu aç
+        filesView.style.display = 'none';
+        readerView.style.display = 'block';
+
+        // Tüm yazıları gizle, sadece seçileni göster
+        allPosts.forEach(post => post.classList.remove('active-post'));
+        document.getElementById(postId).classList.add('active-post');
+    }
+
+    // 4. Geri Dön (Dosyalar Ekranına)
+    function showFiles() {
+        readerView.style.display = 'none';
+        filesView.style.display = 'grid';
+    }
+
+    // Pencere dışına tıklayınca kapat (Opsiyonel)
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal) closeBlog();
+    });
+</script>
