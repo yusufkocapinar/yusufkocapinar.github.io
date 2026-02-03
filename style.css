@@ -40,7 +40,7 @@ html {
 .profile-img {
     width: 160px;
     height: 160px;
-    border-radius: 50%;
+    border-radius: 15px;
     object-fit: cover;
     margin-bottom: 20px;
     /* Fotoğrafa hafif bir "glow" (parlama) verelim */
