@@ -29,11 +29,11 @@ html {
     height: 100%;
     z-index: -1;
     /* BURAYA KENDİ GÖRSEL LİNKİNİ KOYACAKSIN */
-    background-image: url('https://i.pinimg.com/1200x/13/95/df/1395dfc81d25908841b8fe932d5b187b.jpg'); 
+    background-image: url('https://i.pinimg.com/1200x/64/2b/71/642b7177987e8a830d236ad709a46938.jpg'); 
     background-size: cover;
     background-position: center;
     /* Resmi biraz karartalım ki yazılar okunsun */
-    filter: brightness(0.6); 
+    filter: brightness(0.8); 
 }
 
 /* --- KATMAN 2: HERO (TAM EKRAN GİRİŞ) --- */
