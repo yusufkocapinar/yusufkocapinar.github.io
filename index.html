@@ -41,6 +41,32 @@
             <div id="blog-modal" class="modal-overlay">
         <div class="modal-window">
             
+            <section id="featured-post">
+                <h2>Son Eklenen</h2>
+                
+                <div class="featured-file-card" onclick="openPost('post1'); openBlog();">
+                    
+                    <div class="file-visual">
+                        <i class="fas fa-file-alt"></i>
+                        <span class="file-ext">TXT</span>
+                    </div>
+
+                    <div class="file-details">
+                        <div class="meta-tag">YENİ</div>
+                        <h3>Fizik 1: Dönel Hareket</h3>
+                        <p>Eylemsizlik momenti, tork ve açısal momentum üzerine detaylı analizler...</p>
+                        <span class="tap-hint">Okumak için dokun <i class="fas fa-arrow-right"></i></span>
+                    </div>
+                </div>
+
+                <div class="folder-action">
+                    <button class="open-folder-btn" onclick="openBlog()">
+                        <i class="fas fa-folder-open"></i>
+                        Dosya Yöneticisini Aç
+                    </button>
+                </div>
+            </section>
+            
             <div class="modal-header">
                 <div class="window-controls">
                     <span class="dot red" onclick="closeBlog()"></span>

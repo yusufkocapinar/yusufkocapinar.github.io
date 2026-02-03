@@ -522,3 +522,148 @@ h2 {
 .post-content hr { border: 0; border-top: 1px solid rgba(255,255,255,0.1); margin: 20px 0; }
 
 @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+/* --- ÖNE ÇIKAN DOSYA WIDGET'I --- */
+#featured-post {
+    margin-bottom: 60px;
+    animation: fadeInUp 1s ease-out;
+}
+
+.featured-file-card {
+    background: rgba(255, 255, 255, 0.05); /* Cam zemin */
+    backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    padding: 30px;
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.featured-file-card:hover {
+    background: rgba(255, 255, 255, 0.1);
+    transform: translateY(-5px);
+    border-color: var(--accent-color);
+    box-shadow: 0 10px 40px rgba(0,0,0,0.4);
+}
+
+/* Sol İkon Alanı */
+.file-visual {
+    width: 80px;
+    height: 90px;
+    background: linear-gradient(135deg, #eee, #ccc); /* Kağıt rengi */
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    flex-shrink: 0; /* Küçülmesin */
+    box-shadow: 5px 5px 15px rgba(0,0,0,0.3);
+}
+
+/* İkonun kıvrık köşesi (Süs) */
+.file-visual::after {
+    content: '';
+    position: absolute;
+    top: 0; right: 0;
+    width: 0; height: 0;
+    border-style: solid;
+    border-width: 0 20px 20px 0;
+    border-color: transparent rgba(0,0,0,0.1) transparent transparent;
+}
+
+.file-visual i {
+    font-size: 2.5rem;
+    color: #333;
+}
+
+.file-ext {
+    font-size: 0.7rem;
+    font-weight: 800;
+    color: #333;
+    margin-top: 5px;
+    background: rgba(0,0,0,0.1);
+    padding: 2px 5px;
+    border-radius: 4px;
+}
+
+/* Sağ Detaylar */
+.file-details { flex-grow: 1; }
+
+.file-details h3 {
+    margin: 5px 0;
+    font-size: 1.4rem;
+    color: #fff;
+}
+
+.file-details p {
+    color: #aaa;
+    font-size: 0.95rem;
+    margin-bottom: 15px;
+    line-height: 1.5;
+}
+
+.meta-tag {
+    display: inline-block;
+    background: var(--accent-color);
+    color: #121212;
+    font-size: 0.7rem;
+    font-weight: 800;
+    padding: 2px 8px;
+    border-radius: 4px;
+    margin-bottom: 5px;
+}
+
+.tap-hint {
+    font-size: 0.85rem;
+    color: var(--accent-color);
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    opacity: 0.8;
+}
+
+/* Klasör Butonu Alanı */
+.folder-action {
+    margin-top: 20px;
+    text-align: right;
+}
+
+.open-folder-btn {
+    background: transparent;
+    border: 1px solid rgba(255,255,255,0.2);
+    color: #ccc;
+    padding: 10px 20px;
+    border-radius: 30px;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 0.9rem;
+    transition: all 0.3s;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.open-folder-btn:hover {
+    border-color: var(--accent-color);
+    color: #fff;
+    background: rgba(255,255,255,0.05);
+}
+
+/* Mobil Uyum */
+@media (max-width: 768px) {
+    .featured-file-card {
+        flex-direction: column;
+        text-align: center;
+        padding: 20px;
+    }
+    .file-details { width: 100%; }
+    .tap-hint { justify-content: center; }
+    .folder-action { text-align: center; }
+}
