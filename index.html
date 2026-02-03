@@ -38,95 +38,78 @@
         </nav>
 
         <main class="container">
-            <div id="blog-modal" class="modal-overlay">
-        <div class="modal-window">
             
-            <section id="featured-post">
-                <h2>Son Eklenen</h2>
-                
-                <div class="featured-file-card" onclick="openPost('post1'); openBlog();">
+            <section id="blog">
+                <h2>Notlar & Yazılar</h2>
+                <div class="card-grid">
                     
-                    <div class="file-visual">
-                        <i class="fas fa-file-alt"></i>
-                        <span class="file-ext">TXT</span>
-                    </div>
-
-                    <div class="file-details">
-                        <div class="meta-tag">YENİ</div>
+                    <article class="card" onclick="openPost('post1'); openBlog();" style="cursor: pointer;">
+                        <span class="date">3 Şubat 2026</span>
                         <h3>Fizik 1: Dönel Hareket</h3>
-                        <p>Eylemsizlik momenti, tork ve açısal momentum üzerine detaylı analizler...</p>
-                        <span class="tap-hint">Okumak için dokun <i class="fas fa-arrow-right"></i></span>
-                    </div>
-                </div>
+                        <p>Eylemsizlik momenti ve tork üzerine analizler.</p>
+                        <span class="read-more">Okumak için tıkla →</span>
+                    </article>
+                    
+                    <article class="card" onclick="openPost('post2'); openBlog();" style="cursor: pointer;">
+                        <span class="date">28 Ocak 2026</span>
+                        <h3>Biyomühendislik Vizyonu</h3>
+                        <p>Geleceğin teknolojileri üzerine düşünceler.</p>
+                        <span class="read-more">Okumak için tıkla →</span>
+                    </article>
 
-                <div class="folder-action">
-                    <button class="open-folder-btn" onclick="openBlog()">
-                        <i class="fas fa-folder-open"></i>
-                        Dosya Yöneticisini Aç
-                    </button>
                 </div>
             </section>
-            
-            <div class="modal-header">
-                <div class="window-controls">
-                    <span class="dot red" onclick="closeBlog()"></span>
-                    <span class="dot yellow"></span>
-                    <span class="dot green"></span>
-                </div>
-                <div class="window-title">Yazılarım / Notlar</div>
-                <div class="window-spacer"></div> </div>
 
-            <div id="files-view" class="modal-content active-view">
+            <section id="projects">
+                <h2>Projeler</h2>
+                <div class="card">
+                    <h3>Marmara Cansağlığı Kulübü</h3>
+                    <p>Bilimsel ve Akademik Çalışmalar Birimi organizasyon notları.</p>
+                </div>
+            </section>
+
+            <section id="simple-player-section">
+                <div class="player-bar">
+                    <div class="cover-art">
+                        <img src="kapak.jpg" alt="Music Cover">
+                    </div>
+
+                    <div class="song-info">
+                        <div class="track-title">Favori Parçam</div>
+                        <div class="track-artist">Keyif Modu</div>
+                    </div>
+
+                    <div class="player-controls">
+                        <button class="ctrl-btn volume-btn" onclick="toggleMute()">
+                            <i class="fas fa-volume-up" id="volIcon"></i>
+                        </button>
+
+                        <button class="ctrl-btn play-btn" onclick="toggleAudio()">
+                            <i class="fas fa-play" id="playIcon"></i>
+                        </button>
+                    </div>
+
+                    <audio id="myAudio" loop>
+                        <source src="muzik.mp3" type="audio/mpeg">
+                    </audio>
+                </div>
+            </section>
+
+            <section id="contact" class="footer-section">
+                <a href="https://github.com/yusufkocapinar" target="_blank">
+                    <i class="fab fa-github"></i>
+                </a>
                 
-                <div class="file-item" onclick="openPost('post1')">
-                    <div class="file-icon">
-                        <i class="fas fa-file-alt"></i>
-                    </div>
-                    <div class="file-name">Fizik_1_Donel_Hareket.txt</div>
-                    <div class="file-date">3 KB</div>
-                </div>
-
-                <div class="file-item" onclick="openPost('post2')">
-                    <div class="file-icon">
-                        <i class="fas fa-file-code"></i>
-                    </div>
-                    <div class="file-name">Biyomuhendislik_Vizyon.md</div>
-                    <div class="file-date">5 KB</div>
-                </div>
-
-                <div class="file-item">
-                    <div class="file-icon">
-                        <i class="fas fa-folder"></i>
-                    </div>
-                    <div class="file-name">Projeler</div>
-                    <div class="file-date">Klasör</div>
-                </div>
-
-            </div>
-
-            <div id="reader-view" class="modal-content hidden-view">
-                <button class="back-btn" onclick="showFiles()"><i class="fas fa-arrow-left"></i> Geri Dön</button>
+                <a href="https://tr.linkedin.com/in/yusufkocapinar" target="_blank">
+                    <i class="fab fa-linkedin"></i>
+                </a>
                 
-                <div id="post1" class="post-content">
-                    <h2>Fizik 1: Dönel Hareket ve Tork</h2>
-                    <p class="meta">3 Şubat 2026 • 21:45</p>
-                    <hr>
-                    <p>Dönel hareketin temelleri üzerine aldığım notlar burada yer alacak...</p>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-                </div>
-
-                <div id="post2" class="post-content">
-                    <h2>Biyomühendislik Vizyonu</h2>
-                    <p class="meta">28 Ocak 2026 • 14:30</p>
-                    <hr>
-                    <p>Biyoteknolojinin geleceği ve yapay zeka entegrasyonu...</p>
-                    <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-                </div>
-            </div>
-
-        </div>
-    </div>
-
+                <a href="https://www.instagram.com/kpyusufi" target="_blank">
+                    <i class="fab fa-instagram"></i>
+                </a>
+            </section>
+        </main>
+        
             <section id="projects">
                 <h2>Projeler</h2>
                 <div class="card">
