@@ -78,6 +78,46 @@
                 </div>
             </section>
 
+            <section id="music-section">
+                <div class="music-widget-bar">
+                    <div class="music-cover">
+                        <img src="https://i.pinimg.com/originals/26/50/20/2650201e745495c6439061dfcc81e9b2.gif" alt="Vibe">
+                    </div>
+
+                    <div class="music-info">
+                        <div class="track-name">
+                            <span class="scrolling-text">Yusuf's Vibe Selection • Chill & Focus •</span>
+                        </div>
+                        <div class="artist-name">YouTube Playlist</div>
+                        <div class="progress-container">
+                            <span class="curr-time">0:00</span>
+                            <div class="progress-bar"><div class="progress-fill"></div></div>
+                            <span class="total-time">∞</span>
+                        </div>
+                    </div>
+
+                    <div class="music-controls">
+                        <button class="control-btn sm"><i class="fas fa-backward"></i></button>
+                        <button class="control-btn play-btn" onclick="toggleMusicPlayer()">
+                            <i class="fas fa-play" id="playIcon"></i>
+                        </button>
+                        <button class="control-btn list-btn" onclick="toggleMusicPlayer()">
+                            <i class="fas fa-list"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="hidden-player-wrapper" id="musicPlayerArea">
+                    <iframe 
+                        src="https://www.youtube.com/embed/videoseries?list=PLHKooWf1WHWGiZxBbVFT8-D4bkAF1X9ls" 
+                        title="Music Player" 
+                        frameborder="0" 
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                        allowfullscreen>
+                    </iframe>
+                </div>
+            </section>
+
             <section <section id="contact" class="footer-section">
                 <a href="https://github.com/yusufkocapinar" target="_blank">
                     <i class="fab fa-github"></i>
@@ -96,3 +136,46 @@
 
 </body>
 </html>
+
+<script>
+        let isPlaying = false;
+        const playerArea = document.getElementById('musicPlayerArea');
+        const playIcon = document.getElementById('playIcon');
+        const progressFill = document.querySelector('.progress-fill');
+        const currTimeText = document.querySelector('.curr-time');
+        let progressInterval;
+
+        function toggleMusicPlayer() {
+            playerArea.classList.toggle('active');
+            
+            if (playerArea.classList.contains('active')) {
+                playIcon.classList.remove('fa-play');
+                playIcon.classList.add('fa-pause');
+                startFakeProgress();
+            } else {
+                playIcon.classList.remove('fa-pause');
+                playIcon.classList.add('fa-play');
+                stopFakeProgress();
+            }
+        }
+
+        function startFakeProgress() {
+            let width = 0;
+            let seconds = 0;
+            if (progressInterval) clearInterval(progressInterval);
+            progressInterval = setInterval(() => {
+                if (width >= 100) width = 0;
+                width += 0.1; 
+                seconds++;
+                progressFill.style.width = width + '%';
+                let mins = Math.floor(seconds / 60);
+                let secs = Math.floor(seconds % 60);
+                if (secs < 10) secs = "0" + secs;
+                currTimeText.innerText = mins + ":" + secs;
+            }, 1000);
+        }
+
+        function stopFakeProgress() {
+            clearInterval(progressInterval);
+        }
+    </script>
