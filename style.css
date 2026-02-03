@@ -28,7 +28,6 @@ html {
     width: 100%;
     height: 100%;
     z-index: -1;
-    /* Senin görselin */
     background-image: url('https://i.pinimg.com/1200x/64/2b/71/642b7177987e8a830d236ad709a46938.jpg'); 
     background-size: cover;
     background-position: center;
@@ -62,7 +61,7 @@ html {
 .profile-img {
     width: 160px;
     height: 160px;
-    border-radius: 15px; /* Modern kare */
+    border-radius: 15px;
     object-fit: cover;
     border: 3px solid var(--accent-color);
     margin-bottom: 25px;
@@ -78,7 +77,7 @@ html {
 }
 
 .title {
-    color: #1a120b; /* Koyu Kahve */
+    color: #1a120b;
     font-size: 1.2rem;
     letter-spacing: 1px;
     margin-top: 10px;
@@ -198,238 +197,4 @@ h2 {
     width: 50px;
     height: 50px;
     border-radius: 50%;
-    background: rgba(0, 0, 0, 0.6);
-    border: 1px solid var(--accent-color);
-    color: var(--accent-color);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-decoration: none;
-    transition: all 0.3s;
-    font-size: 1.2rem;
-    position: relative;
-}
-
-.nav-item::before {
-    content: attr(data-tooltip);
-    position: absolute;
-    right: 65px;
-    background: var(--accent-color);
-    color: #121212;
-    padding: 5px 15px;
-    border-radius: 20px;
-    font-size: 0.8rem;
-    font-weight: bold;
-    white-space: nowrap;
-    opacity: 0;
-    pointer-events: none;
-    transition: all 0.3s;
-    transform: translateX(10px);
-}
-
-.nav-item:hover {
-    background: var(--accent-color);
-    color: #121212;
-    box-shadow: 0 0 20px var(--accent-color);
-}
-
-.nav-item:hover::before {
-    opacity: 1;
-    transform: translateX(0);
-}
-
-.footer-section {
-    margin-top: 60px;
-    text-align: center;
-    border-top: 1px solid rgba(255,255,255,0.1);
-    padding-top: 30px;
-    opacity: 0.6;
-}
-.footer-section a {
-    color: var(--text-color);
-    font-size: 1.5rem;
-    margin: 0 15px;
-    transition: color 0.3s;
-}
-.footer-section a:hover {
-    color: var(--accent-color);
-}
-
-@media (max-width: 768px) {
-    .container { padding-right: 30px; }
-    .hero-fullscreen h1 { font-size: 1.8rem; }
-    .hero-content { padding: 30px; width: 85%; }
-    .floating-nav {
-        top: auto;
-        bottom: 30px;
-        right: 50%;
-        transform: translateX(50%);
-        flex-direction: row;
-        background: rgba(18, 18, 18, 0.95);
-        padding: 10px 20px;
-        border-radius: 30px;
-        border: 1px solid var(--accent-color);
-    }
-    .nav-item { border: none; background: transparent; width: 40px; height: 40px; }
-    .nav-item:hover { background: transparent; color: var(--accent-color); box-shadow: none;}
-    .nav-item::before { display: none; }
-    .scroll-indicator { bottom: 100px; }
-}
-
-@keyframes fadeInUp {
-    from { opacity: 0; transform: translateY(50px) scale(0.9); }
-    to { opacity: 1; transform: translateY(0) scale(1); }
-}
-@keyframes bounce {
-    0%, 20%, 50%, 80%, 100% {transform: translateX(-50%) translateY(0);}
-    40% {transform: translateX(-50%) translateY(-10px);}
-    60% {transform: translateX(-50%) translateY(-5px);}
-}
-
-/* --- MÜZİK KUTUSU STİLİ --- */
-.music-widget {
-    position: fixed;
-    bottom: 30px; /* Aşağıdan boşluk */
-    left: 30px;   /* Soldan boşluk */
-    width: 280px;
-    height: 190px;
-    z-index: 100;
-    
-    /* Cam Efekti (Glassmorphism) */
-    background: rgba(18, 18, 18, 0.6);
-    backdrop-filter: blur(15px);
-    -webkit-backdrop-filter: blur(15px);
-    border: 1px solid var(--glass-border);
-    border-radius: 20px;
-    padding: 15px;
-    
-    /* Hafif Gölge */
-    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-/* Üzerine gelince efekt */
-.music-widget:hover {
-    transform: translateY(-5px);
-    border-color: var(--accent-color);
-    box-shadow: 0 15px 40px rgba(195, 176, 145, 0.2);
-}
-
-/* Başlık */
-.music-header {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    color: var(--accent-color);
-    font-size: 0.9rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    margin-bottom: 10px;
-    padding-left: 5px;
-}
-
-/* Video Ayarı */
-.music-widget iframe {
-    width: 100%;
-    height: 152px;
-    border-radius: 10px;
-    box-shadow: inset 0 0 20px #000;
-}
-
-/* Mobilde Gizle (Ekranı kapatmaması için) */
-@media (max-width: 768px) {
-    .music-widget {
-        display: none;
-    }
-}
-/* --- YENİ MÜZİK WIDGET TASARIMI --- */
-#music-section {
-    margin: 60px 0;
-    animation: fadeInUp 1s ease-out;
-}
-
-.music-widget-bar {
-    background: rgba(255, 255, 255, 0.05);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border: 1px solid var(--glass-border);
-    border-radius: 20px;
-    padding: 15px 25px;
-    display: flex;
-    align-items: center;
-    gap: 20px;
-    box-shadow: 0 10px 40px rgba(0,0,0,0.4);
-    transition: all 0.3s ease;
-    position: relative;
-    overflow: hidden;
-}
-
-.music-widget-bar:hover {
-    border-color: var(--accent-color);
-    box-shadow: 0 10px 40px rgba(195, 176, 145, 0.15);
-    transform: translateY(-2px);
-}
-
-.music-cover {
-    width: 60px;
-    height: 60px;
-    border-radius: 12px;
-    overflow: hidden;
-    flex-shrink: 0;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.5);
-    border: 2px solid rgba(255,255,255,0.1);
-}
-.music-cover img { width: 100%; height: 100%; object-fit: cover; }
-
-.music-info {
-    flex-grow: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    overflow: hidden;
-}
-
-.track-name {
-    font-size: 1rem;
-    font-weight: 700;
-    color: #fff;
-    white-space: nowrap;
-    overflow: hidden;
-}
-
-.scrolling-text {
-    display: inline-block;
-    padding-left: 100%;
-    animation: scrollText 12s linear infinite;
-}
-
-.artist-name { font-size: 0.8rem; color: var(--accent-color); margin-bottom: 5px; }
-
-.progress-container { display: flex; align-items: center; gap: 10px; font-size: 0.7rem; color: #888; }
-.progress-bar { flex-grow: 1; height: 4px; background: rgba(255,255,255,0.1); border-radius: 2px; }
-.progress-fill { width: 0%; height: 100%; background: var(--accent-color); border-radius: 2px; transition: width 0.5s linear; }
-
-.music-controls { display: flex; align-items: center; gap: 15px; }
-.control-btn { background: transparent; border: none; color: #ccc; cursor: pointer; transition: all 0.2s; }
-.control-btn:hover { color: #fff; transform: scale(1.1); }
-.play-btn { width: 45px; height: 45px; background: #fff; color: #000; border-radius: 50%; font-size: 1.2rem; display: flex; align-items: center; justify-content: center; }
-.play-btn:hover { background: var(--accent-color); box-shadow: 0 0 15px var(--accent-color); }
-.list-btn { color: var(--accent-color); font-size: 1.2rem; }
-
-.hidden-player-wrapper {
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    margin-top: 0;
-    opacity: 0;
-}
-.hidden-player-wrapper.active { max-height: 400px; margin-top: 20px; opacity: 1; }
-.hidden-player-wrapper iframe { width: 100%; height: 350px; border-radius: 15px; border: 1px solid var(--glass-border); }
-
-@keyframes scrollText { 0% { transform: translateX(0); } 100% { transform: translateX(-100%); } }
-
-@media (max-width: 768px) {
-    .music-widget-bar { flex-direction: column; text-align: center; }
-    .music-controls { width: 100%; justify-content: space-around; }
-}
+    background: rgba(0, 0,
