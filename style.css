@@ -98,11 +98,14 @@ h2 {
 }
 
 .card {
-    background: var(--card-bg);
+    .card {
+    background: rgba(30, 30, 30, 0.7); /* Yarı saydam */
+    backdrop-filter: blur(10px);       /* Arkası bulanıklaşsın */
     padding: 20px;
     border-radius: 10px;
     transition: transform 0.2s;
-    border: 1px solid #333;
+    border: 1px solid rgba(255, 255, 255, 0.1); /* İnce beyaz çizgi */
+}
 }
 
 .card:hover {
