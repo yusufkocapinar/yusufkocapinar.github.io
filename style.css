@@ -48,7 +48,7 @@ body {
     width: 150px;
     height: 150px;
     border-radius: 50%;
-    border: 3px solid var(--accent-color);
+    /* border: 3px solid var(--accent-color); */
     object-fit: cover;
     margin-bottom: 15px;
 }
