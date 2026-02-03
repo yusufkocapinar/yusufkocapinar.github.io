@@ -1,26 +1,29 @@
-/* FONT İMPORT (Seçtiğin Elegant Font) */
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600&display=swap');
+/* FONT İMPORT (Sadece Modern Montserrat Kaldı) */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;700;800&display=swap');
 
 :root {
     --accent-color: #c3b091; /* Altın Sarısı */
     --text-color: #eaeaea;
+    /* Cam kenarlığı rengi */
     --glass-border: rgba(255, 255, 255, 0.15);
+    /* Kart arka planı (Hafif beyazımsı şeffaf) */
+    --card-bg: rgba(255, 255, 255, 0.05);
 }
 
 body {
     margin: 0;
     padding: 0;
+    /* TÜM SİTEDE ARTIK BU MODERN FONT GEÇERLİ */
     font-family: 'Montserrat', sans-serif;
     color: var(--text-color);
-    overflow-x: hidden; /* Yan kaymayı engelle */
+    overflow-x: hidden;
 }
 
 html {
     scroll-behavior: smooth;
 }
 
-/* --- KATMAN 1: SABİT ARKA PLAN (ETNİK DESEN) --- */
+/* --- KATMAN 1: SABİT ARKA PLAN --- */
 .bg-image {
     position: fixed;
     top: 0;
@@ -28,55 +31,67 @@ html {
     width: 100%;
     height: 100%;
     z-index: -1;
-    /* BURAYA KENDİ GÖRSEL LİNKİNİ KOYACAKSIN */
+    /* ETNİK GÖRSEL LİNKİ BURAYA */
     background-image: url('https://i.pinimg.com/1200x/64/2b/71/642b7177987e8a830d236ad709a46938.jpg'); 
     background-size: cover;
     background-position: center;
-    /* Resmi biraz karartalım ki yazılar okunsun */
-    filter: brightness(0.8); 
+    filter: brightness(0.2); 
 }
 
 /* --- KATMAN 2: HERO (TAM EKRAN GİRİŞ) --- */
 .hero-fullscreen {
-    height: 100vh; /* Ekranın %100 yüksekliği */
+    height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
     text-align: center;
     position: relative;
+    padding: 20px;
 }
 
+/* YENİ: HERO ARTIK BİR BUZLU CAM KART! */
 .hero-content {
     animation: fadeInUp 1.5s ease-out;
+    
+    /* Glassmorphism Efektleri */
+    background: var(--card-bg);
+    backdrop-filter: blur(15px); /* Arkadaki deseni bulanıklaştır */
+    -webkit-backdrop-filter: blur(15px);
+    border: 1px solid var(--glass-border);
+    padding: 50px; /* İç boşluk */
+    border-radius: 25px; /* Köşeleri yuvarlat */
+    max-width: 500px; /* Çok genişlemesin */
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5); /* Derinlik gölgesi */
 }
 
 .profile-img {
-    width: 180px;
-    height: 180px;
-    border-radius: 15px;
+    width: 160px;
+    height: 160px;
+    border-radius: 50%;
     object-fit: cover;
-    border: 3px solid rgba(195, 176, 145, 0.5);
-    box-shadow: 0 0 30px rgba(0,0,0,0.5);
-    margin-bottom: 20px;
+    border: 3px solid var(--accent-color); /* Çerçeveyi altın yaptık */
+    margin-bottom: 25px;
 }
 
+/* YENİ FONT AYARLARI BURADA */
 .hero-fullscreen h1 {
-    font-family: 'Playfair Display', serif;
-    font-size: 3.5rem;
-    font-style: italic;
+    /* Artık o eski font yok, Montserrat var */
+    font-weight: 800; /* Çok kalın (Bold) */
+    font-size: 2.5rem;
+    text-transform: uppercase; /* Hepsi BÜYÜK HARF */
     margin: 0;
     color: #fff;
-    text-shadow: 0 4px 10px rgba(0,0,0,0.7);
+    letter-spacing: 2px; /* Harf aralığını açtık */
+    text-shadow: 0 2px 10px rgba(0,0,0,0.5);
 }
 
 .title {
     color: var(--accent-color);
-    font-size: 1.2rem;
+    font-size: 1rem;
     letter-spacing: 3px;
     text-transform: uppercase;
-    margin-top: 10px;
+    margin-top: 15px;
     font-weight: 600;
-    text-shadow: 0 2px 5px rgba(0,0,0,0.8);
 }
 
 /* Aşağı Kaydır Oku */
@@ -89,46 +104,49 @@ html {
     animation: bounce 2s infinite;
     font-size: 0.9rem;
     color: var(--accent-color);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-weight: bold;
 }
 .scroll-indicator i {
     display: block;
-    margin-top: 5px;
+    margin-top: 10px;
 }
 
-/* --- KATMAN 3: ANA İÇERİK (BLUR EFEKTİ BURADA) --- */
+/* --- KATMAN 3: ANA İÇERİK --- */
 .main-wrapper {
-    /* Bu alan Hero'dan sonra başlar */
     min-height: 100vh;
-    background: rgba(18, 18, 18, 0.85); /* Siyahın şeffaf hali */
-    backdrop-filter: blur(15px); /* İŞTE SİHİR: Arkadaki resmi bulanıklaştırır */
-    -webkit-backdrop-filter: blur(15px);
+    background: rgba(18, 18, 18, 0.85);
+    backdrop-filter: blur(20px); /* Buranın bulanıklığını artırdık */
+    -webkit-backdrop-filter: blur(20px);
     border-top: 1px solid var(--glass-border);
-    padding-top: 80px; /* İçerik hemen tavana yapışmasın */
+    padding-top: 80px;
     padding-bottom: 80px;
     position: relative;
     z-index: 2;
-    box-shadow: 0 -20px 50px rgba(0,0,0,0.8); /* Gölgeli geçiş */
+    box-shadow: 0 -20px 50px rgba(0,0,0,0.8);
 }
 
 .container {
     max-width: 900px;
     margin: 0 auto;
     padding: 0 30px;
-    padding-right: 100px; /* Sağ bar için boşluk */
+    padding-right: 100px;
 }
 
 /* Başlıklar */
 h2 {
-    font-family: 'Playfair Display', serif;
     color: var(--accent-color);
     border-bottom: 2px solid var(--accent-color);
     display: inline-block;
     padding-bottom: 10px;
     margin-bottom: 40px;
-    font-size: 2rem;
+    font-size: 1.8rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
 }
 
-/* Kartlar (Glassmorphism Devam Ediyor) */
+/* Kartlar */
 .card-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -136,22 +154,24 @@ h2 {
 }
 
 .card {
-    background: rgba(255, 255, 255, 0.05); /* Daha koyu cam */
+    background: var(--card-bg);
     border: 1px solid var(--glass-border);
     padding: 30px;
     border-radius: 15px;
-    transition: transform 0.3s, border-color 0.3s, background 0.3s;
+    transition: all 0.3s ease;
 }
 
 .card:hover {
     transform: translateY(-10px);
     border-color: var(--accent-color);
     background: rgba(255, 255, 255, 0.08);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
 }
 
 .card h3 {
     margin-top: 10px;
-    font-size: 1.4rem;
+    font-size: 1.3rem;
+    font-weight: 700;
 }
 
 .read-more {
@@ -161,13 +181,15 @@ h2 {
     text-decoration: none;
     font-weight: bold;
     font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
     transition: letter-spacing 0.3s;
 }
 .read-more:hover {
-    letter-spacing: 2px;
+    letter-spacing: 3px;
 }
 
-/* Navigasyon Barı (Hala sabit ve sağda) */
+/* Navigasyon Barı */
 .floating-nav {
     position: fixed;
     right: 30px;
@@ -192,23 +214,48 @@ h2 {
     text-decoration: none;
     transition: all 0.3s;
     font-size: 1.2rem;
+    position: relative;
+}
+
+/* Tooltip (İpucu kutusu) */
+.nav-item::before {
+    content: attr(data-tooltip);
+    position: absolute;
+    right: 65px; /* Butonun solunda çıksın */
+    background: var(--accent-color);
+    color: #121212;
+    padding: 5px 15px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: bold;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.3s;
+    transform: translateX(10px);
 }
 
 .nav-item:hover {
     background: var(--accent-color);
-    color: #000;
-    box-shadow: 0 0 15px var(--accent-color);
+    color: #121212;
+    box-shadow: 0 0 20px var(--accent-color);
 }
 
-/* Footer İkonları */
+.nav-item:hover::before {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+/* Footer */
 .footer-section {
     margin-top: 60px;
     text-align: center;
     border-top: 1px solid rgba(255,255,255,0.1);
     padding-top: 30px;
+    opacity: 0.6;
 }
 .footer-section a {
-    color: #888;
+    color: var(--text-color);
     font-size: 1.5rem;
     margin: 0 15px;
     transition: color 0.3s;
@@ -220,25 +267,29 @@ h2 {
 /* Mobil Uyum */
 @media (max-width: 768px) {
     .container { padding-right: 30px; }
-    .hero-fullscreen h1 { font-size: 2.5rem; }
+    .hero-fullscreen h1 { font-size: 1.8rem; }
+    .hero-content { padding: 30px; width: 85%; }
     .floating-nav {
         top: auto;
-        bottom: 20px;
+        bottom: 30px;
         right: 50%;
         transform: translateX(50%);
         flex-direction: row;
-        background: rgba(0,0,0,0.9);
+        background: rgba(18, 18, 18, 0.95);
         padding: 10px 20px;
         border-radius: 30px;
         border: 1px solid var(--accent-color);
     }
     .nav-item { border: none; background: transparent; width: 40px; height: 40px; }
+    .nav-item:hover { background: transparent; color: var(--accent-color); box-shadow: none;}
+    .nav-item::before { display: none; } /* Mobilde tooltip gizle */
+    .scroll-indicator { bottom: 100px; } /* Mobilde menünün üstünde kalsın */
 }
 
 /* Animasyonlar */
 @keyframes fadeInUp {
-    from { opacity: 0; transform: translateY(30px); }
-    to { opacity: 1; transform: translateY(0); }
+    from { opacity: 0; transform: translateY(50px) scale(0.9); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
 }
 @keyframes bounce {
     0%, 20%, 50%, 80%, 100% {transform: translateX(-50%) translateY(0);}
