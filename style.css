@@ -35,7 +35,7 @@ html {
     background-image: url('https://i.pinimg.com/1200x/64/2b/71/642b7177987e8a830d236ad709a46938.jpg'); 
     background-size: cover;
     background-position: center;
-    filter: brightness(0.2); 
+    filter: brightness(0.8); 
 }
 
 /* --- KATMAN 2: HERO (TAM EKRAN GİRİŞ) --- */
@@ -67,7 +67,7 @@ html {
 .profile-img {
     width: 160px;
     height: 160px;
-    border-radius: 50%;
+    border-radius: 15px;
     object-fit: cover;
     border: 3px solid var(--accent-color); /* Çerçeveyi altın yaptık */
     margin-bottom: 25px;
