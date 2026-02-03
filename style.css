@@ -285,3 +285,61 @@ h2 {
     40% {transform: translateX(-50%) translateY(-10px);}
     60% {transform: translateX(-50%) translateY(-5px);}
 }
+
+/* --- MÜZİK KUTUSU STİLİ --- */
+.music-widget {
+    position: fixed;
+    bottom: 30px; /* Aşağıdan boşluk */
+    left: 30px;   /* Soldan boşluk */
+    width: 280px;
+    height: 190px;
+    z-index: 100;
+    
+    /* Cam Efekti (Glassmorphism) */
+    background: rgba(18, 18, 18, 0.6);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border: 1px solid var(--glass-border);
+    border-radius: 20px;
+    padding: 15px;
+    
+    /* Hafif Gölge */
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Üzerine gelince efekt */
+.music-widget:hover {
+    transform: translateY(-5px);
+    border-color: var(--accent-color);
+    box-shadow: 0 15px 40px rgba(195, 176, 145, 0.2);
+}
+
+/* Başlık */
+.music-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--accent-color);
+    font-size: 0.9rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 10px;
+    padding-left: 5px;
+}
+
+/* Video Ayarı */
+.music-widget iframe {
+    width: 100%;
+    height: 152px;
+    border-radius: 10px;
+    box-shadow: inset 0 0 20px #000;
+}
+
+/* Mobilde Gizle (Ekranı kapatmaması için) */
+@media (max-width: 768px) {
+    .music-widget {
+        display: none;
+    }
+}
