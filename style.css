@@ -11,7 +11,9 @@ body {
     margin: 0;
     padding: 0;
     font-family: var(--font-main);
-    background-color: var(--bg-color);
+    /* Düz renk yerine degrade arka plan */
+    background: radial-gradient(circle at top left, #1a2a33, #000000);
+    background-attachment: fixed; /* Sayfa kayarken arka plan sabit kalsın */
     color: var(--text-color);
     line-height: 1.6;
 }
@@ -98,12 +100,21 @@ h2 {
 }
 
 .card {
-    background: rgba(30, 30, 30, 0.7); /* Yarı saydam */
-    backdrop-filter: blur(10px);       /* Arkası bulanıklaşsın */
+    /* Çok hafif beyazımsı şeffaf zemin */
+    background: rgba(255, 255, 255, 0.03); 
+    
+    /* Arkadaki renkleri bulanıklaştır */
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px); /* Safari/iPhone için */
+    
     padding: 20px;
-    border-radius: 10px;
+    border-radius: 15px;
+    
+    /* Kenarlara incecik parlak çizgi (Cam hissi veren detay budur) */
+    border: 1px solid rgba(255, 255, 255, 0.1); 
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5); /* Hafif gölge */
+    
     transition: transform 0.2s;
-    border: 1px solid rgba(255, 255, 255, 0.1); /* İnce beyaz çizgi */
 }
 
 .card:hover {
