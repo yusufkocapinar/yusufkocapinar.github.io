@@ -3,57 +3,71 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Yusuf Kocapınar | Kişisel Blog</title>
+    <title>Yusuf Kocapınar</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 </head>
 <body>
 
-    <div class="container">
-        <aside class="profile-section">
-            <div class="profile-img-container">
-                <img src="profil.png" alt="Yusuf Kocapınar" class="profile-img">
-            </div>
-            <h1>Yusuf Kocapınar</h1>
-            <p class="title">Kişisel Blog</p>
-            <p class="bio">
-                Yakında Yayında...
-            </p>
-            <div class="social-links">
-                <a href="#">GitHub</a>
-                <a href="#">LinkedIn</a>
-                <a href="#">Twitter</a>
-            </div>
-        </aside>
+    <nav class="floating-nav">
+        <a href="#about" class="nav-item" data-tooltip="Hakkımda">
+            <i class="fas fa-user"></i>
+        </a>
+        <a href="#blog" class="nav-item" data-tooltip="Yazılar">
+            <i class="fas fa-pen-nib"></i>
+        </a>
+        <a href="#projects" class="nav-item" data-tooltip="Projeler">
+            <i class="fas fa-flask"></i>
+        </a>
+        <a href="#contact" class="nav-item" data-tooltip="İletişim">
+            <i class="fas fa-envelope"></i>
+        </a>
+    </nav>
 
-        <main class="content-section">
+    <div class="container">
+        
+        <header class="hero-section" id="about">
+            <img src="profil.png" alt="Yusuf Kocapınar" class="profile-img">
+            <h1>Yusuf Kocapınar</h1>
+            <p class="title">Biyomühendislik | Fizik | Teknoloji</p>
+        </header>
+
+        <main>
             
             <section id="blog">
-                <h2>Son Yazılar</h2>
-                <div class="card-grid">
-                    <article class="card">
-                        <span class="date">3 Şubat 2026</span>
-                        <h3>Fizik 1: Dönel Hareket ve Tork</h3>
-                        <p>Dönel hareketin temelleri ve eylemsizlik momenti üzerine çalışma notlarım.</p>
-                        <p class="math-preview">Örnek: $$ \tau = I \cdot \alpha $$</p>
-                        <a href="#" class="read-more">Devamını Oku →</a>
-                    </article>
+                <h2>Son Paylaşımlar</h2>
+                
+                <article class="card">
+                    <span class="date">3 Şubat 2026</span>
+                    <h3>Fizik 1: Dönel Hareket Analizi</h3>
+                    <p>Dönel hareketin temelleri, tork ve eylemsizlik momenti üzerine incelemelerim.</p>
+                    <a href="#" class="read-more">Devamını Oku</a>
+                </article>
 
-                    <article class="card">
-                        <span class="date">28 Ocak 2026</span>
-                        <h3>Biyomühendisliğe Giriş</h3>
-                        <p>Dönem boyunca aldığım notlar ve proje detayları.</p>
-                        <a href="#" class="read-more">Devamını Oku →</a>
-                    </article>
-                </div>
+                <article class="card">
+                    <span class="date">28 Ocak 2026</span>
+                    <h3>Biyomühendislik ve Gelecek</h3>
+                    <p>Laboratuvar notlarım ve biyoteknolojideki yeni gelişmeler.</p>
+                    <a href="#" class="read-more">Devamını Oku</a>
+                </article>
             </section>
 
             <section id="projects">
                 <h2>Projeler</h2>
                 <div class="card">
                     <h3>Marmara Cansağlığı Kulübü</h3>
-                    <p>Bilimsel ve Akademik Çalışmalar Birimi'nde yürüttüğümüz etkinlikler ve organizasyon notları.</p>
+                    <p>Bilimsel ve Akademik Çalışmalar Birimi organizasyon notları ve etkinlik takvimi.</p>
+                </div>
+            </section>
+
+            <section id="contact" style="text-align: center; margin-top: 50px; opacity: 0.7;">
+                <p>Bana Ulaşın</p>
+                <div style="font-size: 1.5rem; letter-spacing: 15px;">
+                    <a href="#" style="color:var(--accent-color)"><i class="fab fa-github"></i></a>
+                    <a href="#" style="color:var(--accent-color)"><i class="fab fa-linkedin"></i></a>
+                    <a href="#" style="color:var(--accent-color)"><i class="fab fa-twitter"></i></a>
                 </div>
             </section>
 
