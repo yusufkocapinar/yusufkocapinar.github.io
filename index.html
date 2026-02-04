@@ -108,10 +108,18 @@
             </section>
 
             <section id="contact" class="footer-section">
-                <a href="https://github.com/yusufkocapinar" target="_blank"><i class="fab fa-github"></i></a>
-                <a href="https://tr.linkedin.com/in/yusufkocapinar" target="_blank"><i class="fab fa-linkedin"></i></a>
-                <a href="https://www.instagram.com/kpyusufi" target="_blank"><i class="fab fa-instagram"></i></a>
+                <div class="footer-socials">
+                    <a href="https://github.com/yusufkocapinar" target="_blank"><i class="fab fa-github"></i></a>
+                    <a href="https://tr.linkedin.com/in/yusufkocapinar" target="_blank"><i class="fab fa-linkedin"></i></a>
+                    <a href="https://www.instagram.com/kpyusufi" target="_blank"><i class="fab fa-instagram"></i></a>
+                </div>
+
+                <div class="footer-info">
+                    <a href="mailto:yusufkocapinar92@gmail.com">yusufkocapinar92@gmail.com</a>
+                    <p>&copy; 2026 Yusuf Kocapınar</p>
+                </div>
             </section>
+
         </main>
     </div>
 
@@ -174,7 +182,6 @@
             { src: "citedepera.jpg", caption: "Cité de Péra (Çiçek Pasajı)" },
             { src: "feneryolu.jpg", caption: "Feneryolu Cafe Sohbet" },
             { src: "daylik.jpg", caption: "Daylık Köyü Merkez Camii" },
-            // Buraya diğer fotoğraflarını da ekleyebilirsin
         ];
 
 
@@ -209,21 +216,19 @@
         audio.volume = 0.5;
 
 
-        /* 3. MODAL GÖRÜNÜM YÖNETİMİ (DÜZELTİLDİ) */
+        /* 3. MODAL GÖRÜNÜM YÖNETİMİ */
         function switchView(modalType, viewType) {
-            // İlgili modalın tüm içeriklerini gizle
             const contents = document.querySelectorAll(`#${modalType} .modal-content`);
             contents.forEach(el => {
                 el.style.display = 'none';
                 el.classList.remove('show-modal-content');
             });
 
-            // İstenen içeriği göster
             const target = document.getElementById(viewType);
             if(viewType === 'files-view' || viewType === 'gallery-grid-view') {
-                target.style.display = 'grid'; // Listeler Grid
+                target.style.display = 'grid'; 
             } else {
-                target.style.display = 'block'; // Tekliler Blok
+                target.style.display = 'block'; 
             }
             target.classList.add('show-modal-content');
         }
