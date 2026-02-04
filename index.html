@@ -30,12 +30,26 @@
         
         <nav class="floating-nav">
             <a href="#home" class="nav-item" data-tooltip="Ana Sayfa"><i class="fas fa-home"></i></a>
+            <a href="#about" class="nav-item" data-tooltip="Hakkımda"><i class="fas fa-user"></i></a>
             <a href="javascript:void(0)" onclick="openBlog()" class="nav-item" data-tooltip="Yazılar"><i class="fas fa-pen-nib"></i></a>
             <a href="javascript:void(0)" onclick="openGallery()" class="nav-item" data-tooltip="Galeri"><i class="fas fa-camera"></i></a>
             <a href="#contact" class="nav-item" data-tooltip="İletişim"><i class="fas fa-envelope"></i></a>
         </nav>
 
         <main class="container">
+            
+            <section id="about">
+                <h2>Hakkımda</h2>
+                <div class="card">
+                    <p style="line-height: 1.8; font-size: 1.05rem;">
+                        Merhaba! Ben Yusuf. Marmara Üniversitesi'nde <strong>Biyomühendislik</strong> öğrencisiyim. Bilime olan tutkum kadar, inovasyon ve sosyal fayda üretmeye de önem veriyorum.
+                        <br><br>
+                        Sosyal medya yöneticiliğinden münazara koçluğuna uzanan deneyimlerim sayesinde, iletişimin ve takım oyununun gücüne inanıyorum. Şu anda <strong>Marmara Üniversitesi Cansağlığı Kulübü</strong>'nde (Cansağlığı Vakfı Temsilciliği) sekreterya üyesi olarak, farklı disiplinler arasında köprüler kuruyor ve bilimsel iş birliklerini destekliyorum.
+                        <br><br>
+                        Amacım; laboratuvardaki bilimsel bilgiyi sosyal farkındalıkla harmanlayarak, insan sağlığına ve yaşam kalitesine dokunan projeler üretmek.
+                    </p>
+                </div>
+            </section>
             
             <section id="blog">
                 <h2>Notlar & Yazılar</h2>
@@ -153,9 +167,7 @@
                 <div class="window-title">Fotoğraf Galerisi</div>
                 <div class="window-spacer"></div>
             </div>
-            
             <div id="gallery-grid-view" class="modal-content active-view gallery-content-grid"></div>
-
             <div id="gallery-single-view" class="modal-content hidden-view" style="text-align:center;">
                 <button class="back-btn" onclick="showGalleryGrid()"><i class="fas fa-arrow-left"></i> Galeriye Dön</button>
                 <div id="single-image-container"></div>
@@ -189,7 +201,6 @@
             { src: "umraniye.jpg", caption: "Ümraniye Osmangazi Korusu" },
         ];
 
-
         /* 2. MÜZİK PLAYER */
         var audio = document.getElementById("myAudio");
         var playIcon = document.getElementById("playIcon");
@@ -220,7 +231,6 @@
         }
         audio.volume = 0.5;
 
-
         /* 3. MODAL GÖRÜNÜM YÖNETİMİ */
         function switchView(modalType, viewType) {
             const contents = document.querySelectorAll(`#${modalType} .modal-content`);
@@ -247,11 +257,10 @@
             switchView('blog-modal', 'files-view');
         }
         
-        // Yeni eklenen fonksiyon: Direkt yazıyı açar
         function openPost(index) {
             closeModals();
             blogModal.classList.add('open');
-            openFile(index); // Direkt okuma moduna geçer
+            openFile(index);
         }
 
         function renderFiles() {
@@ -276,7 +285,6 @@
                 .catch(() => content.innerHTML = `<h2>${myFiles[index].name}</h2><p>Dosya içeriği yüklenemedi.</p>`);
         }
         function showFiles() { switchView('blog-modal', 'files-view'); }
-
 
         // --- GALERİ FONKSİYONLARI ---
         const galleryModal = document.getElementById('gallery-modal');
@@ -306,7 +314,6 @@
             `;
         }
         function showGalleryGrid() { switchView('gallery-modal', 'gallery-grid-view'); }
-
 
         /* 5. ORTAK KAPATMA FONKSİYONLARI */
         function closeModals() {
