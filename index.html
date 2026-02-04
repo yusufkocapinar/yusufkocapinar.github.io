@@ -30,12 +30,8 @@
         
         <nav class="floating-nav">
             <a href="#home" class="nav-item" data-tooltip="Ana Sayfa"><i class="fas fa-home"></i></a>
-            
-            <a href="javascript:void(0)" onclick="openBlog()" class="nav-item" data-tooltip="Yazılar">
-                <i class="fas fa-pen-nib"></i>
-            </a>
-            
-            <a href="#projects" class="nav-item" data-tooltip="Projeler"><i class="fas fa-flask"></i></a>
+            <a href="javascript:void(0)" onclick="openBlog()" class="nav-item" data-tooltip="Yazılar"><i class="fas fa-pen-nib"></i></a>
+            <a href="javascript:void(0)" onclick="openGallery()" class="nav-item" data-tooltip="Galeri"><i class="fas fa-images"></i></a>
             <a href="#contact" class="nav-item" data-tooltip="İletişim"><i class="fas fa-envelope"></i></a>
         </nav>
 
@@ -44,29 +40,47 @@
             <section id="blog">
                 <h2>Notlar & Yazılar</h2>
                 <div class="card-grid">
-                    
-                    <article class="card" onclick="openPost('post1'); openBlog();" style="cursor: pointer;">
-                        <span class="date">4 Şubat 2026</span>
-                        <h3>Kültürlenmiş Et ve Biyoetik</h3>
-                        <p>CRISPR-Cas9 teknolojisiyle üretilen kültürlenmiş et, biyomedikal etik literatüründe ve İbrahimî dinlerin etik yaklaşımlarında hangi ortak kaygılar ve ayrışan sınırlar üzerinden tartışılmaktadır?</p>
+                    <article class="card" onclick="openFile(0); openBlog();" style="cursor: pointer;">
+                        <span class="date">3 Şubat 2026</span>
+                        <h3>Fizik 1: Dönel Hareket</h3>
+                        <p>Eylemsizlik momenti ve tork üzerine analizler.</p>
                         <span class="read-more">Okumak için tıkla →</span>
                     </article>
                     
-                    <article class="card" onclick="openPost('post2'); openBlog();" style="cursor: pointer;">
+                    <article class="card" onclick="openFile(1); openBlog();" style="cursor: pointer;">
                         <span class="date">28 Ocak 2026</span>
                         <h3>Biyomühendislik Vizyonu</h3>
                         <p>Geleceğin teknolojileri üzerine düşünceler.</p>
                         <span class="read-more">Okumak için tıkla →</span>
                     </article>
-
                 </div>
             </section>
 
-            <section id="projects">
-                <h2>Projeler</h2>
-                <div class="card">
-                    <h3>Marmara Cansağlığı Kulübü</h3>
-                    <p>Bilimsel ve Akademik Çalışmalar Birimi organizasyon notları.</p>
+            <section id="gallery-showcase">
+                <h2>Projeler & Galeri</h2>
+                
+                <div class="gallery-preview-container">
+                    <div class="gallery-preview-card" onclick="openGallery()">
+                        <img src="galeri1.jpg" alt="Proje 1">
+                        <div class="overlay">
+                            <i class="fas fa-expand-arrows-alt"></i>
+                            <span>Detaylı İncele</span>
+                        </div>
+                    </div>
+
+                    <div class="gallery-preview-card" onclick="openGallery()">
+                        <img src="galeri2.jpg" alt="Proje 2">
+                        <div class="overlay">
+                            <i class="fas fa-expand-arrows-alt"></i>
+                            <span>Detaylı İncele</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="text-align: center; margin-top: 20px;">
+                    <button class="open-folder-btn" onclick="openGallery()">
+                        <i class="fas fa-th-large"></i> Tüm Galeriye Göz At
+                    </button>
                 </div>
             </section>
 
@@ -76,8 +90,8 @@
                         <img src="kapak.jpg" alt="Music Cover">
                     </div>
                     <div class="song-info">
-                        <div class="track-title">أهو ده اللي صار</div>
-                        <div class="track-artist">Fairouz</div>
+                        <div class="track-title">Favori Parçam</div>
+                        <div class="track-artist">Keyif Modu</div>
                     </div>
                     <div class="player-controls">
                         <button class="ctrl-btn volume-btn" onclick="toggleMute()">
@@ -103,54 +117,77 @@
 
     <div id="blog-modal" class="modal-overlay">
         <div class="modal-window">
-            
             <div class="modal-header">
                 <div class="window-controls">
-                    <span class="dot red" onclick="closeBlog()"></span>
+                    <span class="dot red" onclick="closeModals()"></span>
                     <span class="dot yellow"></span>
                     <span class="dot green"></span>
                 </div>
-                <div class="window-title">Dosyalar</div>
+                <div class="window-title">Dosya Yöneticisi</div>
                 <div class="window-spacer"></div>
             </div>
-
-            <div id="files-view" class="modal-content active-view">
-                <div class="file-item" onclick="openPost('post1')">
-                    <div class="file-icon"><i class="fas fa-file-alt"></i></div>
-                    <div class="file-name">Fizik_1_Notlar.txt</div>
-                    <div class="file-date">3 KB</div>
-                </div>
-                <div class="file-item" onclick="openPost('post2')">
-                    <div class="file-icon"><i class="fas fa-file-code"></i></div>
-                    <div class="file-name">Biyomuhendislik.md</div>
-                    <div class="file-date">5 KB</div>
-                </div>
-            </div>
-
+            <div id="files-view" class="modal-content active-view"></div>
             <div id="reader-view" class="modal-content hidden-view">
                 <button class="back-btn" onclick="showFiles()"><i class="fas fa-arrow-left"></i> Geri Dön</button>
-                
-                <div id="post1" class="post-content">
-                    <h2>Fizik 1: Dönel Hareket ve Tork</h2>
-                    <p class="meta">3 Şubat 2026 • 21:45</p>
-                    <hr>
-                    <p>Dönel hareketin temelleri üzerine aldığım notlar burada yer alacak...</p>
-                    <p>Formüller ve açıklamalar...</p>
-                </div>
-
-                <div id="post2" class="post-content">
-                    <h2>Biyomühendislik Vizyonu</h2>
-                    <p class="meta">28 Ocak 2026 • 14:30</p>
-                    <hr>
-                    <p>Biyoteknolojinin geleceği...</p>
-                </div>
+                <div id="dynamic-content" class="post-content"></div>
             </div>
+        </div>
+    </div>
 
+    <div id="gallery-modal" class="modal-overlay">
+        <div class="modal-window gallery-window">
+            <div class="modal-header">
+                <div class="window-controls">
+                    <span class="dot red" onclick="closeModals()"></span>
+                    <span class="dot yellow"></span>
+                    <span class="dot green"></span>
+                </div>
+                <div class="window-title">Fotoğraf Galerisi</div>
+                <div class="window-spacer"></div>
+            </div>
+            
+            <div id="gallery-grid-view" class="modal-content active-view gallery-content-grid">
+                </div>
+
+            <div id="gallery-single-view" class="modal-content hidden-view" style="text-align:center;">
+                <button class="back-btn" onclick="showGalleryGrid()"><i class="fas fa-arrow-left"></i> Galeriye Dön</button>
+                <div id="single-image-container">
+                    </div>
+            </div>
         </div>
     </div>
 
     <script>
-        // --- MÜZİK PLAYER SİSTEMİ ---
+        /* ----------------------------------------------------
+           1. AYARLAR: BURAYI KENDİNE GÖRE DÜZENLE
+        ---------------------------------------------------- */
+        
+        // YAZI LİSTESİ (Text Dosyaların)
+        const myFiles = [
+            {
+                name: "Fizik 1 Notları",
+                file: "Fizik_1_Notlar.txt", 
+                size: "3 KB"
+            },
+            {
+                name: "Biyomühendislik",
+                file: "Biyomuhendislik.txt",
+                size: "5 KB"
+            }
+        ];
+
+        // GALERİ LİSTESİ (Fotoğrafların)
+        const myGallery = [
+            { src: "galeri1.jpg", caption: "Proje Görseli 1" },
+            { src: "galeri2.jpg", caption: "Laboratuvar Çalışması" },
+            { src: "profil.png", caption: "Profil Fotoğrafım" }, // Örnek
+            // Yeni foto eklemek için: { src: "dosyaadi.jpg", caption: "Açıklama" },
+        ];
+
+
+        /* ----------------------------------------------------
+           2. MÜZİK PLAYER SİSTEMİ
+        ---------------------------------------------------- */
         var audio = document.getElementById("myAudio");
         var playIcon = document.getElementById("playIcon");
         var volIcon = document.getElementById("volIcon");
@@ -185,26 +222,20 @@
         }
         audio.volume = 0.5;
 
-        // --- BLOG PENCERE SİSTEMİ ---
-        const modal = document.getElementById('blog-modal');
+
+        /* ----------------------------------------------------
+           3. DOSYA YÖNETİCİSİ (BLOG) MANTIĞI
+        ---------------------------------------------------- */
+        const blogModal = document.getElementById('blog-modal');
         const filesView = document.getElementById('files-view');
         const readerView = document.getElementById('reader-view');
-        const allPosts = document.querySelectorAll('.post-content');
+        const dynamicContent = document.getElementById('dynamic-content');
 
         function openBlog() {
-            modal.classList.add('open');
-            showFiles(); 
-        }
-
-        function closeBlog() {
-            modal.classList.remove('open');
-        }
-
-        function openPost(postId) {
-            filesView.style.display = 'none';
-            readerView.style.display = 'block';
-            allPosts.forEach(post => post.classList.remove('active-post'));
-            document.getElementById(postId).classList.add('active-post');
+            closeModals(); // Önce diğerlerini kapat
+            blogModal.classList.add('open');
+            renderFiles();
+            showFiles();
         }
 
         function showFiles() {
@@ -212,9 +243,109 @@
             filesView.style.display = 'grid';
         }
 
-        modal.addEventListener('click', (e) => {
-            if (e.target === modal) closeBlog();
-        });
+        function renderFiles() {
+            filesView.innerHTML = '';
+            myFiles.forEach((item, index) => {
+                const fileHTML = `
+                    <div class="file-item" onclick="openFile(${index})">
+                        <div class="file-icon"><i class="fas fa-file-alt"></i></div>
+                        <div class="file-name">${item.name}</div>
+                        <div class="file-date">${item.size}</div>
+                    </div>
+                `;
+                filesView.innerHTML += fileHTML;
+            });
+        }
+
+        function openFile(index) {
+            const item = myFiles[index];
+            filesView.style.display = 'none';
+            readerView.style.display = 'block';
+            dynamicContent.innerHTML = '<p>Yükleniyor...</p>';
+
+            // Text dosyasını okumaya çalış
+            fetch(item.file)
+                .then(response => {
+                    if (!response.ok) throw new Error("Dosya bulunamadı");
+                    return response.text();
+                })
+                .then(text => {
+                    const formattedText = text.replace(/\n/g, "<br>");
+                    dynamicContent.innerHTML = `
+                        <h2>${item.name}</h2>
+                        <hr style="opacity:0.2; margin:10px 0;">
+                        <div style="text-align: left; line-height: 1.6;">${formattedText}</div>
+                    `;
+                })
+                .catch(err => {
+                    dynamicContent.innerHTML = `
+                        <h2>${item.name}</h2>
+                        <p style="color:var(--accent-color)">Bu dosya henüz yüklenmedi veya okunamadı.</p>
+                        <p>Dosya Adı: ${item.file}</p>
+                    `;
+                });
+        }
+
+
+        /* ----------------------------------------------------
+           4. GALERİ MODÜLÜ MANTIĞI
+        ---------------------------------------------------- */
+        const galleryModal = document.getElementById('gallery-modal');
+        const galleryGridView = document.getElementById('gallery-grid-view');
+        const gallerySingleView = document.getElementById('gallery-single-view');
+        const singleImageContainer = document.getElementById('single-image-container');
+
+        function openGallery() {
+            closeModals();
+            galleryModal.classList.add('open');
+            renderGallery();
+            showGalleryGrid();
+        }
+
+        function showGalleryGrid() {
+            gallerySingleView.style.display = 'none';
+            galleryGridView.style.display = 'grid';
+        }
+
+        function renderGallery() {
+            galleryGridView.innerHTML = '';
+            myGallery.forEach((item, index) => {
+                const imgHTML = `
+                    <div class="gallery-item" onclick="viewImage(${index})">
+                        <img src="${item.src}" alt="${item.caption}">
+                        <div class="img-caption">${item.caption}</div>
+                    </div>
+                `;
+                galleryGridView.innerHTML += imgHTML;
+            });
+        }
+
+        function viewImage(index) {
+            const item = myGallery[index];
+            galleryGridView.style.display = 'none';
+            gallerySingleView.style.display = 'block';
+            
+            singleImageContainer.innerHTML = `
+                <img src="${item.src}" style="max-width:100%; max-height:60vh; border-radius:10px; box-shadow:0 10px 30px rgba(0,0,0,0.5);">
+                <h3 style="margin-top:20px; color:var(--accent-color);">${item.caption}</h3>
+            `;
+        }
+
+
+        /* ----------------------------------------------------
+           5. ORTAK FONKSİYONLAR
+        ---------------------------------------------------- */
+        function closeModals() {
+            blogModal.classList.remove('open');
+            galleryModal.classList.remove('open');
+        }
+
+        // Pencere dışına tıklayınca kapatma
+        window.onclick = function(event) {
+            if (event.target == blogModal) closeModals();
+            if (event.target == galleryModal) closeModals();
+        }
+
     </script>
 </body>
 </html>
