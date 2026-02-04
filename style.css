@@ -156,31 +156,15 @@ h2 {
     padding-bottom: 30px;
     opacity: 0.8; 
 }
-.footer-socials {
-    margin-bottom: 20px;
-}
+.footer-socials { margin-bottom: 20px; }
 .footer-socials a { 
-    color: var(--text-color); 
-    font-size: 1.5rem; 
-    margin: 0 15px; 
-    transition: 0.3s; 
+    color: var(--text-color); font-size: 1.5rem; margin: 0 15px; transition: 0.3s; 
 }
 .footer-socials a:hover { color: var(--accent-color); }
 
-.footer-info {
-    font-size: 0.85rem;
-    color: #888;
-    line-height: 1.5;
-}
-.footer-info a {
-    color: #888;
-    text-decoration: none;
-    transition: 0.3s;
-}
-.footer-info a:hover {
-    color: var(--accent-color);
-    text-decoration: underline;
-}
+.footer-info { font-size: 0.85rem; color: #888; line-height: 1.5; }
+.footer-info a { color: #888; text-decoration: none; transition: 0.3s; }
+.footer-info a:hover { color: var(--accent-color); text-decoration: underline; }
 
 /* --- MODAL (PENCERE) SİSTEMİ --- */
 .modal-overlay {
@@ -209,16 +193,8 @@ h2 {
 .window-spacer { width: 60px; }
 
 /* --- MODAL İÇERİK --- */
-.modal-content { 
-    padding: 30px; 
-    flex-grow: 1; 
-    overflow-y: auto; 
-    display: none; 
-}
-.show-modal-content {
-    display: block;
-    animation: fadeIn 0.5s;
-}
+.modal-content { padding: 30px; flex-grow: 1; overflow-y: auto; display: none; }
+.show-modal-content { display: block; animation: fadeIn 0.5s; }
 
 /* Scrollbar */
 .modal-content::-webkit-scrollbar { width: 6px; }
@@ -267,7 +243,7 @@ h2 {
 @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 @keyframes bounce { 0%, 20%, 50%, 80%, 100% {transform: translateX(-50%) translateY(0);} 40% {transform: translateX(-50%) translateY(-10px);} 60% {transform: translateX(-50%) translateY(-5px);} }
 
-/* Mobil Uyum */
+/* MOBİL UYUM */
 @media (max-width: 768px) {
     .container { padding-right: 30px; }
     .hero-content { padding: 30px; width: 85%; }
@@ -278,32 +254,9 @@ h2 {
     }
     .nav-item { border: none; background: transparent; width: 40px; height: 40px; }
     .gallery-preview-container { flex-direction: column; }
-}
-
-/* --- MOBİL İÇİN ÖZEL FOOTER DÜZENLEMESİ --- */
-@media (max-width: 768px) {
-    /* Footer'ın altına boşluk bırak ki menü çubuğu üstüne binmesin */
-    .footer-section {
-        padding-bottom: 120px !important; /* Menü için ekstra yer */
-        padding-top: 40px;
-    }
-
-    /* İkonları mobilde biraz büyütüp aralarını açalım, basması kolay olsun */
-    .footer-socials a {
-        font-size: 1.8rem;
-        margin: 0 20px;
-        display: inline-block; /* Tıklama alanını düzeltir */
-    }
-
-    /* Mail adresini mobilde biraz küçültüp satıra sığdıralım */
-    .footer-info a {
-        font-size: 0.9rem;
-        word-break: break-all; /* Uzun mailleri taşırsa alt satıra al */
-    }
     
-    .footer-info p {
-        font-size: 0.8rem;
-        opacity: 0.6;
-        margin-top: 5px;
-    }
+    /* Footer Mobil Ayarı (Menünün altında kalmaması için) */
+    .footer-section { padding-bottom: 120px !important; padding-top: 40px; }
+    .footer-socials a { font-size: 1.8rem; margin: 0 20px; display: inline-block; }
+    .footer-info a { font-size: 0.9rem; word-break: break-all; }
 }

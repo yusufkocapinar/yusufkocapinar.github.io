@@ -40,14 +40,14 @@
             <section id="blog">
                 <h2>Notlar & Yazılar</h2>
                 <div class="card-grid">
-                    <article class="card" onclick="openFile(0); openBlog();" style="cursor: pointer;">
+                    <article class="card" onclick="openPost(0)" style="cursor: pointer;">
                         <span class="date">3 Şubat 2026</span>
                         <h3>Kültürlenmiş Et ve Biyoetik</h3>
                         <p>CRISPR-Cas9 teknolojisiyle üretilen kültürlenmiş et, biyomedikal etik literatüründe ve İbrahimî dinlerin etik yaklaşımlarında hangi ortak kaygılar ve ayrışan sınırlar üzerinden tartışılmaktadır?</p>
                         <span class="read-more">Okumak için tıkla →</span>
                     </article>
                     
-                    <article class="card" onclick="openFile(1); openBlog();" style="cursor: pointer;">
+                    <article class="card" onclick="openPost(1)" style="cursor: pointer;">
                         <span class="date">28 Ocak 2026</span>
                         <h3>Biyomühendislik Vizyonu</h3>
                         <p>Geleceğin teknolojileri üzerine düşünceler.</p>
@@ -246,6 +246,14 @@
             renderFiles();
             switchView('blog-modal', 'files-view');
         }
+        
+        // Yeni eklenen fonksiyon: Direkt yazıyı açar
+        function openPost(index) {
+            closeModals();
+            blogModal.classList.add('open');
+            openFile(index); // Direkt okuma moduna geçer
+        }
+
         function renderFiles() {
             const container = document.getElementById('files-view');
             container.innerHTML = '';
