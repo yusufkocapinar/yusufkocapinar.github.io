@@ -233,7 +233,36 @@ h2 {
 .window-spacer { width: 60px; }
 
 .modal-content { padding: 30px; flex-grow: 1; overflow-y: auto; display: none; }
-.active-view { display: grid !important; } .hidden-view { display: block !important; display: none; }
+/* --- GÖRÜNÜM AYARLARI --- */
+.modal-content { 
+    padding: 30px; 
+    flex-grow: 1; 
+    overflow-y: auto; 
+    display: none; /* Varsayılan olarak gizli */
+}
+
+/* Aktif olduğunda Grid mi yoksa Blok mu olacağını JS belirleyecek, 
+   o yüzden burada sadece görünür yapıyoruz */
+.show-modal-content {
+    display: block;
+    animation: fadeIn 0.5s;
+}
+
+/* --- SCROLLBAR (KAYDIRMA ÇUBUĞU) GÜZELLEŞTİRME --- */
+/* O çirkin beyaz çubuğu yok ediyoruz */
+.modal-content::-webkit-scrollbar {
+    width: 6px; /* Çok ince */
+}
+.modal-content::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.3); 
+}
+.modal-content::-webkit-scrollbar-thumb {
+    background: var(--accent-color); 
+    border-radius: 10px;
+}
+.modal-content::-webkit-scrollbar-thumb:hover {
+    background: #fff; 
+}
 
 /* Dosya Görünümü */
 #files-view { grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); gap: 30px; align-content: start; }
