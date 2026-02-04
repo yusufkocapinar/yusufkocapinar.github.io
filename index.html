@@ -223,82 +223,114 @@
         audio.volume = 0.5;
 
 
-       /* ----------------------------------------------------
-           3. & 4. MODAL GÖRÜNÜM YÖNETİMİ (GÜNCELLENDİ)
+        /* ----------------------------------------------------
+           3. DOSYA YÖNETİCİSİ (BLOG) MANTIĞI
         ---------------------------------------------------- */
-        
-        // Yardımcı Fonksiyon: Bir içeriği göster, diğerlerini gizle
-        function switchView(modalType, viewType) {
-            // Önce o modal içindeki tüm içerikleri gizle
-            const contents = document.querySelectorAll(`#${modalType} .modal-content`);
-            contents.forEach(el => {
-                el.style.display = 'none';
-                el.classList.remove('show-modal-content');
-            });
+        const blogModal = document.getElementById('blog-modal');
+        const filesView = document.getElementById('files-view');
+        const readerView = document.getElementById('reader-view');
+        const dynamicContent = document.getElementById('dynamic-content');
 
-            // İstenen içeriği göster
-            const target = document.getElementById(viewType);
-            if(viewType === 'files-view' || viewType === 'gallery-grid-view') {
-                target.style.display = 'grid'; // Listeler Grid olur
-            } else {
-                target.style.display = 'block'; // Tekli görünümler Blok olur
-            }
-            target.classList.add('show-modal-content');
+        function openBlog() {
+            closeModals(); // Önce diğerlerini kapat
+            blogModal.classList.add('open');
+            renderFiles();
+            showFiles();
         }
 
-        // --- BLOG (DOSYA) FONKSİYONLARI ---
-        function openBlog() {
-            closeModals();
-            document.getElementById('blog-modal').classList.add('open');
-            renderFiles();
-            switchView('blog-modal', 'files-view'); // Listeyi aç
+        function showFiles() {
+            readerView.style.display = 'none';
+            filesView.style.display = 'grid';
+        }
+
+        function renderFiles() {
+            filesView.innerHTML = '';
+            myFiles.forEach((item, index) => {
+                const fileHTML = `
+                    <div class="file-item" onclick="openFile(${index})">
+                        <div class="file-icon"><i class="fas fa-file-alt"></i></div>
+                        <div class="file-name">${item.name}</div>
+                        <div class="file-date">${item.size}</div>
+                    </div>
+                `;
+                filesView.innerHTML += fileHTML;
+            });
         }
 
         function openFile(index) {
             const item = myFiles[index];
-            switchView('blog-modal', 'reader-view'); // Okuyucuya geç (Liste kapanır)
-            
-            const dynamicContent = document.getElementById('dynamic-content');
+            filesView.style.display = 'none';
+            readerView.style.display = 'block';
             dynamicContent.innerHTML = '<p>Yükleniyor...</p>';
-            
-            // ... (Fetch kodları aynen kalabilir) ...
-             fetch(item.file)
-                .then(r => r.ok ? r.text() : Promise.reject())
-                .then(text => {
-                    dynamicContent.innerHTML = `<h2>${item.name}</h2><hr style="opacity:0.2; margin:10px 0;"><div style="text-align: left; line-height: 1.6;">${text.replace(/\n/g, "<br>")}</div>`;
+
+            // Text dosyasını okumaya çalış
+            fetch(item.file)
+                .then(response => {
+                    if (!response.ok) throw new Error("Dosya bulunamadı");
+                    return response.text();
                 })
-                .catch(() => {
-                    dynamicContent.innerHTML = `<h2>${item.name}</h2><p>Dosya içeriği yüklenemedi.</p>`;
+                .then(text => {
+                    const formattedText = text.replace(/\n/g, "<br>");
+                    dynamicContent.innerHTML = `
+                        <h2>${item.name}</h2>
+                        <hr style="opacity:0.2; margin:10px 0;">
+                        <div style="text-align: left; line-height: 1.6;">${formattedText}</div>
+                    `;
+                })
+                .catch(err => {
+                    dynamicContent.innerHTML = `
+                        <h2>${item.name}</h2>
+                        <p style="color:var(--accent-color)">Bu dosya henüz yüklenmedi veya okunamadı.</p>
+                        <p>Dosya Adı: ${item.file}</p>
+                    `;
                 });
         }
-        
-        function showFiles() {
-            switchView('blog-modal', 'files-view');
-        }
 
 
-        // --- GALERİ FONKSİYONLARI ---
+        /* ----------------------------------------------------
+           4. GALERİ MODÜLÜ MANTIĞI
+        ---------------------------------------------------- */
+        const galleryModal = document.getElementById('gallery-modal');
+        const galleryGridView = document.getElementById('gallery-grid-view');
+        const gallerySingleView = document.getElementById('gallery-single-view');
+        const singleImageContainer = document.getElementById('single-image-container');
+
         function openGallery() {
             closeModals();
-            document.getElementById('gallery-modal').classList.add('open');
+            galleryModal.classList.add('open');
             renderGallery();
-            switchView('gallery-modal', 'gallery-grid-view'); // Izgarayı aç
+            showGalleryGrid();
+        }
+
+        function showGalleryGrid() {
+            gallerySingleView.style.display = 'none';
+            galleryGridView.style.display = 'grid';
+        }
+
+        function renderGallery() {
+            galleryGridView.innerHTML = '';
+            myGallery.forEach((item, index) => {
+                const imgHTML = `
+                    <div class="gallery-item" onclick="viewImage(${index})">
+                        <img src="${item.src}" alt="${item.caption}">
+                        <div class="img-caption">${item.caption}</div>
+                    </div>
+                `;
+                galleryGridView.innerHTML += imgHTML;
+            });
         }
 
         function viewImage(index) {
             const item = myGallery[index];
-            switchView('gallery-modal', 'gallery-single-view'); // Tekliye geç (Izgara kapanır)
+            galleryGridView.style.display = 'none';
+            gallerySingleView.style.display = 'block';
             
-            const singleImageContainer = document.getElementById('single-image-container');
             singleImageContainer.innerHTML = `
                 <img src="${item.src}" style="max-width:100%; max-height:60vh; border-radius:10px; box-shadow:0 10px 30px rgba(0,0,0,0.5);">
-                <h3 style="margin-top:20px; color:var(--accent-color); font-weight:300; letter-spacing:1px;">${item.caption}</h3>
+                <h3 style="margin-top:20px; color:var(--accent-color);">${item.caption}</h3>
             `;
         }
 
-        function showGalleryGrid() {
-            switchView('gallery-modal', 'gallery-grid-view');
-        }
 
         /* ----------------------------------------------------
            5. ORTAK FONKSİYONLAR
