@@ -31,7 +31,7 @@
         <nav class="floating-nav">
             <a href="#home" class="nav-item" data-tooltip="Ana Sayfa"><i class="fas fa-home"></i></a>
             <a href="javascript:void(0)" onclick="openBlog()" class="nav-item" data-tooltip="Yazılar"><i class="fas fa-pen-nib"></i></a>
-            <a href="javascript:void(0)" onclick="openGallery()" class="nav-item" data-tooltip="Galeri"><i class="fas fa-images"></i></a>
+            <a href="javascript:void(0)" onclick="openGallery()" class="nav-item" data-tooltip="Galeri"><i class="fas fa-camera"></i></a>
             <a href="#contact" class="nav-item" data-tooltip="İletişim"><i class="fas fa-envelope"></i></a>
         </nav>
 
@@ -79,7 +79,7 @@
 
                 <div style="text-align: center; margin-top: 20px;">
                     <button class="open-folder-btn" onclick="openGallery()">
-                        <i class="fas fa-th-large"></i> Tüm Galeriye Göz At
+                        <i class="fas fa-camera"></i> Tüm Galeriye Göz At
                     </button>
                 </div>
             </section>
@@ -146,26 +146,20 @@
                 <div class="window-spacer"></div>
             </div>
             
-            <div id="gallery-grid-view" class="modal-content active-view gallery-content-grid">
-                </div>
+            <div id="gallery-grid-view" class="modal-content active-view gallery-content-grid"></div>
 
             <div id="gallery-single-view" class="modal-content hidden-view" style="text-align:center;">
                 <button class="back-btn" onclick="showGalleryGrid()"><i class="fas fa-arrow-left"></i> Galeriye Dön</button>
-                <div id="single-image-container">
-                    </div>
+                <div id="single-image-container"></div>
             </div>
         </div>
     </div>
 
     <script>
-        /* ----------------------------------------------------
-           1. AYARLAR: BURAYI KENDİNE GÖRE DÜZENLE
-        ---------------------------------------------------- */
-        
-        // YAZI LİSTESİ (Text Dosyaların)
+        /* 1. AYARLAR */
         const myFiles = [
             {
-                name: "Fizik 1 Notları",
+                name: "Kültürlenmiş Et",
                 file: "Kültürlenmiş_Et.txt", 
                 size: "3 KB"
             },
@@ -176,18 +170,15 @@
             }
         ];
 
-        // GALERİ LİSTESİ (Fotoğrafların)
         const myGallery = [
             { src: "citedepera.jpg", caption: "Cité de Péra (Çiçek Pasajı)" },
             { src: "feneryolu.jpg", caption: "Feneryolu Cafe Sohbet" },
-            { src: "daylik.jpg", caption: "Daylık Köyü Merkez Camii" }, // Örnek
-            // Yeni foto eklemek için: { src: "dosyaadi.jpg", caption: "Açıklama" },
+            { src: "daylik.jpg", caption: "Daylık Köyü Merkez Camii" },
+            // Buraya diğer fotoğraflarını da ekleyebilirsin
         ];
 
 
-        /* ----------------------------------------------------
-           2. MÜZİK PLAYER SİSTEMİ
-        ---------------------------------------------------- */
+        /* 2. MÜZİK PLAYER */
         var audio = document.getElementById("myAudio");
         var playIcon = document.getElementById("playIcon");
         var volIcon = document.getElementById("volIcon");
@@ -208,28 +199,19 @@
         }
 
         function toggleMute() {
-            if (audio.muted) {
-                audio.muted = false;
-                volIcon.classList.remove("fa-volume-mute");
-                volIcon.classList.add("fa-volume-up");
-                volIcon.style.color = "#ccc";
+            audio.muted = !audio.muted;
+            if(!audio.muted) {
+                volIcon.className = "fas fa-volume-up"; volIcon.style.color = "#ccc";
             } else {
-                audio.muted = true;
-                volIcon.classList.remove("fa-volume-up");
-                volIcon.classList.add("fa-volume-mute");
-                volIcon.style.color = "#e74c3c";
+                volIcon.className = "fas fa-volume-mute"; volIcon.style.color = "#e74c3c";
             }
         }
         audio.volume = 0.5;
 
 
-        /* ----------------------------------------------------
-           3. & 4. MODAL GÖRÜNÜM YÖNETİMİ (GÜNCELLENDİ)
-        ---------------------------------------------------- */
-        
-        // Yardımcı Fonksiyon: Bir içeriği göster, diğerlerini gizle
+        /* 3. MODAL GÖRÜNÜM YÖNETİMİ (DÜZELTİLDİ) */
         function switchView(modalType, viewType) {
-            // Önce o modal içindeki tüm içerikleri gizle
+            // İlgili modalın tüm içeriklerini gizle
             const contents = document.querySelectorAll(`#${modalType} .modal-content`);
             contents.forEach(el => {
                 el.style.display = 'none';
@@ -239,82 +221,83 @@
             // İstenen içeriği göster
             const target = document.getElementById(viewType);
             if(viewType === 'files-view' || viewType === 'gallery-grid-view') {
-                target.style.display = 'grid'; // Listeler Grid olur
+                target.style.display = 'grid'; // Listeler Grid
             } else {
-                target.style.display = 'block'; // Tekli görünümler Blok olur
+                target.style.display = 'block'; // Tekliler Blok
             }
             target.classList.add('show-modal-content');
         }
 
-        // --- BLOG (DOSYA) FONKSİYONLARI ---
+        // --- BLOG FONKSİYONLARI ---
+        const blogModal = document.getElementById('blog-modal');
         function openBlog() {
             closeModals();
-            document.getElementById('blog-modal').classList.add('open');
+            blogModal.classList.add('open');
             renderFiles();
-            switchView('blog-modal', 'files-view'); // Listeyi aç
-        }
-
-        function openFile(index) {
-            const item = myFiles[index];
-            switchView('blog-modal', 'reader-view'); // Okuyucuya geç (Liste kapanır)
-            
-            const dynamicContent = document.getElementById('dynamic-content');
-            dynamicContent.innerHTML = '<p>Yükleniyor...</p>';
-            
-            // ... (Fetch kodları aynen kalabilir) ...
-             fetch(item.file)
-                .then(r => r.ok ? r.text() : Promise.reject())
-                .then(text => {
-                    dynamicContent.innerHTML = `<h2>${item.name}</h2><hr style="opacity:0.2; margin:10px 0;"><div style="text-align: left; line-height: 1.6;">${text.replace(/\n/g, "<br>")}</div>`;
-                })
-                .catch(() => {
-                    dynamicContent.innerHTML = `<h2>${item.name}</h2><p>Dosya içeriği yüklenemedi.</p>`;
-                });
-        }
-        
-        function showFiles() {
             switchView('blog-modal', 'files-view');
         }
+        function renderFiles() {
+            const container = document.getElementById('files-view');
+            container.innerHTML = '';
+            myFiles.forEach((item, index) => {
+                container.innerHTML += `
+                    <div class="file-item" onclick="openFile(${index})">
+                        <div class="file-icon"><i class="fas fa-file-alt"></i></div>
+                        <div class="file-name">${item.name}</div>
+                        <div class="file-date">${item.size}</div>
+                    </div>`;
+            });
+        }
+        function openFile(index) {
+            switchView('blog-modal', 'reader-view');
+            const content = document.getElementById('dynamic-content');
+            content.innerHTML = '<p>Yükleniyor...</p>';
+            fetch(myFiles[index].file)
+                .then(r => r.ok ? r.text() : Promise.reject())
+                .then(text => content.innerHTML = `<h2>${myFiles[index].name}</h2><hr style="opacity:0.2; margin:10px 0;"><div style="text-align:left; line-height:1.6">${text.replace(/\n/g, "<br>")}</div>`)
+                .catch(() => content.innerHTML = `<h2>${myFiles[index].name}</h2><p>Dosya içeriği yüklenemedi.</p>`);
+        }
+        function showFiles() { switchView('blog-modal', 'files-view'); }
 
 
         // --- GALERİ FONKSİYONLARI ---
+        const galleryModal = document.getElementById('gallery-modal');
         function openGallery() {
             closeModals();
-            document.getElementById('gallery-modal').classList.add('open');
+            galleryModal.classList.add('open');
             renderGallery();
-            switchView('gallery-modal', 'gallery-grid-view'); // Izgarayı aç
-        }
-
-        function viewImage(index) {
-            const item = myGallery[index];
-            switchView('gallery-modal', 'gallery-single-view'); // Tekliye geç (Izgara kapanır)
-            
-            const singleImageContainer = document.getElementById('single-image-container');
-            singleImageContainer.innerHTML = `
-                <img src="${item.src}" style="max-width:100%; max-height:60vh; border-radius:10px; box-shadow:0 10px 30px rgba(0,0,0,0.5);">
-                <h3 style="margin-top:20px; color:var(--accent-color); font-weight:300; letter-spacing:1px;">${item.caption}</h3>
-            `;
-        }
-
-        function showGalleryGrid() {
             switchView('gallery-modal', 'gallery-grid-view');
         }
+        function renderGallery() {
+            const container = document.getElementById('gallery-grid-view');
+            container.innerHTML = '';
+            myGallery.forEach((item, index) => {
+                container.innerHTML += `
+                    <div class="gallery-item" onclick="viewImage(${index})">
+                        <img src="${item.src}" alt="${item.caption}">
+                        <div class="img-caption">${item.caption}</div>
+                    </div>`;
+            });
+        }
+        function viewImage(index) {
+            switchView('gallery-modal', 'gallery-single-view');
+            const container = document.getElementById('single-image-container');
+            container.innerHTML = `
+                <img src="${myGallery[index].src}" style="max-width:100%; max-height:60vh; border-radius:10px; box-shadow:0 10px 30px rgba(0,0,0,0.5);">
+                <h3 style="margin-top:20px; color:var(--accent-color); font-weight:300; letter-spacing:1px;">${myGallery[index].caption}</h3>
+            `;
+        }
+        function showGalleryGrid() { switchView('gallery-modal', 'gallery-grid-view'); }
 
 
-        /* ----------------------------------------------------
-           5. ORTAK FONKSİYONLAR
-        ---------------------------------------------------- */
+        /* 5. ORTAK KAPATMA FONKSİYONLARI */
         function closeModals() {
             blogModal.classList.remove('open');
             galleryModal.classList.remove('open');
         }
-
-        // Pencere dışına tıklayınca kapatma
         window.onclick = function(event) {
-            if (event.target == blogModal) closeModals();
-            if (event.target == galleryModal) closeModals();
+            if (event.target == blogModal || event.target == galleryModal) closeModals();
         }
-
     </script>
 </body>
 </html>
