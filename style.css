@@ -209,20 +209,3 @@ h2 {
     .modal-content { padding: 20px; }
 }
 
-/* --- KÜTÜPHANE DETAY GÖRÜNÜMÜ --- */
-.item-detail-container {
-    display: flex; gap: 30px; align-items: flex-start; animation: fadeIn 0.5s;
-}
-.detail-poster {
-    width: 200px; border-radius: 10px; box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-    flex-shrink: 0;
-}
-.detail-content h2 { margin-top: 0; font-family: 'Playfair Display', serif; font-size: 2rem; color: #fff; }
-.detail-meta { color: var(--accent-color); font-size: 0.9rem; margin-bottom: 20px; display: block; font-weight: bold; }
-.detail-text { color: #ddd; line-height: 1.8; font-size: 1rem; font-family: 'Playfair Display', serif; }
-
-/* Mobil Uyum */
-@media (max-width: 768px) {
-    .item-detail-container { flex-direction: column; align-items: center; text-align: center; }
-    .detail-poster { width: 150px; margin-bottom: 20px; }
-}
