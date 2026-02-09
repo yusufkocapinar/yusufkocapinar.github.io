@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Yusuf Kocapınar</title>
+    <title>Yusuf Kocapınar | Dijital Hub</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
@@ -21,109 +21,33 @@
         <div class="hero-content">
             <img src="profil.png" alt="Yusuf Kocapınar" class="profile-img">
             <h1>Yusuf Kocapınar</h1>
-            <p class="title">Yakında Yayında!</p>
+            <p class="title">Dijital Günlük & Zihin Arşivi</p>
         </div>
-
         <div class="scroll-indicator">
-            <span>Aşağı Kaydır</span>
+            <span>Keşfet</span>
             <i class="fas fa-chevron-down"></i>
         </div>
     </header>
 
     <div class="main-wrapper">
-        
         <nav class="floating-nav">
             <a href="#home" class="nav-item" data-tooltip="Ana Sayfa"><i class="fas fa-home"></i></a>
-            <a href="#about" class="nav-item" data-tooltip="Hakkımda"><i class="fas fa-user"></i></a>
-            <a href="javascript:void(0)" onclick="openBlog()" class="nav-item" data-tooltip="Yazılar"><i class="fas fa-pen-nib"></i></a>
-            <a href="javascript:void(0)" onclick="openGallery()" class="nav-item" data-tooltip="Galeri"><i class="fas fa-camera"></i></a>
+            <a href="javascript:void(0)" onclick="openLibrary()" class="nav-item" data-tooltip="Kütüphane"><i class="fas fa-book"></i></a>
+            <a href="javascript:void(0)" onclick="openAcademy()" class="nav-item" data-tooltip="Akademi"><i class="fas fa-graduation-cap"></i></a>
+            <a href="javascript:void(0)" onclick="openBlog()" class="nav-item" data-tooltip="Günlük"><i class="fas fa-pen-nib"></i></a>
+            <a href="javascript:void(0)" onclick="openGallery()" class="nav-item" data-tooltip="Hafıza"><i class="fas fa-camera"></i></a>
             <a href="#contact" class="nav-item" data-tooltip="İletişim"><i class="fas fa-envelope"></i></a>
         </nav>
 
         <main class="container">
-            
             <section id="about">
-                <h2>Hakkımda</h2>
+                <h2>Önsöz</h2>
                 <div class="card">
-                    <p style="line-height: 1.8; font-size: 1.05rem;">
-                        Merhaba! Ben Yusuf. 
+                    <p style="line-height: 1.8; font-size: 1.05rem; font-family: 'Playfair Display', serif;">
+                        Marmara Üniversitesi <strong>Biyomühendislik</strong> öğrencisi. Bilimin analitik dünyası ile sanatın estetik bakış açısını birleştirmeyi hedefliyorum.
                         <br><br>
-                        Meraklı, araştırmacı ve bir o kadar da öğrenmeye tutkulu bir biyomühendislik öğrencisinin blog sayfasına hoş geldin!
-                        <br><br>
-                        Yazılar yazıyor, kültür sanat etkinliklerine katılıyor, gördüklerimi fotoğraflıyorum. Ânın tadını çıkartıyor ama ânda takılı kalmıyorum. Aslında bu sayfa bir sonuç değil sürecin eseri; kendi ellerimle yazdığım "Yusuf Masalı"nda bana eşlik etmenden memnuniyet duyarım.
-                        <br><br>
-                        Aklına takılan bir şey olursa bana ulaşman için gerekli her şey sayfada mevcut. 
+                        Bu kişisel alanda; akademik araştırmalarımı, edebi denemelerimi ve objektifime yansıyan anları paylaşıyorum. Dünyayı hem mikroskop altından hem de vizörden gözlemleyen bir arşiv.
                     </p>
-                </div>
-            </section>
-            
-            <section id="blog">
-                <h2>Notlar & Yazılar</h2>
-                <div class="card-grid">
-                    <article class="card" onclick="openPost(0)" style="cursor: pointer;">
-                        <span class="date">3 Şubat 2026</span>
-                        <h3>Kültürlenmiş Et ve Biyoetik</h3>
-                        <p>CRISPR-Cas9 teknolojisiyle üretilen kültürlenmiş et, biyomedikal etik literatüründe ve İbrahimî dinlerin etik yaklaşımlarında hangi ortak kaygılar ve ayrışan sınırlar üzerinden tartışılmaktadır?</p>
-                        <span class="read-more">Okumak için tıkla →</span>
-                    </article>
-                    
-                    <article class="card" onclick="openPost(1)" style="cursor: pointer;">
-                        <span class="date">28 Ocak 2026</span>
-                        <h3>Biyomühendislik Vizyonu</h3>
-                        <p>Geleceğin teknolojileri üzerine düşünceler.</p>
-                        <span class="read-more">Okumak için tıkla →</span>
-                    </article>
-                </div>
-            </section>
-
-            <section id="gallery-showcase">
-                <h2>Galeri</h2>
-                
-                <div class="gallery-preview-container">
-                    <div class="gallery-preview-card" onclick="openGallery()">
-                        <img src="citedepera.jpg" alt="Cité de Péra">
-                        <div class="overlay">
-                            <i class="fas fa-expand-arrows-alt"></i>
-                            <span>Detaylı İncele</span>
-                        </div>
-                    </div>
-
-                    <div class="gallery-preview-card" onclick="openGallery()">
-                        <img src="feneryolu.jpg" alt="Feneryolu">
-                        <div class="overlay">
-                            <i class="fas fa-expand-arrows-alt"></i>
-                            <span>Detaylı İncele</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div style="text-align: center; margin-top: 20px;">
-                    <button class="open-folder-btn" onclick="openGallery()">
-                        <i class="fas fa-camera"></i> Tüm Galeriye Göz At
-                    </button>
-                </div>
-            </section>
-
-            <section id="simple-player-section">
-                <div class="player-bar">
-                    <div class="cover-art">
-                        <img src="kapak.jpg" alt="Music Cover">
-                    </div>
-                    <div class="song-info">
-                        <div class="track-title">أهو ده اللي صار</div>
-                        <div class="track-artist">Fairouz</div>
-                    </div>
-                    <div class="player-controls">
-                        <button class="ctrl-btn volume-btn" onclick="toggleMute()">
-                            <i class="fas fa-volume-up" id="volIcon"></i>
-                        </button>
-                        <button class="ctrl-btn play-btn" onclick="toggleAudio()">
-                            <i class="fas fa-play" id="playIcon"></i>
-                        </button>
-                    </div>
-                    <audio id="myAudio" loop>
-                        <source src="muzik.mp3" type="audio/mpeg">
-                    </audio>
                 </div>
             </section>
 
@@ -133,30 +57,92 @@
                     <a href="https://tr.linkedin.com/in/yusufkocapinar" target="_blank"><i class="fab fa-linkedin"></i></a>
                     <a href="https://www.instagram.com/kpyusufi" target="_blank"><i class="fab fa-instagram"></i></a>
                 </div>
-
                 <div class="footer-info">
                     <a href="mailto:yusufkocapinar92@gmail.com">yusufkocapinar92@gmail.com</a>
                     <p>&copy; 2026 Yusuf Kocapınar</p>
                 </div>
             </section>
-
         </main>
+    </div>
+
+    <div id="library-modal" class="modal-overlay">
+        <div class="modal-window">
+            <div class="modal-header">
+                <div class="window-controls"><span class="dot red" onclick="closeModals()"></span><span class="dot yellow"></span><span class="dot green"></span></div>
+                <div class="window-title">Kültür & Sanat</div>
+                <div style="width:50px"></div>
+            </div>
+            
+            <div class="modal-content show-modal-content" style="padding-top:10px;">
+                <div class="tabs-header">
+                    <button class="tab-btn active" onclick="switchTab('books')">Kitaplar</button>
+                    <button class="tab-btn" onclick="switchTab('movies')">İzlediklerim</button>
+                </div>
+
+                <div id="tab-books" class="tab-content active poster-grid">
+                    <div class="poster-card">
+                        <img src="https://i.pinimg.com/564x/4d/9e/7f/4d9e7f8c0c8d76208535882672322312.jpg" alt="Kitap 1">
+                        <div class="poster-overlay">
+                            <div class="poster-title">Kürk Mantolu Madonna</div>
+                            <div class="poster-meta">Sabahattin Ali</div>
+                        </div>
+                    </div>
+                    <div class="poster-card">
+                        <img src="https://i.pinimg.com/564x/f3/98/9d/f3989d2c2069f0003723337922752536.jpg" alt="Kitap 2">
+                        <div class="poster-overlay">
+                            <div class="poster-title">Dune</div>
+                            <div class="poster-meta">Frank Herbert</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="tab-movies" class="tab-content poster-grid">
+                    <div class="poster-card">
+                        <img src="https://i.pinimg.com/736x/88/54/9d/88549d4793836d933c063f477699479e.jpg" alt="Film 1">
+                        <div class="poster-overlay">
+                            <div class="poster-title">Interstellar</div>
+                            <div class="poster-meta">Christopher Nolan</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="academy-modal" class="modal-overlay">
+        <div class="modal-window">
+            <div class="modal-header">
+                <div class="window-controls"><span class="dot red" onclick="closeModals()"></span><span class="dot yellow"></span><span class="dot green"></span></div>
+                <div class="window-title">Akademik Çalışmalar</div>
+                <div style="width:50px"></div>
+            </div>
+            <div class="modal-content show-modal-content">
+                <div class="card-grid">
+                    <article class="card">
+                        <span class="date">Şubat 2026 - Proje</span>
+                        <h3>Organ-on-Chip Teknolojileri</h3>
+                        <p>Marmara Üniversitesi laboratuvarlarında mikroakışkan sistemler üzerine araştırma projesi.</p>
+                    </article>
+                    <article class="card">
+                        <span class="date">Ocak 2026 - Üyelik</span>
+                        <h3>Cansağlığı Kulübü</h3>
+                        <p>Yönetim Kurulu Üyeliği ve Bilimsel İş Birlikleri koordinasyonu.</p>
+                    </article>
+                </div>
+            </div>
+        </div>
     </div>
 
     <div id="blog-modal" class="modal-overlay">
         <div class="modal-window">
             <div class="modal-header">
-                <div class="window-controls">
-                    <span class="dot red" onclick="closeModals()"></span>
-                    <span class="dot yellow"></span>
-                    <span class="dot green"></span>
-                </div>
-                <div class="window-title">Dosya Yöneticisi</div>
-                <div class="window-spacer"></div>
+                <div class="window-controls"><span class="dot red" onclick="closeModals()"></span><span class="dot yellow"></span><span class="dot green"></span></div>
+                <div class="window-title">Dijital Günlük</div>
+                <div style="width:50px"></div>
             </div>
-            <div id="files-view" class="modal-content active-view"></div>
-            <div id="reader-view" class="modal-content hidden-view">
-                <button class="back-btn" onclick="showFiles()"><i class="fas fa-arrow-left"></i> Geri Dön</button>
+            <div id="files-view" class="modal-content show-modal-content" style="display:grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap:30px;"></div>
+            <div id="reader-view" class="modal-content" style="display:none;">
+                <button class="back-btn" onclick="showFiles()"><i class="fas fa-arrow-left"></i> Listeye Dön</button>
                 <div id="dynamic-content" class="post-content"></div>
             </div>
         </div>
@@ -165,18 +151,12 @@
     <div id="gallery-modal" class="modal-overlay">
         <div class="modal-window gallery-window">
             <div class="modal-header">
-                <div class="window-controls">
-                    <span class="dot red" onclick="closeModals()"></span>
-                    <span class="dot yellow"></span>
-                    <span class="dot green"></span>
-                </div>
-                <div class="window-title">Fotoğraf Galerisi</div>
-                <div class="window-spacer"></div>
+                <div class="window-controls"><span class="dot red" onclick="closeModals()"></span><span class="dot yellow"></span><span class="dot green"></span></div>
+                <div class="window-title">Görsel Hafıza</div>
+                <div style="width:50px"></div>
             </div>
-            
-            <div id="gallery-grid-view" class="modal-content active-view gallery-content-grid"></div>
-
-            <div id="gallery-single-view" class="modal-content hidden-view" style="text-align:center;">
+            <div id="gallery-grid-view" class="modal-content show-modal-content" style="display:grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap:15px;"></div>
+            <div id="gallery-single-view" class="modal-content" style="display:none; text-align:center;">
                 <button class="back-btn" onclick="showGalleryGrid()"><i class="fas fa-arrow-left"></i> Galeriye Dön</button>
                 <div id="single-image-container"></div>
             </div>
@@ -184,111 +164,73 @@
     </div>
 
     <script>
-        /* 1. TEMA YÖNETİMİ (KODUN EN BAŞINA EKLENDİ) */
+        /* TEMA */
         function toggleTheme() {
             document.body.classList.toggle('purple-mode');
-            if(document.body.classList.contains('purple-mode')){
-                localStorage.setItem('theme', 'purple');
-            } else {
-                localStorage.setItem('theme', 'default');
-            }
+            localStorage.setItem('theme', document.body.classList.contains('purple-mode') ? 'purple' : 'default');
         }
-        
-        // Sayfa yüklendiğinde hafızadaki temayı hatırla
-        if(localStorage.getItem('theme') === 'purple'){
-            document.body.classList.add('purple-mode');
-        }
+        if(localStorage.getItem('theme') === 'purple') document.body.classList.add('purple-mode');
 
-        /* 2. AYARLAR */
+        /* VERİLER */
         const myFiles = [
-            {
-                name: "Kültürlenmiş Et",
-                file: "Kültürlenmiş_Et.txt", 
-                size: "3 KB"
-            },
-            {
-                name: "Biyomühendislik",
-                file: "Biyomuhendislik.txt",
-                size: "5 KB"
-            }
+            { name: "Kültürlenmiş Et", file: "Kültürlenmiş_Et.txt", size: "3 KB" },
+            { name: "Biyomühendislik", file: "Biyomuhendislik.txt", size: "5 KB" }
         ];
-
         const myGallery = [
-            { src: "citedepera.jpg", caption: "Cité de Péra (Çiçek Pasajı)" },
-            { src: "feneryolu.jpg", caption: "Feneryolu Cafe Sohbet" },
-            { src: "daylik.jpg", caption: "Daylık Köyü Merkez Camii" },
-            { src: "baglarbasi.jpg", caption: "Bağlarbaşı Minare" },
-            { src: "kücükyali.jpg", caption: "Küçükyalı Mimari" },
-            { src: "pertevniyal.jpg", caption: "Pertevniyal Valide Sultan Camii" },
-            { src: "sultanahmet.jpg", caption: "Sultanahmet Camii" },
-            { src: "umraniye.jpg", caption: "Ümraniye Osmangazi Korusu" },
+            { src: "citedepera.jpg", caption: "Cité de Péra" },
+            { src: "feneryolu.jpg", caption: "Feneryolu" },
+            { src: "daylik.jpg", caption: "Daylık Köyü" }
         ];
 
+        /* MODAL YÖNETİMİ */
+        const modals = {
+            library: document.getElementById('library-modal'),
+            academy: document.getElementById('academy-modal'),
+            blog: document.getElementById('blog-modal'),
+            gallery: document.getElementById('gallery-modal')
+        };
 
-        /* 3. MÜZİK PLAYER */
-        var audio = document.getElementById("myAudio");
-        var playIcon = document.getElementById("playIcon");
-        var volIcon = document.getElementById("volIcon");
-        var playerBar = document.querySelector(".player-bar");
-
-        function toggleAudio() {
-            if (audio.paused) {
-                audio.play();
-                playIcon.classList.remove("fa-play");
-                playIcon.classList.add("fa-pause");
-                playerBar.classList.add("playing");
-            } else {
-                audio.pause();
-                playIcon.classList.remove("fa-pause");
-                playIcon.classList.add("fa-play");
-                playerBar.classList.remove("playing");
-            }
+        function closeModals() {
+            Object.values(modals).forEach(m => m.classList.remove('open'));
         }
 
-        function toggleMute() {
-            audio.muted = !audio.muted;
-            if(!audio.muted) {
-                volIcon.className = "fas fa-volume-up"; volIcon.style.color = "#ccc";
-            } else {
-                volIcon.className = "fas fa-volume-mute"; volIcon.style.color = "#e74c3c";
-            }
+        function openLibrary() { closeModals(); modals.library.classList.add('open'); }
+        function openAcademy() { closeModals(); modals.academy.classList.add('open'); }
+        
+        function openBlog() { 
+            closeModals(); 
+            modals.blog.classList.add('open'); 
+            renderFiles(); 
+            document.getElementById('files-view').style.display = 'grid';
+            document.getElementById('reader-view').style.display = 'none';
         }
-        audio.volume = 0.5;
 
+        function openGallery() { 
+            closeModals(); 
+            modals.gallery.classList.add('open'); 
+            renderGallery();
+            document.getElementById('gallery-grid-view').style.display = 'grid';
+            document.getElementById('gallery-single-view').style.display = 'none';
+        }
 
-        /* 4. MODAL GÖRÜNÜM YÖNETİMİ */
-        function switchView(modalType, viewType) {
-            const contents = document.querySelectorAll(`#${modalType} .modal-content`);
-            contents.forEach(el => {
-                el.style.display = 'none';
-                el.classList.remove('show-modal-content');
+        /* SEKME YÖNETİMİ (KÜTÜPHANE) */
+        function switchTab(tabName) {
+            // Butonları resetle
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            // İçerikleri gizle
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.remove('active');
+                content.style.display = 'none';
             });
 
-            const target = document.getElementById(viewType);
-            if(viewType === 'files-view' || viewType === 'gallery-grid-view') {
-                target.style.display = 'grid'; 
-            } else {
-                target.style.display = 'block'; 
-            }
-            target.classList.add('show-modal-content');
+            // Tıklananı aktif et
+            event.target.classList.add('active');
+            const activeContent = document.getElementById(`tab-${tabName}`);
+            activeContent.classList.add('active');
+            activeContent.style.display = 'grid';
         }
 
-        // --- BLOG FONKSİYONLARI ---
-        const blogModal = document.getElementById('blog-modal');
-        function openBlog() {
-            closeModals();
-            blogModal.classList.add('open');
-            renderFiles();
-            switchView('blog-modal', 'files-view');
-        }
-        
-        // Direkt yazıyı açar
-        function openPost(index) {
-            closeModals();
-            blogModal.classList.add('open');
-            openFile(index); 
-        }
-
+        /* BLOG İŞLEMLERİ */
         function renderFiles() {
             const container = document.getElementById('files-view');
             container.innerHTML = '';
@@ -302,25 +244,21 @@
             });
         }
         function openFile(index) {
-            switchView('blog-modal', 'reader-view');
+            document.getElementById('files-view').style.display = 'none';
+            document.getElementById('reader-view').style.display = 'block';
             const content = document.getElementById('dynamic-content');
             content.innerHTML = '<p>Yükleniyor...</p>';
             fetch(myFiles[index].file)
                 .then(r => r.ok ? r.text() : Promise.reject())
-                .then(text => content.innerHTML = `<h2>${myFiles[index].name}</h2><hr style="opacity:0.2; margin:10px 0;"><div style="text-align:left; line-height:1.6">${text.replace(/\n/g, "<br>")}</div>`)
-                .catch(() => content.innerHTML = `<h2>${myFiles[index].name}</h2><p>Dosya içeriği yüklenemedi.</p>`);
+                .then(text => content.innerHTML = `<h2>${myFiles[index].name}</h2><hr><div style="text-align:left;">${text.replace(/\n/g, "<br>")}</div>`)
+                .catch(() => content.innerHTML = `<p>İçerik yüklenemedi.</p>`);
         }
-        function showFiles() { switchView('blog-modal', 'files-view'); }
-
-
-        // --- GALERİ FONKSİYONLARI ---
-        const galleryModal = document.getElementById('gallery-modal');
-        function openGallery() {
-            closeModals();
-            galleryModal.classList.add('open');
-            renderGallery();
-            switchView('gallery-modal', 'gallery-grid-view');
+        function showFiles() {
+            document.getElementById('files-view').style.display = 'grid';
+            document.getElementById('reader-view').style.display = 'none';
         }
+
+        /* GALERİ İŞLEMLERİ */
         function renderGallery() {
             const container = document.getElementById('gallery-grid-view');
             container.innerHTML = '';
@@ -333,23 +271,22 @@
             });
         }
         function viewImage(index) {
-            switchView('gallery-modal', 'gallery-single-view');
+            document.getElementById('gallery-grid-view').style.display = 'none';
+            document.getElementById('gallery-single-view').style.display = 'block';
             const container = document.getElementById('single-image-container');
             container.innerHTML = `
                 <img src="${myGallery[index].src}" style="max-width:100%; max-height:60vh; border-radius:10px; box-shadow:0 10px 30px rgba(0,0,0,0.5);">
-                <h3 style="margin-top:20px; color:var(--accent-color); font-weight:300; letter-spacing:1px;">${myGallery[index].caption}</h3>
+                <h3 style="margin-top:20px; color:var(--accent-color); font-weight:300;">${myGallery[index].caption}</h3>
             `;
         }
-        function showGalleryGrid() { switchView('gallery-modal', 'gallery-grid-view'); }
-
-
-        /* 5. ORTAK KAPATMA FONKSİYONLARI */
-        function closeModals() {
-            blogModal.classList.remove('open');
-            galleryModal.classList.remove('open');
+        function showGalleryGrid() {
+            document.getElementById('gallery-grid-view').style.display = 'grid';
+            document.getElementById('gallery-single-view').style.display = 'none';
         }
-        window.onclick = function(event) {
-            if (event.target == blogModal || event.target == galleryModal) closeModals();
+
+        /* KAPATMA */
+        window.onclick = function(e) {
+            if (e.target.classList.contains('modal-overlay')) closeModals();
         }
     </script>
 </body>
