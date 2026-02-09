@@ -11,256 +11,196 @@
 
     <div class="bg-image"></div>
 
-    <div class="theme-toggle" onclick="toggleTheme()"><i class="fas fa-palette"></i></div>
+    <div class="theme-switch" onclick="toggleTheme()">
+        <i class="fas fa-palette"></i>
+    </div>
 
-    <nav class="sidebar">
-        <div class="nav-btn active" onclick="goHome()" data-title="Ana Sayfa"><i class="fas fa-home"></i></div>
-        <div class="nav-btn" onclick="goToPage('library')" data-title="Kütüphane"><i class="fas fa-book"></i></div>
-        <div class="nav-btn" onclick="goToPage('academy')" data-title="Akademi"><i class="fas fa-graduation-cap"></i></div>
-        <div class="nav-btn" onclick="goToPage('blog')" data-title="Günlük"><i class="fas fa-pen-nib"></i></div>
-        <div class="nav-btn" onclick="goToPage('gallery')" data-title="Hafıza"><i class="fas fa-camera"></i></div>
-        <div class="nav-btn" onclick="goToPage('about')" data-title="Hakkımda"><i class="fas fa-user"></i></div>
+    <nav class="floating-nav">
+        <a href="#home" class="nav-item" onclick="showLanding()" data-tooltip="Ana Sayfa"><i class="fas fa-home"></i></a>
+        <a href="#about" class="nav-item" onclick="showLanding()" data-tooltip="Hakkımda"><i class="fas fa-user"></i></a>
+        
+        <a href="javascript:void(0)" onclick="openModule('library')" class="nav-item" data-tooltip="Kütüphane"><i class="fas fa-book"></i></a>
+        <a href="javascript:void(0)" onclick="openModule('academy')" class="nav-item" data-tooltip="Akademi"><i class="fas fa-graduation-cap"></i></a>
+        
+        <a href="#gallery-preview" class="nav-item" onclick="showLanding()" data-tooltip="Galeri"><i class="fas fa-camera"></i></a>
+        <a href="#contact" class="nav-item" onclick="showLanding()" data-tooltip="İletişim"><i class="fas fa-envelope"></i></a>
     </nav>
 
-    <section id="view-home" class="page-view active">
-        <div class="home-content">
-            <img src="profil.png" alt="Yusuf">
-            <h1>Yusuf Kocapınar</h1>
-            <p>Biyomühendislik | Dijital Günlük</p>
-        </div>
-    </section>
-
-    <section id="view-library" class="page-view">
-        <div class="breadcrumb">
-            <span onclick="goHome()">Ana Sayfa</span> <i class="fas fa-chevron-right"></i> 
-            <span class="current">Kütüphane</span>
-        </div>
+    <div id="main-stage">
         
-        <h2>Okuduklarım & İzlediklerim</h2>
-        <div class="grid-layout" id="library-grid">
-            </div>
-    </section>
-
-    <section id="view-detail" class="page-view">
-        <div class="breadcrumb">
-            <span onclick="goHome()">Ana Sayfa</span> <i class="fas fa-chevron-right"></i> 
-            <span onclick="goToPage('library')">Kütüphane</span> <i class="fas fa-chevron-right"></i> 
-            <span class="current" id="detail-breadcrumb-title">Kitap Adı</span>
-        </div>
-
-        <div class="detail-container" id="detail-content-area">
-            </div>
-    </section>
-
-    <section id="view-blog" class="page-view">
-        <div class="breadcrumb">
-            <span onclick="goHome()">Ana Sayfa</span> <i class="fas fa-chevron-right"></i> 
-            <span class="current">Günlük</span>
-        </div>
-        <h2>Son Yazılar</h2>
-        <div class="grid-layout" id="blog-grid"></div>
-    </section>
-
-    <section id="view-read" class="page-view">
-        <div class="breadcrumb">
-            <span onclick="goHome()">Ana Sayfa</span> <i class="fas fa-chevron-right"></i> 
-            <span onclick="goToPage('blog')">Günlük</span> <i class="fas fa-chevron-right"></i> 
-            <span class="current">Okuma Modu</span>
-        </div>
-        <div class="detail-container" id="read-content-area"></div>
-    </section>
-
-    <section id="view-academy" class="page-view">
-        <div class="breadcrumb">
-            <span onclick="goHome()">Ana Sayfa</span> <i class="fas fa-chevron-right"></i> 
-            <span class="current">Akademi</span>
-        </div>
-        <h2>Akademik Çalışmalar</h2>
-        <div class="grid-layout">
-            <div class="blog-card">
-                <h3>Organ-on-Chip</h3>
-                <p>Marmara Üniversitesi laboratuvarlarında mikroakışkan sistemler üzerine araştırma.</p>
-                <span class="blog-date">Devam Ediyor</span>
-            </div>
-            <div class="blog-card">
-                <h3>Cansağlığı Kulübü</h3>
-                <p>Yönetim Kurulu Üyeliği ve Bilimsel İş Birlikleri koordinasyonu.</p>
-                <span class="blog-date">2026</span>
-            </div>
-        </div>
-    </section>
-
-    <section id="view-gallery" class="page-view">
-        <div class="breadcrumb">
-            <span onclick="goHome()">Ana Sayfa</span> <i class="fas fa-chevron-right"></i> 
-            <span class="current">Görsel Hafıza</span>
-        </div>
-        <div class="grid-layout" id="gallery-grid"></div>
-    </section>
-
-    <section id="view-about" class="page-view">
-        <div class="breadcrumb">
-            <span onclick="goHome()">Ana Sayfa</span> <i class="fas fa-chevron-right"></i> 
-            <span class="current">Hakkımda</span>
-        </div>
-        <div class="detail-container">
-            <h1 style="font-family: 'Playfair Display', serif; font-size: 2.5rem;">Ben Kimim?</h1>
-            <div class="detail-body">
-                <p>Marmara Üniversitesi Biyomühendislik öğrencisi. Bilimin analitik dünyası ile sanatın estetik bakış açısını birleştirmeyi hedefliyorum.</p>
-                <p>Bu platform; laboratuvar notlarımdan okuduğum kitaplara, çektiğim fotoğraflardan geleceğe dair vizyonuma kadar her şeyi barındıran bir dijital arşivdir.</p>
-                <br>
-                <h3>İletişim</h3>
-                <p><a href="mailto:yusufkocapinar92@gmail.com" style="color:var(--accent-color)">yusufkocapinar92@gmail.com</a></p>
-                <div style="font-size: 1.5rem; margin-top: 10px;">
-                    <a href="#" style="color:#fff; margin-right:15px"><i class="fab fa-github"></i></a>
-                    <a href="#" style="color:#fff; margin-right:15px"><i class="fab fa-linkedin"></i></a>
-                    <a href="#" style="color:#fff"><i class="fab fa-instagram"></i></a>
+        <section id="home" style="height: 100vh;">
+            <div class="hero-content">
+                <img src="profil.png" alt="Yusuf Kocapınar" class="profile-img">
+                <h1>Yusuf Kocapınar</h1>
+                <p class="subtitle">Biyomühendislik | Dijital Günlük</p>
+                <div style="margin-top: 30px; animation: bounce 2s infinite;">
+                    <i class="fas fa-chevron-down" style="color:var(--accent-color)"></i>
                 </div>
             </div>
+        </section>
+
+        <section id="about">
+            <div class="glass-card">
+                <h2>Önsöz</h2>
+                <p style="line-height: 1.8; font-size: 1.1rem; color: #ddd;">
+                    Merhaba! Ben Yusuf. Marmara Üniversitesi'nde <strong>Biyomühendislik</strong> öğrencisiyim. 
+                    <br><br>
+                    Bilimin analitik dünyası ile sanatın estetik bakış açısını birleştirmeyi hedefliyorum. Bu kişisel alanda; laboratuvar notlarımdan okuduğum kitaplara, çektiğim fotoğraflardan geleceğe dair vizyonuma kadar her şeyi bulabilirsin.
+                    <br><br>
+                    Burası sadece bir CV değil, yaşayan bir zihin arşivi.
+                </p>
+            </div>
+        </section>
+
+        <section id="updates">
+            <h2>Son Güncellemeler</h2>
+            <div class="updates-grid">
+                
+                <div class="update-item" onclick="openModule('blog')">
+                    <span class="tag">Son Yazı</span>
+                    <div class="update-title">Kültürlenmiş Et ve Biyoetik</div>
+                    <p class="update-desc">CRISPR-Cas9 teknolojisiyle üretilen kültürlenmiş et, biyomedikal etik literatüründe nasıl tartışılıyor?</p>
+                    <span style="color:var(--accent-color); font-size:0.8rem; margin-top:10px; display:block;">Okumaya Git →</span>
+                </div>
+
+                <div class="update-item" onclick="openModule('library')">
+                    <span class="tag">Son Okunan</span>
+                    <div class="update-title">Üniversitenin Yükselişi</div>
+                    <p class="update-desc">Charles Homer Haskins'in kaleminden orta çağ üniversitelerinin kökenine dair notlarım.</p>
+                    <span style="color:var(--accent-color); font-size:0.8rem; margin-top:10px; display:block;">Kütüphaneye Git →</span>
+                </div>
+
+                <div class="update-item" onclick="openModule('academy')">
+                    <span class="tag">Akademi</span>
+                    <div class="update-title">Organ-on-Chip</div>
+                    <p class="update-desc">Mikroakışkan sistemler üzerine laboratuvar araştırmalarım devam ediyor.</p>
+                    <span style="color:var(--accent-color); font-size:0.8rem; margin-top:10px; display:block;">Detaylar →</span>
+                </div>
+
+            </div>
+        </section>
+
+        <section id="gallery-preview">
+            <h2>Vizörden Yansıyanlar</h2>
+            <div class="updates-grid" style="grid-template-columns: repeat(3, 1fr);">
+                <img src="citedepera.jpg" style="width:100%; border-radius:10px; aspect-ratio:1/1; object-fit:cover; border:1px solid rgba(255,255,255,0.2);">
+                <img src="feneryolu.jpg" style="width:100%; border-radius:10px; aspect-ratio:1/1; object-fit:cover; border:1px solid rgba(255,255,255,0.2);">
+                <img src="daylik.jpg" style="width:100%; border-radius:10px; aspect-ratio:1/1; object-fit:cover; border:1px solid rgba(255,255,255,0.2);">
+            </div>
+            <button onclick="alert('Galeri modülü eklenecek')" style="margin-top:30px; background:transparent; border:1px solid var(--accent-color); color:#fff; padding:10px 20px; border-radius:30px; cursor:pointer;">Tüm Galeri</button>
+        </section>
+
+        <section id="contact" style="min-height: 40vh;">
+            <div class="glass-card">
+                <h2>İletişim</h2>
+                <div class="footer-socials">
+                    <a href="#"><i class="fab fa-github"></i></a>
+                    <a href="#"><i class="fab fa-linkedin"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                </div>
+                <p style="margin-top:20px; color:#aaa;">yusufkocapinar92@gmail.com</p>
+                <p style="font-size:0.8rem; margin-top:40px; opacity:0.5;">&copy; 2026 Yusuf Kocapınar</p>
+            </div>
+        </section>
+
+    </div> 
+    <div id="module-library" class="full-page-module">
+        <div class="module-header">
+            <h2 style="margin:0; font-size:2rem;">Kütüphane</h2>
+            <button class="back-home-btn" onclick="showLanding()"><i class="fas fa-arrow-left"></i> Ana Sahne</button>
         </div>
-    </section>
+        
+        <h3 style="color:#aaa; border-bottom:1px solid rgba(255,255,255,0.1); padding-bottom:10px; margin-bottom:20px;">Kitaplar & İncelemeler</h3>
+        <div class="poster-grid">
+            <div class="poster">
+                <img src="https://img.kitapyurdu.com/v1/getImage/fn:11985778/wi:800/wh:9b87ff2f0">
+            </div>
+            <div class="poster">
+                <img src="https://img.kitapyurdu.com/v1/getImage/fn:12150703/wi:500/wh:bfff5df1e">
+            </div>
+            <div class="poster">
+                <img src="https://i.pinimg.com/564x/4d/9e/7f/4d9e7f8c0c8d76208535882672322312.jpg">
+            </div>
+        </div>
+
+        <h3 style="color:#aaa; border-bottom:1px solid rgba(255,255,255,0.1); padding-bottom:10px; margin-bottom:20px; margin-top:50px;">İzleme Listesi</h3>
+        <div class="poster-grid">
+            <div class="poster">
+                <img src="https://i.pinimg.com/736x/88/54/9d/88549d4793836d933c063f477699479e.jpg">
+            </div>
+        </div>
+    </div>
+
+    <div id="module-academy" class="full-page-module">
+        <div class="module-header">
+            <h2 style="margin:0; font-size:2rem;">Akademik Yolculuk</h2>
+            <button class="back-home-btn" onclick="showLanding()"><i class="fas fa-arrow-left"></i> Ana Sahne</button>
+        </div>
+        
+        <div class="updates-grid">
+            <div class="glass-card" style="text-align:left;">
+                <span class="tag">Proje</span>
+                <h3>Organ-on-Chip Teknolojileri</h3>
+                <p style="color:#ccc;">Marmara Üniversitesi laboratuvarlarında mikroakışkan sistemler üzerine araştırma projesi yürütüyorum.</p>
+            </div>
+            <div class="glass-card" style="text-align:left;">
+                <span class="tag">Topluluk</span>
+                <h3>Cansağlığı Kulübü</h3>
+                <p style="color:#ccc;">Yönetim Kurulu Üyeliği ve Bilimsel İş Birlikleri koordinasyonu.</p>
+            </div>
+        </div>
+    </div>
+
+    <div id="module-blog" class="full-page-module">
+        <div class="module-header">
+            <h2 style="margin:0; font-size:2rem;">Dijital Günlük</h2>
+            <button class="back-home-btn" onclick="showLanding()"><i class="fas fa-arrow-left"></i> Ana Sahne</button>
+        </div>
+        
+        <div class="updates-grid">
+            <div class="glass-card" style="text-align:left;">
+                <span style="color:var(--accent-color); font-size:0.8rem;">3 Şubat 2026</span>
+                <h3>Kültürlenmiş Et ve Biyoetik</h3>
+                <p style="color:#ccc;">CRISPR-Cas9 teknolojisiyle üretilen kültürlenmiş et üzerine düşünceler...</p>
+            </div>
+            <div class="glass-card" style="text-align:left;">
+                <span style="color:var(--accent-color); font-size:0.8rem;">28 Ocak 2026</span>
+                <h3>Biyomühendislik Vizyonu</h3>
+                <p style="color:#ccc;">Geleceğin teknolojileri ve sürdürülebilirlik üzerine notlar.</p>
+            </div>
+        </div>
+    </div>
+
 
     <script>
-        /* --- VERİ TABANI --- */
-        const data = {
-            library: [
-                {
-                    type: "book",
-                    title: "Üniversitenin Yükselişi",
-                    author: "Charles Homer Haskins",
-                    img: "https://img.kitapyurdu.com/v1/getImage/fn:11985778/wi:800/wh:9b87ff2f0",
-                    review: "Orta Çağ üniversitelerinin kuruluşunu ve modern akademiye etkilerini anlatan temel bir eser. Üniversite kavramının köklerine inmek isteyenler için eşsiz bir kaynak."
-                },
-                {
-                    type: "book",
-                    title: "Holokost Endüstrisi",
-                    author: "Norman Finkelstein",
-                    img: "https://img.kitapyurdu.com/v1/getImage/fn:12150703/wi:500/wh:bfff5df1e",
-                    review: "Tarihsel acıların nasıl politik bir araca dönüştüğünü cesurca eleştiren sarsıcı bir kitap."
-                },
-                {
-                    type: "movie",
-                    title: "Interstellar",
-                    author: "Christopher Nolan",
-                    img: "https://i.pinimg.com/736x/88/54/9d/88549d4793836d933c063f477699479e.jpg",
-                    review: "Bilim ve duygunun, zaman ve mekanın ötesinde harmanlandığı görsel bir başyapıt."
-                }
-            ],
-            blog: [
-                {
-                    title: "Kültürlenmiş Et ve Biyoetik",
-                    date: "3 Şubat 2026",
-                    content: "CRISPR-Cas9 teknolojisiyle üretilen kültürlenmiş et, biyomedikal etik literatüründe ve İbrahimî dinlerin etik yaklaşımlarında hangi ortak kaygılar ve ayrışan sınırlar üzerinden tartışılmaktadır? <br><br> Bu teknoloji sadece gıda üretimini değil, insanın doğayla kurduğu ilişkiyi de kökten değiştirmeye aday..."
-                },
-                {
-                    title: "Biyomühendislik Vizyonu",
-                    date: "28 Ocak 2026",
-                    content: "Geleceğin teknolojileri üzerine düşünceler. Biyomühendislik sadece sağlık değil, sürdürülebilirlik için de anahtar bir rol oynayacak."
-                }
-            ],
-            gallery: [
-                { src: "citedepera.jpg", caption: "Cité de Péra" },
-                { src: "feneryolu.jpg", caption: "Feneryolu" },
-                { src: "daylik.jpg", caption: "Daylık Köyü" }
-            ]
-        };
-
-        /* --- NAVİGASYON SİSTEMİ --- */
-        function goHome() {
-            switchView('view-home');
-            updateActiveMenu(0); // Home ikonu
-        }
-
-        function goToPage(pageName) {
-            switchView(`view-${pageName}`);
-            // Menü aktifliğini güncelle
-            const menuMap = { 'library': 1, 'academy': 2, 'blog': 3, 'gallery': 4, 'about': 5 };
-            if(menuMap[pageName]) updateActiveMenu(menuMap[pageName]);
-        }
-
-        function switchView(viewId) {
-            // Tüm sayfaları gizle
-            document.querySelectorAll('.page-view').forEach(el => el.classList.remove('active'));
-            // İstenen sayfayı göster
-            document.getElementById(viewId).classList.add('active');
-            window.scrollTo(0,0); // Sayfa başına at
-        }
-
-        function updateActiveMenu(index) {
-            document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
-            document.querySelectorAll('.nav-btn')[index].classList.add('active');
-        }
-
-        /* --- İÇERİK YÖNETİMİ --- */
-        
-        // Kütüphaneyi Doldur
-        const libGrid = document.getElementById('library-grid');
-        data.library.forEach((item, index) => {
-            libGrid.innerHTML += `
-                <div class="poster-card" onclick="openDetail(${index})">
-                    <img src="${item.img}">
-                    <div class="poster-info">
-                        <div style="color:#fff; font-weight:bold">${item.title}</div>
-                        <div style="color:var(--accent-color); font-size:0.8rem">${item.author}</div>
-                    </div>
-                </div>`;
-        });
-
-        // Detay Sayfasını Aç (Breadcrumb: Home > Library > Kitap Adı)
-        function openDetail(index) {
-            const item = data.library[index];
-            const detailArea = document.getElementById('detail-content-area');
-            document.getElementById('detail-breadcrumb-title').innerText = item.title;
-            
-            detailArea.innerHTML = `
-                <div class="detail-header">
-                    <img src="${item.img}" class="detail-cover">
-                    <div class="detail-title">
-                        <h1>${item.title}</h1>
-                        <span class="detail-author">${item.author}</span>
-                    </div>
-                </div>
-                <div class="detail-body">${item.review}</div>
-            `;
-            switchView('view-detail');
-        }
-
-        // Blogu Doldur
-        const blogGrid = document.getElementById('blog-grid');
-        data.blog.forEach((item, index) => {
-            blogGrid.innerHTML += `
-                <div class="blog-card" onclick="openRead(${index})">
-                    <h3>${item.title}</h3>
-                    <span class="blog-date">${item.date}</span>
-                    <p style="opacity:0.7; margin-top:10px">Okumak için tıklayın →</p>
-                </div>`;
-        });
-
-        function openRead(index) {
-            const item = data.blog[index];
-            document.getElementById('read-content-area').innerHTML = `
-                <h1 style="font-family:'Playfair Display', serif">${item.title}</h1>
-                <span style="color:var(--accent-color)">${item.date}</span>
-                <hr style="border-color:rgba(255,255,255,0.1); margin:20px 0">
-                <div class="detail-body">${item.content}</div>
-            `;
-            switchView('view-read');
-        }
-
-        // Galeriyi Doldur
-        const galleryGrid = document.getElementById('gallery-grid');
-        data.gallery.forEach(item => {
-            galleryGrid.innerHTML += `
-                <div class="poster-card" style="aspect-ratio:1/1">
-                    <img src="${item.src}">
-                    <div class="poster-info">${item.caption}</div>
-                </div>`;
-        });
-
-        /* --- TEMA --- */
+        // TEMA
         function toggleTheme() {
             document.body.classList.toggle('purple-mode');
         }
+
+        // SAHNE YÖNETİMİ
+        const mainStage = document.getElementById('main-stage');
+        const modules = document.querySelectorAll('.full-page-module');
+
+        function showLanding() {
+            // Modülleri gizle
+            modules.forEach(m => m.classList.remove('active'));
+            // Ana sahneyi geri getir
+            mainStage.classList.remove('hidden');
+            window.scrollTo(0,0); // Başa sar
+        }
+
+        function openModule(moduleId) {
+            // Ana sahneyi gizle (Fade out)
+            mainStage.classList.add('hidden');
+            // Tüm modülleri kapat
+            modules.forEach(m => m.classList.remove('active'));
+            // İstenen modülü aç (Fade in)
+            setTimeout(() => {
+                document.getElementById('module-' + moduleId).classList.add('active');
+            }, 300); // Ana sahne kaybolana kadar bekle
+        }
     </script>
+
 </body>
 </html>
