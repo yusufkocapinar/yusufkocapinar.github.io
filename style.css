@@ -268,3 +268,38 @@ h3.section-header {
     .minimal-contact { flex-direction: column; gap: 15px; padding: 20px; }
     .contact-mail { border-left: none; padding-left: 0; border-top: 1px solid var(--text-color); padding-top: 15px; }
 }
+
+/* --- SCROLL GÖSTERGESİ (DÜZELTME) --- */
+.scroll-indicator {
+    position: absolute;
+    bottom: 30px; /* Ekranın en altına sabitledik */
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+    z-index: 10;
+    animation: bounce 2s infinite;
+    cursor: pointer;
+}
+
+.scroll-indicator span {
+    display: block;
+    font-size: 0.75rem;
+    color: var(--text-color); /* Temaya göre renk alır */
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+    font-weight: 600;
+    opacity: 0.7;
+}
+
+.scroll-indicator i {
+    color: var(--accent-color); /* Ok işareti vurgu renginde */
+    font-size: 1.2rem;
+}
+
+/* Animasyon (Zıplama) */
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {transform: translateX(-50%) translateY(0);}
+    40% {transform: translateX(-50%) translateY(-10px);}
+    60% {transform: translateX(-50%) translateY(-5px);}
+}

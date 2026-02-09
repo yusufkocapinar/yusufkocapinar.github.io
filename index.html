@@ -34,11 +34,13 @@
                 <div class="hero-content">
                     <img src="profil.png" alt="Yusuf Kocapınar" class="profile-img">
                     <h1>Yusuf Kocapınar</h1>
-                    <p class="subtitle">Dijital Günlüğüme Hoş Geldin</p>
-                    <div style="margin-top: 30px; animation: float 3s infinite;">
-                        <i class="fas fa-chevron-down" style="color:#fff; font-size: 1.5rem;"></i>
-                    </div>
+                    <p class="subtitle">Biyomühendislik & Dijital Günlük</p>
                 </div>
+            </div>
+
+            <div class="scroll-indicator" onclick="document.getElementById('about').scrollIntoView();">
+                <span>Keşfet</span>
+                <i class="fas fa-chevron-down"></i>
             </div>
         </section>
 
@@ -178,6 +180,7 @@
     </div>
 
     <script>
+        <script>
         /* --- VERİLER --- */
         const data = {
             books: [
@@ -185,13 +188,19 @@
                     title: "Üniversitenin Yükselişi",
                     author: "Charles Homer Haskins",
                     img: "https://img.kitapyurdu.com/v1/getImage/fn:11985778/wi:800/wh:9b87ff2f0",
-                    review: "Orta Çağ üniversitelerinin modern akademiye mirası üzerine temel bir eser."
+                    review: `Kitap, Orta Çağ üniversitelerinin doğuşunu, kurumsal yapısını, profesörlerin otoritesini ve öğrencilerin gündelik hayatını ayrıntılı şekilde ele alıyor. Temelde üç bölümden oluşan eser, “ekler” kısmındaki belgelerle derinlik kazanıyor. Öğrencilerin mektuplarında kira, geçim ve ders yoğunluğu gibi sorunların hâlâ tanıdık olması dikkat çekici.
+                    <br><br>
+                    Haskins üniversiteleri iki modele ayırıyor: Bologna’daki öğrenci üniversiteleri ve Paris’teki profesör üniversiteleri. Bologna’da öğrenciler profesörleri seçiyor ve maaşlarını ödüyordu; bu da ciddi bir güç sağlıyordu. Paris’te ise kilise/devlet desteğiyle maaş alan profesörler, teoloji merkezli güçlü bir otorite kuruyordu. Burada üniversitenin tanımı da önemli: Universitas bugünkü gibi “evrensellik” değil, “birlik” anlamına geliyordu. Öğrenci üniversitelerinde, profesörlerin öğrencilere karşı sorumlu olmaları ve onlar tarafından idare ediliyor olmaları da bence bu birlikle alakalı. Öte yandan; öğrenciler, yüksek konut fiyatları gibi sorunlarla da birlik olarak mücadele ediyordu. Henüz üniversiteler birer binaya sahip değilken bir anda başka bir yere taşınabiliyorlardı. Ayrıca değinmeden geçmeyeyim, o dönemki üniversite olgusunun ekseninde meslek öğretmek değil ahlaklı bireyler yetiştirmek gibi bir motivasyon vardı ve bunu yaparken dinden pek de ayrılıyor değillerdi.
+                    <br><br>
+                    Buna hem yazarın ifadelerinde hem de öğrenci mektuplarında rastlamak mümkün. Çok uzatmadan kişisel notlarıma geçecek olursam:
+                    <br><br>
+                    Üniversitenin Yükselişi, akademik bir metin olması sebebiyle temiz kafayla ve iştahla okunması gereken bir kitap. Kısa olsa da oldukça zengin bir içeriğe ve kaynakçaya sahip ve ilgilileri için bence güzel bir giriş niteliğinde.`
                 },
                 {
                     title: "Holokost Endüstrisi",
                     author: "Norman Finkelstein",
                     img: "https://img.kitapyurdu.com/v1/getImage/fn:12150703/wi:500/wh:bfff5df1e",
-                    review: "Acıların politikleşmesi üzerine sarsıcı bir eleştiri."
+                    review: "Tarihsel acıların nasıl politik ve ekonomik bir güce dönüştürüldüğüne dair cesur bir eleştiri. Okurken sorgulatan ve sarsan bir kitap."
                 },
                 {
                     title: "Kürk Mantolu Madonna",
@@ -227,6 +236,8 @@
                 }
             ]
         };
+        
+        // ... (Kodun geri kalanı aynı)
 
         /* --- SAYFA YÖNETİMİ --- */
         const mainStage = document.getElementById('main-stage');
