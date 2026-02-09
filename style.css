@@ -1,28 +1,32 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;800&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap');
 
 :root {
-    /* AÇIK TEMA */
+    /* AÇIK TEMA (Varsayılan - Krem/Haki) */
     --accent-color: #c3b091;
     --text-color: #4a4a4a;
     --bg-color: #f8f5f2;
     --glass-bg: rgba(255, 255, 255, 0.65);
     --glass-border: rgba(255, 255, 255, 0.5);
     --nav-bg: rgba(255, 255, 255, 0.9);
-    --card-shadow: 0 10px 30px rgba(195, 176, 145, 0.1);
+    --card-shadow: 0 10px 30px rgba(195, 176, 145, 0.15);
     --blur-amount: 20px;
     --module-bg: #f8f5f2;
 }
 
-/* KOYU TEMA */
-body.dark-mode {
+/* PURPLE MODE (Koyu Mor Tema) */
+body.purple-mode {
+    --accent-color: #9b59b6; /* Ametist Moru */
     --text-color: #eaeaea;
-    --bg-color: #121212;
-    --glass-bg: rgba(30, 30, 30, 0.7);
-    --glass-border: rgba(255, 255, 255, 0.1);
-    --nav-bg: rgba(0, 0, 0, 0.8);
-    --card-shadow: 0 15px 40px rgba(0,0,0,0.4);
-    --module-bg: #121212;
+    --bg-color: #1a0b1e; /* Çok koyu mor/siyah */
+    --glass-bg: rgba(30, 10, 35, 0.7);
+    --glass-border: rgba(255, 255, 255, 0.15);
+    --nav-bg: rgba(20, 5, 25, 0.85);
+    --card-shadow: 0 15px 40px rgba(0,0,0,0.5);
+    --module-bg: #150818;
 }
+
+/* Koyu modda arka plan */
+body.purple-mode .bg-image { filter: brightness(0.4) hue-rotate(20deg) blur(5px); }
 
 * { box-sizing: border-box; }
 
@@ -89,25 +93,22 @@ html { scroll-behavior: smooth; }
 #main-stage.hidden { opacity: 0; pointer-events: none; }
 
 section {
-    padding: 50px 20px; /* BOŞLUK AZALTILDI (Eskisi 80px) */
-    width: 100%; 
-    max-width: 900px;
-    margin: 0 auto;
+    padding: 50px 20px;
+    width: 100%; max-width: 900px; margin: 0 auto;
     display: flex; flex-direction: column; 
     justify-content: center; align-items: center;
     text-align: center;
 }
 
-/* HERO (Giriş) */
+/* HERO */
 #home { min-height: 100vh; padding: 0; }
 .hero-glass {
     background: rgba(255, 255, 255, 0.2); backdrop-filter: blur(15px);
-    border: 1px solid rgba(255, 255, 255, 0.3); padding: 40px; /* Biraz daha kompakt */
-    border-radius: 30px;
-    width: 100%; max-width: 600px;
+    border: 1px solid rgba(255, 255, 255, 0.3); padding: 40px;
+    border-radius: 30px; width: 100%; max-width: 600px;
     box-shadow: 0 20px 50px rgba(0,0,0,0.1);
 }
-body.dark-mode .hero-glass { background: rgba(0, 0, 0, 0.5); border-color: rgba(255,255,255,0.1); }
+body.purple-mode .hero-glass { background: rgba(0, 0, 0, 0.5); border-color: rgba(255,255,255,0.1); }
 .profile-img {
     width: 170px; height: 170px; border-radius: 15px; object-fit: cover;
     border: 3px solid var(--accent-color); margin-bottom: 20px;
@@ -118,13 +119,19 @@ h1 { font-size: 3rem; margin: 0; font-weight: 800; letter-spacing: -1px; color: 
 /* BAŞLIKLAR */
 h2 {
     font-family: 'Playfair Display', serif; font-size: 2.2rem; color: var(--text-color);
-    margin-bottom: 25px; /* Başlık altı boşluk azaltıldı */
-    position: relative; display: inline-block;
+    margin-bottom: 25px; position: relative; display: inline-block;
     text-align: center; width: 100%;
 }
 h2::after {
     content: ''; display: block; width: 50px; height: 3px; background: var(--accent-color); 
     margin: 10px auto 0;
+}
+
+/* ALT BAŞLIKLAR (MODÜL İÇİ) */
+h3.section-header {
+    font-family: 'Playfair Display', serif; font-size: 1.5rem; color: var(--text-color);
+    border-bottom: 1px solid var(--glass-border); padding-bottom: 10px; margin: 40px 0 20px;
+    opacity: 0.8;
 }
 
 /* GENEL CAM KART */
@@ -135,15 +142,11 @@ h2::after {
 }
 
 /* --- SON GÜNCELLEMELER --- */
-.updates-list { 
-    display: flex; flex-direction: column; gap: 15px; /* Kartlar arası boşluk azaltıldı */
-    width: 100%; max-width: 800px;
-}
+.updates-list { display: flex; flex-direction: column; gap: 15px; width: 100%; max-width: 800px; }
 .update-row {
     background: var(--glass-bg); padding: 20px 30px; border-radius: 20px;
     border: 1px solid var(--glass-border); cursor: pointer; transition: 0.3s;
-    display: flex; align-items: center; justify-content: space-between;
-    text-align: left;
+    display: flex; align-items: center; justify-content: space-between; text-align: left;
 }
 .update-row:hover { transform: scale(1.01); border-color: var(--accent-color); box-shadow: var(--card-shadow); }
 .update-info h3 { margin: 5px 0; font-family: 'Playfair Display', serif; font-size: 1.3rem; color: var(--text-color); }
@@ -195,12 +198,13 @@ h2::after {
 
 .module-content { max-width: 900px; margin: 0 auto; text-align: left; }
 
-/* Kütüphane & Akademi */
+/* Kütüphane Grid */
 .poster-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 25px; }
 .poster { aspect-ratio: 2/3; border-radius: 12px; overflow: hidden; cursor: pointer; transition: 0.3s; box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
 .poster:hover { transform: scale(1.05); }
 .poster img { width: 100%; height: 100%; object-fit: cover; }
 
+/* Akademi & Blog Listeleri */
 .academy-grid { display: grid; grid-template-columns: 1fr; gap: 20px; }
 .academy-card { 
     background: var(--glass-bg); padding: 25px; border-radius: 15px; 
@@ -239,6 +243,6 @@ h2::after {
     .update-info { text-align: center; }
     .detail-flex { flex-direction: column; align-items: center; text-align: center; }
     .detail-img { width: 150px; margin-bottom: 20px; }
-    .player-bar { padding: 10px 20px; flex-direction: column; gap: 10px; text-align: center; }
+    .player-bar { padding: 15px 20px; flex-direction: column; gap: 10px; text-align: center; }
     .song-info { text-align: center; }
 }
