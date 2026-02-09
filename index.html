@@ -16,223 +16,248 @@
     </div>
 
     <nav class="floating-nav">
-        <a href="#home" class="nav-item active" data-tooltip="Ana Sayfa"><i class="fas fa-home"></i></a>
-        <a href="#about" class="nav-item" data-tooltip="Önsöz"><i class="fas fa-user-astronaut"></i></a>
-        <a href="#library" class="nav-item" data-tooltip="Kütüphane"><i class="fas fa-book-open"></i></a>
-        <a href="#academy" class="nav-item" data-tooltip="Akademi"><i class="fas fa-graduation-cap"></i></a>
-        <a href="#blog" class="nav-item" data-tooltip="Günlük"><i class="fas fa-feather-pointed"></i></a>
-        <a href="#gallery" class="nav-item" data-tooltip="Hafıza"><i class="fas fa-camera"></i></a>
-        <a href="#contact" class="nav-item" data-tooltip="İletişim"><i class="fas fa-paper-plane"></i></a>
+        <a href="#home" class="nav-item active" onclick="showLanding()" data-tooltip="Ana Sayfa"><i class="fas fa-home"></i></a>
+        <a href="#about" class="nav-item" onclick="showLanding()" data-tooltip="Hakkımda"><i class="fas fa-user"></i></a>
+        
+        <a href="javascript:void(0)" onclick="openModule('library')" class="nav-item" data-tooltip="Kütüphane"><i class="fas fa-book-open"></i></a>
+        <a href="javascript:void(0)" onclick="openModule('academy')" class="nav-item" data-tooltip="Akademi"><i class="fas fa-graduation-cap"></i></a>
+        <a href="javascript:void(0)" onclick="openModule('blog')" class="nav-item" data-tooltip="Günlük"><i class="fas fa-feather-pointed"></i></a>
+        <a href="javascript:void(0)" onclick="openModule('gallery')" class="nav-item" data-tooltip="Galeri"><i class="fas fa-camera"></i></a>
+        
+        <a href="#updates" class="nav-item" onclick="showLanding()" data-tooltip="Güncellemeler"><i class="fas fa-bell"></i></a>
+        <a href="#contact" class="nav-item" onclick="showLanding()" data-tooltip="İletişim"><i class="fas fa-paper-plane"></i></a>
     </nav>
 
-    <section id="home">
-        <div class="hero-glass">
-            <div class="hero-content">
-                <img src="profil.png" alt="Yusuf Kocapınar" class="profile-img">
-                <h1>Yusuf Kocapınar</h1>
-                <p class="subtitle">Biyomühendislik & Dijital Günlük</p>
-                <div style="margin-top: 30px; animation: float 3s infinite;">
-                    <i class="fas fa-chevron-down" style="color:#fff; font-size: 1.5rem;"></i>
+    <div id="main-stage">
+        
+        <section id="home">
+            <div class="hero-glass">
+                <div class="hero-content">
+                    <img src="profil.png" alt="Yusuf Kocapınar" class="profile-img">
+                    <h1>Yusuf Kocapınar</h1>
+                    <p class="subtitle">Biyomühendislik & Dijital Günlük</p>
+                    <div style="margin-top: 30px; animation: float 3s infinite;">
+                        <i class="fas fa-chevron-down" style="color:#fff; font-size: 1.5rem;"></i>
+                    </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <section id="about">
-        <div class="glass-container" style="text-align: center; max-width: 800px;">
-            <h2 style="margin: 0 0 30px 0;">Önsöz</h2>
-            <p style="line-height: 1.9; font-size: 1.1rem; font-family: 'Playfair Display', serif;">
-                Merhaba! Ben Yusuf. Marmara Üniversitesi'nde <strong>Biyomühendislik</strong> öğrencisiyim. 
-                <br><br>
-                Bilimin analitik dünyası ile sanatın estetik bakış açısını birleştirmeyi hedefliyorum. Bu kişisel alanda; laboratuvar notlarımdan okuduğum kitaplara, çektiğim fotoğraflardan geleceğe dair vizyonuma kadar her şeyi bulabilirsin.
-            </p>
-        </div>
-    </section>
-
-    <section id="library">
-        <h2>Kütüphane <span>&</span> İzlediklerim</h2>
-        <div class="scroll-shelf" id="library-shelf">
+        <section id="about">
+            <div class="glass-card" style="text-align:center; max-width:800px;">
+                <h2 style="margin:0 0 30px 0;">Önsöz</h2>
+                <p style="line-height: 1.9; font-size: 1.1rem; font-family: 'Playfair Display', serif;">
+                    Merhaba! Ben Yusuf. Marmara Üniversitesi'nde <strong>Biyomühendislik</strong> öğrencisiyim. 
+                    <br><br>
+                    Bilimin analitik dünyası ile sanatın estetik bakış açısını birleştirmeyi hedefliyorum. Burası, laboratuvar notlarımdan okuduğum kitaplara kadar her şeyi barındıran yaşayan bir zihin arşivi.
+                </p>
             </div>
-    </section>
+        </section>
 
-    <section id="academy">
-        <h2>Akademik <span>Yolculuk</span></h2>
+        <section id="updates">
+            <h2>Son Güncellemeler</h2>
+            <div class="updates-list">
+                
+                <div class="update-row" onclick="openModule('blog')">
+                    <div class="update-info">
+                        <div class="update-meta">YENİ YAZI • 3 ŞUBAT</div>
+                        <h3>Kültürlenmiş Et ve Biyoetik Sınırlar</h3>
+                    </div>
+                    <i class="fas fa-arrow-right arrow-icon"></i>
+                </div>
+
+                <div class="update-row" onclick="openModule('library')">
+                    <div class="update-info">
+                        <div class="update-meta">KÜTÜPHANE • OKUNDU</div>
+                        <h3>Üniversitenin Yükselişi - C.H. Haskins</h3>
+                    </div>
+                    <i class="fas fa-arrow-right arrow-icon"></i>
+                </div>
+
+                <div class="update-row" onclick="openModule('academy')">
+                    <div class="update-info">
+                        <div class="update-meta">AKADEMİ • PROJE</div>
+                        <h3>Organ-on-Chip Ar-Ge Süreci</h3>
+                    </div>
+                    <i class="fas fa-arrow-right arrow-icon"></i>
+                </div>
+
+            </div>
+        </section>
+
+        <section id="music-section">
+            <div class="player-container">
+                <div class="player-bar">
+                    <div class="cover-art">
+                        <img src="kapak.jpg" alt="Music Cover">
+                    </div>
+                    <div class="song-info">
+                        <div class="track-title">أهو ده اللي صار</div>
+                        <div class="track-artist">Fairouz</div>
+                    </div>
+                    <div class="player-controls">
+                        <button class="ctrl-btn" onclick="toggleMute()"><i class="fas fa-volume-up" id="volIcon"></i></button>
+                        <button class="ctrl-btn play-btn" onclick="toggleAudio()"><i class="fas fa-play" id="playIcon"></i></button>
+                    </div>
+                    <audio id="myAudio" loop>
+                        <source src="muzik.mp3" type="audio/mpeg">
+                    </audio>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact" style="min-height: 40vh;">
+            <div class="glass-card" style="text-align: center; max-width:600px;">
+                <h2 style="margin:0 0 30px 0;">İletişim</h2>
+                <div class="footer-socials">
+                    <a href="#" style="font-size: 1.8rem; margin: 0 15px;"><i class="fab fa-github"></i></a>
+                    <a href="#" style="font-size: 1.8rem; margin: 0 15px;"><i class="fab fa-linkedin"></i></a>
+                    <a href="#" style="font-size: 1.8rem; margin: 0 15px;"><i class="fab fa-instagram"></i></a>
+                </div>
+                <p style="margin-top: 30px; font-weight: 600;">yusufkocapinar92@gmail.com</p>
+                <p style="font-size: 0.8rem; opacity: 0.6; margin-top: 40px;">&copy; 2026 Yusuf Kocapınar</p>
+            </div>
+        </section>
+
+    </div> 
+    <div id="module-library" class="full-page-module">
+        <div class="module-header">
+            <h2 class="module-title">Kütüphane</h2>
+            <button class="back-btn" onclick="showLanding()">Ana Sayfaya Dön</button>
+        </div>
+        <div class="poster-grid" id="library-grid">
+            </div>
+    </div>
+
+    <div id="module-academy" class="full-page-module">
+        <div class="module-header">
+            <h2 class="module-title">Akademik</h2>
+            <button class="back-btn" onclick="showLanding()">Ana Sayfaya Dön</button>
+        </div>
         <div class="academy-grid">
             <div class="academy-card">
-                <span style="font-size:0.8rem; color:var(--accent-color); font-weight:bold;">PROJE</span>
-                <h3 style="margin: 10px 0; font-family:'Playfair Display', serif;">Organ-on-Chip Teknolojileri</h3>
-                <p style="opacity: 0.8;">Marmara Üniversitesi laboratuvarlarında mikroakışkan sistemler üzerine araştırma projesi yürütüyorum.</p>
+                <div style="font-weight:bold; color:var(--accent-color); font-size:0.8rem;">PROJE</div>
+                <h3>Organ-on-Chip Teknolojileri</h3>
+                <p>Marmara Üniversitesi laboratuvarlarında mikroakışkan sistemler üzerine araştırma projesi.</p>
             </div>
             <div class="academy-card">
-                <span style="font-size:0.8rem; color:var(--accent-color); font-weight:bold;">ÜYELİK</span>
-                <h3 style="margin: 10px 0; font-family:'Playfair Display', serif;">Cansağlığı Kulübü</h3>
-                <p style="opacity: 0.8;">Yönetim Kurulu Üyeliği ve Bilimsel İş Birlikleri koordinasyonu görevini sürdürüyorum.</p>
+                <div style="font-weight:bold; color:var(--accent-color); font-size:0.8rem;">TOPLULUK</div>
+                <h3>Cansağlığı Kulübü</h3>
+                <p>Yönetim Kurulu Üyeliği ve Bilimsel İş Birlikleri koordinasyonu.</p>
             </div>
         </div>
-    </section>
+    </div>
 
-    <section id="blog">
-        <h2>Son <span>Yazılar</span></h2>
-        <div class="blog-list" id="blog-container">
-            </div>
-    </section>
-
-    <section id="gallery">
-        <h2>Görsel <span>Hafıza</span></h2>
-        <div class="scroll-shelf">
-            <img src="citedepera.jpg" class="gallery-img">
-            <img src="feneryolu.jpg" class="gallery-img">
-            <img src="daylik.jpg" class="gallery-img">
-            <img src="https://i.pinimg.com/564x/a5/39/30/a5393077759c99732709033320f77242.jpg" class="gallery-img">
+    <div id="module-blog" class="full-page-module">
+        <div class="module-header">
+            <h2 class="module-title">Günlük</h2>
+            <button class="back-btn" onclick="showLanding()">Ana Sayfaya Dön</button>
         </div>
-    </section>
-
-    <section id="contact" style="min-height: 50vh;">
-        <div class="glass-container" style="text-align: center;">
-            <h2 style="margin-left:0; margin-bottom: 20px;">İletişim</h2>
-            <div class="footer-socials">
-                <a href="#" style="font-size: 2rem; color:var(--text-color); margin: 0 15px;"><i class="fab fa-github"></i></a>
-                <a href="#" style="font-size: 2rem; color:var(--text-color); margin: 0 15px;"><i class="fab fa-linkedin"></i></a>
-                <a href="#" style="font-size: 2rem; color:var(--text-color); margin: 0 15px;"><i class="fab fa-instagram"></i></a>
+        <div class="academy-grid"> <div class="academy-card" onclick="alert('Detay eklenecek')">
+                <div style="font-weight:bold; color:var(--accent-color); font-size:0.8rem;">3 ŞUBAT 2026</div>
+                <h3>Kültürlenmiş Et ve Biyoetik</h3>
+                <p>CRISPR-Cas9 teknolojisiyle üretilen kültürlenmiş et üzerine etik tartışmalar...</p>
             </div>
-            <p style="margin-top: 30px; font-weight: 600;">yusufkocapinar92@gmail.com</p>
-            <p style="font-size: 0.8rem; opacity: 0.6; margin-top: 50px;">&copy; 2026 Yusuf Kocapınar</p>
         </div>
-    </section>
+    </div>
+
+    <div id="module-gallery" class="full-page-module">
+        <div class="module-header">
+            <h2 class="module-title">Hafıza</h2>
+            <button class="back-btn" onclick="showLanding()">Ana Sayfaya Dön</button>
+        </div>
+        <div class="poster-grid">
+            <div class="poster"><img src="citedepera.jpg"></div>
+            <div class="poster"><img src="feneryolu.jpg"></div>
+            <div class="poster"><img src="daylik.jpg"></div>
+        </div>
+    </div>
 
     <div id="detail-modal" class="detail-modal">
         <div class="detail-card">
-            <span class="close-btn" onclick="closeDetail()">&times;</span>
-            <div id="detail-content">
-                </div>
+            <span class="close-detail" onclick="closeDetail()">&times;</span>
+            <div id="detail-content"></div>
         </div>
     </div>
 
     <script>
-        /* --- VERİLER --- */
+        /* --- KÜTÜPHANE VERİSİ --- */
         const libraryData = [
             {
-                type: "Kitap",
                 title: "Üniversitenin Yükselişi",
                 author: "Charles Homer Haskins",
                 img: "https://img.kitapyurdu.com/v1/getImage/fn:11985778/wi:800/wh:9b87ff2f0",
-                review: "Orta Çağ üniversitelerinin kuruluşunu ve modern akademiye etkilerini anlatan temel bir eser. Üniversite kavramının nasıl doğduğunu anlamak isteyenler için harika bir kaynak."
+                review: "Orta Çağ üniversitelerinin modern akademiye mirası üzerine temel bir eser."
             },
             {
-                type: "Kitap",
                 title: "Holokost Endüstrisi",
                 author: "Norman Finkelstein",
                 img: "https://img.kitapyurdu.com/v1/getImage/fn:12150703/wi:500/wh:bfff5df1e",
-                review: "Tarihsel acıların nasıl politik ve ekonomik bir güce dönüştürüldüğüne dair cesur bir eleştiri. Okurken sorgulatan ve sarsan bir kitap."
+                review: "Acıların politikleşmesi üzerine sarsıcı bir eleştiri."
             },
             {
-                type: "Film",
                 title: "Interstellar",
                 author: "Christopher Nolan",
                 img: "https://i.pinimg.com/736x/88/54/9d/88549d4793836d933c063f477699479e.jpg",
-                review: "Zamanın göreliliği ve sevginin boyutlar arası gücü üzerine görsel bir şölen. Hans Zimmer'ın müzikleri filmi başka bir seviyeye taşıyor."
-            },
-            {
-                type: "Kitap",
-                title: "Kürk Mantolu Madonna",
-                author: "Sabahattin Ali",
-                img: "https://i.pinimg.com/564x/4d/9e/7f/4d9e7f8c0c8d76208535882672322312.jpg",
-                review: "Raif Efendi'nin iç dünyasına yolculuk..."
-            },
-            {
-                type: "Film",
-                title: "Dune",
-                author: "Denis Villeneuve",
-                img: "https://i.pinimg.com/564x/f3/98/9d/f3989d2c2069f0003723337922752536.jpg",
-                review: "Görsel bir başyapıt."
+                review: "Zaman ve mekanın ötesinde bir başyapıt."
             }
         ];
 
-        const blogData = [
-            {
-                title: "Kültürlenmiş Et ve Biyoetik",
-                date: "3 Şubat 2026",
-                content: "CRISPR-Cas9 teknolojisiyle üretilen kültürlenmiş et, biyomedikal etik literatüründe..."
-            },
-            {
-                title: "Biyomühendislik Vizyonu",
-                date: "28 Ocak 2026",
-                content: "Geleceğin teknolojileri üzerine düşünceler..."
-            }
-        ];
+        /* --- SAYFA YÖNETİMİ --- */
+        const mainStage = document.getElementById('main-stage');
+        const modules = document.querySelectorAll('.full-page-module');
 
-        /* --- SAYFA YÜKLENDİĞİNDE ÇALIŞACAKLAR --- */
-        window.addEventListener('DOMContentLoaded', () => {
-            renderLibrary();
-            renderBlog();
-        });
+        function showLanding() {
+            modules.forEach(m => m.classList.remove('active'));
+            mainStage.classList.remove('hidden');
+            window.scrollTo(0,0);
+        }
 
-        // 1. Kütüphane Render
+        function openModule(moduleId) {
+            mainStage.classList.add('hidden');
+            modules.forEach(m => m.classList.remove('active'));
+            setTimeout(() => {
+                document.getElementById('module-' + moduleId).classList.add('active');
+                if(moduleId === 'library') renderLibrary();
+                window.scrollTo(0,0);
+            }, 300);
+        }
+
+        /* --- KÜTÜPHANE RENDER & DETAY --- */
         function renderLibrary() {
-            const shelf = document.getElementById('library-shelf');
-            shelf.innerHTML = '';
+            const grid = document.getElementById('library-grid');
+            grid.innerHTML = '';
             libraryData.forEach((item, index) => {
-                shelf.innerHTML += `
-                    <div class="shelf-item" onclick="openDetail(${index})">
-                        <img src="${item.img}" class="poster-img">
-                        <div class="shelf-info">
-                            <span class="shelf-title">${item.title}</span>
-                            <span class="shelf-meta">${item.author}</span>
-                        </div>
-                    </div>
-                `;
+                grid.innerHTML += `
+                    <div class="poster" onclick="openDetail(${index})">
+                        <img src="${item.img}">
+                    </div>`;
             });
         }
 
-        // 2. Blog Render
-        function renderBlog() {
-            const container = document.getElementById('blog-container');
-            container.innerHTML = '';
-            blogData.forEach((item) => {
-                container.innerHTML += `
-                    <div class="blog-item" onclick="alert('Blog okuma sayfası eklenecek')">
-                        <div class="blog-content">
-                            <h3>${item.title}</h3>
-                            <p>${item.content.substring(0, 60)}...</p>
-                        </div>
-                        <span class="blog-date">${item.date}</span>
-                    </div>
-                `;
-            });
-        }
-
-        /* --- DETAY PENCERESİ (MODAL) --- */
         function openDetail(index) {
             const item = libraryData[index];
             const modal = document.getElementById('detail-modal');
-            const content = document.getElementById('detail-content');
-            
-            content.innerHTML = `
+            document.getElementById('detail-content').innerHTML = `
                 <div class="detail-flex">
-                    <img src="${item.img}" class="detail-poster-img">
-                    <div class="detail-info">
-                        <span style="color:var(--accent-color); font-weight:bold; letter-spacing:1px;">${item.type.toUpperCase()}</span>
+                    <img src="${item.img}" class="detail-img">
+                    <div class="detail-content">
                         <h3>${item.title}</h3>
-                        <span style="opacity:0.6; display:block; margin-bottom:15px;">${item.author}</span>
+                        <p style="color:var(--accent-color); font-weight:bold;">${item.author}</p>
                         <p>${item.review}</p>
                     </div>
-                </div>
-            `;
+                </div>`;
             modal.classList.add('active');
         }
-
         function closeDetail() {
             document.getElementById('detail-modal').classList.remove('active');
         }
 
-        /* --- DİNAMİK BLUR (SCROLL EFFECT) --- */
-        const bgImage = document.getElementById('bg-blur');
+        /* --- BLUR EFEKTİ --- */
         window.addEventListener('scroll', () => {
-            if (window.scrollY > 50) {
-                bgImage.classList.add('blurred');
-            } else {
-                bgImage.classList.remove('blurred');
-            }
+            const bg = document.getElementById('bg-blur');
+            if (window.scrollY > 50) bg.classList.add('blurred');
+            else bg.classList.remove('blurred');
         });
 
         /* --- TEMA --- */
@@ -248,24 +273,30 @@
             }
         }
 
-        /* --- MENÜ AKTİFLİK DURUMU --- */
-        const sections = document.querySelectorAll('section');
-        const navLi = document.querySelectorAll('.nav-item');
-        window.addEventListener('scroll', () => {
-            let current = '';
-            sections.forEach(section => {
-                const sectionTop = section.offsetTop;
-                if (pageYOffset >= (sectionTop - section.clientHeight / 3)) {
-                    current = section.getAttribute('id');
-                }
-            });
-            navLi.forEach(a => {
-                a.classList.remove('active');
-                if (a.getAttribute('href').includes(current)) {
-                    a.classList.add('active');
-                }
-            });
-        });
+        /* --- MÜZİK PLAYER --- */
+        var audio = document.getElementById("myAudio");
+        var playBtn = document.querySelector(".play-btn");
+        var playerBar = document.querySelector(".player-bar");
+        var icon = document.getElementById("playIcon");
+
+        function toggleAudio() {
+            if (audio.paused) {
+                audio.play();
+                icon.classList.remove("fa-play");
+                icon.classList.add("fa-pause");
+                playerBar.classList.add("playing");
+            } else {
+                audio.pause();
+                icon.classList.remove("fa-pause");
+                icon.classList.add("fa-play");
+                playerBar.classList.remove("playing");
+            }
+        }
+        function toggleMute() {
+            audio.muted = !audio.muted;
+            document.getElementById("volIcon").className = audio.muted ? "fas fa-volume-mute" : "fas fa-volume-up";
+        }
+        audio.volume = 0.5;
     </script>
 </body>
 </html>
