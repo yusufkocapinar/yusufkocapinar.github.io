@@ -119,8 +119,16 @@ body.purple-mode .hero-glass { background: rgba(60, 40, 70, 0.4); border-color: 
     border: 3px solid var(--accent-color); margin-bottom: 20px;
 }
 h1 { font-size: 3rem; margin: 0; font-weight: 800; letter-spacing: -1px; color: #fff; text-shadow: 0 5px 15px rgba(0,0,0,0.2); }
-.subtitle { font-family: 'Playfair Display', serif; font-size: 1.2rem; color: #f0f0f0; font-style: italic; margin-top: 10px; opacity: 0.9;}
-
+/* HERO kısmındaki subtitle güncellemesi */
+.subtitle { 
+    font-family: 'Playfair Display', serif; 
+    font-size: 1.2rem; 
+    color: var(--accent-color); /* DEĞİŞEN KISIM: Artık temanın vurgu rengini alıyor */
+    font-style: italic; 
+    margin-top: 10px; 
+    opacity: 1; /* Rengi tam göstermek için opaklığı artırdım */
+    font-weight: 500;
+}
 /* BAŞLIKLAR */
 h2 {
     font-family: 'Playfair Display', serif; font-size: 2.2rem; color: var(--text-color);
