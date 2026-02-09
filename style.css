@@ -109,7 +109,7 @@ section {
 }
 body.dark-mode .hero-glass { background: rgba(0, 0, 0, 0.5); border-color: rgba(255,255,255,0.1); }
 .profile-img {
-    width: 170px; height: 170px; border-radius: 50%; object-fit: cover;
+    width: 170px; height: 170px; border-radius: 15px; object-fit: cover;
     border: 3px solid var(--accent-color); margin-bottom: 20px;
 }
 h1 { font-size: 3rem; margin: 0; font-weight: 800; letter-spacing: -1px; color: #fff; text-shadow: 0 5px 15px rgba(0,0,0,0.2); }
