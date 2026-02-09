@@ -1,176 +1,190 @@
 /* FONT VE TEMEL AYARLAR */
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;800&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;800&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap');
 
 :root {
-    --accent-color: #c3b091; /* Haki */
-    --text-color: #eaeaea;
-    --glass-bg: rgba(20, 20, 20, 0.65); /* Yarı saydam koyu zemin */
-    --glass-border: rgba(255, 255, 255, 0.1);
-    --blur-amount: 15px;
+    /* --- AÇIK TEMA (Varsayılan - Krem/Bej/Haki) --- */
+    --accent-color: #c3b091; /* Haki Vurgu */
+    --text-color: #4a4a4a; /* Koyu Kahve/Gri Metin */
+    --bg-color: #f8f5f2; /* Açık Krem Zemin */
+    
+    /* Cam Efekti (Açık) */
+    --glass-bg: rgba(255, 255, 255, 0.65); /* Beyazımsı yarı saydam */
+    --glass-border: rgba(255, 255, 255, 0.4);
+    --nav-bg: rgba(255, 255, 255, 0.8);
+    --nav-icon-color: #888;
+    
+    --blur-amount: 20px;
+    --module-bg: rgba(248, 245, 242, 0.98); /* Modüller için neredeyse opak krem */
 }
 
-body.purple-mode {
-    --accent-color: #a569bd; /* Zarif Mor */
+/* --- KOYU TEMA (Haki/Siyah Versiyon) --- */
+body.dark-mode {
+    --text-color: #eaeaea;
+    --bg-color: #121212;
+    --glass-bg: rgba(20, 20, 20, 0.75);
+    --glass-border: rgba(255, 255, 255, 0.1);
+    --nav-bg: rgba(0, 0, 0, 0.5);
+    --nav-icon-color: #bbb;
+    --module-bg: rgba(15, 15, 15, 0.98);
 }
-body.purple-mode .bg-image { filter: brightness(0.5) hue-rotate(20deg); }
+/* Koyu modda arka planı karart */
+body.dark-mode .bg-image { filter: brightness(0.4) blur(8px); }
 
 body {
     margin: 0; padding: 0;
     font-family: 'Montserrat', sans-serif;
     color: var(--text-color);
-    background: #000;
+    background: var(--bg-color); /* Yeni zemin rengi */
     overflow-x: hidden;
+    transition: background 0.5s ease, color 0.5s ease;
 }
 
 html { scroll-behavior: smooth; }
 
-/* ARKA PLAN */
+/* --- ARKA PLAN GÖRSELİ (BLUR EKLENDİ) --- */
 .bg-image {
     position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1;
     background-image: url('https://i.pinimg.com/1200x/64/2b/71/642b7177987e8a830d236ad709a46938.jpg'); 
-    background-size: cover; background-position: center; filter: brightness(0.7);
+    background-size: cover; background-position: center; 
+    /* ÖNEMLİ GÜNCELLEME: Blur ve Aydınlatma */
+    filter: brightness(1.1) blur(8px); 
+    transform: scale(1.05); /* Kenarlardaki bulanıklık taşmasını gizlemek için büyütme */
     transition: filter 0.5s ease;
 }
 
 /* --- TEMA BUTONU --- */
 .theme-switch {
-    position: fixed; top: 25px; left: 25px; z-index: 1000;
-    color: var(--accent-color); font-size: 1.5rem; cursor: pointer;
-    background: rgba(0,0,0,0.5); width: 50px; height: 50px; border-radius: 50%;
-    display: flex; align-items: center; justify-content: center; border: 1px solid var(--glass-border);
-    transition: 0.3s;
+    position: fixed; top: 30px; left: 30px; z-index: 1000;
+    color: var(--accent-color); font-size: 1.4rem; cursor: pointer;
+    background: var(--nav-bg); width: 50px; height: 50px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center; 
+    border: 1px solid var(--glass-border); backdrop-filter: blur(5px);
+    transition: 0.3s; box-shadow: 0 5px 15px rgba(0,0,0,0.05);
 }
-.theme-switch:hover { background: var(--accent-color); color: #fff; transform: rotate(45deg); }
+.theme-switch:hover { background: var(--accent-color); color: #fff; transform: rotate(30deg); }
 
 /* --- YAN MENÜ (Navigasyon) --- */
 .floating-nav {
     position: fixed; right: 30px; top: 50%; transform: translateY(-50%);
     display: flex; flex-direction: column; gap: 25px; z-index: 1000;
-    background: rgba(0,0,0,0.3); padding: 20px 10px; border-radius: 50px;
-    border: 1px solid var(--glass-border); backdrop-filter: blur(5px);
+    background: var(--nav-bg); padding: 20px 12px; border-radius: 50px;
+    border: 1px solid var(--glass-border); backdrop-filter: blur(10px);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
 }
 .nav-item {
-    color: #bbb; font-size: 1.2rem; transition: 0.3s; position: relative;
-    width: 40px; height: 40px; display: flex; align-items: center; justify-content: center;
+    color: var(--nav-icon-color); font-size: 1.2rem; transition: 0.3s; position: relative;
+    width: 45px; height: 45px; display: flex; align-items: center; justify-content: center;
     text-decoration: none; border-radius: 50%;
 }
-.nav-item:hover, .nav-item.active { color: var(--accent-color); background: rgba(255,255,255,0.1); }
-/* Tooltip (İpucu) */
+.nav-item:hover, .nav-item.active { color: var(--accent-color); background: rgba(var(--accent-color), 0.1); }
+/* Tooltip */
 .nav-item::before {
-    content: attr(data-tooltip); position: absolute; right: 60px;
-    background: var(--accent-color); color: #000; padding: 5px 12px;
-    border-radius: 5px; font-size: 0.75rem; font-weight: bold; opacity: 0;
+    content: attr(data-tooltip); position: absolute; right: 65px;
+    background: var(--accent-color); color: #fff; padding: 6px 14px;
+    border-radius: 6px; font-size: 0.8rem; font-weight: 600; opacity: 0;
     pointer-events: none; transition: 0.3s; white-space: nowrap; transform: translateX(10px);
 }
 .nav-item:hover::before { opacity: 1; transform: translateX(0); }
 
-/* --- ANA SAHNE (SCROLL CONTAINER) --- */
-#main-stage {
-    transition: opacity 0.5s ease, transform 0.5s ease;
-    opacity: 1; transform: scale(1);
-}
-#main-stage.hidden {
-    opacity: 0; pointer-events: none; transform: scale(0.95); display: none; /* Tamamen gizle */
-}
+/* --- ANA SAHNE --- */
+#main-stage { transition: opacity 0.5s ease, transform 0.5s ease; }
+#main-stage.hidden { opacity: 0; pointer-events: none; transform: scale(0.98); }
 
-/* Bölümler */
 section {
-    padding: 100px 20px;
-    min-height: 80vh; /* Her bölüm ekranı doldursun */
+    padding: 120px 20px; min-height: 90vh;
     display: flex; flex-direction: column; justify-content: center; align-items: center;
-    max-width: 900px; margin: 0 auto;
+    max-width: 1000px; margin: 0 auto;
 }
 
-/* HERO (Giriş) */
+/* HERO */
 .hero-content { text-align: center; animation: fadeInUp 1.5s ease; }
 .profile-img {
-    width: 180px; height: 180px; border-radius: 20px; object-fit: cover;
-    border: 3px solid var(--accent-color); margin-bottom: 30px;
-    box-shadow: 0 20px 50px rgba(0,0,0,0.6);
+    width: 200px; height: 200px; border-radius: 30px; object-fit: cover;
+    border: 4px solid var(--accent-color); margin-bottom: 35px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.15);
 }
-h1 { font-size: 3.5rem; margin: 0; font-weight: 800; letter-spacing: -2px; }
-.subtitle { font-size: 1.2rem; color: var(--accent-color); letter-spacing: 3px; text-transform: uppercase; margin-top: 10px; }
+h1 { font-size: 3.8rem; margin: 0; font-weight: 800; letter-spacing: -1px; color: var(--text-color); }
+.subtitle { font-size: 1.3rem; color: var(--accent-color); font-weight: 500; letter-spacing: 2px; margin-top: 15px; font-family: 'Playfair Display', serif; font-style: italic;}
 
-/* KART TASARIMI (Glassmorphism) */
+/* KART TASARIMI (Açık Renk Glassmorphism) */
 .glass-card {
     background: var(--glass-bg); backdrop-filter: blur(var(--blur-amount));
-    border: 1px solid var(--glass-border); padding: 40px; border-radius: 20px;
-    box-shadow: 0 20px 40px rgba(0,0,0,0.4); text-align: center;
-    transition: 0.3s; width: 100%;
+    border: 1px solid var(--glass-border); padding: 50px; border-radius: 25px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.08); text-align: center; width: 100%;
+    transition: 0.3s;
 }
-.glass-card:hover { transform: translateY(-5px); border-color: var(--accent-color); }
+.glass-card:hover { transform: translateY(-5px); box-shadow: 0 30px 60px rgba(0,0,0,0.12); border-color: var(--accent-color);}
 
 h2 {
-    font-family: 'Playfair Display', serif; font-size: 2.5rem; color: #fff;
+    font-family: 'Playfair Display', serif; font-size: 2.5rem; color: var(--text-color);
     margin-bottom: 40px; position: relative; display: inline-block;
 }
-h2::after {
-    content: ''; display: block; width: 50%; height: 3px; background: var(--accent-color);
-    margin: 10px auto 0;
-}
+h2::after { content: ''; display: block; width: 40%; height: 3px; background: var(--accent-color); margin: 15px auto 0; opacity: 0.7; }
 
-/* SON GÜNCELLEMELER (Grid) */
-.updates-grid {
-    display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; width: 100%;
-}
+/* SON GÜNCELLEMELER GRID */
+.updates-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 30px; width: 100%; }
 .update-item {
-    background: rgba(255,255,255,0.05); padding: 25px; border-radius: 15px;
+    background: var(--glass-bg); padding: 30px; border-radius: 20px;
     border: 1px solid var(--glass-border); text-align: left; cursor: pointer; transition: 0.3s;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.05); backdrop-filter: blur(10px);
 }
-.update-item:hover { background: rgba(255,255,255,0.1); border-color: var(--accent-color); }
-.tag { font-size: 0.7rem; color: var(--accent-color); text-transform: uppercase; letter-spacing: 1px; border: 1px solid var(--accent-color); padding: 2px 8px; border-radius: 10px; }
-.update-title { font-family: 'Playfair Display', serif; font-size: 1.5rem; margin: 15px 0 10px; line-height: 1.2; }
-.update-desc { font-size: 0.9rem; color: #aaa; line-height: 1.6; }
+.update-item:hover { transform: translateY(-5px); border-color: var(--accent-color); box-shadow: 0 20px 40px rgba(0,0,0,0.1); }
+.tag { font-size: 0.75rem; color: var(--accent-color); text-transform: uppercase; letter-spacing: 1px; font-weight: 700; }
+.update-title { font-family: 'Playfair Display', serif; font-size: 1.6rem; margin: 15px 0 15px; line-height: 1.3; color: var(--text-color); }
+.update-desc { font-size: 1rem; color: var(--text-color); opacity: 0.8; line-height: 1.7; }
 
-/* --- FULL PAGE MODÜLLER (Kütüphane & Akademi) --- */
+/* --- FULL PAGE MODÜLLER --- */
 .full-page-module {
-    display: none; /* Varsayılan gizli */
-    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-    background: rgba(10, 10, 10, 0.95); backdrop-filter: blur(20px);
-    z-index: 2000; overflow-y: auto; padding: 40px;
-    animation: fadeIn 0.5s ease;
+    display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: var(--module-bg); /* Yeni opak krem zemin */
+    z-index: 2000; overflow-y: auto; padding: 60px 40px;
+    animation: fadeIn 0.4s ease;
 }
 .full-page-module.active { display: block; }
 
 .module-header {
-    max-width: 1000px; margin: 0 auto 40px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 20px;
+    max-width: 1100px; margin: 0 auto 60px; display: flex; justify-content: space-between; align-items: center; 
 }
-.back-home-btn {
-    background: transparent; border: 1px solid var(--accent-color); color: var(--accent-color);
-    padding: 10px 20px; border-radius: 30px; cursor: pointer; transition: 0.3s;
-    font-size: 0.9rem; font-weight: bold; display: flex; align-items: center; gap: 10px;
-}
-.back-home-btn:hover { background: var(--accent-color); color: #000; }
+.module-title { font-family: 'Playfair Display', serif; font-size: 3rem; margin: 0; color: var(--text-color); }
 
-/* Kütüphane Poster Grid */
-.poster-grid {
-    display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 30px;
-    max-width: 1000px; margin: 0 auto;
+.back-home-btn {
+    background: transparent; border: 2px solid var(--accent-color); color: var(--accent-color);
+    padding: 12px 25px; border-radius: 30px; cursor: pointer; transition: 0.3s;
+    font-size: 1rem; font-weight: 600; display: flex; align-items: center; gap: 10px;
 }
+.back-home-btn:hover { background: var(--accent-color); color: #fff; }
+
+.module-content { max-width: 1100px; margin: 0 auto; }
+.section-title { font-size: 1.2rem; color: var(--text-color); opacity: 0.6; margin-bottom: 25px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px;}
+
+/* Poster Grid */
+.poster-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 35px; }
 .poster {
-    aspect-ratio: 2/3; border-radius: 10px; overflow: hidden; position: relative;
-    border: 1px solid var(--glass-border); transition: 0.3s; cursor: pointer;
+    aspect-ratio: 2/3; border-radius: 15px; overflow: hidden; position: relative;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.15); transition: 0.3s; cursor: pointer;
 }
-.poster:hover { transform: scale(1.05); border-color: var(--accent-color); z-index: 5; }
+.poster:hover { transform: scale(1.03) translateY(-5px); box-shadow: 0 25px 50px rgba(0,0,0,0.25); }
 .poster img { width: 100%; height: 100%; object-fit: cover; }
 
 /* Footer */
-.footer-socials a { color: #fff; font-size: 1.8rem; margin: 0 15px; transition: 0.3s; }
-.footer-socials a:hover { color: var(--accent-color); }
+.footer-socials a { color: var(--text-color); font-size: 1.8rem; margin: 0 15px; transition: 0.3s; opacity: 0.7; }
+.footer-socials a:hover { color: var(--accent-color); opacity: 1; }
 
 /* Animasyonlar */
-@keyframes fadeInUp { from { opacity: 0; transform: translateY(50px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes fadeInUp { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
 @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes bounce { 0%, 100% {transform: translateY(0);} 50% {transform: translateY(-10px);} }
 
 /* Mobil */
 @media (max-width: 768px) {
     .floating-nav { 
         bottom: 20px; top: auto; right: 50%; transform: translateX(50%); 
-        flex-direction: row; width: 90%; justify-content: space-around; background: rgba(0,0,0,0.9);
+        flex-direction: row; width: auto; gap: 15px; padding: 15px 25px;
     }
-    .nav-item::before { display: none; } /* Mobilde tooltip gizle */
-    h1 { font-size: 2.5rem; }
-    section { padding: 60px 20px; }
-    .updates-grid { grid-template-columns: 1fr; }
-    .full-page-module { padding: 20px; padding-bottom: 100px; }
+    .nav-item::before { display: none; }
+    h1 { font-size: 2.8rem; }
+    section { padding: 80px 20px; }
+    .glass-card { padding: 30px; }
+    .full-page-module { padding: 30px 20px 100px; }
+    .module-title { font-size: 2rem; }
 }
