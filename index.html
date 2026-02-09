@@ -72,43 +72,33 @@
     <div id="library-modal" class="modal-overlay">
         <div class="modal-window">
             <div class="modal-header">
-                <div class="window-controls"><span class="dot red" onclick="closeModals()"></span><span class="dot yellow"></span><span class="dot green"></span></div>
+                <div class="window-controls">
+                    <span class="dot red" onclick="closeModals()"></span>
+                    <span class="dot yellow"></span>
+                    <span class="dot green"></span>
+                </div>
                 <div class="window-title">Kültür & Sanat</div>
                 <div style="width:50px"></div>
             </div>
             
-            <div class="modal-content show-modal-content" style="padding-top:10px;">
-                <div class="tabs-header">
-                    <button class="tab-btn active" onclick="switchTab('books')">Kitaplar</button>
-                    <button class="tab-btn" onclick="switchTab('movies')">İzlediklerim</button>
+            <div class="modal-content show-modal-content">
+                
+                <div id="library-overview">
+                    <div class="tabs-header">
+                        <button class="tab-btn active" onclick="switchTab('books')">Kitaplar</button>
+                        <button class="tab-btn" onclick="switchTab('movies')">İzlediklerim</button>
+                    </div>
+
+                    <div id="tab-books" class="tab-content active poster-grid"></div>
+
+                    <div id="tab-movies" class="tab-content poster-grid"></div>
                 </div>
 
-                <div id="tab-books" class="tab-content active poster-grid">
-                    <div class="poster-card">
-                        <img src="https://img.kitapyurdu.com/v1/getImage/fn:11985778/wi:800/wh:9b87ff2f0" alt="Kitap 1">
-                        <div class="poster-overlay">
-                            <div class="poster-title">Üniversitenin Yükselişi</div>
-                            <div class="poster-meta">Charles Homer Haskins</div>
-                        </div>
-                    </div>
-                    <div class="poster-card">
-                        <img src="https://img.kitapyurdu.com/v1/getImage/fn:12150703/wi:500/wh:bfff5df1e" alt="Kitap 2">
-                        <div class="poster-overlay">
-                            <div class="poster-title">Holokost Endüstrisi</div>
-                            <div class="poster-meta">Norman Finkelstein</div>
-                        </div>
-                    </div>
+                <div id="library-detail" style="display: none;">
+                    <button class="back-btn" onclick="closeLibItem()"><i class="fas fa-arrow-left"></i> Listeye Dön</button>
+                    <div id="lib-dynamic-content"></div>
                 </div>
 
-                <div id="tab-movies" class="tab-content poster-grid">
-                    <div class="poster-card">
-                        <img src="https://i.pinimg.com/736x/88/54/9d/88549d4793836d933c063f477699479e.jpg" alt="Film 1">
-                        <div class="poster-overlay">
-                            <div class="poster-title">Interstellar</div>
-                            <div class="poster-meta">Christopher Nolan</div>
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
     </div>
@@ -175,16 +165,46 @@
         }
         if(localStorage.getItem('theme') === 'purple') document.body.classList.add('purple-mode');
 
-        /* VERİLER */
+        /* --- VERİLER --- */
+        
+        // BLOG DOSYALARI
         const myFiles = [
             { name: "Kültürlenmiş Et", file: "Kültürlenmiş_Et.txt", size: "3 KB" },
             { name: "Biyomühendislik", file: "Biyomuhendislik.txt", size: "5 KB" }
         ];
+
+        // GALERİ FOTOĞRAFLARI
         const myGallery = [
             { src: "citedepera.jpg", caption: "Cité de Péra" },
             { src: "feneryolu.jpg", caption: "Feneryolu" },
             { src: "daylik.jpg", caption: "Daylık Köyü" }
         ];
+
+        // KÜTÜPHANE VERİLERİ (Kitaplar ve Filmler buraya girilecek)
+        const myLibrary = {
+            books: [
+                {
+                    title: "Üniversitenin Yükselişi",
+                    author: "Charles Homer Haskins",
+                    img: "https://img.kitapyurdu.com/v1/getImage/fn:11985778/wi:800/wh:9b87ff2f0",
+                    review: "Orta Çağ üniversitelerinin kuruluşunu ve modern akademiye etkilerini anlatan temel bir eser. Üniversite kavramının nasıl doğduğunu anlamak isteyenler için harika bir kaynak."
+                },
+                {
+                    title: "Holokost Endüstrisi",
+                    author: "Norman Finkelstein",
+                    img: "https://img.kitapyurdu.com/v1/getImage/fn:12150703/wi:500/wh:bfff5df1e",
+                    review: "Tarihsel acıların nasıl politik ve ekonomik bir güce dönüştürüldüğüne dair cesur bir eleştiri. Okurken sorgulatan ve sarsan bir kitap."
+                }
+            ],
+            movies: [
+                {
+                    title: "Interstellar",
+                    author: "Christopher Nolan",
+                    img: "https://i.pinimg.com/736x/88/54/9d/88549d4793836d933c063f477699479e.jpg",
+                    review: "Zamanın göreliliği ve sevginin boyutlar arası gücü üzerine görsel bir şölen. Hans Zimmer'ın müzikleri filmi başka bir seviyeye taşıyor."
+                }
+            ]
+        };
 
         /* MODAL YÖNETİMİ */
         const modals = {
@@ -198,7 +218,83 @@
             Object.values(modals).forEach(m => m.classList.remove('open'));
         }
 
-        function openLibrary() { closeModals(); modals.library.classList.add('open'); }
+        /* --- KÜTÜPHANE FONKSİYONLARI --- */
+        function openLibrary() { 
+            closeModals(); 
+            modals.library.classList.add('open'); 
+            renderLibrary(); 
+            closeLibItem(); 
+        }
+
+        function renderLibrary() {
+            // Kitapları Doldur
+            const bookContainer = document.getElementById('tab-books');
+            bookContainer.innerHTML = '';
+            myLibrary.books.forEach((item, index) => {
+                bookContainer.innerHTML += `
+                    <div class="poster-card" onclick="openLibItem('books', ${index})">
+                        <img src="${item.img}" alt="${item.title}">
+                        <div class="poster-overlay">
+                            <div class="poster-title">${item.title}</div>
+                            <div class="poster-meta">${item.author}</div>
+                        </div>
+                    </div>`;
+            });
+
+            // Filmleri Doldur
+            const movieContainer = document.getElementById('tab-movies');
+            movieContainer.innerHTML = '';
+            myLibrary.movies.forEach((item, index) => {
+                movieContainer.innerHTML += `
+                    <div class="poster-card" onclick="openLibItem('movies', ${index})">
+                        <img src="${item.img}" alt="${item.title}">
+                        <div class="poster-overlay">
+                            <div class="poster-title">${item.title}</div>
+                            <div class="poster-meta">${item.author}</div>
+                        </div>
+                    </div>`;
+            });
+        }
+
+        function openLibItem(category, index) {
+            const item = myLibrary[category][index];
+            document.getElementById('library-overview').style.display = 'none';
+            document.getElementById('library-detail').style.display = 'block';
+
+            const contentDiv = document.getElementById('lib-dynamic-content');
+            contentDiv.innerHTML = `
+                <div class="item-detail-container">
+                    <img src="${item.img}" class="detail-poster">
+                    <div class="detail-content">
+                        <h2>${item.title}</h2>
+                        <span class="detail-meta">${item.author}</span>
+                        <div class="detail-text">${item.review}</div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function closeLibItem() {
+            document.getElementById('library-overview').style.display = 'block';
+            document.getElementById('library-detail').style.display = 'none';
+        }
+
+        function switchTab(tabName) {
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.remove('active');
+                content.style.display = 'none';
+            });
+            const buttons = document.querySelectorAll('.tab-btn');
+            if(tabName === 'books') buttons[0].classList.add('active');
+            else buttons[1].classList.add('active');
+            
+            const activeContent = document.getElementById(`tab-${tabName}`);
+            activeContent.classList.add('active');
+            activeContent.style.display = 'grid';
+        }
+
+        /* DİĞER FONKSİYONLAR */
         function openAcademy() { closeModals(); modals.academy.classList.add('open'); }
         
         function openBlog() { 
@@ -217,24 +313,7 @@
             document.getElementById('gallery-single-view').style.display = 'none';
         }
 
-        /* SEKME YÖNETİMİ (KÜTÜPHANE) */
-        function switchTab(tabName) {
-            // Butonları resetle
-            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
-            // İçerikleri gizle
-            document.querySelectorAll('.tab-content').forEach(content => {
-                content.classList.remove('active');
-                content.style.display = 'none';
-            });
-
-            // Tıklananı aktif et
-            event.target.classList.add('active');
-            const activeContent = document.getElementById(`tab-${tabName}`);
-            activeContent.classList.add('active');
-            activeContent.style.display = 'grid';
-        }
-
-        /* BLOG İŞLEMLERİ */
+        /* BLOG RENDER */
         function renderFiles() {
             const container = document.getElementById('files-view');
             container.innerHTML = '';
@@ -242,56 +321,3 @@
                 container.innerHTML += `
                     <div class="file-item" onclick="openFile(${index})">
                         <div class="file-icon"><i class="fas fa-file-alt"></i></div>
-                        <div class="file-name">${item.name}</div>
-                        <div class="file-date">${item.size}</div>
-                    </div>`;
-            });
-        }
-        function openFile(index) {
-            document.getElementById('files-view').style.display = 'none';
-            document.getElementById('reader-view').style.display = 'block';
-            const content = document.getElementById('dynamic-content');
-            content.innerHTML = '<p>Yükleniyor...</p>';
-            fetch(myFiles[index].file)
-                .then(r => r.ok ? r.text() : Promise.reject())
-                .then(text => content.innerHTML = `<h2>${myFiles[index].name}</h2><hr><div style="text-align:left;">${text.replace(/\n/g, "<br>")}</div>`)
-                .catch(() => content.innerHTML = `<p>İçerik yüklenemedi.</p>`);
-        }
-        function showFiles() {
-            document.getElementById('files-view').style.display = 'grid';
-            document.getElementById('reader-view').style.display = 'none';
-        }
-
-        /* GALERİ İŞLEMLERİ */
-        function renderGallery() {
-            const container = document.getElementById('gallery-grid-view');
-            container.innerHTML = '';
-            myGallery.forEach((item, index) => {
-                container.innerHTML += `
-                    <div class="gallery-item" onclick="viewImage(${index})">
-                        <img src="${item.src}" alt="${item.caption}">
-                        <div class="img-caption">${item.caption}</div>
-                    </div>`;
-            });
-        }
-        function viewImage(index) {
-            document.getElementById('gallery-grid-view').style.display = 'none';
-            document.getElementById('gallery-single-view').style.display = 'block';
-            const container = document.getElementById('single-image-container');
-            container.innerHTML = `
-                <img src="${myGallery[index].src}" style="max-width:100%; max-height:60vh; border-radius:10px; box-shadow:0 10px 30px rgba(0,0,0,0.5);">
-                <h3 style="margin-top:20px; color:var(--accent-color); font-weight:300;">${myGallery[index].caption}</h3>
-            `;
-        }
-        function showGalleryGrid() {
-            document.getElementById('gallery-grid-view').style.display = 'grid';
-            document.getElementById('gallery-single-view').style.display = 'none';
-        }
-
-        /* KAPATMA */
-        window.onclick = function(e) {
-            if (e.target.classList.contains('modal-overlay')) closeModals();
-        }
-    </script>
-</body>
-</html>
