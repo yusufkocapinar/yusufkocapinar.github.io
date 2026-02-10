@@ -11,20 +11,17 @@
 
     <div class="bg-image" id="bg-blur"></div>
 
-    <div class="theme-switch" onclick="toggleTheme()">
+    <button class="theme-switch" onclick="toggleTheme()">
         <i class="fas fa-sun" id="theme-icon"></i>
-    </div>
+    </button>
 
     <nav class="floating-nav">
         <a href="#home" class="nav-item active" onclick="showLanding()" data-tooltip="Ana Sayfa"><i class="fas fa-home"></i></a>
         <a href="#about" class="nav-item" onclick="showLanding()" data-tooltip="Ben Kimim?"><i class="fas fa-user-astronaut"></i></a>
-        
         <a href="javascript:void(0)" onclick="openModule('culture')" class="nav-item" data-tooltip="Kültür & Sanat"><i class="fas fa-book-open"></i></a>
         <a href="javascript:void(0)" onclick="openModule('journal')" class="nav-item" data-tooltip="Akademik & Günlük"><i class="fas fa-graduation-cap"></i></a>
         <a href="javascript:void(0)" onclick="openModule('gallery')" class="nav-item" data-tooltip="Galeri"><i class="fas fa-camera"></i></a>
-        
         <a href="#updates" class="nav-item" onclick="showLanding()" data-tooltip="Güncellemeler"><i class="fas fa-bell"></i></a>
-        <a href="#contact" class="nav-item" onclick="showLanding()" data-tooltip="İletişim"><i class="fas fa-paper-plane"></i></a>
     </nav>
 
     <div id="main-stage">
@@ -34,7 +31,7 @@
                 <div class="hero-content">
                     <img src="profil.png" alt="Yusuf Kocapınar" class="profile-img">
                     <h1>Yusuf Kocapınar</h1>
-                    <p class="subtitle">Dijital Günlüğüme Hoş Geldin</p>
+                    <p class="subtitle">Biyomühendislik & Dijital Günlük</p>
                 </div>
             </div>
             <div class="scroll-indicator" onclick="document.getElementById('about').scrollIntoView();">
@@ -43,10 +40,10 @@
             </div>
         </section>
 
-        <section id="about">
-            <div class="glass-card" style="text-align: left; max-width: 800px;">
-                <h2 style="margin: 0 0 30px 0; text-align: left; width: auto;">Ben Kimim?</h2>
-                <div style="line-height: 1.9; font-size: 1.1rem; font-family: 'Playfair Display', serif; color: var(--text-color);">
+        <section id="about" style="padding-bottom: 20px;">
+            <div class="glass-card">
+                <h2>Ben Kimim?</h2>
+                <div style="line-height: 1.8; font-size: 1.05rem; opacity: 0.9;">
                     <p>Merhaba! Ben Yusuf.</p>
                     <p>Meraklı, araştırmacı ve bir o kadar da öğrenmeye tutkulu bir biyomühendislik öğrencisinin blog sayfasına hoş geldin!</p>
                     <p>Yazılar yazıyor, kültür sanat etkinliklerine katılıyor, gördüklerimi fotoğraflıyorum. Ânın tadını çıkartıyor ama ânda takılı kalmıyorum. Aslında bu sayfa bir sonuç değil sürecin eseri; kendi ellerimle yazdığım "Yusuf Masalı"nda bana eşlik etmenden memnuniyet duyarım.</p>
@@ -55,10 +52,9 @@
             </div>
         </section>
 
-        <section id="updates">
-            <h2>Son Güncellemeler</h2>
+        <section id="updates" style="padding-top: 0;">
+            <h2 style="font-size: 1.5rem; border: none; margin-bottom: 15px;">Son Güncellemeler</h2>
             <div class="updates-list">
-                
                 <div class="update-row" onclick="openModule('journal')">
                     <div class="update-info">
                         <div class="update-meta">YENİ YAZI • 3 ŞUBAT</div>
@@ -66,7 +62,6 @@
                     </div>
                     <i class="fas fa-arrow-right arrow-icon"></i>
                 </div>
-
                 <div class="update-row" onclick="openModule('culture')">
                     <div class="update-info">
                         <div class="update-meta">KÜTÜPHANE • OKUNDU</div>
@@ -74,7 +69,6 @@
                     </div>
                     <i class="fas fa-arrow-right arrow-icon"></i>
                 </div>
-
                 <div class="update-row" onclick="openModule('journal')">
                     <div class="update-info">
                         <div class="update-meta">AKADEMİ • PROJE</div>
@@ -82,15 +76,14 @@
                     </div>
                     <i class="fas fa-arrow-right arrow-icon"></i>
                 </div>
-
             </div>
         </section>
 
-        <section id="music-section" style="padding-bottom: 20px;">
+        <section id="music-section" style="padding: 20px 0;">
             <div class="player-container">
                 <div class="player-bar">
                     <div class="cover-art">
-                        <img src="kapak.jpg" alt="Music Cover">
+                        <img src="kapak.jpg" alt="Cover">
                     </div>
                     <div class="song-info">
                         <div class="track-title">أهو ده اللي صار</div>
@@ -98,7 +91,7 @@
                     </div>
                     <div class="player-controls">
                         <button class="ctrl-btn" onclick="toggleMute()"><i class="fas fa-volume-up" id="volIcon"></i></button>
-                        <button class="ctrl-btn play-btn" onclick="toggleAudio()"><i class="fas fa-play" id="playIcon"></i></button>
+                        <button class="ctrl-btn" onclick="toggleAudio()"><i class="fas fa-play" id="playIcon"></i></button>
                     </div>
                     <audio id="myAudio" loop>
                         <source src="muzik.mp3" type="audio/mpeg">
@@ -107,23 +100,24 @@
             </div>
         </section>
 
-        <section id="contact" style="padding-top: 0; min-height: auto; padding-bottom: 80px;">
-            <div class="minimal-contact">
-                <div class="contact-socials">
+        <section id="contact">
+            <div class="minimal-footer">
+                <div class="footer-socials">
                     <a href="#"><i class="fab fa-github"></i></a>
                     <a href="#"><i class="fab fa-linkedin"></i></a>
                     <a href="#"><i class="fab fa-instagram"></i></a>
                 </div>
-                <div class="contact-mail">yusufkocapinar92@gmail.com</div>
+                <div class="footer-mail">yusufkocapinar92@gmail.com</div>
+                <div class="copyright">&copy; 2026 Yusuf Kocapınar</div>
             </div>
-            <p style="font-size: 0.7rem; opacity: 0.5; margin-top: 20px;">&copy; 2026 Yusuf Kocapınar</p>
         </section>
 
     </div> 
+
     <div id="module-culture" class="full-page-module">
         <div class="module-header">
             <h2 class="module-title">Kültür & Sanat</h2>
-            <button class="back-btn" onclick="showLanding()">Ana Sayfaya Dön</button>
+            <button class="back-btn" onclick="showLanding()">Geri Dön</button>
         </div>
         <div class="module-content">
             <h3 class="section-header">Kitaplık</h3>
@@ -136,23 +130,23 @@
     <div id="module-journal" class="full-page-module">
         <div class="module-header">
             <h2 class="module-title">Akademik & Günlük</h2>
-            <button class="back-btn" onclick="showLanding()">Ana Sayfaya Dön</button>
+            <button class="back-btn" onclick="showLanding()">Geri Dön</button>
         </div>
         <div class="module-content">
-            <h3 class="section-header">Akademik Çalışmalar</h3>
+            <h3 class="section-header">Akademik</h3>
             <div class="academy-grid">
                 <div class="academy-card">
-                    <div style="font-weight:bold; color:var(--accent-color); font-size:0.8rem;">PROJE</div>
+                    <div style="font-weight:bold; color:var(--accent-color); font-size:0.7rem;">PROJE</div>
                     <h3>Organ-on-Chip Teknolojileri</h3>
                     <p>Marmara Üniversitesi laboratuvarlarında mikroakışkan sistemler üzerine araştırma projesi.</p>
                 </div>
                 <div class="academy-card">
-                    <div style="font-weight:bold; color:var(--accent-color); font-size:0.8rem;">TOPLULUK</div>
+                    <div style="font-weight:bold; color:var(--accent-color); font-size:0.7rem;">TOPLULUK</div>
                     <h3>Cansağlığı Kulübü</h3>
                     <p>Yönetim Kurulu Üyeliği ve Bilimsel İş Birlikleri koordinasyonu.</p>
                 </div>
             </div>
-            <h3 class="section-header">Blog Notları</h3>
+            <h3 class="section-header">Blog</h3>
             <div class="academy-grid" id="blog-grid"></div>
         </div>
     </div>
@@ -160,7 +154,7 @@
     <div id="module-gallery" class="full-page-module">
         <div class="module-header">
             <h2 class="module-title">Hafıza</h2>
-            <button class="back-btn" onclick="showLanding()">Ana Sayfaya Dön</button>
+            <button class="back-btn" onclick="showLanding()">Geri Dön</button>
         </div>
         <div class="poster-grid">
             <div class="poster"><img src="citedepera.jpg"></div>
@@ -177,20 +171,13 @@
     </div>
 
     <script>
-        /* --- VERİLER --- */
         const data = {
             books: [
                 {
                     title: "Üniversitenin Yükselişi",
                     author: "Charles Homer Haskins",
                     img: "https://img.kitapyurdu.com/v1/getImage/fn:11985778/wi:800/wh:9b87ff2f0",
-                    review: `Kitap, Orta Çağ üniversitelerinin doğuşunu, kurumsal yapısını, profesörlerin otoritesini ve öğrencilerin gündelik hayatını ayrıntılı şekilde ele alıyor. Temelde üç bölümden oluşan eser, “ekler” kısmındaki belgelerle derinlik kazanıyor. Öğrencilerin mektuplarında kira, geçim ve ders yoğunluğu gibi sorunların hâlâ tanıdık olması dikkat çekici.
-                    <br><br>
-                    Haskins üniversiteleri iki modele ayırıyor: Bologna’daki öğrenci üniversiteleri ve Paris’teki profesör üniversiteleri. Bologna’da öğrenciler profesörleri seçiyor ve maaşlarını ödüyordu; bu da ciddi bir güç sağlıyordu. Paris’te ise kilise/devlet desteğiyle maaş alan profesörler, teoloji merkezli güçlü bir otorite kuruyordu. Burada üniversitenin tanımı da önemli: Universitas bugünkü gibi “evrensellik” değil, “birlik” anlamına geliyordu. Öğrenci üniversitelerinde, profesörlerin öğrencilere karşı sorumlu olmaları ve onlar tarafından idare ediliyor olmaları da bence bu birlikle alakalı. Öte yandan; öğrenciler, yüksek konut fiyatları gibi sorunlarla da birlik olarak mücadele ediyordu. Henüz üniversiteler birer binaya sahip değilken bir anda başka bir yere taşınabiliyorlardı. Ayrıca değinmeden geçmeyeyim, o dönemki üniversite olgusunun ekseninde meslek öğretmek değil ahlaklı bireyler yetiştirmek gibi bir motivasyon vardı ve bunu yaparken dinden pek de ayrılıyor değillerdi.
-                    <br><br>
-                    Buna hem yazarın ifadelerinde hem de öğrenci mektuplarında rastlamak mümkün. Çok uzatmadan kişisel notlarıma geçecek olursam:
-                    <br><br>
-                    Üniversitenin Yükselişi, akademik bir metin olması sebebiyle temiz kafayla ve iştahla okunması gereken bir kitap. Kısa olsa da oldukça zengin bir içeriğe ve kaynakçaya sahip ve ilgilileri için bence güzel bir giriş niteliğinde.`
+                    review: `Kitap, Orta Çağ üniversitelerinin doğuşunu, kurumsal yapısını, profesörlerin otoritesini ve öğrencilerin gündelik hayatını ayrıntılı şekilde ele alıyor. Temelde üç bölümden oluşan eser, “ekler” kısmındaki belgelerle derinlik kazanıyor. Öğrencilerin mektuplarında kira, geçim ve ders yoğunluğu gibi sorunların hâlâ tanıdık olması dikkat çekici.<br><br>Haskins üniversiteleri iki modele ayırıyor: Bologna’daki öğrenci üniversiteleri ve Paris’teki profesör üniversiteleri. Bologna’da öğrenciler profesörleri seçiyor ve maaşlarını ödüyordu; bu da ciddi bir güç sağlıyordu. Paris’te ise kilise/devlet desteğiyle maaş alan profesörler, teoloji merkezli güçlü bir otorite kuruyordu. Burada üniversitenin tanımı da önemli: Universitas bugünkü gibi “evrensellik” değil, “birlik” anlamına geliyordu. Öğrenci üniversitelerinde, profesörlerin öğrencilere karşı sorumlu olmaları ve onlar tarafından idare ediliyor olmaları da bence bu birlikle alakalı. Öte yandan; öğrenciler, yüksek konut fiyatları gibi sorunlarla da birlik olarak mücadele ediyordu. Henüz üniversiteler birer binaya sahip değilken bir anda başka bir yere taşınabiliyorlardı. Ayrıca değinmeden geçmeyeyim, o dönemki üniversite olgusunun ekseninde meslek öğretmek değil ahlaklı bireyler yetiştirmek gibi bir motivasyon vardı ve bunu yaparken dinden pek de ayrılıyor değillerdi.<br><br>Buna hem yazarın ifadelerinde hem de öğrenci mektuplarında rastlamak mümkün. Çok uzatmadan kişisel notlarıma geçecek olursam:<br><br>Üniversitenin Yükselişi, akademik bir metin olması sebebiyle temiz kafayla ve iştahla okunması gereken bir kitap. Kısa olsa da oldukça zengin bir içeriğe ve kaynakçaya sahip ve ilgilileri için bence güzel bir giriş niteliğinde.`
                 },
                 {
                     title: "Holokost Endüstrisi",
@@ -207,22 +194,16 @@
             ],
             movies: [
                 {
-                    title: "Interstellar",
-                    author: "Christopher Nolan",
-                    img: "https://i.pinimg.com/736x/88/54/9d/88549d4793836d933c063f477699479e.jpg",
-                    review: "Zamanın göreliliği ve sevginin boyutlar arası gücü üzerine görsel bir şölen."
-                },
-                {
-                    title: "Dune",
-                    author: "Denis Villeneuve",
-                    img: "https://i.pinimg.com/564x/f3/98/9d/f3989d2c2069f0003723337922752536.jpg",
-                    review: "Bilim kurgunun sınırlarını aşan, politika ve ekoloji üzerine devasa bir destan."
-                },
-                {
                     title: "Inception",
                     author: "Christopher Nolan",
                     img: "https://m.media-amazon.com/images/M/MV5BMjExMjkwNTQ0Nl5BMl5BanBnXkFtZTcwNTY0OTk1Mw@@._V1_.jpg",
                     review: "Rüya içinde rüya..."
+                },
+                {
+                    title: "Intouchables",
+                    author: "Olivier Nakache",
+                    img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRkiJPMd8Tlgpt58klpULjQUCVox_C2X5IS1w&s",
+                    review: "Dostluğun engel tanımayan hikayesi."
                 },
                 {
                     title: "Ters Yüz",
@@ -245,7 +226,6 @@
             ]
         };
 
-        /* --- SAYFA YÖNETİMİ --- */
         const mainStage = document.getElementById('main-stage');
         const modules = document.querySelectorAll('.full-page-module');
 
@@ -264,26 +244,18 @@
             }, 300);
         }
 
-        /* --- İÇERİK RENDER --- */
         window.addEventListener('DOMContentLoaded', () => {
-            // Kitaplar
             const bookGrid = document.getElementById('books-grid');
-            data.books.forEach((item, index) => {
-                bookGrid.innerHTML += createPosterHTML(item, 'books', index);
-            });
+            data.books.forEach((item, index) => bookGrid.innerHTML += createPosterHTML(item, 'books', index));
 
-            // Filmler
             const movieGrid = document.getElementById('movies-grid');
-            data.movies.forEach((item, index) => {
-                movieGrid.innerHTML += createPosterHTML(item, 'movies', index);
-            });
+            data.movies.forEach((item, index) => movieGrid.innerHTML += createPosterHTML(item, 'movies', index));
 
-            // Blog
             const blogGrid = document.getElementById('blog-grid');
             data.blog.forEach((item) => {
                 blogGrid.innerHTML += `
-                    <div class="academy-card" onclick="alert('Blog detayı eklenecek')">
-                        <div style="font-weight:bold; color:var(--accent-color); font-size:0.8rem;">${item.date}</div>
+                    <div class="academy-card">
+                        <div style="font-weight:bold; color:var(--accent-color); font-size:0.7rem;">${item.date}</div>
                         <h3>${item.title}</h3>
                         <p>${item.content}</p>
                     </div>`;
@@ -291,13 +263,9 @@
         });
 
         function createPosterHTML(item, type, index) {
-            return `
-                <div class="poster" onclick="openDetail('${type}', ${index})">
-                    <img src="${item.img}">
-                </div>`;
+            return `<div class="poster" onclick="openDetail('${type}', ${index})"><img src="${item.img}"></div>`;
         }
 
-        /* --- DETAY PENCERESİ --- */
         function openDetail(type, index) {
             const item = data[type][index];
             const modal = document.getElementById('detail-modal');
@@ -316,43 +284,31 @@
             document.getElementById('detail-modal').classList.remove('active');
         }
 
-        /* --- BLUR --- */
         window.addEventListener('scroll', () => {
             const bg = document.getElementById('bg-blur');
             if (window.scrollY > 50) bg.classList.add('blurred');
             else bg.classList.remove('blurred');
         });
 
-        /* --- TEMA --- */
-        const themeIcon = document.getElementById('theme-icon');
         function toggleTheme() {
             document.body.classList.toggle('purple-mode');
         }
 
-        /* --- MÜZİK PLAYER --- */
         var audio = document.getElementById("myAudio");
-        var playBtn = document.querySelector(".play-btn");
-        var playerBar = document.querySelector(".player-bar");
         var icon = document.getElementById("playIcon");
-
         function toggleAudio() {
             if (audio.paused) {
                 audio.play();
-                icon.classList.remove("fa-play");
-                icon.classList.add("fa-pause");
-                playerBar.classList.add("playing");
+                icon.className = "fas fa-pause";
             } else {
                 audio.pause();
-                icon.classList.remove("fa-pause");
-                icon.classList.add("fa-play");
-                playerBar.classList.remove("playing");
+                icon.className = "fas fa-play";
             }
         }
         function toggleMute() {
             audio.muted = !audio.muted;
             document.getElementById("volIcon").className = audio.muted ? "fas fa-volume-mute" : "fas fa-volume-up";
         }
-        audio.volume = 0.5;
     </script>
 </body>
 </html>
