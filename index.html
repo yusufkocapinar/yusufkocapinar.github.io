@@ -40,7 +40,7 @@
             </div>
         </section>
 
-        <section id="about" style="padding-bottom: 20px;">
+        <section id="about" style="padding-bottom: 25px;">
             <div class="glass-card">
                 <h2>Ben Kimim?</h2>
                 <div style="line-height: 1.9; font-size: 1.1rem; opacity: 0.95;">
@@ -54,7 +54,9 @@
 
         <section id="updates" style="padding-top: 0;">
             <div class="updates-list">
-                <div class="updates-header">Son Güncellemeler</div>
+                <div class="updates-header-container">
+                    <h2>Son Güncellemeler</h2>
+                </div>
                 
                 <div class="update-row" onclick="openModule('journal')">
                     <div class="update-info">
@@ -159,17 +161,27 @@
             <h2 class="module-title">Hafıza</h2>
             <button class="back-btn" onclick="showLanding()">Geri Dön</button>
         </div>
-        <div class="poster-grid">
-            <div class="poster"><img src="citedepera.jpg"></div>
-            <div class="poster"><img src="feneryolu.jpg"></div>
-            <div class="poster"><img src="daylik.jpg"></div>
-        </div>
+        <div class="poster-grid" id="gallery-grid"></div>
     </div>
 
     <div id="detail-modal" class="detail-modal">
         <div class="detail-card">
             <span class="close-detail" onclick="closeDetail()">&times;</span>
             <div id="detail-content"></div>
+        </div>
+    </div>
+
+    <div id="gallery-viewer" class="detail-modal">
+        <div class="detail-card">
+            <span class="close-detail" onclick="closeGallery()">&times;</span>
+            <div style="display: flex; align-items: center; width: 100%; justify-content: space-between;">
+                <button class="gallery-nav-btn" onclick="changeGalleryImage(-1)">&#10094;</button>
+                <div id="gallery-img-container" style="text-align: center;">
+                    <img id="gallery-img-tag" src="" alt="">
+                    <h3 id="gallery-caption-tag" style="margin-top: 20px;"></h3>
+                </div>
+                <button class="gallery-nav-btn" onclick="changeGalleryImage(1)">&#10095;</button>
+            </div>
         </div>
     </div>
 
@@ -226,6 +238,11 @@
                     date: "28 Ocak 2026",
                     content: "Geleceğin teknolojileri üzerine düşünceler."
                 }
+            ],
+            gallery: [
+                { src: "citedepera.jpg", title: "Cité de Péra" },
+                { src: "feneryolu.jpg", title: "Feneryolu İstasyonu" },
+                { src: "daylik.jpg", title: "Daylık Köyü" }
             ]
         };
 
@@ -263,12 +280,23 @@
                         <p>${item.content}</p>
                     </div>`;
             });
+
+            // GALERİ RENDER
+            const galleryGrid = document.getElementById('gallery-grid');
+            data.gallery.forEach((item, index) => {
+                galleryGrid.innerHTML += `
+                    <div class="poster" onclick="openGalleryViewer(${index})">
+                        <img src="${item.src}">
+                        <div class="poster-caption">${item.title}</div>
+                    </div>`;
+            });
         });
 
         function createPosterHTML(item, type, index) {
             return `<div class="poster" onclick="openDetail('${type}', ${index})"><img src="${item.img}"></div>`;
         }
 
+        /* GENEL DETAY PENCERESİ */
         function openDetail(type, index) {
             const item = data[type][index];
             const modal = document.getElementById('detail-modal');
@@ -285,6 +313,28 @@
         }
         function closeDetail() {
             document.getElementById('detail-modal').classList.remove('active');
+        }
+
+        /* GALERİ OYNATICI (LIGHTBOX) */
+        let currentGalleryIndex = 0;
+        function openGalleryViewer(index) {
+            currentGalleryIndex = index;
+            updateGalleryModal();
+            document.getElementById('gallery-viewer').classList.add('active');
+        }
+        function closeGallery() {
+            document.getElementById('gallery-viewer').classList.remove('active');
+        }
+        function changeGalleryImage(direction) {
+            currentGalleryIndex += direction;
+            if (currentGalleryIndex < 0) currentGalleryIndex = data.gallery.length - 1;
+            if (currentGalleryIndex >= data.gallery.length) currentGalleryIndex = 0;
+            updateGalleryModal();
+        }
+        function updateGalleryModal() {
+            const item = data.gallery[currentGalleryIndex];
+            document.getElementById('gallery-img-tag').src = item.src;
+            document.getElementById('gallery-caption-tag').innerText = item.title;
         }
 
         window.addEventListener('scroll', () => {
