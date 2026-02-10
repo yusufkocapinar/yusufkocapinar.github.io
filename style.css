@@ -5,15 +5,16 @@
     --accent-color: #c3b091;
     --text-color: #4a4a4a;
     --bg-color: #f9f7f4;
-    --glass-bg: rgba(255, 255, 255, 0.6);
+    --glass-bg: rgba(255, 255, 255, 0.65);
     --glass-border: rgba(255, 255, 255, 0.5);
     --nav-bg: rgba(255, 255, 255, 0.85);
     --card-shadow: 0 10px 30px rgba(195, 176, 145, 0.1);
     --blur-amount: 20px;
     --module-bg: #f9f7f4;
+    --separator-color: rgba(0,0,0,0.05);
 }
 
-/* --- SOFT PURPLE MODE (Rüya Gibi - Güncellendi) --- */
+/* --- SOFT PURPLE MODE (Rüya Gibi) --- */
 body.purple-mode {
     --accent-color: #d1b3ff; /* Pastel Lavanta */
     --text-color: #ece0f5;   /* Açık leylak beyazı */
@@ -25,6 +26,7 @@ body.purple-mode {
     --nav-bg: rgba(40, 30, 50, 0.8);
     --card-shadow: 0 15px 40px rgba(0,0,0,0.3);
     --module-bg: #261e30;
+    --separator-color: rgba(255,255,255,0.05);
 }
 
 /* Purple modda arka plan */
@@ -106,9 +108,10 @@ section {
 }
 
 /* HERO (Giriş) */
-#home { min-height: 100vh; padding: 0; position: relative; } /* Scroll oku için relative */
+#home { min-height: 100vh; padding: 0; position: relative; }
 .hero-glass {
-    background: rgba(255, 255, 255, 0.65); backdrop-filter: blur(15px);
+    background: rgba(255, 255, 255, 0.65); /* Daha opak beyaz */
+    backdrop-filter: blur(15px);
     border: 1px solid rgba(255, 255, 255, 0.3); padding: 40px;
     border-radius: 30px; width: 100%; max-width: 600px;
     box-shadow: 0 20px 50px rgba(0,0,0,0.1);
@@ -118,33 +121,27 @@ body.purple-mode .hero-glass { background: rgba(60, 40, 70, 0.4); border-color: 
     width: 170px; height: 170px; border-radius: 15px; object-fit: cover;
     border: 3px solid var(--accent-color); margin-bottom: 20px;
 }
-/* style.css içinde bu kısmı bul ve değiştir */
-
 h1 { 
     font-size: 3rem; margin: 0; font-weight: 800; letter-spacing: -1px; color: #fff; 
-    
-    /* Eski değer: text-shadow: 0 5px 15px rgba(0,0,0,0.2); */
-    
-    /* YENİ DEĞER (Daha keskin ve belirgin gölge) */
     text-shadow: 0 2px 4px rgba(0,0,0,0.5), 0 8px 20px rgba(0,0,0,0.1);
 }
-/* Hero Alt Başlık (Renklendirildi) */
 .subtitle { 
     font-family: 'Playfair Display', serif; font-size: 1.2rem; 
-    color: var(--accent-color); /* Vurgu Rengi */
-    font-style: italic; margin-top: 10px; opacity: 1; font-weight: 500;
+    color: var(--accent-color);
+    font-style: italic; margin-top: 10px; opacity: 1; font-weight: 600;
+    text-shadow: 0 2px 10px rgba(0,0,0,0.1);
 }
 
-/* Scroll Göstergesi (Aşağıda) */
+/* Scroll Göstergesi */
 .scroll-indicator {
     position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%);
     text-align: center; z-index: 10; animation: bounce 2s infinite; cursor: pointer;
 }
 .scroll-indicator span {
     display: block; font-size: 0.75rem; color: #fff; letter-spacing: 3px;
-    text-transform: uppercase; margin-bottom: 10px; font-weight: 600; opacity: 0.8;
+    text-transform: uppercase; margin-bottom: 10px; font-weight: 600; opacity: 0.9; text-shadow: 0 2px 5px rgba(0,0,0,0.5);
 }
-.scroll-indicator i { color: var(--accent-color); font-size: 1.2rem; }
+.scroll-indicator i { color: var(--accent-color); font-size: 1.2rem; filter: drop-shadow(0 2px 5px rgba(0,0,0,0.5)); }
 
 /* BAŞLIKLAR */
 h2 {
@@ -169,14 +166,20 @@ h3.section-header {
     box-shadow: var(--card-shadow); width: 100%;
 }
 
-/* --- SON GÜNCELLEMELER --- */
-.updates-list { display: flex; flex-direction: column; gap: 15px; width: 100%; max-width: 800px; }
-.update-row {
-    background: var(--glass-bg); padding: 20px 30px; border-radius: 20px;
-    border: 1px solid var(--glass-border); cursor: pointer; transition: 0.3s;
-    display: flex; align-items: center; justify-content: space-between; text-align: left;
+/* --- SON GÜNCELLEMELER (YENİLENDİ: TEK BLOK) --- */
+.updates-list { 
+    display: flex; flex-direction: column; width: 100%; max-width: 800px; 
+    background: var(--glass-bg); backdrop-filter: blur(var(--blur-amount));
+    border: 1px solid var(--glass-border); border-radius: 30px;
+    box-shadow: var(--card-shadow); overflow: hidden; /* Kenarları yumuşat */
 }
-.update-row:hover { transform: scale(1.01); border-color: var(--accent-color); box-shadow: var(--card-shadow); }
+.update-row {
+    padding: 25px 40px; cursor: pointer; transition: 0.3s;
+    display: flex; align-items: center; justify-content: space-between; text-align: left;
+    border-bottom: 1px solid var(--separator-color);
+}
+.update-row:last-child { border-bottom: none; }
+.update-row:hover { background: rgba(var(--accent-color), 0.05); }
 .update-info h3 { margin: 5px 0; font-family: 'Playfair Display', serif; font-size: 1.3rem; color: var(--text-color); }
 .update-meta { font-size: 0.7rem; color: var(--accent-color); font-weight: 700; text-transform: uppercase; letter-spacing: 1px; }
 .arrow-icon { color: var(--accent-color); font-size: 1.2rem; opacity: 0.5; transition: 0.3s; }
