@@ -351,6 +351,42 @@
             document.body.classList.toggle('purple-mode');
         }
 
+        /* --- GELİŞMİŞ KONTROLLER (KLAVYE & DIŞARI TIKLAMA) --- */
+        
+        // 1. Dışarı Tıklayarak Kapatma
+        window.onclick = function(event) {
+            const galleryModal = document.getElementById('gallery-viewer');
+            const detailModal = document.getElementById('detail-modal');
+            
+            // Eğer tıklanan yer modalın kendisiyse (içerik kartı değilse)
+            if (event.target === galleryModal) {
+                closeGallery();
+            }
+            if (event.target === detailModal) {
+                closeDetail();
+            }
+        }
+
+        // 2. Klavye Kontrolleri
+        document.addEventListener('keydown', function(event) {
+            const galleryModal = document.getElementById('gallery-viewer');
+            const detailModal = document.getElementById('detail-modal');
+            const anyModuleActive = document.querySelector('.full-page-module.active');
+
+            // ESC Tuşu: Her şeyi kapatır
+            if (event.key === "Escape") {
+                if (galleryModal.classList.contains('active')) closeGallery();
+                else if (detailModal.classList.contains('active')) closeDetail();
+                else if (anyModuleActive) showLanding();
+            }
+
+            // Yön Tuşları: Sadece Galeri Açıksa Çalışır
+            if (galleryModal.classList.contains('active')) {
+                if (event.key === "ArrowLeft") changeGalleryImage(-1);
+                if (event.key === "ArrowRight") changeGalleryImage(1);
+            }
+        });
+
         var audio = document.getElementById("myAudio");
         var icon = document.getElementById("playIcon");
         function toggleAudio() {
