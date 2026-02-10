@@ -229,23 +229,42 @@ h2 {
 }
 #gallery-caption-tag { font-family: 'Cormorant Garamond', serif; font-size: 1.8rem; color: #fff; text-align: center; }
 
-/* --- MÜZİK ÇALAR --- */
+/* --- MÜZİK ÇALAR (Eliptik & Dönen Albüm) --- */
 .player-container { display: flex; justify-content: center; width: 100%; margin-top: 10px;}
 .player-bar {
     background: var(--player-bg); border: 1px solid var(--player-border);
-    padding: 12px 25px; display: flex; align-items: center; gap: 20px;
-    width: 100%; max-width: 500px; transition: 0.3s;
-    border-radius: 4px; box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    padding: 10px 30px; /* İç boşluk eliptik yapıya göre ayarlandı */
+    display: flex; align-items: center; gap: 20px;
+    width: 100%; max-width: 550px; transition: 0.3s;
+    border-radius: 50px; /* TAM ELİPTİK/YUVARLAK */
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
 }
 .player-bar:hover { border-color: var(--accent-color); transform: translateY(-2px); }
-.cover-art { width: 45px; height: 45px; border-radius: 2px; overflow: hidden; flex-shrink: 0; }
+
+/* Albüm Kapağı & Animasyon */
+.cover-art {
+    width: 55px; height: 55px; 
+    border-radius: 50%; /* TAM DAİRE */
+    overflow: hidden; flex-shrink: 0;
+    border: 2px solid rgba(150, 150, 150, 0.1);
+    animation: spin 10s linear infinite; /* Dönme animasyonu tanımlandı */
+    animation-play-state: paused; /* Başlangıçta duruyor */
+}
+
+/* JS ile 'playing' sınıfı eklenince dönmeye başlar */
+.player-bar.playing .cover-art { 
+    animation-play-state: running; 
+    border-color: var(--accent-color); 
+}
+
 .cover-art img { width: 100%; height: 100%; object-fit: cover; }
+
 .song-info { flex-grow: 1; text-align: left; display: flex; flex-direction: column; justify-content: center;}
-.track-title { color: var(--text-color); font-weight: 600; font-size: 0.85rem; letter-spacing: 0.5px;}
-.track-artist { color: var(--accent-color); font-size: 0.7rem; text-transform: uppercase; font-weight: 600; letter-spacing: 1px;}
+.track-title { color: var(--text-color); font-weight: 700; font-size: 0.95rem; letter-spacing: 0.5px;}
+.track-artist { color: var(--accent-color); font-size: 0.75rem; text-transform: uppercase; font-weight: 600; letter-spacing: 1px;}
 .player-controls { display: flex; gap: 15px; }
-.ctrl-btn { background: transparent; border: none; color: var(--text-color); cursor: pointer; font-size: 1rem; transition: 0.3s; opacity: 0.7;}
-.ctrl-btn:hover { color: var(--accent-color); opacity: 1; }
+.ctrl-btn { background: transparent; border: none; color: var(--text-color); cursor: pointer; font-size: 1.1rem; transition: 0.3s; opacity: 0.7;}
+.ctrl-btn:hover { color: var(--accent-color); opacity: 1; transform: scale(1.1); }
 
 /* --- İLETİŞİM --- */
 #contact { padding-top: 10px; padding-bottom: 60px; min-height: auto; }

@@ -387,15 +387,20 @@
             }
         });
 
+        /* --- MÜZİK PLAYER --- */
         var audio = document.getElementById("myAudio");
         var icon = document.getElementById("playIcon");
+        var playerBar = document.querySelector(".player-bar"); // Player çubuğunu seçtik
+
         function toggleAudio() {
             if (audio.paused) {
                 audio.play();
                 icon.className = "fas fa-pause";
+                playerBar.classList.add("playing"); // CSS'e 'çalıyor' mesajı gönder (Dönmeye başlar)
             } else {
                 audio.pause();
                 icon.className = "fas fa-play";
+                playerBar.classList.remove("playing"); // Mesajı geri al (Dönme durur)
             }
         }
         function toggleMute() {
