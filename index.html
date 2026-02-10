@@ -43,7 +43,7 @@
         <section id="about" style="padding-bottom: 20px;">
             <div class="glass-card">
                 <h2>Ben Kimim?</h2>
-                <div style="line-height: 1.8; font-size: 1.05rem; opacity: 0.9;">
+                <div style="line-height: 1.9; font-size: 1.1rem; opacity: 0.9;">
                     <p>Merhaba! Ben Yusuf.</p>
                     <p>Meraklı, araştırmacı ve bir o kadar da öğrenmeye tutkulu bir biyomühendislik öğrencisinin blog sayfasına hoş geldin!</p>
                     <p>Yazılar yazıyor, kültür sanat etkinliklerine katılıyor, gördüklerimi fotoğraflıyorum. Ânın tadını çıkartıyor ama ânda takılı kalmıyorum. Aslında bu sayfa bir sonuç değil sürecin eseri; kendi ellerimle yazdığım "Yusuf Masalı"nda bana eşlik etmenden memnuniyet duyarım.</p>
@@ -53,8 +53,9 @@
         </section>
 
         <section id="updates" style="padding-top: 0;">
-            <h2 style="font-size: 1.5rem; border: none; margin-bottom: 15px;">Son Güncellemeler</h2>
+            <h2 style="font-size: 1.5rem; border: none; margin-bottom: 15px; width: 100%; text-align: left;">Son Güncellemeler</h2>
             <div class="updates-list">
+                
                 <div class="update-row" onclick="openModule('journal')">
                     <div class="update-info">
                         <div class="update-meta">YENİ YAZI • 3 ŞUBAT</div>
@@ -62,6 +63,7 @@
                     </div>
                     <i class="fas fa-arrow-right arrow-icon"></i>
                 </div>
+
                 <div class="update-row" onclick="openModule('culture')">
                     <div class="update-info">
                         <div class="update-meta">KÜTÜPHANE • OKUNDU</div>
@@ -69,6 +71,7 @@
                     </div>
                     <i class="fas fa-arrow-right arrow-icon"></i>
                 </div>
+
                 <div class="update-row" onclick="openModule('journal')">
                     <div class="update-info">
                         <div class="update-meta">AKADEMİ • PROJE</div>
@@ -76,6 +79,7 @@
                     </div>
                     <i class="fas fa-arrow-right arrow-icon"></i>
                 </div>
+
             </div>
         </section>
 
@@ -246,20 +250,26 @@
 
         window.addEventListener('DOMContentLoaded', () => {
             const bookGrid = document.getElementById('books-grid');
-            data.books.forEach((item, index) => bookGrid.innerHTML += createPosterHTML(item, 'books', index));
+            let booksHTML = '';
+            data.books.forEach((item, index) => booksHTML += createPosterHTML(item, 'books', index));
+            bookGrid.innerHTML = booksHTML;
 
             const movieGrid = document.getElementById('movies-grid');
-            data.movies.forEach((item, index) => movieGrid.innerHTML += createPosterHTML(item, 'movies', index));
+            let moviesHTML = '';
+            data.movies.forEach((item, index) => moviesHTML += createPosterHTML(item, 'movies', index));
+            movieGrid.innerHTML = moviesHTML;
 
             const blogGrid = document.getElementById('blog-grid');
+            let blogHTML = '';
             data.blog.forEach((item) => {
-                blogGrid.innerHTML += `
+                blogHTML += `
                     <div class="academy-card">
                         <div style="font-weight:bold; color:var(--accent-color); font-size:0.7rem;">${item.date}</div>
                         <h3>${item.title}</h3>
                         <p>${item.content}</p>
                     </div>`;
             });
+            blogGrid.innerHTML = blogHTML;
         });
 
         function createPosterHTML(item, type, index) {
