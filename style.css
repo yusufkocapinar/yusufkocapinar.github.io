@@ -94,14 +94,14 @@ html { scroll-behavior: smooth; }
 }
 .nav-item:hover::before { opacity: 1; transform: translateX(0); }
 
-/* ANA SAHNE - GENEL BÖLÜM AYARLARI */
+/* ANA SAHNE */
 #main-stage { transition: opacity 0.5s ease; width: 100%; }
 #main-stage.hidden { opacity: 0; pointer-events: none; }
 
 section {
     padding: 40px 20px;
     width: 100%; 
-    max-width: 850px; /* Her iki bölüm de bu genişliğe uyacak */
+    max-width: 850px;
     margin: 0 auto;
     display: flex; flex-direction: column; 
     justify-content: center; align-items: center;
@@ -115,9 +115,10 @@ section {
     backdrop-filter: blur(25px);
     border: 1px solid var(--glass-border); padding: 50px;
     border-radius: 60px;
-    width: 100%; max-width: 600px; /* Hero biraz daha dar kalabilir */
+    width: 100%; max-width: 600px;
     box-shadow: 0 30px 60px rgba(0,0,0,0.15);
 }
+body.purple-mode .hero-glass { background: rgba(60, 40, 70, 0.4); border-color: rgba(255,255,255,0.1); }
 .profile-img {
     width: 170px; height: 170px; border-radius: 50%; object-fit: cover;
     border: 3px solid var(--accent-color); margin-bottom: 20px;
@@ -151,13 +152,13 @@ h2 {
     padding-bottom: 15px; display: inline-block;
 }
 
-/* CAM KART (Ben Kimim) */
+/* CAM KART */
 .glass-card {
     background: var(--glass-bg); backdrop-filter: blur(25px);
     border: 1px solid var(--glass-border); 
-    padding: 50px; /* İç boşluk */
+    padding: 50px; 
     border-radius: 40px; 
-    width: 100%; /* Ebeveynin (850px) tamamını kapla */
+    width: 100%; 
     text-align: left; 
     box-shadow: var(--card-shadow);
 }
@@ -165,8 +166,8 @@ h2 {
 /* --- SON GÜNCELLEMELER LİSTESİ --- */
 .updates-list { 
     display: flex; flex-direction: column; 
-    width: 100%; /* Ben Kimim ile EŞİT GENİŞLİK */
-    max-width: none; /* Sınırı kaldırdık */
+    width: 100%; 
+    max-width: none; 
     background: var(--glass-bg); backdrop-filter: blur(25px);
     border: 1px solid var(--glass-border); 
     border-radius: 40px; 
@@ -174,9 +175,8 @@ h2 {
     box-shadow: var(--card-shadow);
 }
 
-/* Güncelleme Başlığı (Ben Kimim başlığı ile aynı hizada olması için) */
 .updates-header-container {
-    padding: 40px 50px 10px 50px; /* Üst ve yan padding'i .glass-card ile eşitledik */
+    padding: 40px 50px 10px 50px;
     text-align: left;
 }
 .updates-header-container h2 {
@@ -185,7 +185,7 @@ h2 {
 }
 
 .update-row {
-    padding: 25px 50px; /* Yan padding'i artırdık */
+    padding: 25px 50px;
     cursor: pointer; transition: 0.3s;
     display: flex; align-items: center; justify-content: space-between; text-align: left;
     border-bottom: 1px solid rgba(150, 150, 150, 0.1);
@@ -197,9 +197,9 @@ h2 {
 .arrow-icon { color: var(--text-color); font-size: 1rem; opacity: 0.4; transition: 0.3s; }
 .update-row:hover .arrow-icon { opacity: 1; color: var(--accent-color); transform: translateX(5px); }
 
-/* --- GALERİ --- */
+/* --- GALERİ & AFİŞLER --- */
 .poster { 
-    aspect-ratio: 1/1; 
+    aspect-ratio: 2/3; /* DİKEY AFİŞ FORMATI (DÜZELTİLDİ) */
     border-radius: 15px; overflow: hidden; cursor: pointer; transition: 0.3s; 
     box-shadow: 0 5px 15px rgba(0,0,0,0.1); position: relative;
     background: #000;
@@ -215,6 +215,7 @@ h2 {
 }
 .poster:hover .poster-caption { opacity: 1; transform: translateY(0); }
 
+/* --- GALERİ MEDYA OYNATICI (LIGHTBOX) --- */
 .gallery-nav-btn {
     background: transparent; border: none; color: #fff; font-size: 2rem; cursor: pointer;
     padding: 20px; transition: 0.3s; opacity: 0.7;
@@ -222,8 +223,9 @@ h2 {
 .gallery-nav-btn:hover { opacity: 1; transform: scale(1.2); color: var(--accent-color); }
 #gallery-img-container { display: flex; flex-direction: column; align-items: center; justify-content: center; }
 #gallery-img-tag {
-    max-height: 70vh; max-width: 100%; border-radius: 10px; 
+    max-height: 80vh; max-width: 100%; border-radius: 10px; 
     box-shadow: 0 20px 50px rgba(0,0,0,0.5); margin-bottom: 20px;
+    object-fit: contain; /* Görüntü bozulmasın */
 }
 #gallery-caption-tag { font-family: 'Cormorant Garamond', serif; font-size: 1.8rem; color: #fff; text-align: center; }
 
@@ -276,13 +278,23 @@ h2 {
 .academy-grid { display: grid; grid-template-columns: 1fr; gap: 15px; }
 .academy-card { background: var(--glass-bg); padding: 25px; border-radius: 20px; border-left: 4px solid var(--accent-color); border: 1px solid var(--glass-border);}
 
-/* Detay Penceresi (Genel) */
-.detail-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 3000; align-items: center; justify-content: center; backdrop-filter: blur(10px); }
+/* DETAY PENCERESİ (GENEL) */
+.detail-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 3000; align-items: center; justify-content: center; backdrop-filter: blur(10px); }
 .detail-modal.active { display: flex; }
 .detail-card { background: var(--bg-color); width: 90%; max-width: 700px; padding: 50px; border-radius: 30px; position: relative; max-height: 90vh; overflow-y: auto; text-align: left; box-shadow: 0 30px 60px rgba(0,0,0,0.5); }
 .close-detail { position: absolute; top: 25px; right: 25px; font-size: 1.8rem; cursor: pointer; color: var(--text-color);}
 .detail-flex { display: flex; gap: 40px; }
-.detail-img { width: 200px; border-radius: 15px; box-shadow: 0 15px 30px rgba(0,0,0,0.3); }
+
+/* DETAY RESİM AYARI (Uzamayı Önleme ve Sabitleme) */
+.detail-img { 
+    width: 200px; 
+    height: auto; /* Oranı korur */
+    align-self: flex-start; /* Sol üstte sabitler */
+    border-radius: 15px; 
+    box-shadow: 0 15px 30px rgba(0,0,0,0.3); 
+    object-fit: cover;
+}
+
 .detail-content h3 { font-family: 'Cormorant Garamond', serif; font-size: 2.5rem; margin: 0 0 10px 0; color: var(--text-color); line-height: 1.1;}
 .detail-content p { line-height: 1.8; color: var(--text-color); opacity: 0.9; font-size: 1.05rem; }
 
