@@ -138,7 +138,6 @@
             <button class="back-btn" onclick="goBack()">Geri Dön</button>
         </div>
         <div class="module-content">
-            
             <h3 class="section-header">Dijital Günlük</h3>
             <div class="academy-grid">
                 <div class="academy-card">
@@ -152,7 +151,6 @@
                     <p>Pek Yakında...</p>
                 </div>
             </div>
-
             <h3 class="section-header">Akademik</h3>
             <div class="academy-grid" id="blog-grid"></div>
         </div>
@@ -255,39 +253,100 @@
         const mainStage = document.getElementById('main-stage');
         const modules = document.querySelectorAll('.full-page-module');
 
-        // PROFESYONEL NAVİGASYON (HISTORY API)
+        // PROFESYONEL NAVİGASYON (HISTORY API - KAPSAMLI)
+        
+        // 1. Modül Açma (Geçmişe Ekle)
         function openModule(moduleId) {
             mainStage.classList.add('hidden');
             modules.forEach(m => m.classList.remove('active'));
             document.getElementById('module-' + moduleId).classList.add('active');
             window.scrollTo(0,0);
             
-            history.pushState({module: moduleId}, null, `#${moduleId}`);
+            history.pushState({view: 'module', id: moduleId}, null, `#${moduleId}`);
         }
 
-        function goBack() {
-            if (history.state && history.state.module) {
-                history.back(); 
-            } else {
-                showLanding(); 
-            }
+        // 2. Detay/Galeri Açma (Geçmişe Ekle)
+        function openDetail(type, index) {
+            const item = data[type][index];
+            const modal = document.getElementById('detail-modal');
+            document.getElementById('detail-content').innerHTML = `
+                <div class="detail-flex">
+                    <img src="${item.img}" class="detail-img">
+                    <div class="detail-content">
+                        <h3>${item.title}</h3>
+                        <p style="color:var(--accent-color); font-weight:bold;">${item.author}</p>
+                        <p>${item.review}</p>
+                    </div>
+                </div>`;
+            modal.classList.add('active');
+            history.pushState({view: 'modal', type: 'detail'}, null, '#detail');
         }
 
-        function showLanding() {
+        let currentGalleryIndex = 0;
+        function openGalleryViewer(index) {
+            currentGalleryIndex = index;
+            updateGalleryModal();
+            document.getElementById('gallery-viewer').classList.add('active');
+            history.pushState({view: 'modal', type: 'gallery'}, null, '#gallery');
+        }
+
+        // 3. UI Kapatma Fonksiyonları (Geçmişi Yönetmez, Sadece UI)
+        function closeDetailUI() {
+            document.getElementById('detail-modal').classList.remove('active');
+        }
+        function closeGalleryUI() {
+            document.getElementById('gallery-viewer').classList.remove('active');
+        }
+        function showLandingUI() {
             modules.forEach(m => m.classList.remove('active'));
             mainStage.classList.remove('hidden');
             window.scrollTo(0,0);
-            history.replaceState(null, null, ' ');
+        }
+        function openModuleUI(moduleId) {
+            mainStage.classList.add('hidden');
+            modules.forEach(m => m.classList.remove('active'));
+            document.getElementById('module-' + moduleId).classList.add('active');
         }
 
+        // 4. "Geri Dön" veya "X" Tuşları (Tarayıcıyı Tetikler)
+        function goBack() {
+            history.back();
+        }
+        function closeDetail() {
+            history.back(); 
+        }
+        function closeGallery() {
+            history.back();
+        }
+
+        // 5. TARAYICI GERİ TUŞU DİNLEYİCİSİ (MASTER CONTROLLER)
         window.onpopstate = function(event) {
-            if (event.state && event.state.module) {
+            // Önce açık modalları kontrol et ve kapat (UI)
+            const detailOpen = document.getElementById('detail-modal').classList.contains('active');
+            const galleryOpen = document.getElementById('gallery-viewer').classList.contains('active');
+
+            if (detailOpen) {
+                closeDetailUI();
+                // Eğer state hala modül ise, modül açık kalsın (Zaten açık)
+                return;
+            }
+            if (galleryOpen) {
+                closeGalleryUI();
+                return;
+            }
+
+            // Eğer modal yoksa, sayfa yapısını state'e göre ayarla
+            if (event.state && event.state.view === 'module') {
+                openModuleUI(event.state.id);
             } else {
-                showLanding();
+                showLandingUI();
             }
         };
 
         window.addEventListener('DOMContentLoaded', () => {
+            // URL temizle (Sayfa yenilendiğinde temiz başla)
+            history.replaceState(null, null, ' ');
+
             const bookGrid = document.getElementById('books-grid');
             data.books.forEach((item, index) => bookGrid.innerHTML += createPosterHTML(item, 'books', index));
 
@@ -318,33 +377,6 @@
             return `<div class="poster" onclick="openDetail('${type}', ${index})"><img src="${item.img}"></div>`;
         }
 
-        function openDetail(type, index) {
-            const item = data[type][index];
-            const modal = document.getElementById('detail-modal');
-            document.getElementById('detail-content').innerHTML = `
-                <div class="detail-flex">
-                    <img src="${item.img}" class="detail-img">
-                    <div class="detail-content">
-                        <h3>${item.title}</h3>
-                        <p style="color:var(--accent-color); font-weight:bold;">${item.author}</p>
-                        <p>${item.review}</p>
-                    </div>
-                </div>`;
-            modal.classList.add('active');
-        }
-        function closeDetail() {
-            document.getElementById('detail-modal').classList.remove('active');
-        }
-
-        let currentGalleryIndex = 0;
-        function openGalleryViewer(index) {
-            currentGalleryIndex = index;
-            updateGalleryModal();
-            document.getElementById('gallery-viewer').classList.add('active');
-        }
-        function closeGallery() {
-            document.getElementById('gallery-viewer').classList.remove('active');
-        }
         function changeGalleryImage(direction) {
             currentGalleryIndex += direction;
             if (currentGalleryIndex < 0) currentGalleryIndex = data.gallery.length - 1;
@@ -361,8 +393,10 @@
         window.onclick = function(event) {
             const galleryModal = document.getElementById('gallery-viewer');
             const detailModal = document.getElementById('detail-modal');
-            if (event.target === galleryModal) closeGallery();
-            if (event.target === detailModal) closeDetail();
+            
+            // Dışarı tıklandığında da history.back() çalışsın
+            if (event.target === galleryModal) history.back();
+            if (event.target === detailModal) history.back();
         }
 
         document.addEventListener('keydown', function(event) {
@@ -371,9 +405,8 @@
             const anyModuleActive = document.querySelector('.full-page-module.active');
 
             if (event.key === "Escape") {
-                if (galleryModal.classList.contains('active')) closeGallery();
-                else if (detailModal.classList.contains('active')) closeDetail();
-                else if (anyModuleActive) goBack(); 
+                // ESC tuşu da geri fonksiyonunu tetikler
+                history.back();
             }
             if (galleryModal.classList.contains('active')) {
                 if (event.key === "ArrowLeft") changeGalleryImage(-1);
