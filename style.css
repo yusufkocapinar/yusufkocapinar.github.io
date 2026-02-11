@@ -5,11 +5,16 @@
     --accent-color: #c3b091;
     --text-color: #333;
     --bg-color: #f4f1ea;
+    
+    /* Hero Okunabilirliği İçin */
     --glass-bg: rgba(255, 255, 255, 0.85); 
     --glass-border: rgba(255, 255, 255, 0.9);
+    
     --nav-bg: rgba(255, 255, 255, 0.95);
     --card-shadow: 0 15px 40px rgba(195, 176, 145, 0.15);
     --module-bg: #f4f1ea;
+    
+    /* Müzik Çalar (Mat) */
     --player-bg: #fff;
     --player-border: #ddd;
 }
@@ -19,11 +24,13 @@ body.purple-mode {
     --accent-color: #d1b3ff;
     --text-color: #ece0f5;
     --bg-color: #261e30;
+    
     --glass-bg: rgba(50, 40, 65, 0.6); 
     --glass-border: rgba(200, 180, 255, 0.15);
     --nav-bg: rgba(40, 30, 50, 0.8);
     --card-shadow: 0 20px 50px rgba(0,0,0,0.4);
     --module-bg: #261e30;
+    
     --player-bg: #1a1220; 
     --player-border: rgba(255,255,255,0.1);
 }
@@ -108,15 +115,10 @@ section {
     box-shadow: 0 30px 60px rgba(0,0,0,0.15);
 }
 body.purple-mode .hero-glass { background: rgba(60, 40, 70, 0.4); border-color: rgba(255,255,255,0.1); }
-
-/* --- PROFİL RESMİ GÜNCELLEMESİ (15px Radius) --- */
 .profile-img {
-    width: 170px; height: 170px; 
-    border-radius: 15px; /* İSTEĞİN ÜZERİNE GÜNCELLENDİ */
-    object-fit: cover;
+    width: 170px; height: 170px; border-radius: 15px; object-fit: cover;
     border: 3px solid var(--accent-color); margin-bottom: 20px;
 }
-
 h1 { 
     font-family: 'Cormorant Garamond', serif; font-size: 3.8rem; margin: 0; 
     font-weight: 700; letter-spacing: -1px; color: var(--text-color); text-shadow: none; 
@@ -196,6 +198,30 @@ h2 {
     box-shadow: 0 20px 50px rgba(0,0,0,0.5); margin-bottom: 20px; object-fit: contain;
 }
 #gallery-caption-tag { font-family: 'Cormorant Garamond', serif; font-size: 1.8rem; color: #fff; text-align: center; }
+
+/* --- YENİ EKLENEN İNDİRME BUTONU STİLİ --- */
+.gallery-download-btn {
+    margin-top: 15px;
+    background: transparent;
+    color: #fff;
+    border: 1px solid #fff;
+    padding: 8px 25px;
+    border-radius: 30px;
+    text-decoration: none;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.9rem;
+    transition: 0.3s;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    opacity: 0.7;
+}
+.gallery-download-btn:hover {
+    background: #fff;
+    color: #000;
+    opacity: 1;
+    transform: translateY(-3px);
+}
 
 /* MÜZİK ÇALAR */
 .player-container { display: flex; justify-content: center; width: 100%; margin-top: 10px;}

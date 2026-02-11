@@ -179,6 +179,11 @@
                 <div id="gallery-img-container" style="text-align: center;">
                     <img id="gallery-img-tag" src="" alt="">
                     <h3 id="gallery-caption-tag" style="margin-top: 20px;"></h3>
+                    
+                    <a id="gallery-download-btn" href="#" download class="gallery-download-btn">
+                        <i class="fas fa-download"></i> Orijinal Boyut (İndir)
+                    </a>
+
                 </div>
                 <button class="gallery-nav-btn" onclick="changeGalleryImage(1)">&#10095;</button>
             </div>
@@ -253,9 +258,7 @@
         const mainStage = document.getElementById('main-stage');
         const modules = document.querySelectorAll('.full-page-module');
 
-        // PROFESYONEL NAVİGASYON (HISTORY API - KAPSAMLI)
-        
-        // 1. Modül Açma (Geçmişe Ekle)
+        // PROFESYONEL NAVİGASYON (HISTORY API)
         function openModule(moduleId) {
             mainStage.classList.add('hidden');
             modules.forEach(m => m.classList.remove('active'));
@@ -265,7 +268,6 @@
             history.pushState({view: 'module', id: moduleId}, null, `#${moduleId}`);
         }
 
-        // 2. Detay/Galeri Açma (Geçmişe Ekle)
         function openDetail(type, index) {
             const item = data[type][index];
             const modal = document.getElementById('detail-modal');
@@ -290,7 +292,6 @@
             history.pushState({view: 'modal', type: 'gallery'}, null, '#gallery');
         }
 
-        // 3. UI Kapatma Fonksiyonları (Geçmişi Yönetmez, Sadece UI)
         function closeDetailUI() {
             document.getElementById('detail-modal').classList.remove('active');
         }
@@ -308,34 +309,17 @@
             document.getElementById('module-' + moduleId).classList.add('active');
         }
 
-        // 4. "Geri Dön" veya "X" Tuşları (Tarayıcıyı Tetikler)
-        function goBack() {
-            history.back();
-        }
-        function closeDetail() {
-            history.back(); 
-        }
-        function closeGallery() {
-            history.back();
-        }
+        function goBack() { history.back(); }
+        function closeDetail() { history.back(); }
+        function closeGallery() { history.back(); }
 
-        // 5. TARAYICI GERİ TUŞU DİNLEYİCİSİ (MASTER CONTROLLER)
         window.onpopstate = function(event) {
-            // Önce açık modalları kontrol et ve kapat (UI)
             const detailOpen = document.getElementById('detail-modal').classList.contains('active');
             const galleryOpen = document.getElementById('gallery-viewer').classList.contains('active');
 
-            if (detailOpen) {
-                closeDetailUI();
-                // Eğer state hala modül ise, modül açık kalsın (Zaten açık)
-                return;
-            }
-            if (galleryOpen) {
-                closeGalleryUI();
-                return;
-            }
+            if (detailOpen) { closeDetailUI(); return; }
+            if (galleryOpen) { closeGalleryUI(); return; }
 
-            // Eğer modal yoksa, sayfa yapısını state'e göre ayarla
             if (event.state && event.state.view === 'module') {
                 openModuleUI(event.state.id);
             } else {
@@ -343,8 +327,25 @@
             }
         };
 
+        function changeGalleryImage(direction) {
+            currentGalleryIndex += direction;
+            if (currentGalleryIndex < 0) currentGalleryIndex = data.gallery.length - 1;
+            if (currentGalleryIndex >= data.gallery.length) currentGalleryIndex = 0;
+            updateGalleryModal();
+        }
+
+        function updateGalleryModal() {
+            const item = data.gallery[currentGalleryIndex];
+            document.getElementById('gallery-img-tag').src = item.src;
+            document.getElementById('gallery-caption-tag').innerText = item.title;
+            
+            // İNDİRME BUTONU GÜNCELLEME
+            const downloadBtn = document.getElementById('gallery-download-btn');
+            downloadBtn.href = item.src; 
+            downloadBtn.setAttribute('download', item.title + ".jpg"); 
+        }
+
         window.addEventListener('DOMContentLoaded', () => {
-            // URL temizle (Sayfa yenilendiğinde temiz başla)
             history.replaceState(null, null, ' ');
 
             const bookGrid = document.getElementById('books-grid');
@@ -377,24 +378,9 @@
             return `<div class="poster" onclick="openDetail('${type}', ${index})"><img src="${item.img}"></div>`;
         }
 
-        function changeGalleryImage(direction) {
-            currentGalleryIndex += direction;
-            if (currentGalleryIndex < 0) currentGalleryIndex = data.gallery.length - 1;
-            if (currentGalleryIndex >= data.gallery.length) currentGalleryIndex = 0;
-            updateGalleryModal();
-        }
-        function updateGalleryModal() {
-            const item = data.gallery[currentGalleryIndex];
-            document.getElementById('gallery-img-tag').src = item.src;
-            document.getElementById('gallery-caption-tag').innerText = item.title;
-        }
-
-        /* KLAVYE & DIŞARI TIKLAMA */
         window.onclick = function(event) {
             const galleryModal = document.getElementById('gallery-viewer');
             const detailModal = document.getElementById('detail-modal');
-            
-            // Dışarı tıklandığında da history.back() çalışsın
             if (event.target === galleryModal) history.back();
             if (event.target === detailModal) history.back();
         }
@@ -405,7 +391,6 @@
             const anyModuleActive = document.querySelector('.full-page-module.active');
 
             if (event.key === "Escape") {
-                // ESC tuşu da geri fonksiyonunu tetikler
                 history.back();
             }
             if (galleryModal.classList.contains('active')) {
