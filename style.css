@@ -310,3 +310,16 @@ h2 {
     .close-detail { top: 15px; right: 15px; }
     #gallery-img-tag { max-width: 90%; max-height: 60vh; }
 }
+
+/* --- SCROLLBAR GİZLEME (Kaydırma Çalışır, Çubuk Görünmez) --- */
+
+/* Chrome, Safari ve Opera için */
+::-webkit-scrollbar {
+    display: none;
+}
+
+/* Firefox, IE ve Edge için */
+* {
+    -ms-overflow-style: none;  /* IE ve Edge */
+    scrollbar-width: none;  /* Firefox */
+}
