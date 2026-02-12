@@ -58,18 +58,10 @@
                     <h2>Son Güncellemeler</h2>
                 </div>
                 
-                <div class="update-row" onclick="openModule('journal')">
+                <div class="update-row" onclick="openDetail('books', 1)">
                     <div class="update-info">
-                        <div class="update-meta">YENİ YAZI • AKADEMİK</div>
-                        <h3>Kültürlenmiş Et ve Biyoetik Sınırlar</h3>
-                    </div>
-                    <i class="fas fa-arrow-right arrow-icon"></i>
-                </div>
-
-                <div class="update-row" onclick="openModule('culture')">
-                    <div class="update-info">
-                        <div class="update-meta">Kitap İncelemesi</div>
-                        <h3>Üniversitenin Yükselişi - C.H. Haskins</h3>
+                        <div class="update-meta">KİTAPLIK • İNCELEME EKLENDİ</div>
+                        <h3>Holokost Endüstrisi - N. Finkelstein</h3>
                     </div>
                     <i class="fas fa-arrow-right arrow-icon"></i>
                 </div>
@@ -78,6 +70,14 @@
                     <div class="update-info">
                         <div class="update-meta">YENİ YAZI • GÜNLÜK</div>
                         <h3>21. Yaşımdan Notlar</h3>
+                    </div>
+                    <i class="fas fa-arrow-right arrow-icon"></i>
+                </div>
+
+                <div class="update-row" onclick="openDetail('books', 0)">
+                    <div class="update-info">
+                        <div class="update-meta">KİTAPLIK • İNCELEME</div>
+                        <h3>Üniversitenin Yükselişi - C.H. Haskins</h3>
                     </div>
                     <i class="fas fa-arrow-right arrow-icon"></i>
                 </div>
@@ -203,7 +203,7 @@
                     title: "Holokost Endüstrisi",
                     author: "Norman Finkelstein",
                     img: "https://img.kitapyurdu.com/v1/getImage/fn:12150703/wi:500/wh:bfff5df1e",
-                    review: `Norman Finkelstein’in Holokost Endüstrisi, tarihsel bir trajedinin nasıl dokunulmaz bir ideolojik silaha dönüştürüldüğünü çok cesur bir dille masaya yatırıyor. Yazarın, ailesi bizzat Holokost mağduru olan bir Yahudi akademisyen olmasına rağmen bu eleştirileri kaleme alabilmesi, meseleye sadece akademik değil vicdani bir yerden baktığını da gösteriyor. Açıkçası bu durum, yazara duyduğum saygıyı katbekat artırdı.<br><br>Kitapta özellikle Amerika'nın Holokost'u adeta bir propaganda aracı haline getirişini ve Soğuk Savaş sonrası dönemde bunu nasıl stratejik olarak kullandığını okuyoruz. Finkelstein, acıların sömürüsü üzerinden kurulan bu yapının, tarihsel gerçeklikten ziyade güncel siyasi çıkarlara hizmet ettiğini savunuyor.<br><br>Finkelstein'in çizdiği tabloda en çarpıcı noktalardan biri de dünya üzerinde yaşanan ve yaşanacak bütün acıları Holokost ile mukayese eden ve kendilerine her şeyi hak gören bir toplum. Bu 'biriciklik' iddiası, ne yazık ki eleştiriye kapalı, dokunulmaz bir alan yaratıyor. Okurken sık sık duraksayıp, 'tarih' ile 'tarihin kullanımı' arasındaki o ince çizgiyi sorguladığımı söylemeliyim.`
+                    review: `Norman Finkelstein’in *Holokost Endüstrisi*, tarihsel bir trajedinin nasıl dokunulmaz bir ideolojik silaha dönüştürüldüğünü çok cesur bir dille masaya yatırıyor. Yazarın, ailesi bizzat Holokost mağduru olan bir Yahudi akademisyen olmasına rağmen bu eleştirileri kaleme alabilmesi, meseleye sadece akademik değil vicdani bir yerden baktığını da gösteriyor. Açıkçası bu durum, yazara duyduğum saygıyı katbekat artırdı.<br><br>Kitapta özellikle Amerika'nın Holokost'u adeta bir propaganda aracı haline getirişini ve Soğuk Savaş sonrası dönemde bunu nasıl stratejik olarak kullandığını okuyoruz. Finkelstein, acıların sömürüsü üzerinden kurulan bu yapının, tarihsel gerçeklikten ziyade güncel siyasi çıkarlara hizmet ettiğini savunuyor.<br><br>Finkelstein'in çizdiği tabloda en çarpıcı noktalardan biri de şu: Bununla beraber Dünya üzerinde yaşanan ve yaşanacak bütün acıları Holokost ile mukayese eden ve kendilerine her şeyi hak gören bir toplumun inşa edildiğini görüyoruz. Bu 'biriciklik' iddiası, ne yazık ki eleştiriye kapalı, dokunulmaz bir alan yaratıyor. Okurken sık sık duraksayıp, 'tarih' ile 'tarihin kullanımı' arasındaki o ince çizgiyi sorguladığımı söylemeliyim.`
                 },
                 {
                     title: "Muhtelif 1 - İslam'a Yönelik İtiraz ve Cevaplar",
@@ -268,6 +268,7 @@
             history.pushState({view: 'module', id: moduleId}, null, `#${moduleId}`);
         }
 
+        // Modül ID'si yerine TYPE (books, movies) ve INDEX alır.
         function openDetail(type, index) {
             const item = data[type][index];
             const modal = document.getElementById('detail-modal');
