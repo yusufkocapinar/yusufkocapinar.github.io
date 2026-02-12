@@ -3,7 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="description" content="Yusuf Kocapınar - Biyomühendislik & Dijital Günlük">
+    <meta name="author" content="Yusuf Kocapınar">
+    
     <title>Yusuf Kocapınar</title>
+    
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🪐</text></svg>">
+
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
@@ -11,7 +17,7 @@
 
     <div class="bg-image" id="bg-blur"></div>
 
-    <button class="theme-switch" onclick="toggleTheme()">
+    <button class="theme-switch" onclick="toggleTheme()" aria-label="Temayı Değiştir">
         <i class="fas fa-sun" id="theme-icon"></i>
     </button>
 
@@ -95,8 +101,8 @@
                         <div class="track-artist">Fairouz</div>
                     </div>
                     <div class="player-controls">
-                        <button class="ctrl-btn" onclick="toggleMute()"><i class="fas fa-volume-up" id="volIcon"></i></button>
-                        <button class="ctrl-btn" onclick="toggleAudio()"><i class="fas fa-play" id="playIcon"></i></button>
+                        <button class="ctrl-btn" onclick="toggleMute()" aria-label="Sesi Aç/Kapat"><i class="fas fa-volume-up" id="volIcon"></i></button>
+                        <button class="ctrl-btn" onclick="toggleAudio()" aria-label="Oynat/Durdur"><i class="fas fa-play" id="playIcon"></i></button>
                     </div>
                     <audio id="myAudio" loop>
                         <source src="muzik.mp3" type="audio/mpeg">
@@ -108,9 +114,9 @@
         <section id="contact">
             <div class="minimal-footer">
                 <div class="footer-socials">
-                    <a href="#"><i class="fab fa-github"></i></a>
-                    <a href="#"><i class="fab fa-linkedin"></i></a>
-                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#" aria-label="Github"><i class="fab fa-github"></i></a>
+                    <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                    <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
                 </div>
                 <div class="footer-mail">yusufkocapinar92@gmail.com</div>
                 <div class="copyright">&copy; 2026 Yusuf Kocapınar</div>
@@ -175,7 +181,7 @@
         <div class="detail-card">
             <span class="close-detail" onclick="closeGallery()">&times;</span>
             <div style="display: flex; align-items: center; width: 100%; justify-content: space-between;">
-                <button class="gallery-nav-btn" onclick="changeGalleryImage(-1)">&#10094;</button>
+                <button class="gallery-nav-btn" onclick="changeGalleryImage(-1)" aria-label="Önceki">&#10094;</button>
                 <div id="gallery-img-container" style="text-align: center;">
                     <img id="gallery-img-tag" src="" alt="">
                     <h3 id="gallery-caption-tag" style="margin-top: 20px;"></h3>
@@ -185,7 +191,7 @@
                     </a>
 
                 </div>
-                <button class="gallery-nav-btn" onclick="changeGalleryImage(1)">&#10095;</button>
+                <button class="gallery-nav-btn" onclick="changeGalleryImage(1)" aria-label="Sonraki">&#10095;</button>
             </div>
         </div>
     </div>
@@ -203,7 +209,7 @@
                     title: "Holokost Endüstrisi",
                     author: "Norman Finkelstein",
                     img: "https://img.kitapyurdu.com/v1/getImage/fn:12150703/wi:500/wh:bfff5df1e",
-                    review: `Norman Finkelstein’in Holokost Endüstrisi, tarihsel bir trajedinin nasıl dokunulmaz bir ideolojik silaha dönüştürüldüğünü çok cesur bir dille masaya yatırıyor. Yazarın, ailesi bizzat Holokost mağduru olan bir Yahudi akademisyen olmasına rağmen bu eleştirileri kaleme alabilmesi, meseleye sadece akademik değil vicdani bir yerden baktığını da gösteriyor. Açıkçası bu durum, yazara duyduğum saygıyı katbekat artırdı.<br><br>Kitapta özellikle Amerika'nın Holokost'u adeta bir propaganda aracı haline getirişini ve Soğuk Savaş sonrası dönemde bunu nasıl stratejik olarak kullandığını okuyoruz. Finkelstein, acıların sömürüsü üzerinden kurulan bu yapının, tarihsel gerçeklikten ziyade güncel siyasi çıkarlara hizmet ettiğini savunuyor.<br><br>Finkelstein'in çizdiği tabloda en çarpıcı noktalardan biri de dünya üzerinde yaşanan ve yaşanacak bütün acıları Holokost ile mukayese eden ve kendilerine her şeyi hak gören bir toplum. Bu 'biriciklik' iddiası, ne yazık ki eleştiriye kapalı, dokunulmaz bir alan yaratıyor. Okurken sık sık duraksayıp, 'tarih' ile 'tarihin kullanımı' arasındaki o ince çizgiyi sorguladığımı söylemeliyim.`
+                    review: `Norman Finkelstein’in *Holokost Endüstrisi*, tarihsel bir trajedinin nasıl dokunulmaz bir ideolojik silaha dönüştürüldüğünü çok cesur bir dille masaya yatırıyor. Yazarın, ailesi bizzat Holokost mağduru olan bir Yahudi akademisyen olmasına rağmen bu eleştirileri kaleme alabilmesi, meseleye sadece akademik değil vicdani bir yerden baktığını da gösteriyor. Açıkçası bu durum, yazara duyduğum saygıyı katbekat artırdı.<br><br>Kitapta özellikle Amerika'nın Holokost'u adeta bir propaganda aracı haline getirişini ve Soğuk Savaş sonrası dönemde bunu nasıl stratejik olarak kullandığını okuyoruz. Finkelstein, acıların sömürüsü üzerinden kurulan bu yapının, tarihsel gerçeklikten ziyade güncel siyasi çıkarlara hizmet ettiğini savunuyor.<br><br>Finkelstein'in çizdiği tabloda en çarpıcı noktalardan biri de şu: Bununla beraber Dünya üzerinde yaşanan ve yaşanacak bütün acıları Holokost ile mukayese eden ve kendilerine her şeyi hak gören bir toplumun inşa edildiğini görüyoruz. Bu 'biriciklik' iddiası, ne yazık ki eleştiriye kapalı, dokunulmaz bir alan yaratıyor. Okurken sık sık duraksayıp, 'tarih' ile 'tarihin kullanımı' arasındaki o ince çizgiyi sorguladığımı söylemeliyim.`
                 },
                 {
                     title: "Muhtelif 1 - İslam'a Yönelik İtiraz ve Cevaplar",
