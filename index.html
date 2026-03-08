@@ -3,19 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    
-    <meta name="description" content="Yusuf Kocapınar - Biyomühendislik Öğrencisi, Kişisel Blog ve Portfolyo.">
-    <meta name="author" content="Yusuf Kocapınar">
-    <meta name="robots" content="index, follow">
-
-    <meta name="google-site-verification" content="-hYl90NJpsZ0lDJJIyfvSviADWe8d6Q6N6RA6jrB7HI" />
-
     <title>Yusuf Kocapınar | Dijital Günlük</title>
-    
-    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23c3b091'%3E%3Cpath d='M12.07 2C8.55 2 5.62 4.57 4.77 8c-1.1 4.42.8 8.64 3.57 11.29L12.07 22l3.73-2.71c2.77-2.65 4.67-6.87 3.57-11.29-.85-3.43-3.78-6-7.3-6zm0 15c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2z'/%3E%3C/svg%3E">
-
     <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
 
@@ -35,7 +25,6 @@
     </nav>
 
     <div id="main-stage">
-        
         <section id="home">
             <div class="hero-glass">
                 <div class="hero-content">
@@ -50,32 +39,23 @@
             </div>
         </section>
 
-        <section id="about" style="padding-bottom: 25px;">
+        <section id="about">
             <div class="glass-card">
                 <h2>Ben Kimim?</h2>
                 <div style="line-height: 1.9; font-size: 1.1rem; opacity: 0.95;">
                     <p>Merhaba! Ben Yusuf.</p>
                     <p>Meraklı, araştırmacı ve bir o kadar da öğrenmeye tutkulu bir biyomühendislik öğrencisinin blog sayfasına hoş geldin!</p>
                     <p>Yazılar yazıyor, kültür sanat etkinliklerine katılıyor, gördüklerimi fotoğraflıyorum. Ânın tadını çıkartıyor ama ânda takılı kalmıyorum. Aslında bu sayfa bir sonuç değil sürecin eseri; kendi ellerimle yazdığım "Yusuf Masalı"nda bana eşlik etmenden memnuniyet duyarım.</p>
-                    <p>Aklına takılan bir şey olursa bana ulaşman için gerekli her şey sayfada mevcut.</p>
                 </div>
             </div>
         </section>
 
-        <section id="updates" style="padding-top: 0;">
+        <section id="updates">
             <div class="updates-list">
                 <div class="updates-header-container">
                     <h2>Son Güncellemeler</h2>
                 </div>
                 
-                <div class="update-row" onclick="openDetail('books', 1)">
-                    <div class="update-info">
-                        <div class="update-meta">KİTAPLIK • İNCELEME EKLENDİ</div>
-                        <h3>Holokost Endüstrisi - N. Finkelstein</h3>
-                    </div>
-                    <i class="fas fa-arrow-right arrow-icon"></i>
-                </div>
-
                 <div class="update-row" onclick="openModule('journal')">
                     <div class="update-info">
                         <div class="update-meta">YENİ YAZI • GÜNLÜK</div>
@@ -84,63 +64,17 @@
                     <i class="fas fa-arrow-right arrow-icon"></i>
                 </div>
 
-                <div class="update-row" onclick="openDetail('books', 0)">
+                <div class="update-row" onclick="openDetail('books', 1)">
                     <div class="update-info">
-                        <div class="update-meta">KİTAPLIK • İNCELEME</div>
-                        <h3>Üniversitenin Yükselişi - C.H. Haskins</h3>
+                        <div class="update-meta">KİTAPLIK • İNCELEME EKLENDİ</div>
+                        <h3>Holokost Endüstrisi - N. Finkelstein</h3>
                     </div>
                     <i class="fas fa-arrow-right arrow-icon"></i>
                 </div>
             </div>
         </section>
 
-        <section id="music-section" style="padding: 20px 0;">
-            <div class="player-container">
-                <div class="player-bar">
-                    <div class="cover-art">
-                        <img src="kapak.jpg" alt="Cover">
-                    </div>
-                    <div class="song-info">
-                        <div class="track-title">أهو ده اللي صار</div>
-                        <div class="track-artist">Fairouz</div>
-                    </div>
-                    <div class="player-controls">
-                        <button class="ctrl-btn" onclick="toggleMute()" aria-label="Sesi Aç/Kapat"><i class="fas fa-volume-up" id="volIcon"></i></button>
-                        <button class="ctrl-btn" onclick="toggleAudio()" aria-label="Oynat/Durdur"><i class="fas fa-play" id="playIcon"></i></button>
-                    </div>
-                    <audio id="myAudio" loop>
-                        <source src="muzik.mp3" type="audio/mpeg">
-                    </audio>
-                </div>
-            </div>
-        </section>
-
-        <section id="contact">
-            <div class="minimal-footer">
-                <div class="footer-socials">
-                    <a href="#" target="_blank" rel="noopener noreferrer" aria-label="Github"><i class="fab fa-github"></i></a>
-                    <a href="#" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
-                    <a href="#" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-                </div>
-                <div class="footer-mail">yusufkocapinar92@gmail.com</div>
-                <div class="copyright">&copy; 2026 Yusuf Kocapınar</div>
-            </div>
-        </section>
-
-    </div> 
-
-    <div id="module-culture" class="full-page-module">
-        <div class="module-header">
-            <h2 class="module-title">Kültür & Sanat</h2>
-            <button class="back-btn" onclick="goBack()">Geri Dön</button>
         </div>
-        <div class="module-content">
-            <h3 class="section-header">Kitaplık</h3>
-            <div class="poster-grid" id="books-grid"></div>
-            <h3 class="section-header">Sinema</h3>
-            <div class="poster-grid" id="movies-grid"></div>
-        </div>
-    </div>
 
     <div id="module-journal" class="full-page-module">
         <div class="module-header">
@@ -148,303 +82,66 @@
             <button class="back-btn" onclick="goBack()">Geri Dön</button>
         </div>
         <div class="module-content">
-            <h3 class="section-header">Dijital Günlük</h3>
-            <div class="academy-grid">
-                <div class="academy-card">
-                    <div style="font-weight:bold; color:var(--accent-color); font-size:0.7rem;">9 Mart 2026</div>
-                    <h3>21. Yaşımdan Notlar</h3>
-                    <p>Pek Yakında...</p>
-                </div>
-                <div class="academy-card">
-                    <div style="font-weight:bold; color:var(--accent-color); font-size:0.7rem;">19 Şubat 2026</div>
-                    <h3>Nerede O Eski Ramazanlar</h3>
-                    <p>Pek Yakında...</p>
-                </div>
-            </div>
-            <h3 class="section-header">Akademik</h3>
             <div class="academy-grid" id="blog-grid"></div>
-        </div>
-    </div>
-
-    <div id="module-gallery" class="full-page-module">
-        <div class="module-header">
-            <h2 class="module-title">Hafıza</h2>
-            <button class="back-btn" onclick="goBack()">Geri Dön</button>
-        </div>
-        <div class="poster-grid" id="gallery-grid"></div>
-    </div>
-
-    <div id="detail-modal" class="detail-modal">
-        <div class="detail-card">
-            <span class="close-detail" onclick="closeDetail()">&times;</span>
-            <div id="detail-content"></div>
-        </div>
-    </div>
-
-    <div id="gallery-viewer" class="detail-modal">
-        <div class="detail-card">
-            <span class="close-detail" onclick="closeGallery()">&times;</span>
-            <div style="display: flex; align-items: center; width: 100%; justify-content: space-between;">
-                <button class="gallery-nav-btn" onclick="changeGalleryImage(-1)" aria-label="Önceki">&#10094;</button>
-                <div id="gallery-img-container" style="text-align: center;">
-                    <img id="gallery-img-tag" src="" alt="">
-                    <h3 id="gallery-caption-tag" style="margin-top: 20px;"></h3>
-                    
-                    </div>
-                <button class="gallery-nav-btn" onclick="changeGalleryImage(1)" aria-label="Sonraki">&#10095;</button>
-            </div>
         </div>
     </div>
 
     <script>
         const data = {
-            books: [
-                {
-                    title: "Üniversitenin Yükselişi",
-                    author: "Charles Homer Haskins",
-                    img: "https://img.kitapyurdu.com/v1/getImage/fn:11985778/wi:800/wh:9b87ff2f0",
-                    review: `Kitap, Orta Çağ üniversitelerinin doğuşunu, kurumsal yapısını, profesörlerin otoritesini ve öğrencilerin gündelik hayatını ayrıntılı şekilde ele alıyor. Temelde üç bölümden oluşan eser, “ekler” kısmındaki belgelerle derinlik kazanıyor. Öğrencilerin mektuplarında kira, geçim ve ders yoğunluğu gibi sorunların hâlâ tanıdık olması dikkat çekici.<br><br>Haskins üniversiteleri iki modele ayırıyor: Bologna’daki öğrenci üniversiteleri ve Paris’teki profesör üniversiteleri. Bologna’da öğrenciler profesörleri seçiyor ve maaşlarını ödüyordu; bu da ciddi bir güç sağlıyordu. Paris’te ise kilise/devlet desteğiyle maaş alan profesörler, teoloji merkezli güçlü bir otorite kuruyordu. Burada üniversitenin tanımı da önemli: Universitas bugünkü gibi “evrensellik” değil, “birlik” anlamına geliyordu. Öğrenci üniversitelerinde, profesörlerin öğrencilere karşı sorumlu olmaları ve onlar tarafından idare ediliyor olmaları da bence bu birlikle alakalı. Öte yandan; öğrenciler, yüksek konut fiyatları gibi sorunlarla da birlik olarak mücadele ediyordu. Henüz üniversiteler birer binaya sahip değilken bir anda başka bir yere taşınabiliyorlardı. Ayrıca değinmeden geçmeyeyim, o dönemki üniversite olgusunun ekseninde meslek öğretmek değil ahlaklı bireyler yetiştirmek gibi bir motivasyon vardı ve bunu yaparken dinden pek de ayrılıyor değillerdi.<br><br>Buna hem yazarın ifadelerinde hem de öğrenci mektuplarında rastlamak mümkün. Çok uzatmadan kişisel notlarıma geçecek olursam:<br><br>Üniversitenin Yükselişi, akademik bir metin olması sebebiyle temiz kafayla ve iştahla okunması gereken bir kitap. Kısa olsa da oldukça zengin bir içeriğe ve kaynakçaya sahip ve ilgilileri için bence güzel bir giriş niteliğinde.`
-                },
-                {
-                    title: "Holokost Endüstrisi",
-                    author: "Norman Finkelstein",
-                    img: "https://img.kitapyurdu.com/v1/getImage/fn:12150703/wi:500/wh:bfff5df1e",
-                    review: `Norman Finkelstein’in Holokost Endüstrisi, tarihsel bir trajedinin nasıl dokunulmaz bir ideolojik silaha dönüştürüldüğünü çok cesur bir dille masaya yatırıyor. Yazarın, ailesi bizzat Holokost mağduru olan bir Yahudi akademisyen olmasına rağmen bu eleştirileri kaleme alabilmesi, meseleye sadece akademik değil vicdani bir yerden baktığını da gösteriyor. Açıkçası bu durum, yazara duyduğum saygıyı katbekat artırdı.<br><br>Kitapta özellikle Amerika'nın Holokost'u adeta bir propaganda aracı haline getirişini ve Soğuk Savaş sonrası dönemde bunu nasıl stratejik olarak kullandığını okuyoruz. Finkelstein, acıların sömürüsü üzerinden kurulan bu yapının, tarihsel gerçeklikten ziyade güncel siyasi çıkarlara hizmet ettiğini savunuyor.<br><br>Finkelstein'in çizdiği tabloda en çarpıcı noktalardan biri de dünya üzerinde yaşanan ve yaşanacak bütün acıları Holokost ile mukayese eden ve kendilerine her şeyi hak gören bir toplum. Bu 'biriciklik' iddiası, ne yazık ki eleştiriye kapalı, dokunulmaz bir alan yaratıyor. Okurken sık sık duraksayıp, 'tarih' ile 'tarihin kullanımı' arasındaki o ince çizgiyi sorguladığımı söylemeliyim.`
-                },
-                {
-                    title: "Freud İmparatorluğunun Çöküşü",
-                    author: "Hans Eysenck",
-                    img: "https://www.kutadgu.com.tr/u/kutadgu/img/b/f/r/freud-kpk3-1751670171.jpg",
-                    review: `Eysenck'in 1985 senesinde kaleme aldığı ve akademik çevrelerde irtifa kaybetmeye başlayan Freudyen teoriye karşı öldürücü darbeyi vuran yapıtlardan birisidir.`
-                },
-                {
-                    title: "Muhtelif 1 - İslam'a Yönelik İtiraz ve Cevaplar",
-                    author: "Altay Cem Meriç",
-                    img: "https://img.kitapyurdu.com/v1/getImage/fn:12148197/wi:500/wh:3c2524b94",
-                    review: "İslam'a Yönelik İtiraz ve Cevaplar"
-                }
-            ],
-            movies: [
-                {
-                    title: "Inception",
-                    author: "Christopher Nolan",
-                    img: "https://m.media-amazon.com/images/M/MV5BMjExMjkwNTQ0Nl5BMl5BanBnXkFtZTcwNTY0OTk1Mw@@._V1_.jpg",
-                    review: "Rüya içinde rüya..."
-                },
-                {
-                    title: "Intouchables",
-                    author: "Olivier Nakache",
-                    img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRkiJPMd8Tlgpt58klpULjQUCVox_C2X5IS1w&s",
-                    review: "Dostluğun engel tanımayan hikayesi."
-                },
-                {
-                    title: "Özdemir Bayraktar | Bu Dünyadan Bir Akıncı Geçti",
-                    author: "BAYKAR",
-                    img: "https://cdn.baykartech.com/media/upload/userFormUpload/Q0QQpKsVzpiZriNcR7WUpGlJtWHfqtCo.JPG",
-                    review: "Bir İnancın, Bir Mücadelenin ve “Biz de Yapabiliriz” Diyen Bir Neslin Hikâyesi"
-                },
-                {
-                    title: "Ters Yüz",
-                    author: "Pixar",
-                    img: "https://upload.wikimedia.org/wikipedia/tr/thumb/2/29/Ters_Y%C3%BCz_-_afi%C5%9F.jpg/250px-Ters_Y%C3%BCz_-_afi%C5%9F.jpg",
-                    review: "Duyguların dünyasına yolculuk."
-                }
-            ],
             blog: [
+                {
+                    title: "21. Yaşımdan Notlar",
+                    date: "9 Mart 2026",
+                    content: `
+                        <blockquote>
+                            “Dostlar ki bir kere bile selamlaşmadık<br>
+                            Aynı ekmek, aynı hürriyet, aynı hasret için ölebiliriz.”
+                        </blockquote>
+                        Nazım’ın bu ihtişamlı sözleriyle başlıyorum mektubuma. Çünkü geride bıraktığım üç yüz altmış beş takvim günü, bana hiç tanımadığım kalplerle aynı sofrada, aynı kavgada ve aynı neşede buluşabilmenin kudretini öğretti. İçimdeki gürültülerin bir tufana dönüştüğü o sağanakları da, bir bahar ikindisi ruhumu usulca okşayan o serin esintiyi de bu yaşımda tanıdım.<br><br>
+                        <strong>Yirminci yaşım.</strong> Henüz lezzetine tam varamadığım nice sofradan, ibriğimi daldırdığım nice pınardan rızıklanma vaktimdi. Uykusuz gecelerin hırçınlığı, yollarda olmanın vakur yorgunluğu, çiğliğin verdiği o müthiş iştah... Her şeyden biraz, birazdan daha çok; ama pek çok şeyi doldurdum heybeme.<br><br>
+                        Şimdi anlıyorum: <strong>“Ölüyoruz, demek ki yaşanılacak.”</strong> Ömür dediğin bir ezan ile namaz arası, şu fani dünyada bir nefeslik hükmüm var, o halde bu nefesi en derininden çekmeli içe. Hayatın muntazam elifba’sında henüz bir hemzeyim; küçük bir işaret, bir duruş, bir başlangıçtan ibaret. Ve ne muazzam bir lütuf ki; dünyaya gelmiş olmaktan, bu karmaşanın ortasında kendi sesimi aramaktan fevkalade memnunum. Fevkalade memnunum dünyaya geldiğime.<br><br>
+                        Önümde yaşanılacak, ter dökülecek ve sevdalanılacak koca bir ömür... Yaşamaya değer, her anıyla kutsanmaya değer bir ömür...<br><br>
+                        Yoldayım. Yolum uzun.
+                    `
+                },
                 {
                     title: "Kültürlenmiş Et ve Biyoetik",
                     date: "3 Şubat 2026",
-                    content: "CRISPR-Cas9 teknolojisiyle üretilen kültürlenmiş et, biyomedikal etik literatüründe..."
-                },
-                {
-                    title: "Biyomühendislik Vizyonu",
-                    date: "28 Ocak 2026",
-                    content: "Geleceğin teknolojileri üzerine düşünceler."
+                    content: "CRISPR-Cas9 teknolojisiyle üretilen kültürlenmiş et..."
                 }
             ],
-            gallery: [
-                { src: "citedepera.jpg", title: "Cité de Péra" },
-                { src: "feneryolu.jpg", title: "Feneryolu İstasyonu" },
-                { src: "daylik.jpg", title: "Daylık Köyü" },
-                { src: "kücükyali.jpg", title: "Küçükyalı" },
-                { src: "umraniye.jpg", title: "Osmangazi Korusu" },
-                { src: "sultanahmet.jpg", title: "Sultanahmet Camii" },
-                { src: "baglarbasi.jpg", title: "Bağlarbaşı" }
-            ]
+            books: [ /* Mevcut kitap verilerin */ ],
+            movies: [ /* Mevcut film verilerin */ ],
+            gallery: [ /* Mevcut galeri verilerin */ ]
         };
 
-        const mainStage = document.getElementById('main-stage');
-        const modules = document.querySelectorAll('.full-page-module');
-
-        // PROFESYONEL NAVİGASYON (HISTORY API)
-        function openModule(moduleId) {
-            mainStage.classList.add('hidden');
-            modules.forEach(m => m.classList.remove('active'));
-            document.getElementById('module-' + moduleId).classList.add('active');
-            window.scrollTo(0,0);
-            
-            history.pushState({view: 'module', id: moduleId}, null, `#${moduleId}`);
-        }
-
-        function openDetail(type, index) {
-            const item = data[type][index];
-            const modal = document.getElementById('detail-modal');
-            document.getElementById('detail-content').innerHTML = `
-                <div class="detail-flex">
-                    <img src="${item.img}" class="detail-img">
-                    <div class="detail-content">
-                        <h3>${item.title}</h3>
-                        <p style="color:var(--accent-color); font-weight:bold;">${item.author}</p>
-                        <p>${item.review}</p>
-                    </div>
-                </div>`;
-            modal.classList.add('active');
-            history.pushState({view: 'modal', type: 'detail'}, null, '#detail');
-        }
-
-        let currentGalleryIndex = 0;
-        function openGalleryViewer(index) {
-            currentGalleryIndex = index;
-            updateGalleryModal();
-            document.getElementById('gallery-viewer').classList.add('active');
-            history.pushState({view: 'modal', type: 'gallery'}, null, '#gallery');
-        }
-
-        function closeDetailUI() {
-            document.getElementById('detail-modal').classList.remove('active');
-        }
-        function closeGalleryUI() {
-            document.getElementById('gallery-viewer').classList.remove('active');
-        }
-        function showLandingUI() {
-            modules.forEach(m => m.classList.remove('active'));
-            mainStage.classList.remove('hidden');
-            window.scrollTo(0,0);
-        }
-        function openModuleUI(moduleId) {
-            mainStage.classList.add('hidden');
-            modules.forEach(m => m.classList.remove('active'));
-            document.getElementById('module-' + moduleId).classList.add('active');
-        }
-
-        function goBack() { history.back(); }
-        function closeDetail() { history.back(); }
-        function closeGallery() { history.back(); }
-
-        window.onpopstate = function(event) {
-            const detailOpen = document.getElementById('detail-modal').classList.contains('active');
-            const galleryOpen = document.getElementById('gallery-viewer').classList.contains('active');
-
-            if (detailOpen) { closeDetailUI(); return; }
-            if (galleryOpen) { closeGalleryUI(); return; }
-
-            if (event.state && event.state.view === 'module') {
-                openModuleUI(event.state.id);
-            } else {
-                showLandingUI();
-            }
-        };
-
-        function changeGalleryImage(direction) {
-            currentGalleryIndex += direction;
-            if (currentGalleryIndex < 0) currentGalleryIndex = data.gallery.length - 1;
-            if (currentGalleryIndex >= data.gallery.length) currentGalleryIndex = 0;
-            updateGalleryModal();
-        }
-
-        function updateGalleryModal() {
-            const item = data.gallery[currentGalleryIndex];
-            document.getElementById('gallery-img-tag').src = item.src;
-            document.getElementById('gallery-caption-tag').innerText = item.title;
-            
-            // GÜVENLİK İÇİN PASİFE ALINAN İNDİRME KODU
-            // const downloadBtn = document.getElementById('gallery-download-btn');
-            // downloadBtn.href = item.src; 
-            // downloadBtn.setAttribute('download', item.title + ".jpg"); 
-        }
-
+        // Modül ve içerik yükleme fonksiyonları
         window.addEventListener('DOMContentLoaded', () => {
-            history.replaceState(null, null, ' ');
-
-            const bookGrid = document.getElementById('books-grid');
-            data.books.forEach((item, index) => bookGrid.innerHTML += createPosterHTML(item, 'books', index));
-
-            const movieGrid = document.getElementById('movies-grid');
-            data.movies.forEach((item, index) => movieGrid.innerHTML += createPosterHTML(item, 'movies', index));
-
             const blogGrid = document.getElementById('blog-grid');
             data.blog.forEach((item) => {
                 blogGrid.innerHTML += `
                     <div class="academy-card">
-                        <div style="font-weight:bold; color:var(--accent-color); font-size:0.7rem;">${item.date}</div>
-                        <h3>${item.title}</h3>
-                        <p>${item.content}</p>
+                        <div style="font-weight:bold; color:var(--accent-color); font-size:0.7rem; margin-bottom:10px;">${item.date}</div>
+                        <h3 style="font-family:'Cormorant Garamond', serif; font-size:2rem; margin-bottom:15px;">${item.title}</h3>
+                        <div style="line-height:1.8; opacity:0.9;">${item.content}</div>
                     </div>`;
             });
-
-            const galleryGrid = document.getElementById('gallery-grid');
-            data.gallery.forEach((item, index) => {
-                galleryGrid.innerHTML += `
-                    <div class="poster" onclick="openGalleryViewer(${index})">
-                        <img src="${item.src}">
-                        <div class="poster-caption">${item.title}</div>
-                    </div>`;
-            });
+            // Diğer grid yüklemeleri...
         });
 
-        function createPosterHTML(item, type, index) {
-            return `<div class="poster" onclick="openDetail('${type}', ${index})"><img src="${item.img}"></div>`;
+        // Mevcut openModule, goBack, toggleTheme fonksiyonların...
+        function openModule(moduleId) {
+            document.getElementById('main-stage').classList.add('hidden');
+            document.querySelectorAll('.full-page-module').forEach(m => m.classList.remove('active'));
+            document.getElementById('module-' + moduleId).classList.add('active');
+            window.scrollTo(0,0);
         }
-
-        window.onclick = function(event) {
-            const galleryModal = document.getElementById('gallery-viewer');
-            const detailModal = document.getElementById('detail-modal');
-            if (event.target === galleryModal) history.back();
-            if (event.target === detailModal) history.back();
+        function goBack() {
+            document.querySelectorAll('.full-page-module').forEach(m => m.classList.remove('active'));
+            document.getElementById('main-stage').classList.remove('hidden');
         }
-
-        document.addEventListener('keydown', function(event) {
-            const galleryModal = document.getElementById('gallery-viewer');
-            const detailModal = document.getElementById('detail-modal');
-            const anyModuleActive = document.querySelector('.full-page-module.active');
-
-            if (event.key === "Escape") {
-                history.back();
-            }
-            if (galleryModal.classList.contains('active')) {
-                if (event.key === "ArrowLeft") changeGalleryImage(-1);
-                if (event.key === "ArrowRight") changeGalleryImage(1);
-            }
-        });
-
-        window.addEventListener('scroll', () => {
-            const bg = document.getElementById('bg-blur');
-            if (window.scrollY > 50) bg.classList.add('blurred');
-            else bg.classList.remove('blurred');
-        });
-
         function toggleTheme() {
             document.body.classList.toggle('purple-mode');
-        }
-
-        var audio = document.getElementById("myAudio");
-        var icon = document.getElementById("playIcon");
-        var playerBar = document.querySelector(".player-bar");
-
-        function toggleAudio() {
-            if (audio.paused) {
-                audio.play();
-                icon.className = "fas fa-pause";
-                playerBar.classList.add("playing");
-            } else {
-                audio.pause();
-                icon.className = "fas fa-play";
-                playerBar.classList.remove("playing");
-            }
-        }
-        function toggleMute() {
-            audio.muted = !audio.muted;
-            document.getElementById("volIcon").className = audio.muted ? "fas fa-volume-mute" : "fas fa-volume-up";
         }
     </script>
 </body>
