@@ -6,313 +6,17 @@
     
     <meta name="description" content="Yusuf Kocapınar - Biyomühendislik Öğrencisi, Kişisel Blog ve Portfolyo.">
     <meta name="author" content="Yusuf Kocapınar">
+    <meta name="robots" content="index, follow">
+
+    <meta name="google-site-verification" content="-hYl90NJpsZ0lDJJIyfvSviADWe8d6Q6N6RA6jrB7HI" />
+
     <title>Yusuf Kocapınar | Dijital Günlük</title>
     
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23c3b091'%3E%3Cpath d='M12.07 2C8.55 2 5.62 4.57 4.77 8c-1.1 4.42.8 8.64 3.57 11.29L12.07 22l3.73-2.71c2.77-2.65 4.67-6.87 3.57-11.29-.85-3.43-3.78-6-7.3-6zm0 15c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2z'/%3E%3C/svg%3E">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Cormorant+Garamond:ital,wght@0,500;0,700;1,500&display=swap');
-
-        :root {
-            --accent-color: #c3b091;
-            --text-color: #333;
-            --bg-color: #f4f1ea;
-            --glass-bg: rgba(255, 255, 255, 0.85); 
-            --glass-border: rgba(255, 255, 255, 0.9);
-            --nav-bg: rgba(255, 255, 255, 0.95);
-            --card-shadow: 0 15px 40px rgba(195, 176, 145, 0.15);
-            --module-bg: #f4f1ea;
-            --player-bg: #fff;
-            --player-border: #ddd;
-        }
-
-        body.purple-mode {
-            --accent-color: #d1b3ff;
-            --text-color: #ece0f5;
-            --bg-color: #261e30;
-            --glass-bg: rgba(50, 40, 65, 0.6); 
-            --glass-border: rgba(200, 180, 255, 0.15);
-            --nav-bg: rgba(40, 30, 50, 0.8);
-            --card-shadow: 0 20px 50px rgba(0,0,0,0.4);
-            --module-bg: #261e30;
-            --player-bg: #1a1220; 
-            --player-border: rgba(255,255,255,0.1);
-        }
-
-        body.purple-mode .bg-image { filter: brightness(0.6) hue-rotate(15deg) sepia(0.3); opacity: 0.6; }
-
-        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-
-        body {
-            margin: 0; padding: 0;
-            font-family: 'Montserrat', sans-serif;
-            color: var(--text-color);
-            background: var(--bg-color);
-            overflow-x: hidden;
-            transition: background 0.8s ease, color 0.8s ease;
-        }
-
-        html { scroll-behavior: smooth; }
-        ::-webkit-scrollbar { display: none; }
-        * { -ms-overflow-style: none; scrollbar-width: none; }
-
-        /* ARKA PLAN */
-        .bg-image {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1;
-            background-image: url('https://i.pinimg.com/1200x/64/2b/71/642b7177987e8a830d236ad709a46938.jpg'); 
-            background-size: cover; background-position: center; 
-            transition: filter 1s ease;
-            filter: brightness(1) blur(0px);
-        }
-        .bg-image.blurred { filter: brightness(0.7) blur(15px); }
-
-        /* TEMA BUTONU */
-        .theme-switch {
-            position: fixed; top: 30px; left: 30px; z-index: 1000;
-            color: var(--accent-color); font-size: 1.2rem; cursor: pointer;
-            background: var(--nav-bg); width: 50px; height: 50px; border-radius: 50%;
-            display: flex; align-items: center; justify-content: center; 
-            border: 1px solid var(--glass-border); backdrop-filter: blur(10px);
-            transition: 0.3s; box-shadow: var(--card-shadow);
-        }
-        .theme-switch:hover { background: var(--accent-color); color: #fff; transform: rotate(15deg); }
-
-        /* YAN MENÜ */
-        .floating-nav {
-            position: fixed; right: 25px; top: 50%; transform: translateY(-50%);
-            display: flex; flex-direction: column; gap: 15px; z-index: 1000;
-            background: var(--nav-bg); padding: 20px 12px; 
-            border-radius: 50px; 
-            border: 1px solid var(--glass-border); backdrop-filter: blur(10px);
-            box-shadow: var(--card-shadow);
-        }
-        .nav-item {
-            color: var(--text-color); opacity: 0.6; font-size: 1.1rem; transition: 0.3s; position: relative;
-            width: 40px; height: 40px; display: flex; align-items: center; justify-content: center;
-            text-decoration: none; border-radius: 50%;
-        }
-        .nav-item:hover, .nav-item.active { opacity: 1; color: var(--accent-color); background: rgba(var(--accent-color), 0.1); transform: scale(1.1); }
-        .nav-item::before {
-            content: attr(data-tooltip); position: absolute; right: 60px;
-            background: var(--accent-color); color: #fff; padding: 5px 12px;
-            border-radius: 20px; font-size: 0.75rem; font-weight: 600; opacity: 0;
-            pointer-events: none; transition: 0.3s; white-space: nowrap; transform: translateX(10px);
-        }
-        .nav-item:hover::before { opacity: 1; transform: translateX(0); }
-
-        /* ANA SAHNE */
-        #main-stage { transition: opacity 0.5s ease; width: 100%; }
-        #main-stage.hidden { opacity: 0; pointer-events: none; }
-
-        section {
-            padding: 40px 20px;
-            width: 100%; max-width: 850px; margin: 0 auto;
-            display: flex; flex-direction: column; 
-            justify-content: center; align-items: center;
-            text-align: center;
-        }
-
-        /* HERO */
-        #home { min-height: 100vh; padding: 0; position: relative; }
-        .hero-glass {
-            background: var(--glass-bg); backdrop-filter: blur(25px);
-            border: 1px solid var(--glass-border); padding: 50px;
-            border-radius: 60px; width: 100%; max-width: 600px;
-            box-shadow: 0 30px 60px rgba(0,0,0,0.15);
-        }
-        body.purple-mode .hero-glass { background: rgba(60, 40, 70, 0.4); border-color: rgba(255,255,255,0.1); }
-        .profile-img {
-            width: 170px; height: 170px; border-radius: 15px; object-fit: cover;
-            border: 3px solid var(--accent-color); margin-bottom: 20px;
-        }
-        h1 { 
-            font-family: 'Cormorant Garamond', serif; 
-            font-size: clamp(2.5rem, 5vw, 3.8rem); 
-            margin: 0; font-weight: 700; letter-spacing: -1px; 
-            color: var(--text-color); text-shadow: none; 
-        }
-        body.purple-mode h1 { color: #fff; text-shadow: 0 4px 10px rgba(0,0,0,0.3); }
-
-        .subtitle { 
-            font-family: 'Montserrat', sans-serif; font-size: 1.1rem; 
-            color: var(--accent-color); text-transform: uppercase; letter-spacing: 3px;
-            margin-top: 10px; font-weight: 600;
-        }
-
-        .scroll-indicator {
-            position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%);
-            text-align: center; cursor: pointer; animation: bounce 2s infinite;
-        }
-        .scroll-indicator span { font-size: 0.75rem; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 8px; display: block; color: var(--text-color); opacity: 0.8; font-weight: 600;}
-        .scroll-indicator i { font-size: 1.2rem; color: var(--accent-color); }
-
-        h2 {
-            font-family: 'Cormorant Garamond', serif; font-size: 2.5rem; color: var(--text-color);
-            margin-bottom: 30px; text-align: left; width: 100%; 
-            border-bottom: 1px solid var(--accent-color);
-            padding-bottom: 15px; display: inline-block;
-        }
-
-        .glass-card {
-            background: var(--glass-bg); backdrop-filter: blur(25px);
-            border: 1px solid var(--glass-border); padding: 50px; 
-            border-radius: 40px; width: 100%; text-align: left; box-shadow: var(--card-shadow);
-        }
-
-        /* GÜNCELLEMELER */
-        .updates-list { 
-            display: flex; flex-direction: column; width: 100%; max-width: none; 
-            background: var(--glass-bg); backdrop-filter: blur(25px);
-            border: 1px solid var(--glass-border); border-radius: 40px; 
-            overflow: hidden; box-shadow: var(--card-shadow);
-        }
-        .updates-header-container { padding: 40px 50px 10px 50px; text-align: left; }
-        .updates-header-container h2 { margin-bottom: 10px; border-bottom: 1px solid var(--accent-color); padding-bottom: 15px; display: block; width: 100%; }
-        .update-row { padding: 25px 50px; cursor: pointer; transition: 0.3s; display: flex; align-items: center; justify-content: space-between; text-align: left; border-bottom: 1px solid rgba(150, 150, 150, 0.1); }
-        .update-row:last-child { border-bottom: none; }
-        .update-row:hover { background: rgba(var(--accent-color), 0.1); padding-left: 60px; }
-        .update-info h3 { margin: 0; font-family: 'Cormorant Garamond', serif; font-size: 1.5rem; color: var(--text-color); }
-        .update-meta { font-size: 0.7rem; color: var(--accent-color); font-weight: 700; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 5px;}
-        .arrow-icon { color: var(--text-color); font-size: 1rem; opacity: 0.4; transition: 0.3s; }
-        .update-row:hover .arrow-icon { opacity: 1; color: var(--accent-color); transform: translateX(5px); }
-
-        /* GALERİ & AFİŞLER */
-        .poster { 
-            aspect-ratio: 2/3; border-radius: 15px; overflow: hidden; cursor: pointer; transition: 0.3s; 
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1); position: relative; background: #000;
-        }
-        .poster:hover { transform: scale(1.03); box-shadow: 0 15px 30px rgba(0,0,0,0.2); }
-        .poster img { width: 100%; height: 100%; object-fit: cover; opacity: 0.9; transition: 0.3s; }
-        .poster:hover img { opacity: 0.6; }
-        .poster-caption {
-            position: absolute; bottom: 0; left: 0; width: 100%;
-            padding: 15px; background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
-            color: #fff; text-align: center; opacity: 0; transition: 0.3s;
-            font-family: 'Cormorant Garamond', serif; font-size: 1.2rem; transform: translateY(10px);
-        }
-        .poster:hover .poster-caption { opacity: 1; transform: translateY(0); }
-
-        /* MÜZİK ÇALAR */
-        .player-container { display: flex; justify-content: center; width: 100%; margin-top: 10px;}
-        .player-bar {
-            background: var(--player-bg); border: 1px solid var(--player-border);
-            padding: 10px 30px; display: flex; align-items: center; gap: 20px;
-            width: 100%; max-width: 550px; transition: 0.3s;
-            border-radius: 50px; box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-        }
-        .player-bar:hover { border-color: var(--accent-color); transform: translateY(-2px); }
-        .cover-art {
-            width: 55px; height: 55px; border-radius: 50%; overflow: hidden; flex-shrink: 0;
-            border: 2px solid rgba(150, 150, 150, 0.1);
-            animation: spin 10s linear infinite; animation-play-state: paused;
-        }
-        .player-bar.playing .cover-art { animation-play-state: running; border-color: var(--accent-color); }
-        .cover-art img { width: 100%; height: 100%; object-fit: cover; }
-        .song-info { flex-grow: 1; text-align: left; display: flex; flex-direction: column; justify-content: center;}
-        .track-title { color: var(--text-color); font-weight: 700; font-size: 0.9rem; letter-spacing: 0.5px;}
-        .track-artist { color: var(--accent-color); font-size: 0.75rem; text-transform: uppercase; font-weight: 600; letter-spacing: 1px;}
-        .player-controls { display: flex; gap: 15px; }
-        .ctrl-btn { background: transparent; border: none; color: var(--text-color); cursor: pointer; font-size: 1.1rem; transition: 0.3s; opacity: 0.7;}
-        .ctrl-btn:hover { color: var(--accent-color); opacity: 1; transform: scale(1.1); }
-
-        /* İLETİŞİM */
-        #contact { padding-top: 10px; padding-bottom: 60px; min-height: auto; }
-        .minimal-footer {
-            display: flex; flex-direction: column; align-items: center; gap: 15px;
-            width: 100%; padding-top: 30px; border-top: 1px solid rgba(150,150,150, 0.2);
-        }
-        .footer-socials { display: flex; gap: 30px; }
-        .footer-socials a { font-size: 1.5rem; color: var(--text-color); opacity: 0.5; transition: 0.3s; }
-        .footer-socials a:hover { color: var(--accent-color); opacity: 1; transform: translateY(-3px); }
-        .footer-mail { font-family: 'Montserrat', sans-serif; font-size: 0.95rem; color: var(--text-color); opacity: 0.8; letter-spacing: 0.5px; font-weight: 500;}
-        .copyright { font-size: 0.75rem; opacity: 0.4; margin-top: 10px; }
-
-        /* MODÜLLER */
-        .full-page-module {
-            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: var(--module-bg); z-index: 2000; overflow-y: auto; padding: 60px 20px;
-            animation: fadeIn 0.4s ease;
-        }
-        .full-page-module.active { display: block; }
-        .module-header { max-width: 900px; margin: 0 auto 40px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--glass-border); padding-bottom: 20px;}
-        .module-title { font-family: 'Cormorant Garamond', serif; font-size: 3rem; margin: 0; color: var(--text-color); }
-        .back-btn { background: transparent; border: 1px solid var(--accent-color); color: var(--accent-color); padding: 8px 25px; border-radius: 20px; cursor: pointer; transition: 0.3s; font-weight: 600; }
-        .back-btn:hover { background: var(--accent-color); color: #fff; }
-        .module-content { max-width: 900px; margin: 0 auto; text-align: left; }
-        .section-header { font-family: 'Cormorant Garamond', serif; font-size: 1.8rem; color: var(--text-color); border-bottom: 1px solid rgba(150,150,150,0.1); padding-bottom: 10px; margin: 40px 0 25px; opacity: 0.8;}
-
-        .poster-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 20px; }
-        .academy-grid { display: grid; grid-template-columns: 1fr; gap: 15px; }
-        
-        .academy-card { 
-            background: var(--glass-bg); padding: 30px; border-radius: 20px; 
-            border: 1px solid var(--glass-border); border-left: 4px solid var(--accent-color); 
-            cursor: pointer; transition: 0.3s;
-        }
-        .academy-card:hover { transform: translateY(-5px); box-shadow: var(--card-shadow); }
-
-        /* OKUYUCU (READER) EKRANI */
-        .reader-overlay {
-            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: var(--module-bg); z-index: 4000; overflow-y: auto; padding: 40px 20px;
-        }
-        .reader-overlay.active { display: block; animation: slideUp 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
-        .reader-container { max-width: 750px; margin: 0 auto; text-align: left; padding: 20px; background: var(--glass-bg); border-radius: 30px; border: 1px solid var(--glass-border); box-shadow: var(--card-shadow); }
-        .reader-top-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; padding-bottom: 20px; border-bottom: 1px solid rgba(150,150,150,0.2); }
-        .reader-title { font-family: 'Cormorant Garamond', serif; font-size: 2.8rem; color: var(--text-color); margin: 0; line-height: 1.1; }
-        .reader-date { color: var(--accent-color); font-weight: 600; font-size: 0.9rem; margin-top: 15px; display: inline-block; }
-        .reader-body { font-size: 1.15rem; line-height: 1.9; color: var(--text-color); opacity: 0.95; margin-top: 30px; }
-        
-        blockquote {
-            font-family: 'Cormorant Garamond', serif; font-size: 1.4rem; line-height: 1.6; 
-            color: var(--accent-color); border-left: 3px solid var(--accent-color); 
-            margin: 30px 0; padding: 10px 0 10px 25px; font-style: italic; background: rgba(195, 176, 145, 0.05); border-radius: 0 10px 10px 0;
-        }
-
-        /* DETAY PENCERESİ */
-        .detail-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 3000; align-items: center; justify-content: center; backdrop-filter: blur(10px); }
-        .detail-modal.active { display: flex; }
-        .detail-card { background: var(--bg-color); width: 90%; max-width: 700px; padding: 50px; border-radius: 30px; position: relative; max-height: 90vh; overflow-y: auto; text-align: left; box-shadow: 0 30px 60px rgba(0,0,0,0.5); }
-        .close-detail { position: absolute; top: 25px; right: 25px; font-size: 1.8rem; cursor: pointer; color: var(--text-color);}
-        .detail-flex { display: flex; gap: 40px; }
-        .detail-img { width: 200px; height: auto; align-self: flex-start; border-radius: 15px; box-shadow: 0 15px 30px rgba(0,0,0,0.3); object-fit: cover;}
-        .detail-content h3 { font-family: 'Cormorant Garamond', serif; font-size: 2.5rem; margin: 0 0 10px 0; color: var(--text-color); line-height: 1.1;}
-        .detail-content p { line-height: 1.8; color: var(--text-color); opacity: 0.9; font-size: 1.05rem; }
-
-        /* GALERİ OYNATICI */
-        .gallery-nav-btn { background: transparent; border: none; color: #fff; font-size: 2rem; cursor: pointer; padding: 20px; transition: 0.3s; opacity: 0.7; }
-        .gallery-nav-btn:hover { opacity: 1; transform: scale(1.2); color: var(--accent-color); }
-        #gallery-img-container { display: flex; flex-direction: column; align-items: center; justify-content: center; width: 100%; }
-        #gallery-img-tag { max-height: 80vh; max-width: 100%; border-radius: 10px; box-shadow: 0 20px 50px rgba(0,0,0,0.5); margin-bottom: 20px; object-fit: contain; }
-        #gallery-caption-tag { font-family: 'Cormorant Garamond', serif; font-size: 1.8rem; color: #fff; text-align: center; }
-        #gallery-viewer .detail-card { background: transparent; box-shadow: none; max-width: 1000px; display: flex; align-items: center; justify-content: center; padding: 10px;}
-        #gallery-viewer .close-detail { color: #fff; top: 20px; right: 20px; z-index: 3002; }
-
-        @keyframes spin { 100% { transform: rotate(360deg); } }
-        @keyframes bounce { 0%, 20%, 50%, 80%, 100% {transform: translateX(-50%) translateY(0);} 40% {transform: translateX(-50%) translateY(-10px);} 60% {transform: translateX(-50%) translateY(-5px);} }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-        @keyframes slideUp { from { transform: translateY(50px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
-
-        /* MOBİL OPTİMİZASYON */
-        @media (max-width: 768px) {
-            .floating-nav { bottom: 20px; top: auto; right: 50%; transform: translateX(50%); flex-direction: row; width: 90%; max-width: 400px; padding: 15px 25px; gap: 0; justify-content: space-between; background: rgba(255, 255, 255, 0.95); box-shadow: 0 10px 30px rgba(0,0,0,0.2); }
-            .nav-item { width: auto; height: auto; padding: 5px; }
-            .nav-item::before { display: none; }
-            section { padding: 30px 15px; }
-            .hero-glass, .glass-card, .updates-list { padding: 30px 20px; border-radius: 30px; }
-            .updates-header-container { padding: 20px 20px 0 20px; }
-            h1 { font-size: 2.8rem; }
-            .detail-card { padding: 30px 20px; width: 95%; max-height: 85vh; }
-            .detail-flex { flex-direction: column; gap: 20px; }
-            .detail-img { width: 100%; max-width: 200px; margin: 0 auto; }
-            .detail-content { text-align: center; }
-            .close-detail { top: 15px; right: 15px; }
-            #gallery-img-tag { max-width: 90%; max-height: 60vh; }
-            .reader-container { padding: 25px 20px; border-radius: 20px; }
-            .reader-title { font-size: 2.2rem; }
-        }
-    </style>
+    <link rel="stylesheet" href="style.css">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body>
 
@@ -336,7 +40,7 @@
         <section id="home">
             <div class="hero-glass">
                 <div class="hero-content">
-                    <img src="profil.png" alt="Yusuf Kocapınar" class="profile-img" onerror="this.src='https://via.placeholder.com/170'">
+                    <img src="profil.png" alt="Yusuf Kocapınar" class="profile-img">
                     <h1>Yusuf Kocapınar</h1>
                     <p class="subtitle">Dijital Günlüğüme Hoş Geldin</p>
                 </div>
@@ -365,18 +69,18 @@
                     <h2>Son Güncellemeler</h2>
                 </div>
                 
-                <div class="update-row" onclick="openModule('journal')">
-                    <div class="update-info">
-                        <div class="update-meta">YENİ YAZI • GÜNLÜK</div>
-                        <h3>21. Yaşımdan Notlar</h3>
-                    </div>
-                    <i class="fas fa-arrow-right arrow-icon"></i>
-                </div>
-
                 <div class="update-row" onclick="openDetail('books', 1)">
                     <div class="update-info">
                         <div class="update-meta">KİTAPLIK • İNCELEME EKLENDİ</div>
                         <h3>Holokost Endüstrisi - N. Finkelstein</h3>
+                    </div>
+                    <i class="fas fa-arrow-right arrow-icon"></i>
+                </div>
+
+                <div class="update-row" onclick="openReader(0)">
+                    <div class="update-info">
+                        <div class="update-meta">YENİ YAZI • GÜNLÜK</div>
+                        <h3>21. Yaşımdan Notlar</h3>
                     </div>
                     <i class="fas fa-arrow-right arrow-icon"></i>
                 </div>
@@ -395,7 +99,7 @@
             <div class="player-container">
                 <div class="player-bar">
                     <div class="cover-art">
-                        <img src="kapak.jpg" onerror="this.src='https://via.placeholder.com/55'" alt="Cover">
+                        <img src="kapak.jpg" alt="Cover">
                     </div>
                     <div class="song-info">
                         <div class="track-title">أهو ده اللي صار</div>
@@ -415,9 +119,9 @@
         <section id="contact">
             <div class="minimal-footer">
                 <div class="footer-socials">
-                    <a href="#" target="_blank" aria-label="Github"><i class="fab fa-github"></i></a>
-                    <a href="#" target="_blank" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
-                    <a href="#" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="#" target="_blank" rel="noopener noreferrer" aria-label="Github"><i class="fab fa-github"></i></a>
+                    <a href="#" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                    <a href="#" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
                 </div>
                 <div class="footer-mail">yusufkocapinar92@gmail.com</div>
                 <div class="copyright">&copy; 2026 Yusuf Kocapınar</div>
@@ -429,7 +133,7 @@
     <div id="module-culture" class="full-page-module">
         <div class="module-header">
             <h2 class="module-title">Kültür & Sanat</h2>
-            <button class="back-btn" onclick="history.back()">Geri Dön</button>
+            <button class="back-btn" onclick="goBack()">Geri Dön</button>
         </div>
         <div class="module-content">
             <h3 class="section-header">Kitaplık</h3>
@@ -442,10 +146,13 @@
     <div id="module-journal" class="full-page-module">
         <div class="module-header">
             <h2 class="module-title">Akademik & Günlük</h2>
-            <button class="back-btn" onclick="history.back()">Geri Dön</button>
+            <button class="back-btn" onclick="goBack()">Geri Dön</button>
         </div>
         <div class="module-content">
-            <h3 class="section-header">Yazılarım</h3>
+            <h3 class="section-header">Dijital Günlük</h3>
+            <div class="academy-grid" id="journal-grid"></div>
+            
+            <h3 class="section-header">Akademik</h3>
             <div class="academy-grid" id="blog-grid"></div>
         </div>
     </div>
@@ -453,30 +160,28 @@
     <div id="module-gallery" class="full-page-module">
         <div class="module-header">
             <h2 class="module-title">Hafıza</h2>
-            <button class="back-btn" onclick="history.back()">Geri Dön</button>
+            <button class="back-btn" onclick="goBack()">Geri Dön</button>
         </div>
         <div class="poster-grid" id="gallery-grid"></div>
     </div>
 
-    <div id="reader-overlay" class="reader-overlay">
-        <div class="reader-container">
-            <div class="reader-top-bar">
-                <button class="back-btn" onclick="history.back()"><i class="fas fa-chevron-left"></i> Kapat</button>
-            </div>
-            <div id="reader-data"></div>
+    <div id="detail-modal" class="detail-modal">
+        <div class="detail-card">
+            <span class="close-detail" onclick="closeDetail()">&times;</span>
+            <div id="detail-content"></div>
         </div>
     </div>
 
-    <div id="detail-modal" class="detail-modal">
-        <div class="detail-card">
-            <span class="close-detail" onclick="history.back()">&times;</span>
-            <div id="detail-content"></div>
+    <div id="reader-modal" class="detail-modal">
+        <div class="detail-card" style="padding-top: 40px; padding-bottom: 40px;">
+            <span class="close-detail" onclick="closeReader()">&times;</span>
+            <div id="reader-content"></div>
         </div>
     </div>
 
     <div id="gallery-viewer" class="detail-modal">
         <div class="detail-card">
-            <span class="close-detail" onclick="history.back()">&times;</span>
+            <span class="close-detail" onclick="closeGallery()">&times;</span>
             <div style="display: flex; align-items: center; width: 100%; justify-content: space-between;">
                 <button class="gallery-nav-btn" onclick="changeGalleryImage(-1)" aria-label="Önceki">&#10094;</button>
                 <div id="gallery-img-container" style="text-align: center;">
@@ -490,190 +195,266 @@
 
     <script>
         const data = {
-            blog: [
+            journal: [
                 {
-                    id: 0,
                     title: "21. Yaşımdan Notlar",
                     date: "9 Mart 2026",
                     content: `
-                        <blockquote>
-                            “Dostlar ki bir kere bile selamlaşmadık<br>
-                            Aynı ekmek, aynı hürriyet, aynı hasret için ölebiliriz.”
-                        </blockquote>
-                        Nazım’ın bu ihtişamlı sözleriyle başlıyorum mektubuma. Çünkü geride bıraktığım üç yüz altmış beş takvim günü, bana hiç tanımadığım kalplerle aynı sofrada, aynı kavgada ve aynı neşede buluşabilmenin kudretini öğretti. İçimdeki gürültülerin bir tufana dönüştüğü o sağanakları da, bir bahar ikindisi ruhumu usulca okşayan o serin esintiyi de bu yaşımda tanıdım.<br><br>
-                        <strong>Yirminci yaşım.</strong> Henüz lezzetine tam varamadığım nice sofradan, ibriğimi daldırdığım nice pınardan rızıklanma vaktimdi. Uykusuz gecelerin hırçınlığı, yollarda olmanın vakur yorgunluğu, çiğliğin verdiği o müthiş iştah... Her şeyden biraz, birazdan daha çok; ama pek çok şeyi doldurdum heybeme.<br><br>
-                        Şimdi anlıyorum: <strong>“Ölüyoruz, demek ki yaşanılacak.”</strong> Ömür dediğin bir ezan ile namaz arası, şu fani dünyada bir nefeslik hükmüm var, o halde bu nefesi en derininden çekmeli içe. Hayatın muntazam elifba’sında henüz bir hemzeyim; küçük bir işaret, bir duruş, bir başlangıçtan ibaret. Ve ne muazzam bir lütuf ki; dünyaya gelmiş olmaktan, bu karmaşanın ortasında kendi sesimi aramaktan fevkalade memnunum. Fevkalade memnunum dünyaya geldiğime.<br><br>
-                        Önümde yaşanılacak, ter dökülecek ve sevdalanılacak koca bir ömür... Yaşamaya değer, her anıyla kutsanmaya değer bir ömür...<br><br>
-                        Yoldayım. Yolum uzun.
+                        <div style="font-size: 1.1rem; line-height: 1.8; opacity: 0.95; text-align: justify; margin-top: 15px;">
+                            <p style="font-style: italic; color: var(--accent-color); font-weight: 500; font-family: 'Cormorant Garamond', serif; font-size: 1.3rem; text-align: center; margin-bottom: 25px; line-height: 1.5;">
+                                "Dostlar ki bir kere bile selamlaşmadık<br>
+                                Aynı ekmek, aynı hürriyet, aynı hasret için ölebiliriz."
+                            </p>
+                            <p>Nazım’ın bu ihtişamlı sözleriyle başlıyorum mektubuma. Çünkü geride bıraktığım üç yüz altmış beş takvim günü, bana hiç tanımadığım kalplerle aynı sofrada, aynı kavgada ve aynı neşede buluşabilmenin kudretini öğretti. İçimdeki gürültülerin bir tufana dönüştüğü o sağanakları da, bir bahar ikindisi ruhumu usulca okşayan o serin esintiyi de bu yaşımda tanıdım.</p>
+                            <p>Yirminci yaşım. Henüz lezzetine tam varamadığım nice sofradan, ibriğimi daldırdığım nice pınardan rızıklanma vaktimdi. Uykusuz gecelerin hırçınlığı, yollarda olmanın vakur yorgunluğu, çiğliğin verdiği o müthiş iştah... Her şeyden biraz, birazdan daha çok; ama pek çok şeyi doldurdum heybeme.</p>
+                            <p>Şimdi anlıyorum: <em style="color: var(--accent-color);">“Ölüyoruz, demek ki yaşanılacak.”</em> Ömür dediğin bir ezan ile namaz arası, şu fani dünyada bir nefeslik hükmüm var, o halde bu nefesi en derininden çekmeli içe. Hayatın muntazam elifba’sında henüz bir hemzeyim; küçük bir işaret, bir duruş, bir başlangıçtan ibaret. Ve ne muazzam bir lütuf ki; dünyaya gelmiş olmaktan, bu karmaşanın ortasında kendi sesimi aramaktan fevkalade memnunum. Fevkalade memnunum dünyaya geldiğime.</p>
+                            <p>Önümde yaşanılacak, ter dökülecek ve sevdalanılacak koca bir ömür... Yaşamaya değer, her anıyla kutsanmaya değer bir ömür...</p>
+                            <p style="font-weight: 600; color: var(--accent-color); text-align: right; margin-top: 30px; font-size: 1.2rem; font-family: 'Cormorant Garamond', serif;">Yarın yirmi bir. Yoldayım. Yolum uzun.</p>
+                        </div>
                     `
                 },
                 {
-                    id: 1,
-                    title: "Kültürlenmiş Et ve Biyoetik",
-                    date: "3 Şubat 2026",
-                    content: "CRISPR-Cas9 teknolojisiyle üretilen kültürlenmiş et, biyomedikal etik literatüründe yeni tartışmalara kapı aralıyor. Etik çerçevede meseleye baktığımızda..."
+                    title: "Nerede O Eski Ramazanlar",
+                    date: "19 Şubat 2026",
+                    content: `<div style="text-align: center; padding: 40px; font-style: italic; opacity: 0.7;">Pek Yakında...</div>`
                 }
             ],
             books: [
-                { title: "Üniversitenin Yükselişi", author: "Charles Homer Haskins", img: "https://img.kitapyurdu.com/v1/getImage/fn:11985778/wi:800/wh:9b87ff2f0", review: `Orta Çağ üniversitelerinin doğuşunu inceleyen önemli bir eser.` },
-                { title: "Holokost Endüstrisi", author: "Norman Finkelstein", img: "https://img.kitapyurdu.com/v1/getImage/fn:12150703/wi:500/wh:bfff5df1e", review: `Tarihsel bir trajedinin siyasi boyutunu ele alıyor.` },
-                { title: "Freud İmparatorluğunun Çöküşü", author: "Hans Eysenck", img: "https://www.kutadgu.com.tr/u/kutadgu/img/b/f/r/freud-kpk3-1751670171.jpg", review: `Freudyen teoriye karşı bilimsel bir eleştiri.` },
-                { title: "Muhtelif 1", author: "Altay Cem Meriç", img: "https://img.kitapyurdu.com/v1/getImage/fn:12148197/wi:500/wh:3c2524b94", review: "İslam'a Yönelik İtiraz ve Cevaplar" }
+                {
+                    title: "Üniversitenin Yükselişi",
+                    author: "Charles Homer Haskins",
+                    img: "https://img.kitapyurdu.com/v1/getImage/fn:11985778/wi:800/wh:9b87ff2f0",
+                    review: `Kitap, Orta Çağ üniversitelerinin doğuşunu, kurumsal yapısını, profesörlerin otoritesini ve öğrencilerin gündelik hayatını ayrıntılı şekilde ele alıyor...`
+                },
+                {
+                    title: "Holokost Endüstrisi",
+                    author: "Norman Finkelstein",
+                    img: "https://img.kitapyurdu.com/v1/getImage/fn:12150703/wi:500/wh:bfff5df1e",
+                    review: `Norman Finkelstein’in Holokost Endüstrisi, tarihsel bir trajedinin nasıl dokunulmaz bir ideolojik silaha dönüştürüldüğünü çok cesur bir dille masaya yatırıyor...`
+                },
+                {
+                    title: "Freud İmparatorluğunun Çöküşü",
+                    author: "Hans Eysenck",
+                    img: "https://www.kutadgu.com.tr/u/kutadgu/img/b/f/r/freud-kpk3-1751670171.jpg",
+                    review: `Eysenck'in 1985 senesinde kaleme aldığı ve akademik çevrelerde irtifa kaybetmeye başlayan Freudyen teoriye karşı öldürücü darbeyi vuran yapıtlardan birisidir.`
+                },
+                {
+                    title: "Muhtelif 1 - İslam'a Yönelik İtiraz ve Cevaplar",
+                    author: "Altay Cem Meriç",
+                    img: "https://img.kitapyurdu.com/v1/getImage/fn:12148197/wi:500/wh:3c2524b94",
+                    review: "İslam'a Yönelik İtiraz ve Cevaplar"
+                }
             ],
             movies: [
-                { title: "Inception", author: "Christopher Nolan", img: "https://m.media-amazon.com/images/M/MV5BMjExMjkwNTQ0Nl5BMl5BanBnXkFtZTcwNTY0OTk1Mw@@._V1_.jpg", review: "Rüya içinde rüya..." },
-                { title: "Intouchables", author: "Olivier Nakache", img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRkiJPMd8Tlgpt58klpULjQUCVox_C2X5IS1w&s", review: "Dostluğun engel tanımayan hikayesi." },
-                { title: "Özdemir Bayraktar", author: "BAYKAR", img: "https://cdn.baykartech.com/media/upload/userFormUpload/Q0QQpKsVzpiZriNcR7WUpGlJtWHfqtCo.JPG", review: "Bir İnancın Hikâyesi" },
-                { title: "Ters Yüz", author: "Pixar", img: "https://upload.wikimedia.org/wikipedia/tr/thumb/2/29/Ters_Y%C3%BCz_-_afi%C5%9F.jpg/250px-Ters_Y%C3%BCz_-_afi%C5%9F.jpg", review: "Duyguların dünyasına yolculuk." }
+                {
+                    title: "Inception",
+                    author: "Christopher Nolan",
+                    img: "https://m.media-amazon.com/images/M/MV5BMjExMjkwNTQ0Nl5BMl5BanBnXkFtZTcwNTY0OTk1Mw@@._V1_.jpg",
+                    review: "Rüya içinde rüya..."
+                },
+                {
+                    title: "Intouchables",
+                    author: "Olivier Nakache",
+                    img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRkiJPMd8Tlgpt58klpULjQUCVox_C2X5IS1w&s",
+                    review: "Dostluğun engel tanımayan hikayesi."
+                },
+                {
+                    title: "Özdemir Bayraktar | Bu Dünyadan Bir Akıncı Geçti",
+                    author: "BAYKAR",
+                    img: "https://cdn.baykartech.com/media/upload/userFormUpload/Q0QQpKsVzpiZriNcR7WUpGlJtWHfqtCo.JPG",
+                    review: "Bir İnancın, Bir Mücadelenin ve “Biz de Yapabiliriz” Diyen Bir Neslin Hikâyesi"
+                },
+                {
+                    title: "Ters Yüz",
+                    author: "Pixar",
+                    img: "https://upload.wikimedia.org/wikipedia/tr/thumb/2/29/Ters_Y%C3%BCz_-_afi%C5%9F.jpg/250px-Ters_Y%C3%BCz_-_afi%C5%9F.jpg",
+                    review: "Duyguların dünyasına yolculuk."
+                }
+            ],
+            blog: [
+                {
+                    title: "Kültürlenmiş Et ve Biyoetik",
+                    date: "3 Şubat 2026",
+                    content: "CRISPR-Cas9 teknolojisiyle üretilen kültürlenmiş et, biyomedikal etik literatüründe..."
+                },
+                {
+                    title: "Biyomühendislik Vizyonu",
+                    date: "28 Ocak 2026",
+                    content: "Geleceğin teknolojileri üzerine düşünceler."
+                }
             ],
             gallery: [
                 { src: "citedepera.jpg", title: "Cité de Péra" },
                 { src: "feneryolu.jpg", title: "Feneryolu İstasyonu" },
-                { src: "daylik.jpg", title: "Daylık Köyü" }
+                { src: "daylik.jpg", title: "Daylık Köyü" },
+                { src: "kücükyali.jpg", title: "Küçükyalı" },
+                { src: "umraniye.jpg", title: "Osmangazi Korusu" },
+                { src: "sultanahmet.jpg", title: "Sultanahmet Camii" },
+                { src: "baglarbasi.jpg", title: "Bağlarbaşı" }
             ]
         };
 
         const mainStage = document.getElementById('main-stage');
         const modules = document.querySelectorAll('.full-page-module');
 
-        // --- SAYFA YÜKLENDİĞİNDE VERİLERİ BAS ---
-        window.addEventListener('DOMContentLoaded', () => {
-            history.replaceState({view: 'home'}, null, window.location.pathname);
-
-            // Kitaplar
-            const bookGrid = document.getElementById('books-grid');
-            data.books.forEach((item, index) => bookGrid.innerHTML += `<div class="poster" onclick="openDetail('books', ${index})"><img src="${item.img}" onerror="this.src='https://via.placeholder.com/160x240'"></div>`);
-
-            // Filmler
-            const movieGrid = document.getElementById('movies-grid');
-            data.movies.forEach((item, index) => movieGrid.innerHTML += `<div class="poster" onclick="openDetail('movies', ${index})"><img src="${item.img}" onerror="this.src='https://via.placeholder.com/160x240'"></div>`);
-
-            // Blog / Günlük
-            const blogGrid = document.getElementById('blog-grid');
-            data.blog.forEach((item) => {
-                blogGrid.innerHTML += `
-                    <div class="academy-card" onclick="openReader(${item.id})">
-                        <div style="font-weight:bold; color:var(--accent-color); font-size:0.75rem; margin-bottom:8px;">${item.date}</div>
-                        <h3 style="font-family:'Cormorant Garamond', serif; font-size:1.8rem; margin:0 0 10px 0;">${item.title}</h3>
-                        <p style="font-size:0.95rem; opacity:0.7; margin:0;">Okumak için dokun <i class="fas fa-arrow-right" style="font-size:0.8rem; margin-left:5px;"></i></p>
-                    </div>`;
-            });
-
-            // Galeri
-            const galleryGrid = document.getElementById('gallery-grid');
-            data.gallery.forEach((item, index) => {
-                galleryGrid.innerHTML += `
-                    <div class="poster" onclick="openGalleryViewer(${index})">
-                        <img src="${item.src}" onerror="this.src='https://via.placeholder.com/160x240'">
-                        <div class="poster-caption">${item.title}</div>
-                    </div>`;
-            });
-        });
-
-        // --- HISTORY API & YÖNLENDİRMELER (MOBİL GERİ TUŞU İÇİN) ---
-        function showLanding() {
-            if(history.state && history.state.view === 'home') return;
-            history.pushState({view: 'home'}, null, '#home');
-            renderUI({view: 'home'});
-        }
-
         function openModule(moduleId) {
+            mainStage.classList.add('hidden');
+            modules.forEach(m => m.classList.remove('active'));
+            document.getElementById('module-' + moduleId).classList.add('active');
+            window.scrollTo(0,0);
+            
             history.pushState({view: 'module', id: moduleId}, null, `#${moduleId}`);
-            renderUI({view: 'module', id: moduleId});
-        }
-
-        function openReader(blogId) {
-            history.pushState({view: 'reader', id: blogId}, null, `#read-${blogId}`);
-            renderUI({view: 'reader', id: blogId});
         }
 
         function openDetail(type, index) {
-            history.pushState({view: 'detail', type: type, index: index}, null, `#detail`);
-            renderUI({view: 'detail', type: type, index: index});
+            const item = data[type][index];
+            const modal = document.getElementById('detail-modal');
+            document.getElementById('detail-content').innerHTML = `
+                <div class="detail-flex">
+                    <img src="${item.img}" class="detail-img">
+                    <div class="detail-content">
+                        <h3 style="border-bottom:none;">${item.title}</h3>
+                        <p style="color:var(--accent-color); font-weight:bold;">${item.author}</p>
+                        <p>${item.review}</p>
+                    </div>
+                </div>`;
+            modal.classList.add('active');
+            history.pushState({view: 'modal', type: 'detail'}, null, '#detail');
+        }
+
+        function openReader(index) {
+            const item = data.journal[index];
+            const modal = document.getElementById('reader-modal');
+            
+            document.getElementById('reader-content').innerHTML = `
+                <h2 style="font-family: 'Cormorant Garamond', serif; border-bottom: none; margin-bottom: 5px; padding-bottom: 0;">${item.title}</h2>
+                <div style="font-weight:bold; color:var(--accent-color); font-size:0.85rem; margin-bottom: 20px; letter-spacing: 1px;">${item.date}</div>
+                <hr style="border: none; border-top: 1px solid rgba(150,150,150,0.1); margin-bottom: 20px;">
+                <div>${item.content}</div>
+            `;
+            
+            modal.classList.add('active');
+            history.pushState({view: 'modal', type: 'reader'}, null, '#reader');
         }
 
         let currentGalleryIndex = 0;
         function openGalleryViewer(index) {
             currentGalleryIndex = index;
-            history.pushState({view: 'gallery', index: index}, null, '#gallery');
-            renderUI({view: 'gallery', index: index});
+            updateGalleryModal();
+            document.getElementById('gallery-viewer').classList.add('active');
+            history.pushState({view: 'modal', type: 'gallery'}, null, '#gallery');
         }
 
-        // --- ARAYÜZ GÜNCELLEME (RENDER) ---
-        function renderUI(state) {
-            // Her şeyi gizle
-            document.querySelectorAll('.full-page-module').forEach(m => m.classList.remove('active'));
-            document.getElementById('reader-overlay').classList.remove('active');
-            document.getElementById('detail-modal').classList.remove('active');
-            document.getElementById('gallery-viewer').classList.remove('active');
+        function closeDetailUI() { document.getElementById('detail-modal').classList.remove('active'); }
+        function closeReaderUI() { document.getElementById('reader-modal').classList.remove('active'); }
+        function closeGalleryUI() { document.getElementById('gallery-viewer').classList.remove('active'); }
+        function showLandingUI() {
+            modules.forEach(m => m.classList.remove('active'));
+            mainStage.classList.remove('hidden');
+            window.scrollTo(0,0);
+        }
+        function openModuleUI(moduleId) {
             mainStage.classList.add('hidden');
-
-            document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-
-            if (!state || state.view === 'home') {
-                mainStage.classList.remove('hidden');
-                document.querySelector('.nav-item[href="#home"]').classList.add('active');
-                window.scrollTo(0,0);
-            } 
-            else if (state.view === 'module') {
-                document.getElementById('module-' + state.id).classList.add('active');
-                let navIcon = document.querySelector(`.nav-item[onclick="openModule('${state.id}')"]`);
-                if(navIcon) navIcon.classList.add('active');
-                window.scrollTo(0,0);
-            }
-            else if (state.view === 'reader') {
-                document.getElementById('module-journal').classList.add('active'); // Arkada modül açık kalsın
-                const post = data.blog.find(b => b.id === state.id);
-                document.getElementById('reader-data').innerHTML = `
-                    <h1 class="reader-title">${post.title}</h1>
-                    <span class="reader-date">${post.date}</span>
-                    <div class="reader-body">${post.content}</div>
-                `;
-                document.getElementById('reader-overlay').classList.add('active');
-            }
-            else if (state.view === 'detail') {
-                document.getElementById('module-culture').classList.add('active');
-                const item = data[state.type][state.index];
-                document.getElementById('detail-content').innerHTML = `
-                    <div class="detail-flex">
-                        <img src="${item.img}" class="detail-img" onerror="this.src='https://via.placeholder.com/200x300'">
-                        <div class="detail-content">
-                            <h3>${item.title}</h3>
-                            <p style="color:var(--accent-color); font-weight:bold;">${item.author}</p>
-                            <p>${item.review}</p>
-                        </div>
-                    </div>`;
-                document.getElementById('detail-modal').classList.add('active');
-            }
-            else if (state.view === 'gallery') {
-                document.getElementById('module-gallery').classList.add('active');
-                currentGalleryIndex = state.index;
-                updateGalleryModal();
-                document.getElementById('gallery-viewer').classList.add('active');
-            }
+            modules.forEach(m => m.classList.remove('active'));
+            document.getElementById('module-' + moduleId).classList.add('active');
         }
 
-        // TARAYICI GERİ TUŞU YAKALAYICI
+        function goBack() { history.back(); }
+        function closeDetail() { history.back(); }
+        function closeReader() { history.back(); }
+        function closeGallery() { history.back(); }
+
         window.onpopstate = function(event) {
-            if (event.state) {
-                renderUI(event.state);
+            const detailOpen = document.getElementById('detail-modal').classList.contains('active');
+            const readerOpen = document.getElementById('reader-modal').classList.contains('active');
+            const galleryOpen = document.getElementById('gallery-viewer').classList.contains('active');
+
+            if (detailOpen) { closeDetailUI(); return; }
+            if (readerOpen) { closeReaderUI(); return; }
+            if (galleryOpen) { closeGalleryUI(); return; }
+
+            if (event.state && event.state.view === 'module') {
+                openModuleUI(event.state.id);
             } else {
-                renderUI({view: 'home'});
+                showLandingUI();
             }
         };
 
-        // --- GALERİ VE DİĞER FONKSİYONLAR ---
         function changeGalleryImage(direction) {
             currentGalleryIndex += direction;
             if (currentGalleryIndex < 0) currentGalleryIndex = data.gallery.length - 1;
             if (currentGalleryIndex >= data.gallery.length) currentGalleryIndex = 0;
             updateGalleryModal();
         }
+
         function updateGalleryModal() {
             const item = data.gallery[currentGalleryIndex];
             document.getElementById('gallery-img-tag').src = item.src;
             document.getElementById('gallery-caption-tag').innerText = item.title;
         }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            history.replaceState(null, null, ' ');
+
+            const bookGrid = document.getElementById('books-grid');
+            data.books.forEach((item, index) => bookGrid.innerHTML += createPosterHTML(item, 'books', index));
+
+            const movieGrid = document.getElementById('movies-grid');
+            data.movies.forEach((item, index) => movieGrid.innerHTML += createPosterHTML(item, 'movies', index));
+
+            const journalGrid = document.getElementById('journal-grid');
+            data.journal.forEach((item, index) => {
+                journalGrid.innerHTML += `
+                    <div class="academy-card reader-card" onclick="openReader(${index})">
+                        <div style="font-weight:bold; color:var(--accent-color); font-size:0.7rem;">${item.date}</div>
+                        <h3>${item.title}</h3>
+                        <p style="font-size: 0.85rem; opacity: 0.7; margin-top: 10px;">Okumak için tıklayın <i class="fas fa-arrow-right" style="font-size:0.75rem; margin-left:5px;"></i></p>
+                    </div>`;
+            });
+
+            const blogGrid = document.getElementById('blog-grid');
+            data.blog.forEach((item) => {
+                blogGrid.innerHTML += `
+                    <div class="academy-card">
+                        <div style="font-weight:bold; color:var(--accent-color); font-size:0.7rem;">${item.date}</div>
+                        <h3>${item.title}</h3>
+                        <p>${item.content}</p>
+                    </div>`;
+            });
+
+            const galleryGrid = document.getElementById('gallery-grid');
+            data.gallery.forEach((item, index) => {
+                galleryGrid.innerHTML += `
+                    <div class="poster" onclick="openGalleryViewer(${index})">
+                        <img src="${item.src}">
+                        <div class="poster-caption">${item.title}</div>
+                    </div>`;
+            });
+        });
+
+        function createPosterHTML(item, type, index) {
+            return `<div class="poster" onclick="openDetail('${type}', ${index})"><img src="${item.img}"></div>`;
+        }
+
+        window.onclick = function(event) {
+            const galleryModal = document.getElementById('gallery-viewer');
+            const detailModal = document.getElementById('detail-modal');
+            const readerModal = document.getElementById('reader-modal');
+            if (event.target === galleryModal) history.back();
+            if (event.target === detailModal) history.back();
+            if (event.target === readerModal) history.back();
+        }
+
+        document.addEventListener('keydown', function(event) {
+            const galleryModal = document.getElementById('gallery-viewer');
+            if (event.key === "Escape") {
+                history.back();
+            }
+            if (galleryModal.classList.contains('active')) {
+                if (event.key === "ArrowLeft") changeGalleryImage(-1);
+                if (event.key === "ArrowRight") changeGalleryImage(1);
+            }
+        });
 
         window.addEventListener('scroll', () => {
             const bg = document.getElementById('bg-blur');
@@ -681,15 +462,24 @@
             else bg.classList.remove('blurred');
         });
 
-        function toggleTheme() { document.body.classList.toggle('purple-mode'); }
+        function toggleTheme() {
+            document.body.classList.toggle('purple-mode');
+        }
 
         var audio = document.getElementById("myAudio");
         var icon = document.getElementById("playIcon");
         var playerBar = document.querySelector(".player-bar");
 
         function toggleAudio() {
-            if (audio.paused) { audio.play(); icon.className = "fas fa-pause"; playerBar.classList.add("playing"); } 
-            else { audio.pause(); icon.className = "fas fa-play"; playerBar.classList.remove("playing"); }
+            if (audio.paused) {
+                audio.play();
+                icon.className = "fas fa-pause";
+                playerBar.classList.add("playing");
+            } else {
+                audio.pause();
+                icon.className = "fas fa-play";
+                playerBar.classList.remove("playing");
+            }
         }
         function toggleMute() {
             audio.muted = !audio.muted;
