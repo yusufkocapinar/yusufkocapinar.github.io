@@ -3,354 +3,370 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Yusuf Kocapınar | Biyomühendislik & Dijital Arşiv</title>
+    <title>Yusuf Kocapınar | Dijital Arşiv</title>
     
-    <!-- Premium Fontlar -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Tenor+Sans&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
         :root {
-            --bg-color: #faf9f6; /* Kırık beyaz, premium kağıt hissi */
-            --text-main: #1a1a1a;
-            --text-muted: #737373;
-            --accent: #a38f72; /* Toprak/Soft Altın */
-            --border-color: rgba(0, 0, 0, 0.08);
-            --transition-smooth: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+            /* Renk paleti daha zengin tonlarla güncellendi */
+            --bg-color: #f6f3ef; /* Çok hafif sıcak, mat kağıt tonu */
+            --text-main: #0a0a0a; /* Tam siyah değil, çok koyu mat gri */
+            --text-muted: #555555;
+            --accent: #9c8461; /* Daha zengin, koyu bronz/altın tonu */
+            --border-color: rgba(0, 0, 0, 0.06);
+            --transition-premium: all 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+            --font-serif: 'Playfair Display', serif;
+            --font-sans: 'Tenor Sans', sans-serif; /* Daha editoryal bir sans-serif */
         }
 
         * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+            margin: 0; padding: 0; box-sizing: border-box;
+            cursor: none; /* Özel cursor için varsayılanı gizle */
         }
 
         body {
             background-color: var(--bg-color);
             color: var(--text-main);
-            font-family: 'Inter', sans-serif;
-            line-height: 1.7;
+            font-family: var(--font-sans);
+            line-height: 1.8;
             -webkit-font-smoothing: antialiased;
             overflow-x: hidden;
+            position: relative;
         }
 
-        ::selection {
-            background: var(--accent);
-            color: #fff;
+        /* DOKUNUŞ 1: Tüm sayfada hafif bir kağıt/grain dokusu */
+        body::before {
+            content: "";
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background-image: url('data:image/svg+xml,<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><filter id="noiseFilter"><feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/></filter><rect width="100%" height="100%" filter="url(%23noiseFilter)" opacity="0.04"/></svg>');
+            pointer-events: none; z-index: 50;
         }
+
+        /* DOKUNUŞ 2: Özel Minimalist Cursor */
+        #custom-cursor {
+            position: fixed; width: 8px; height: 8px; background: var(--accent);
+            border-radius: 50%; pointer-events: none; z-index: 10000;
+            transform: translate(-50%, -50%); transition: width 0.3s, height 0.3s, opacity 0.3s;
+        }
+        #custom-cursor.hover { width: 30px; height: 30px; background: transparent; border: 1px solid var(--accent); opacity: 0.5; }
 
         a { text-decoration: none; color: inherit; }
+        ul { list-style: none; }
 
         .container {
-            max-width: 1200px;
+            max-width: 1300px;
             margin: 0 auto;
             padding: 0 5vw;
         }
 
         /* --- NAVİGASYON --- */
         nav {
-            position: fixed;
-            top: 0; left: 0; width: 100%;
-            padding: 30px 0;
-            z-index: 100;
-            background: rgba(250, 249, 246, 0.85);
-            backdrop-filter: blur(12px);
+            position: fixed; top: 0; left: 0; width: 100%;
+            padding: 30px 0; z-index: 100;
+            transition: var(--transition-premium);
+        }
+        nav.scrolled {
+            background: rgba(246, 243, 239, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 20px 0;
             border-bottom: 1px solid var(--border-color);
         }
 
-        .nav-inner {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
+        .nav-inner { display: flex; justify-content: space-between; align-items: center; }
 
         .logo {
-            font-family: 'Playfair Display', serif;
-            font-size: 1.5rem;
-            font-weight: 700;
-            letter-spacing: -0.5px;
+            font-family: var(--font-serif);
+            font-size: 1.6rem; font-weight: 700; letter-spacing: -1px;
+            color: var(--text-main);
         }
 
-        .nav-links { display: flex; gap: 40px; }
-        
+        .nav-links { display: flex; gap: 45px; }
         .nav-links a {
-            font-size: 0.85rem;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            color: var(--text-muted);
-            transition: var(--transition-smooth);
-            position: relative;
+            font-size: 0.8rem; text-transform: uppercase;
+            letter-spacing: 2.5px; color: var(--text-muted);
+            transition: var(--transition-premium);
         }
-
         .nav-links a:hover { color: var(--text-main); }
 
         /* --- HERO (GİRİŞ) --- */
         .hero {
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            padding-top: 80px;
+            min-height: 100vh; display: flex; flex-direction: column;
+            justify-content: center; position: relative;
         }
 
-        .subtitle {
-            font-size: 0.85rem;
-            text-transform: uppercase;
-            letter-spacing: 4px;
-            color: var(--accent);
-            margin-bottom: 25px;
-            font-weight: 500;
+        /* DOKUNUŞ 3: Editoryal Tipografi ve Mouse Parallax */
+        .hero-meta {
+            font-size: 0.8rem; text-transform: uppercase;
+            letter-spacing: 5px; color: var(--accent);
+            margin-bottom: 30px; font-weight: 400;
+            display: block;
         }
 
-        .title {
-            font-family: 'Playfair Display', serif;
-            font-size: clamp(3rem, 8vw, 6.5rem);
-            line-height: 1.05;
-            font-weight: 600;
-            letter-spacing: -1.5px;
-            margin-bottom: 30px;
-            max-width: 900px;
+        .title-wrapper { position: relative; max-width: 1000px; }
+        .main-title {
+            font-family: var(--font-serif);
+            font-size: clamp(3.5rem, 10vw, 8rem);
+            line-height: 1; font-weight: 600;
+            letter-spacing: -2.5px; color: var(--text-main);
+            /* Mouse Parallax efekti için sınıflar */
+            transition: transform 0.1s ease-out;
+            will-change: transform;
         }
 
-        .title i {
-            font-family: 'Playfair Display', serif;
-            color: var(--text-muted);
-            font-weight: 400;
+        .main-title i {
+            font-weight: 400; color: var(--accent);
+            font-family: var(--font-serif);
         }
 
-        .bio {
-            font-size: 1.25rem;
-            color: var(--text-muted);
-            max-width: 600px;
-            font-weight: 300;
+        .hero-desc {
+            font-size: 1.4rem; color: var(--text-muted);
+            max-width: 650px; font-weight: 300;
+            margin-top: 50px; line-height: 1.6;
         }
 
-        /* --- BÖLÜM BAŞLIKLARI --- */
+        /* --- BÖLÜM STİLLERİ --- */
+        section { padding: 140px 0; }
+
         .section-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-end;
-            border-bottom: 1px solid var(--border-color);
-            padding-bottom: 20px;
-            margin-bottom: 50px;
+            max-width: 800px; margin-bottom: 90px;
         }
-
+        .section-tag {
+            font-size: 0.8rem; text-transform: uppercase;
+            letter-spacing: 3px; color: var(--accent);
+            margin-bottom: 15px; display: block;
+        }
         .section-header h2 {
-            font-family: 'Playfair Display', serif;
-            font-size: 2.5rem;
-            font-weight: 400;
+            font-family: var(--font-serif);
+            font-size: 3.5rem; font-weight: 400;
+            line-height: 1.2; letter-spacing: -1px;
         }
 
-        .view-all {
-            font-size: 0.85rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            color: var(--accent);
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            transition: var(--transition-smooth);
-        }
-        .view-all:hover { gap: 12px; color: var(--text-main); }
-
-        /* --- AKADEMİK GRID (BENTO STİLİ) --- */
-        .academic-section { padding: 100px 0; }
-        
+        /* DOKUNUŞ 4: Modern Bento Grid & Smooth Hover */
         .bento-grid {
-            display: grid;
-            grid-template-columns: repeat(12, 1fr);
-            gap: 30px;
+            display: grid; grid-template-columns: repeat(12, 1fr);
+            gap: 40px;
         }
 
         .bento-item {
-            background: #fff;
-            padding: 40px;
-            border: 1px solid var(--border-color);
-            transition: var(--transition-smooth);
-            cursor: pointer;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
+            background: rgba(255,255,255,0.6);
+            padding: 50px; border: 1px solid var(--border-color);
+            transition: var(--transition-premium);
+            display: flex; flex-direction: column; justify-content: space-between;
+            position: relative; overflow: hidden;
+        }
+        /* Item arkasına hafif bir derinlik efekti */
+        .bento-item::after {
+            content: ""; position: absolute; bottom: 0; right: 0;
+            width: 100px; height: 100px; background: var(--accent);
+            opacity: 0.03; border-radius: 50%; transform: translate(30%, 30%);
+            transition: var(--transition-premium);
         }
 
         .bento-item:hover {
-            box-shadow: 0 20px 40px rgba(0,0,0,0.03);
-            transform: translateY(-5px);
-            border-color: var(--accent);
+            border-color: rgba(156, 132, 97, 0.3);
+            background: rgba(255,255,255,0.9);
+            transform: translateY(-8px);
+            box-shadow: 0 30px 60px rgba(156, 132, 97, 0.05);
         }
+        .bento-item:hover::after { opacity: 0.08; transform: translate(20%, 20%) scale(1.2); }
 
-        .item-large { grid-column: span 8; min-height: 350px; }
-        .item-small { grid-column: span 4; min-height: 350px; }
+        .item-12 { grid-column: span 12; min-height: 400px; }
+        .item-8 { grid-column: span 8; min-height: 400px; }
+        .item-4 { grid-column: span 4; min-height: 400px; }
 
         .item-meta {
-            font-size: 0.75rem;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            color: var(--text-muted);
-            margin-bottom: 20px;
+            font-size: 0.7rem; text-transform: uppercase;
+            letter-spacing: 2px; color: var(--accent);
+            margin-bottom: 25px; font-weight: 400;
         }
-
         .item-title {
-            font-family: 'Playfair Display', serif;
-            font-size: 2rem;
-            line-height: 1.2;
-            margin-bottom: 15px;
+            font-family: var(--font-serif);
+            font-size: 2.2rem; line-height: 1.2;
+            margin-bottom: 20px; font-weight: 600;
         }
-
         .item-desc {
-            font-size: 0.95rem;
-            color: var(--text-muted);
+            font-size: 1rem; color: var(--text-muted);
+            max-width: 80%;
+        }
+        .item-icon {
+            font-size: 1.5rem; color: rgba(156, 132, 97, 0.4);
+            margin-top: auto; padding-top: 30px;
         }
 
-        /* --- LİSTE STİLİ (KÜLTÜR & GÜNLÜK) --- */
-        .list-section { padding: 50px 0 150px 0; }
-
+        /* --- LİSTE STİLİ (GÜNLÜK) --- */
         .minimal-list { border-top: 1px solid var(--border-color); }
         
         .list-item {
-            display: grid;
-            grid-template-columns: 1fr 3fr 1fr;
-            padding: 30px 0;
-            border-bottom: 1px solid var(--border-color);
-            transition: var(--transition-smooth);
-            cursor: pointer;
+            display: grid; grid-template-columns: 1.5fr 4fr 1.5fr;
+            padding: 40px 0; border-bottom: 1px solid var(--border-color);
+            transition: var(--transition-premium);
             align-items: center;
         }
-
         .list-item:hover {
-            padding-left: 20px;
-            background: rgba(255,255,255,0.5);
+            background: rgba(255,255,255,0.4);
+            padding-left: 25px; padding-right: 25px;
         }
 
-        .list-date { font-size: 0.85rem; color: var(--text-muted); }
-        .list-title { font-family: 'Playfair Display', serif; font-size: 1.5rem; }
-        .list-category { font-size: 0.85rem; text-align: right; color: var(--accent); text-transform: uppercase; letter-spacing: 1px;}
+        .list-date { font-size: 0.9rem; color: var(--text-muted); }
+        .list-title {
+            font-family: var(--font-serif);
+            font-size: 1.8rem; font-weight: 400;
+        }
+        .list-category {
+            font-size: 0.8rem; text-align: right;
+            color: var(--accent); text-transform: uppercase;
+            letter-spacing: 2px;
+        }
 
-        /* --- ANİMASYON SINIFLARI --- */
+        /* ANİMASYON SINIFLARI */
         .fade-up {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: var(--transition-smooth);
+            opacity: 0; transform: translateY(40px);
+            transition: opacity 1.2s cubic-bezier(0.23, 1, 0.32, 1), transform 1.2s cubic-bezier(0.23, 1, 0.32, 1);
         }
-        .fade-up.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
+        .fade-up.visible { opacity: 1; transform: translateY(0); }
 
-        @media (max-width: 900px) {
-            .item-large, .item-small { grid-column: span 12; min-height: 250px;}
-            .list-item { grid-template-columns: 1fr; gap: 10px; }
-            .list-category { text-align: left; }
+        /* RESPONSIVE */
+        @media (max-width: 1000px) {
             .nav-links { display: none; }
-            .title { font-size: 2.5rem; }
+            .bento-item { grid-column: span 12; min-height: 300px;}
+            .list-item { grid-template-columns: 1fr; gap: 15px; padding: 30px 15px;}
+            .list-category { text-align: left; }
+            section { padding: 80px 0; }
         }
     </style>
 </head>
 <body>
 
-    <nav>
+    <div id="custom-cursor"></div>
+
+    <nav id="main-nav">
         <div class="container nav-inner">
             <a href="#" class="logo">YK.</a>
             <div class="nav-links">
-                <a href="#academic">Akademik</a>
-                <a href="#culture">Kültür</a>
-                <a href="#journal">Günlük</a>
+                <a href="#projects" class="hover-target">Projeler</a>
+                <a href="#archive" class="hover-target">Dijital Arşiv</a>
             </div>
         </div>
     </nav>
 
     <main>
-        <!-- GİRİŞ BÖLÜMÜ -->
         <section class="hero container">
-            <span class="subtitle fade-up">Dijital Arşiv</span>
-            <h1 class="title fade-up" style="transition-delay: 0.1s;">
-                Merhaba, ben Yusuf. <br>
-                <i>Biyomühendislik</i> öğrencisi.
-            </h1>
-            <p class="bio fade-up" style="transition-delay: 0.2s;">
-                Bilimin hassasiyetiyle sanatın estetiği arasında bir köprü. Yazılımdan laboratuvara, kitaplardan müziğe uzanan bir sürecin günlüğü.
-            </p>
+            <div class="title-wrapper">
+                <span class="hero-meta fade-up">© 2026 / İstanbul</span>
+                <h1 class="main-title fade-up parallax-text" style="transition-delay: 0.1s;">
+                    Yusuf <br>Kocapınar
+                </h1>
+                <p class="hero-desc fade-up" style="transition-delay: 0.2s;">
+                    Dijital bir kütüphane, kişisel bir hafıza alanı. <br> Fikirler, projeler <i>&</i> notlar.
+                </p>
+            </div>
         </section>
 
-        <!-- AKADEMİK & PROJELER -->
-        <section id="academic" class="academic-section container">
+        <section id="projects" class="container">
             <div class="section-header fade-up">
-                <h2>Akademik & Projeler</h2>
-                <a href="#" class="view-all">Tümünü Gör <i class="fas fa-arrow-right"></i></a>
+                <span class="section-tag">Seçkiler</span>
+                <h2>Öne Çıkan Çalışmalar</h2>
             </div>
 
             <div class="bento-grid">
-                <!-- Büyük Kart -->
-                <div class="bento-item item-large fade-up">
+                <a href="#" class="bento-item item-8 fade-up hover-target">
                     <div>
-                        <div class="item-meta">TEKNOFEST • 3T ONKOLOJİ</div>
-                        <h3 class="item-title">Onkosklepios: İntegre Likit Biyopsi Karar Destek Sistemi</h3>
-                        <p class="item-desc">Glioblastoma hastalarında pseudoprogresyon ayrımı için CfMeDIP-seq entegrasyonu ve sanal patoloji algoritması geliştirilmesi.</p>
+                        <div class="item-meta">Araştırma & Geliştirme</div>
+                        <h3 class="item-title">Onkosklepios: İntegre Karar Destek Sistemi</h3>
+                        <p class="item-desc">Likit biyopsi verileri ve sanal patoloji algoritmaları ile onkolojik analiz platformu.</p>
                     </div>
-                    <div style="margin-top: 30px; font-size: 1.5rem; color: var(--accent);"><i class="fas fa-dna"></i></div>
-                </div>
+                    <div class="item-icon"><i class="fas fa-microscope"></i></div>
+                </a>
 
-                <!-- Küçük Kart 1 -->
-                <div class="bento-item item-small fade-up" style="transition-delay: 0.1s;">
+                <a href="#" class="bento-item item-4 fade-up hover-target" style="transition-delay: 0.1s;">
                     <div>
-                        <div class="item-meta">YAZILIM & ANALİZ</div>
-                        <h3 class="item-title">MATLAB ile Veri İşleme</h3>
-                        <p class="item-desc">Matematiksel modellemeler ve mantıksal operasyonlar üzerine çalışmalar.</p>
+                        <div class="item-meta">Yazılım</div>
+                        <h3 class="item-title">Sinyal İşleme</h3>
+                        <p class="item-desc">MATLAB tabanlı veri analizi ve modelleme çalışmaları.</p>
                     </div>
-                    <div style="margin-top: 30px; font-size: 1.5rem; color: var(--accent);"><i class="fas fa-laptop-code"></i></div>
-                </div>
+                    <div class="item-icon"><i class="fas fa-code"></i></div>
+                </a>
             </div>
         </section>
 
-        <!-- KÜLTÜR & GÜNLÜK -->
-        <section id="culture" class="list-section container">
+        <section id="archive" class="container">
             <div class="section-header fade-up">
+                <span class="section-tag">Koleksiyon</span>
                 <h2>Son Eklenenler</h2>
             </div>
 
             <div class="minimal-list">
-                <div class="list-item fade-up">
-                    <span class="list-date">09 Mart 2026</span>
-                    <h3 class="list-title">21. Yaşımdan Notlar</h3>
-                    <span class="list-category">Günlük</span>
+                <div class="list-item fade-up hover-target">
+                    <span class="list-date">Mart 2026</span>
+                    <h3 class="list-title">Bir Devrin Kapanışı: 20 Yılın Ardından Notlar</h3>
+                    <span class="list-category">Deneme</span>
                 </div>
                 
-                <div class="list-item fade-up" style="transition-delay: 0.1s;">
-                    <span class="list-date">Kitaplık</span>
-                    <h3 class="list-title">Holokost Endüstrisi - N. Finkelstein</h3>
-                    <span class="list-category">İnceleme</span>
+                <div class="list-item fade-up hover-target" style="transition-delay: 0.1s;">
+                    <span class="list-date">Şubat 2026</span>
+                    <h3 class="list-title">Holokost Endüstrisi - Norman Finkelstein</h3>
+                    <span class="list-category">Kitaplık</span>
                 </div>
 
-                <div class="list-item fade-up" style="transition-delay: 0.2s;">
-                    <span class="list-date">Dinleti</span>
+                <div class="list-item fade-up hover-target" style="transition-delay: 0.2s;">
+                    <span class="list-date">Ocak 2026</span>
                     <h3 class="list-title">أهو ده اللي صار - Fairouz</h3>
-                    <span class="list-category">Müzik</span>
+                    <span class="list-category">Dinleti</span>
                 </div>
             </div>
         </section>
     </main>
 
     <script>
-        // Sayfa kaydırıldıkça elementlerin belirmesini sağlayan Observer
         document.addEventListener('DOMContentLoaded', () => {
-            const observerOptions = {
-                root: null,
-                rootMargin: '0px',
-                threshold: 0.15
-            };
+            
+            // --- DOKUNUŞ 2: Özel Cursor Mantığı ---
+            const cursor = document.getElementById('custom-cursor');
+            const hoverTargets = document.querySelectorAll('.hover-target');
 
-            const observer = new IntersectionObserver((entries, observer) => {
+            document.addEventListener('mousemove', e => {
+                cursor.style.left = e.clientX + 'px';
+                cursor.style.top = e.clientY + 'px';
+            });
+
+            hoverTargets.forEach(target => {
+                target.addEventListener('mouseover', () => cursor.classList.add('hover'));
+                target.addEventListener('mouseout', () => cursor.classList.remove('hover'));
+            });
+
+            // --- DOKUNUŞ 3: Mouse Parallax Efekti (Hero Başlığı) ---
+            const parallaxText = document.querySelector('.parallax-text');
+            
+            if(window.innerWidth > 1000) { // Sadece masaüstünde çalışsın
+                document.addEventListener('mousemove', e => {
+                    const moveX = (e.clientX - window.innerWidth / 2) * 0.01; // Hassasiyet ayarı
+                    const moveY = (e.clientY - window.innerHeight / 2) * 0.01;
+                    
+                    parallaxText.style.transform = `translate(${moveX}px, ${moveY}px)`;
+                });
+            }
+
+            // --- Navigasyon Scroll Efekti ---
+            const nav = document.getElementById('main-nav');
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 50) nav.classList.add('scrolled');
+                else nav.classList.remove('scrolled');
+            });
+
+            // --- Giriş Animasyonları (Intersection Observer) ---
+            const observerOptions = { root: null, rootMargin: '0px', threshold: 0.1 };
+            const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
                         entry.target.classList.add('visible');
-                        observer.unobserve(entry.target); // Sadece bir kere çalışsın
+                        observer.unobserve(entry.target);
                     }
                 });
             }, observerOptions);
 
-            document.querySelectorAll('.fade-up').forEach((el) => {
-                observer.observe(el);
-            });
+            document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
         });
     </script>
 </body>
