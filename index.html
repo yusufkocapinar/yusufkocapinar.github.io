@@ -2,489 +2,356 @@
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yusuf Kocapınar | Biyomühendislik & Dijital Arşiv</title>
     
-    <meta name="description" content="Yusuf Kocapınar - Biyomühendislik Öğrencisi, Kişisel Blog ve Portfolyo.">
-    <meta name="author" content="Yusuf Kocapınar">
-    <meta name="robots" content="index, follow">
+    <!-- Premium Fontlar -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-    <meta name="google-site-verification" content="-hYl90NJpsZ0lDJJIyfvSviADWe8d6Q6N6RA6jrB7HI" />
+    <style>
+        :root {
+            --bg-color: #faf9f6; /* Kırık beyaz, premium kağıt hissi */
+            --text-main: #1a1a1a;
+            --text-muted: #737373;
+            --accent: #a38f72; /* Toprak/Soft Altın */
+            --border-color: rgba(0, 0, 0, 0.08);
+            --transition-smooth: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
 
-    <title>Yusuf Kocapınar | Dijital Günlük</title>
-    
-    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23c3b091'%3E%3Cpath d='M12.07 2C8.55 2 5.62 4.57 4.77 8c-1.1 4.42.8 8.64 3.57 11.29L12.07 22l3.73-2.71c2.77-2.65 4.67-6.87 3.57-11.29-.85-3.43-3.78-6-7.3-6zm0 15c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2z'/%3E%3C/svg%3E">
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-    <link rel="stylesheet" href="style.css">
-    
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: 'Inter', sans-serif;
+            line-height: 1.7;
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+        }
+
+        ::selection {
+            background: var(--accent);
+            color: #fff;
+        }
+
+        a { text-decoration: none; color: inherit; }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 5vw;
+        }
+
+        /* --- NAVİGASYON --- */
+        nav {
+            position: fixed;
+            top: 0; left: 0; width: 100%;
+            padding: 30px 0;
+            z-index: 100;
+            background: rgba(250, 249, 246, 0.85);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .nav-inner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+
+        .nav-links { display: flex; gap: 40px; }
+        
+        .nav-links a {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--text-muted);
+            transition: var(--transition-smooth);
+            position: relative;
+        }
+
+        .nav-links a:hover { color: var(--text-main); }
+
+        /* --- HERO (GİRİŞ) --- */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding-top: 80px;
+        }
+
+        .subtitle {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            color: var(--accent);
+            margin-bottom: 25px;
+            font-weight: 500;
+        }
+
+        .title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(3rem, 8vw, 6.5rem);
+            line-height: 1.05;
+            font-weight: 600;
+            letter-spacing: -1.5px;
+            margin-bottom: 30px;
+            max-width: 900px;
+        }
+
+        .title i {
+            font-family: 'Playfair Display', serif;
+            color: var(--text-muted);
+            font-weight: 400;
+        }
+
+        .bio {
+            font-size: 1.25rem;
+            color: var(--text-muted);
+            max-width: 600px;
+            font-weight: 300;
+        }
+
+        /* --- BÖLÜM BAŞLIKLARI --- */
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 20px;
+            margin-bottom: 50px;
+        }
+
+        .section-header h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            font-weight: 400;
+        }
+
+        .view-all {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--accent);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: var(--transition-smooth);
+        }
+        .view-all:hover { gap: 12px; color: var(--text-main); }
+
+        /* --- AKADEMİK GRID (BENTO STİLİ) --- */
+        .academic-section { padding: 100px 0; }
+        
+        .bento-grid {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 30px;
+        }
+
+        .bento-item {
+            background: #fff;
+            padding: 40px;
+            border: 1px solid var(--border-color);
+            transition: var(--transition-smooth);
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .bento-item:hover {
+            box-shadow: 0 20px 40px rgba(0,0,0,0.03);
+            transform: translateY(-5px);
+            border-color: var(--accent);
+        }
+
+        .item-large { grid-column: span 8; min-height: 350px; }
+        .item-small { grid-column: span 4; min-height: 350px; }
+
+        .item-meta {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--text-muted);
+            margin-bottom: 20px;
+        }
+
+        .item-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            line-height: 1.2;
+            margin-bottom: 15px;
+        }
+
+        .item-desc {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+        }
+
+        /* --- LİSTE STİLİ (KÜLTÜR & GÜNLÜK) --- */
+        .list-section { padding: 50px 0 150px 0; }
+
+        .minimal-list { border-top: 1px solid var(--border-color); }
+        
+        .list-item {
+            display: grid;
+            grid-template-columns: 1fr 3fr 1fr;
+            padding: 30px 0;
+            border-bottom: 1px solid var(--border-color);
+            transition: var(--transition-smooth);
+            cursor: pointer;
+            align-items: center;
+        }
+
+        .list-item:hover {
+            padding-left: 20px;
+            background: rgba(255,255,255,0.5);
+        }
+
+        .list-date { font-size: 0.85rem; color: var(--text-muted); }
+        .list-title { font-family: 'Playfair Display', serif; font-size: 1.5rem; }
+        .list-category { font-size: 0.85rem; text-align: right; color: var(--accent); text-transform: uppercase; letter-spacing: 1px;}
+
+        /* --- ANİMASYON SINIFLARI --- */
+        .fade-up {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: var(--transition-smooth);
+        }
+        .fade-up.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        @media (max-width: 900px) {
+            .item-large, .item-small { grid-column: span 12; min-height: 250px;}
+            .list-item { grid-template-columns: 1fr; gap: 10px; }
+            .list-category { text-align: left; }
+            .nav-links { display: none; }
+            .title { font-size: 2.5rem; }
+        }
+    </style>
 </head>
 <body>
 
-    <div class="bg-image" id="bg-blur"></div>
-
-    <button class="theme-switch" onclick="toggleTheme()" aria-label="Temayı Değiştir">
-        <i class="fas fa-sun" id="theme-icon"></i>
-    </button>
-
-    <nav class="floating-nav">
-        <a href="#home" class="nav-item active" onclick="showLanding()" data-tooltip="Ana Sayfa"><i class="fas fa-home"></i></a>
-        <a href="#about" class="nav-item" onclick="showLanding()" data-tooltip="Ben Kimim?"><i class="fas fa-user-astronaut"></i></a>
-        <a href="javascript:void(0)" onclick="openModule('culture')" class="nav-item" data-tooltip="Kültür & Sanat"><i class="fas fa-book-open"></i></a>
-        <a href="javascript:void(0)" onclick="openModule('journal')" class="nav-item" data-tooltip="Akademik & Günlük"><i class="fas fa-graduation-cap"></i></a>
-        <a href="javascript:void(0)" onclick="openModule('gallery')" class="nav-item" data-tooltip="Galeri"><i class="fas fa-camera"></i></a>
-        <a href="#updates" class="nav-item" onclick="showLanding()" data-tooltip="Güncellemeler"><i class="fas fa-bell"></i></a>
+    <nav>
+        <div class="container nav-inner">
+            <a href="#" class="logo">YK.</a>
+            <div class="nav-links">
+                <a href="#academic">Akademik</a>
+                <a href="#culture">Kültür</a>
+                <a href="#journal">Günlük</a>
+            </div>
+        </div>
     </nav>
 
-    <div id="main-stage">
-        
-        <section id="home">
-            <div class="hero-glass">
-                <div class="hero-content">
-                    <img src="profil.png" alt="Yusuf Kocapınar" class="profile-img">
-                    <h1>Yusuf Kocapınar</h1>
-                    <p class="subtitle">Dijital Günlüğüme Hoş Geldin</p>
-                </div>
+    <main>
+        <!-- GİRİŞ BÖLÜMÜ -->
+        <section class="hero container">
+            <span class="subtitle fade-up">Dijital Arşiv</span>
+            <h1 class="title fade-up" style="transition-delay: 0.1s;">
+                Merhaba, ben Yusuf. <br>
+                <i>Biyomühendislik</i> öğrencisi.
+            </h1>
+            <p class="bio fade-up" style="transition-delay: 0.2s;">
+                Bilimin hassasiyetiyle sanatın estetiği arasında bir köprü. Yazılımdan laboratuvara, kitaplardan müziğe uzanan bir sürecin günlüğü.
+            </p>
+        </section>
+
+        <!-- AKADEMİK & PROJELER -->
+        <section id="academic" class="academic-section container">
+            <div class="section-header fade-up">
+                <h2>Akademik & Projeler</h2>
+                <a href="#" class="view-all">Tümünü Gör <i class="fas fa-arrow-right"></i></a>
             </div>
-            <div class="scroll-indicator" onclick="document.getElementById('about').scrollIntoView();">
-                <span>Keşfet</span>
-                <i class="fas fa-chevron-down"></i>
+
+            <div class="bento-grid">
+                <!-- Büyük Kart -->
+                <div class="bento-item item-large fade-up">
+                    <div>
+                        <div class="item-meta">TEKNOFEST • 3T ONKOLOJİ</div>
+                        <h3 class="item-title">Onkosklepios: İntegre Likit Biyopsi Karar Destek Sistemi</h3>
+                        <p class="item-desc">Glioblastoma hastalarında pseudoprogresyon ayrımı için CfMeDIP-seq entegrasyonu ve sanal patoloji algoritması geliştirilmesi.</p>
+                    </div>
+                    <div style="margin-top: 30px; font-size: 1.5rem; color: var(--accent);"><i class="fas fa-dna"></i></div>
+                </div>
+
+                <!-- Küçük Kart 1 -->
+                <div class="bento-item item-small fade-up" style="transition-delay: 0.1s;">
+                    <div>
+                        <div class="item-meta">YAZILIM & ANALİZ</div>
+                        <h3 class="item-title">MATLAB ile Veri İşleme</h3>
+                        <p class="item-desc">Matematiksel modellemeler ve mantıksal operasyonlar üzerine çalışmalar.</p>
+                    </div>
+                    <div style="margin-top: 30px; font-size: 1.5rem; color: var(--accent);"><i class="fas fa-laptop-code"></i></div>
+                </div>
             </div>
         </section>
 
-        <section id="about" style="padding-bottom: 25px;">
-            <div class="glass-card">
-                <h2>Ben Kimim?</h2>
-                <div style="line-height: 1.9; font-size: 1.1rem; opacity: 0.95;">
-                    <p>Merhaba! Ben Yusuf.</p>
-                    <p>Meraklı, araştırmacı ve bir o kadar da öğrenmeye tutkulu bir biyomühendislik öğrencisinin blog sayfasına hoş geldin!</p>
-                    <p>Yazılar yazıyor, kültür sanat etkinliklerine katılıyor, gördüklerimi fotoğraflıyorum. Ânın tadını çıkartıyor ama ânda takılı kalmıyorum. Aslında bu sayfa bir sonuç değil sürecin eseri; kendi ellerimle yazdığım "Yusuf Masalı"nda bana eşlik etmenden memnuniyet duyarım.</p>
-                    <p>Aklına takılan bir şey olursa bana ulaşman için gerekli her şey sayfada mevcut.</p>
-                </div>
+        <!-- KÜLTÜR & GÜNLÜK -->
+        <section id="culture" class="list-section container">
+            <div class="section-header fade-up">
+                <h2>Son Eklenenler</h2>
             </div>
-        </section>
 
-        <section id="updates" style="padding-top: 0;">
-            <div class="updates-list">
-                <div class="updates-header-container">
-                    <h2>Son Güncellemeler</h2>
+            <div class="minimal-list">
+                <div class="list-item fade-up">
+                    <span class="list-date">09 Mart 2026</span>
+                    <h3 class="list-title">21. Yaşımdan Notlar</h3>
+                    <span class="list-category">Günlük</span>
                 </div>
                 
-                <div class="update-row" onclick="openDetail('books', 1)">
-                    <div class="update-info">
-                        <div class="update-meta">KİTAPLIK • İNCELEME EKLENDİ</div>
-                        <h3>Holokost Endüstrisi - N. Finkelstein</h3>
-                    </div>
-                    <i class="fas fa-arrow-right arrow-icon"></i>
+                <div class="list-item fade-up" style="transition-delay: 0.1s;">
+                    <span class="list-date">Kitaplık</span>
+                    <h3 class="list-title">Holokost Endüstrisi - N. Finkelstein</h3>
+                    <span class="list-category">İnceleme</span>
                 </div>
 
-                <div class="update-row" onclick="openReader(0)">
-                    <div class="update-info">
-                        <div class="update-meta">YENİ YAZI • GÜNLÜK</div>
-                        <h3>21. Yaşımdan Notlar</h3>
-                    </div>
-                    <i class="fas fa-arrow-right arrow-icon"></i>
-                </div>
-
-                <div class="update-row" onclick="openDetail('books', 0)">
-                    <div class="update-info">
-                        <div class="update-meta">KİTAPLIK • İNCELEME</div>
-                        <h3>Üniversitenin Yükselişi - C.H. Haskins</h3>
-                    </div>
-                    <i class="fas fa-arrow-right arrow-icon"></i>
+                <div class="list-item fade-up" style="transition-delay: 0.2s;">
+                    <span class="list-date">Dinleti</span>
+                    <h3 class="list-title">أهو ده اللي صار - Fairouz</h3>
+                    <span class="list-category">Müzik</span>
                 </div>
             </div>
         </section>
-
-        <section id="music-section" style="padding: 20px 0;">
-            <div class="player-container">
-                <div class="player-bar">
-                    <div class="cover-art">
-                        <img src="kapak.jpg" alt="Cover">
-                    </div>
-                    <div class="song-info">
-                        <div class="track-title">أهو ده اللي صار</div>
-                        <div class="track-artist">Fairouz</div>
-                    </div>
-                    <div class="player-controls">
-                        <button class="ctrl-btn" onclick="toggleMute()" aria-label="Sesi Aç/Kapat"><i class="fas fa-volume-up" id="volIcon"></i></button>
-                        <button class="ctrl-btn" onclick="toggleAudio()" aria-label="Oynat/Durdur"><i class="fas fa-play" id="playIcon"></i></button>
-                    </div>
-                    <audio id="myAudio" loop>
-                        <source src="muzik.mp3" type="audio/mpeg">
-                    </audio>
-                </div>
-            </div>
-        </section>
-
-        <section id="contact">
-            <div class="minimal-footer">
-                <div class="footer-socials">
-                    <a href="#" target="_blank" rel="noopener noreferrer" aria-label="Github"><i class="fab fa-github"></i></a>
-                    <a href="#" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
-                    <a href="#" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-                </div>
-                <div class="footer-mail">yusufkocapinar92@gmail.com</div>
-                <div class="copyright">&copy; 2026 Yusuf Kocapınar</div>
-            </div>
-        </section>
-
-    </div> 
-
-    <div id="module-culture" class="full-page-module">
-        <div class="module-header">
-            <h2 class="module-title">Kültür & Sanat</h2>
-            <button class="back-btn" onclick="goBack()">Geri Dön</button>
-        </div>
-        <div class="module-content">
-            <h3 class="section-header">Kitaplık</h3>
-            <div class="poster-grid" id="books-grid"></div>
-            <h3 class="section-header">Sinema</h3>
-            <div class="poster-grid" id="movies-grid"></div>
-        </div>
-    </div>
-
-    <div id="module-journal" class="full-page-module">
-        <div class="module-header">
-            <h2 class="module-title">Akademik & Günlük</h2>
-            <button class="back-btn" onclick="goBack()">Geri Dön</button>
-        </div>
-        <div class="module-content">
-            <h3 class="section-header">Dijital Günlük</h3>
-            <div class="academy-grid" id="journal-grid"></div>
-            
-            <h3 class="section-header">Akademik</h3>
-            <div class="academy-grid" id="blog-grid"></div>
-        </div>
-    </div>
-
-    <div id="module-gallery" class="full-page-module">
-        <div class="module-header">
-            <h2 class="module-title">Hafıza</h2>
-            <button class="back-btn" onclick="goBack()">Geri Dön</button>
-        </div>
-        <div class="poster-grid" id="gallery-grid"></div>
-    </div>
-
-    <div id="detail-modal" class="detail-modal">
-        <div class="detail-card">
-            <span class="close-detail" onclick="closeDetail()">&times;</span>
-            <div id="detail-content"></div>
-        </div>
-    </div>
-
-    <div id="reader-modal" class="detail-modal">
-        <div class="detail-card" style="padding-top: 40px; padding-bottom: 40px;">
-            <span class="close-detail" onclick="closeReader()">&times;</span>
-            <div id="reader-content"></div>
-        </div>
-    </div>
-
-    <div id="gallery-viewer" class="detail-modal">
-        <div class="detail-card">
-            <span class="close-detail" onclick="closeGallery()">&times;</span>
-            <div style="display: flex; align-items: center; width: 100%; justify-content: space-between;">
-                <button class="gallery-nav-btn" onclick="changeGalleryImage(-1)" aria-label="Önceki">&#10094;</button>
-                <div id="gallery-img-container" style="text-align: center;">
-                    <img id="gallery-img-tag" src="" alt="">
-                    <h3 id="gallery-caption-tag" style="margin-top: 20px;"></h3>
-                </div>
-                <button class="gallery-nav-btn" onclick="changeGalleryImage(1)" aria-label="Sonraki">&#10095;</button>
-            </div>
-        </div>
-    </div>
+    </main>
 
     <script>
-        const data = {
-            journal: [
-                {
-                    title: "21. Yaşımdan Notlar",
-                    date: "9 Mart 2026",
-                    content: `
-                        <div style="font-size: 1.1rem; line-height: 1.8; opacity: 0.95; text-align: justify; margin-top: 15px;">
-                            <p style="font-style: italic; color: var(--accent-color); font-weight: 500; font-family: 'Cormorant Garamond', serif; font-size: 1.3rem; text-align: center; margin-bottom: 25px; line-height: 1.5;">
-                                "Dostlar ki bir kere bile selamlaşmadık<br>
-                                Aynı ekmek, aynı hürriyet, aynı hasret için ölebiliriz."
-                            </p>
-                            <p>Nazım’ın bu ihtişamlı sözleriyle başlıyorum mektubuma. Çünkü geride bıraktığım üç yüz altmış beş takvim günü, bana hiç tanımadığım kalplerle aynı sofrada, aynı kavgada ve aynı neşede buluşabilmenin kudretini öğretti. İçimdeki gürültülerin bir tufana dönüştüğü o sağanakları da, bir bahar ikindisi ruhumu usulca okşayan o serin esintiyi de bu yaşımda tanıdım.</p>
-                            <p>Yirminci yaşım. Henüz lezzetine tam varamadığım nice sofradan, ibriğimi daldırdığım nice pınardan rızıklanma vaktimdi. Uykusuz gecelerin hırçınlığı, yollarda olmanın vakur yorgunluğu, çiğliğin verdiği o müthiş iştah... Her şeyden biraz, birazdan daha çok; ama pek çok şeyi doldurdum heybeme.</p>
-                            <p>Şimdi anlıyorum: <em style="color: var(--accent-color);">“Ölüyoruz, demek ki yaşanılacak.”</em> Ömür dediğin bir ezan ile namaz arası, şu fani dünyada bir nefeslik hükmüm var, o halde bu nefesi en derininden çekmeli içe. Hayatın muntazam elifba’sında henüz bir hemzeyim; küçük bir işaret, bir duruş, bir başlangıçtan ibaret. Ve ne muazzam bir lütuf ki; dünyaya gelmiş olmaktan, bu karmaşanın ortasında kendi sesimi aramaktan fevkalade memnunum. Fevkalade memnunum dünyaya geldiğime.</p>
-                            <p>Önümde yaşanılacak, ter dökülecek ve sevdalanılacak koca bir ömür... Yaşamaya değer, her anıyla kutsanmaya değer bir ömür...</p>
-                            <p style="font-weight: 600; color: var(--accent-color); text-align: right; margin-top: 30px; font-size: 1.2rem; font-family: 'Cormorant Garamond', serif;">Yarın yirmi bir. Yoldayım. Yolum uzun.</p>
-                        </div>
-                    `
-                },
-                {
-                    title: "Nerede O Eski Ramazanlar",
-                    date: "19 Şubat 2026",
-                    content: `<div style="text-align: center; padding: 40px; font-style: italic; opacity: 0.7;">Pek Yakında...</div>`
-                }
-            ],
-            books: [
-                {
-                    title: "Üniversitenin Yükselişi",
-                    author: "Charles Homer Haskins",
-                    img: "https://img.kitapyurdu.com/v1/getImage/fn:11985778/wi:800/wh:9b87ff2f0",
-                    review: `Kitap, Orta Çağ üniversitelerinin doğuşunu, kurumsal yapısını, profesörlerin otoritesini ve öğrencilerin gündelik hayatını ayrıntılı şekilde ele alıyor...`
-                },
-                {
-                    title: "Holokost Endüstrisi",
-                    author: "Norman Finkelstein",
-                    img: "https://img.kitapyurdu.com/v1/getImage/fn:12150703/wi:500/wh:bfff5df1e",
-                    review: `Norman Finkelstein’in Holokost Endüstrisi, tarihsel bir trajedinin nasıl dokunulmaz bir ideolojik silaha dönüştürüldüğünü çok cesur bir dille masaya yatırıyor...`
-                },
-                {
-                    title: "Freud İmparatorluğunun Çöküşü",
-                    author: "Hans Eysenck",
-                    img: "https://www.kutadgu.com.tr/u/kutadgu/img/b/f/r/freud-kpk3-1751670171.jpg",
-                    review: `Eysenck'in 1985 senesinde kaleme aldığı ve akademik çevrelerde irtifa kaybetmeye başlayan Freudyen teoriye karşı öldürücü darbeyi vuran yapıtlardan birisidir.`
-                },
-                {
-                    title: "Muhtelif 1 - İslam'a Yönelik İtiraz ve Cevaplar",
-                    author: "Altay Cem Meriç",
-                    img: "https://img.kitapyurdu.com/v1/getImage/fn:12148197/wi:500/wh:3c2524b94",
-                    review: "İslam'a Yönelik İtiraz ve Cevaplar"
-                }
-            ],
-            movies: [
-                {
-                    title: "Inception",
-                    author: "Christopher Nolan",
-                    img: "https://m.media-amazon.com/images/M/MV5BMjExMjkwNTQ0Nl5BMl5BanBnXkFtZTcwNTY0OTk1Mw@@._V1_.jpg",
-                    review: "Rüya içinde rüya..."
-                },
-                {
-                    title: "Intouchables",
-                    author: "Olivier Nakache",
-                    img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRkiJPMd8Tlgpt58klpULjQUCVox_C2X5IS1w&s",
-                    review: "Dostluğun engel tanımayan hikayesi."
-                },
-                {
-                    title: "Özdemir Bayraktar | Bu Dünyadan Bir Akıncı Geçti",
-                    author: "BAYKAR",
-                    img: "https://cdn.baykartech.com/media/upload/userFormUpload/Q0QQpKsVzpiZriNcR7WUpGlJtWHfqtCo.JPG",
-                    review: "Bir İnancın, Bir Mücadelenin ve “Biz de Yapabiliriz” Diyen Bir Neslin Hikâyesi"
-                },
-                {
-                    title: "Ters Yüz",
-                    author: "Pixar",
-                    img: "https://upload.wikimedia.org/wikipedia/tr/thumb/2/29/Ters_Y%C3%BCz_-_afi%C5%9F.jpg/250px-Ters_Y%C3%BCz_-_afi%C5%9F.jpg",
-                    review: "Duyguların dünyasına yolculuk."
-                }
-            ],
-            blog: [
-                {
-                    title: "Kültürlenmiş Et ve Biyoetik",
-                    date: "3 Şubat 2026",
-                    content: "CRISPR-Cas9 teknolojisiyle üretilen kültürlenmiş et, biyomedikal etik literatüründe..."
-                },
-                {
-                    title: "Biyomühendislik Vizyonu",
-                    date: "28 Ocak 2026",
-                    content: "Geleceğin teknolojileri üzerine düşünceler."
-                }
-            ],
-            gallery: [
-                { src: "citedepera.jpg", title: "Cité de Péra" },
-                { src: "feneryolu.jpg", title: "Feneryolu İstasyonu" },
-                { src: "daylik.jpg", title: "Daylık Köyü" },
-                { src: "kücükyali.jpg", title: "Küçükyalı" },
-                { src: "umraniye.jpg", title: "Osmangazi Korusu" },
-                { src: "sultanahmet.jpg", title: "Sultanahmet Camii" },
-                { src: "baglarbasi.jpg", title: "Bağlarbaşı" }
-            ]
-        };
+        // Sayfa kaydırıldıkça elementlerin belirmesini sağlayan Observer
+        document.addEventListener('DOMContentLoaded', () => {
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.15
+            };
 
-        const mainStage = document.getElementById('main-stage');
-        const modules = document.querySelectorAll('.full-page-module');
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        observer.unobserve(entry.target); // Sadece bir kere çalışsın
+                    }
+                });
+            }, observerOptions);
 
-        function openModule(moduleId) {
-            mainStage.classList.add('hidden');
-            modules.forEach(m => m.classList.remove('active'));
-            document.getElementById('module-' + moduleId).classList.add('active');
-            window.scrollTo(0,0);
-            
-            history.pushState({view: 'module', id: moduleId}, null, `#${moduleId}`);
-        }
-
-        function openDetail(type, index) {
-            const item = data[type][index];
-            const modal = document.getElementById('detail-modal');
-            document.getElementById('detail-content').innerHTML = `
-                <div class="detail-flex">
-                    <img src="${item.img}" class="detail-img">
-                    <div class="detail-content">
-                        <h3 style="border-bottom:none;">${item.title}</h3>
-                        <p style="color:var(--accent-color); font-weight:bold;">${item.author}</p>
-                        <p>${item.review}</p>
-                    </div>
-                </div>`;
-            modal.classList.add('active');
-            history.pushState({view: 'modal', type: 'detail'}, null, '#detail');
-        }
-
-        function openReader(index) {
-            const item = data.journal[index];
-            const modal = document.getElementById('reader-modal');
-            
-            document.getElementById('reader-content').innerHTML = `
-                <h2 style="font-family: 'Cormorant Garamond', serif; border-bottom: none; margin-bottom: 5px; padding-bottom: 0;">${item.title}</h2>
-                <div style="font-weight:bold; color:var(--accent-color); font-size:0.85rem; margin-bottom: 20px; letter-spacing: 1px;">${item.date}</div>
-                <hr style="border: none; border-top: 1px solid rgba(150,150,150,0.1); margin-bottom: 20px;">
-                <div>${item.content}</div>
-            `;
-            
-            modal.classList.add('active');
-            history.pushState({view: 'modal', type: 'reader'}, null, '#reader');
-        }
-
-        let currentGalleryIndex = 0;
-        function openGalleryViewer(index) {
-            currentGalleryIndex = index;
-            updateGalleryModal();
-            document.getElementById('gallery-viewer').classList.add('active');
-            history.pushState({view: 'modal', type: 'gallery'}, null, '#gallery');
-        }
-
-        function closeDetailUI() { document.getElementById('detail-modal').classList.remove('active'); }
-        function closeReaderUI() { document.getElementById('reader-modal').classList.remove('active'); }
-        function closeGalleryUI() { document.getElementById('gallery-viewer').classList.remove('active'); }
-        function showLandingUI() {
-            modules.forEach(m => m.classList.remove('active'));
-            mainStage.classList.remove('hidden');
-            window.scrollTo(0,0);
-        }
-        function openModuleUI(moduleId) {
-            mainStage.classList.add('hidden');
-            modules.forEach(m => m.classList.remove('active'));
-            document.getElementById('module-' + moduleId).classList.add('active');
-        }
-
-        function goBack() { history.back(); }
-        function closeDetail() { history.back(); }
-        function closeReader() { history.back(); }
-        function closeGallery() { history.back(); }
-
-        window.onpopstate = function(event) {
-            const detailOpen = document.getElementById('detail-modal').classList.contains('active');
-            const readerOpen = document.getElementById('reader-modal').classList.contains('active');
-            const galleryOpen = document.getElementById('gallery-viewer').classList.contains('active');
-
-            if (detailOpen) { closeDetailUI(); return; }
-            if (readerOpen) { closeReaderUI(); return; }
-            if (galleryOpen) { closeGalleryUI(); return; }
-
-            if (event.state && event.state.view === 'module') {
-                openModuleUI(event.state.id);
-            } else {
-                showLandingUI();
-            }
-        };
-
-        function changeGalleryImage(direction) {
-            currentGalleryIndex += direction;
-            if (currentGalleryIndex < 0) currentGalleryIndex = data.gallery.length - 1;
-            if (currentGalleryIndex >= data.gallery.length) currentGalleryIndex = 0;
-            updateGalleryModal();
-        }
-
-        function updateGalleryModal() {
-            const item = data.gallery[currentGalleryIndex];
-            document.getElementById('gallery-img-tag').src = item.src;
-            document.getElementById('gallery-caption-tag').innerText = item.title;
-        }
-
-        window.addEventListener('DOMContentLoaded', () => {
-            history.replaceState(null, null, ' ');
-
-            const bookGrid = document.getElementById('books-grid');
-            data.books.forEach((item, index) => bookGrid.innerHTML += createPosterHTML(item, 'books', index));
-
-            const movieGrid = document.getElementById('movies-grid');
-            data.movies.forEach((item, index) => movieGrid.innerHTML += createPosterHTML(item, 'movies', index));
-
-            const journalGrid = document.getElementById('journal-grid');
-            data.journal.forEach((item, index) => {
-                journalGrid.innerHTML += `
-                    <div class="academy-card reader-card" onclick="openReader(${index})">
-                        <div style="font-weight:bold; color:var(--accent-color); font-size:0.7rem;">${item.date}</div>
-                        <h3>${item.title}</h3>
-                        <p style="font-size: 0.85rem; opacity: 0.7; margin-top: 10px;">Okumak için tıklayın <i class="fas fa-arrow-right" style="font-size:0.75rem; margin-left:5px;"></i></p>
-                    </div>`;
-            });
-
-            const blogGrid = document.getElementById('blog-grid');
-            data.blog.forEach((item) => {
-                blogGrid.innerHTML += `
-                    <div class="academy-card">
-                        <div style="font-weight:bold; color:var(--accent-color); font-size:0.7rem;">${item.date}</div>
-                        <h3>${item.title}</h3>
-                        <p>${item.content}</p>
-                    </div>`;
-            });
-
-            const galleryGrid = document.getElementById('gallery-grid');
-            data.gallery.forEach((item, index) => {
-                galleryGrid.innerHTML += `
-                    <div class="poster" onclick="openGalleryViewer(${index})">
-                        <img src="${item.src}">
-                        <div class="poster-caption">${item.title}</div>
-                    </div>`;
+            document.querySelectorAll('.fade-up').forEach((el) => {
+                observer.observe(el);
             });
         });
-
-        function createPosterHTML(item, type, index) {
-            return `<div class="poster" onclick="openDetail('${type}', ${index})"><img src="${item.img}"></div>`;
-        }
-
-        window.onclick = function(event) {
-            const galleryModal = document.getElementById('gallery-viewer');
-            const detailModal = document.getElementById('detail-modal');
-            const readerModal = document.getElementById('reader-modal');
-            if (event.target === galleryModal) history.back();
-            if (event.target === detailModal) history.back();
-            if (event.target === readerModal) history.back();
-        }
-
-        document.addEventListener('keydown', function(event) {
-            const galleryModal = document.getElementById('gallery-viewer');
-            if (event.key === "Escape") {
-                history.back();
-            }
-            if (galleryModal.classList.contains('active')) {
-                if (event.key === "ArrowLeft") changeGalleryImage(-1);
-                if (event.key === "ArrowRight") changeGalleryImage(1);
-            }
-        });
-
-        window.addEventListener('scroll', () => {
-            const bg = document.getElementById('bg-blur');
-            if (window.scrollY > 50) bg.classList.add('blurred');
-            else bg.classList.remove('blurred');
-        });
-
-        function toggleTheme() {
-            document.body.classList.toggle('purple-mode');
-        }
-
-        var audio = document.getElementById("myAudio");
-        var icon = document.getElementById("playIcon");
-        var playerBar = document.querySelector(".player-bar");
-
-        function toggleAudio() {
-            if (audio.paused) {
-                audio.play();
-                icon.className = "fas fa-pause";
-                playerBar.classList.add("playing");
-            } else {
-                audio.pause();
-                icon.className = "fas fa-play";
-                playerBar.classList.remove("playing");
-            }
-        }
-        function toggleMute() {
-            audio.muted = !audio.muted;
-            document.getElementById("volIcon").className = audio.muted ? "fas fa-volume-mute" : "fas fa-volume-up";
-        }
     </script>
 </body>
 </html>
