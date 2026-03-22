@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doku | YK. Dijital Arşiv</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Tenor+Sans&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        :root {
+            --bg-color: #F5F5F3; --text-main: #2C2A29; --text-muted: #7A7A7A;
+            --accent: #B39B78; --border-color: rgba(179, 155, 120, 0.2); 
+            --transition-premium: all 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+            --font-serif: 'Playfair Display', serif; --font-sans: 'Tenor Sans', sans-serif; --font-reading: 'Inter', sans-serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; cursor: none; }
+        body { background-color: var(--bg-color); color: var(--text-main); font-family: var(--font-sans); -webkit-font-smoothing: antialiased; overflow-x: hidden; position: relative; }
+        body.no-scroll { overflow: hidden; }
+
+        /* DOKU */
+        body::before { content: ""; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-image: url('data:image/svg+xml,<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><filter id="noiseFilter"><feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/></filter><rect width="100%" height="100%" filter="url(%23noiseFilter)" opacity="0.025"/></svg>'); pointer-events: none; z-index: 50; }
+
+        #custom-cursor { position: fixed; width: 6px; height: 6px; background: var(--accent); border-radius: 50%; pointer-events: none; z-index: 10000; transform: translate(-50%, -50%); transition: width 0.3s, height 0.3s, opacity 0.3s; }
+        #custom-cursor.hover { width: 40px; height: 40px; background: rgba(179, 155, 120, 0.05); border: 1px solid var(--accent); opacity: 1; mix-blend-mode: difference; }
+
+        .container { max-width: 1300px; margin: 0 auto; padding: 0 4vw; position: relative; z-index: 10; }
+
+        /* NAVİGASYON */
+        nav { position: fixed; top: 0; left: 0; width: 100%; background-color: rgba(245, 245, 243, 0.95); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border-color); padding: 20px 0; z-index: 100; }
+        .nav-inner { display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-family: var(--font-serif); font-size: 1.5rem; font-weight: 700; letter-spacing: -0.5px; text-decoration: none; color: var(--text-main); z-index: 2; }
+        
+        .header-journey { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -45%); width: 55%; max-width: 700px; pointer-events: none; opacity: 0.85; }
+
+        .nav-actions { display: flex; align-items: center; gap: 30px; z-index: 2; }
+        .login-btn, .menu-toggle { background: none; border: none; font-family: var(--font-sans); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 2px; color: var(--text-main); text-decoration: none; display: flex; align-items: center; gap: 8px; }
+        .login-btn:hover, .menu-toggle:hover { color: var(--accent); }
+        .menu-toggle i { font-size: 0.9rem; color: var(--accent); }
+
+        /* THE BRIDGE (Menü Katmanı) */
+        .menu-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100vh; background-color: var(--bg-color); z-index: 999; display: flex; justify-content: center; align-items: center; opacity: 0; visibility: hidden; clip-path: circle(0% at top right); transition: opacity 0.6s ease, visibility 0.6s ease, clip-path 0.8s cubic-bezier(0.77, 0, 0.175, 1); }
+        .menu-overlay.active { opacity: 1; visibility: visible; clip-path: circle(150% at top right); }
+        .overlay-close { position: absolute; top: 30px; right: 4vw; font-family: var(--font-sans); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 2px; color: var(--text-main); background: none; border: none; z-index: 1000; }
+        .overlay-nav { display: flex; flex-direction: column; gap: 40px; text-align: center; }
+        .overlay-link { font-family: var(--font-serif); font-size: clamp(3rem, 6vw, 5rem); color: var(--text-main); text-decoration: none; display: block; transform: translateY(30px); opacity: 0; transition: var(--transition-premium); }
+        .overlay-link span { display: block; font-family: var(--font-sans); font-size: 0.9rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 4px; margin-top: 10px; }
+        .menu-overlay.active .overlay-link { transform: translateY(0); opacity: 1; }
+        .overlay-link:hover { color: var(--accent); }
+
+        /* DOKU ODASI - EDİTÖRYAL BAŞLIK */
+        .page-header { padding: 220px 0 100px 0; display: flex; flex-direction: column; align-items: flex-start; border-bottom: 1px solid var(--border-color); }
+        .room-tag { font-size: 0.85rem; text-transform: uppercase; letter-spacing: 4px; color: var(--accent); margin-bottom: 30px; }
+        .room-title { font-family: var(--font-serif); font-size: clamp(4rem, 10vw, 8rem); font-weight: 400; line-height: 1; margin-bottom: 40px; margin-left: -5px; }
+        .room-desc { font-size: 1.2rem; color: var(--text-muted); max-width: 600px; line-height: 1.8; font-weight: 300; }
+
+        /* SİNEMATİK GALERİ (Cinematic Grid) */
+        .gallery-grid {
+            display: grid; grid-template-columns: repeat(12, 1fr);
+            gap: 40px; padding: 100px 0 160px 0;
+        }
+
+        .gallery-item {
+            position: relative; overflow: hidden; display: block;
+            text-decoration: none; background: #E8E8E8;
+        }
+
+        .gallery-img {
+            width: 100%; height: 100%; object-fit: cover;
+            transition: transform 1.5s cubic-bezier(0.25, 1, 0.5, 1), filter 1s ease;
+            filter: grayscale(20%); /* Hafif sanat galerisi tonu */
+        }
+        
+        .gallery-item:hover .gallery-img { transform: scale(1.04); filter: grayscale(0%); }
+
+        .gallery-caption {
+            position: absolute; bottom: 0; left: 0; width: 100%;
+            padding: 50px 40px 40px 40px;
+            background: linear-gradient(to top, rgba(20,20,20,0.85), transparent);
+            color: #FFFFFF;
+            opacity: 0; transform: translateY(20px); transition: var(--transition-premium);
+        }
+        
+        .gallery-item:hover .gallery-caption { opacity: 1; transform: translateY(0); }
+
+        .caption-meta { font-family: var(--font-sans); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 3px; color: var(--accent); margin-bottom: 10px; display: block; }
+        .caption-title { font-family: var(--font-serif); font-size: 2rem; font-weight: 400; margin-bottom: 10px; line-height: 1.2; }
+        .caption-desc { font-family: var(--font-reading); font-size: 0.95rem; opacity: 0.8; font-weight: 300; }
+
+        /* Galeri Yerleşimi */
+        .gi-1 { grid-column: span 5; aspect-ratio: 3/4; }
+        .gi-2 { grid-column: span 7; aspect-ratio: 16/11; }
+        .gi-3 { grid-column: span 7; aspect-ratio: 16/11; margin-top: -80px; } /* Asimetrik geçme detayı */
+        .gi-4 { grid-column: span 5; aspect-ratio: 3/4; margin-top: 80px; }
+
+        .fade-up { opacity: 0; transform: translateY(40px); transition: 1.2s cubic-bezier(0.25, 1, 0.5, 1); }
+        .fade-up.visible { opacity: 1; transform: translateY(0); }
+
+        @media (max-width: 900px) {
+            .header-journey { display: none; }
+            .gallery-grid { display: flex; flex-direction: column; gap: 40px; padding: 60px 0; }
+            .gi-1, .gi-2, .gi-3, .gi-4 { grid-column: 1 / -1; margin-top: 0; aspect-ratio: 4/3; }
+            .gallery-caption { opacity: 1; transform: translateY(0); background: linear-gradient(to top, rgba(20,20,20,0.9), rgba(20,20,20,0)); padding: 60px 20px 30px 20px; }
+        }
+    </style>
+</head>
+<body>
+    <div id="custom-cursor"></div>
+    
+    <div class="menu-overlay" id="overlay">
+        <button class="overlay-close hover-target" id="close-menu">Kapat ✕</button>
+        <nav class="overlay-nav">
+            <a href="sentez.html" class="overlay-link hover-target">Sentez <span>Akademik Projeler & Kod</span></a>
+            <a href="perspektif.html" class="overlay-link hover-target">Perspektif <span>Entelektüel Denemeler</span></a>
+            <a href="doku.html" class="overlay-link hover-target">Doku <span>Sanat & Estetik</span></a>
+        </nav>
+    </div>
+
+    <nav id="main-nav">
+        <div class="container nav-inner">
+            <a href="index.html" class="logo hover-target">YK.</a>
+            
+            <div class="header-journey">
+                <svg viewBox="0 0 800 120" preserveAspectRatio="xMidYMid meet" fill="none" stroke="var(--accent)" stroke-linecap="round" stroke-linejoin="round" style="width: 100%; max-height: 80px;">
+                    <path d="M-50,75 C100,125 250,15 400,85 C550,155 700,35 850,65" stroke-width="1" opacity="0.3"/>
+                    <path d="M-20,50 C150,0 250,100 400,50 C550,0 650,100 820,40" stroke-width="0.8" opacity="0.2"/>
+                    <path d="M-50,90 C100,70 200,110 290,90 L310,90 L310,75 L330,75 L330,50 L350,50 C350,10 450,10 450,50 L470,50 L470,75 L490,75 L490,90 C580,110 700,70 850,90" stroke-width="1.5"/>
+                    <path d="M400,22 L400,6 C396,2 404,2 400,6" stroke-width="1.5"/>
+                </svg>
+            </div>
+
+            <div class="nav-actions">
+                <a href="login.html" class="login-btn hover-target">Giriş</a>
+                <button class="menu-toggle hover-target" id="open-menu">Menü <i class="fas fa-bars"></i></button>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <header class="page-header container fade-up">
+            <span class="room-tag">03 &mdash; Görsel Tasarım & Mimari</span>
+            <h1 class="room-title">Doku.</h1>
+            <p class="room-desc">Malzemenin ruhu, ışığın yansıması ve formun şiiri. Dijital ile fiziksel dünyanın kesiştiği estetik denemeler ve görsel kompozisyonlar.</p>
+        </header>
+
+        <section class="gallery-grid container">
+            
+            <!-- Görsel 1: Dikey -->
+            <a href="#" class="gallery-item gi-1 fade-up hover-target">
+                <!-- Not: Geçici olarak mermer/mimari konseptli Unsplash görselleri kullanılmıştır. Kendi fotoğraflarınla değiştirebilirsin. -->
+                <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=80" alt="Mermer Doku" class="gallery-img">
+                <div class="gallery-caption">
+                    <span class="caption-meta">Fotoğraf / 2025</span>
+                    <h3 class="caption-title">Işığın Kırılması</h3>
+                    <p class="caption-desc">Saf mermer yüzeyinde ışık ve gölgenin asimetrik oyunu.</p>
+                </div>
+            </a>
+
+            <!-- Görsel 2: Yatay -->
+            <a href="#" class="gallery-item gi-2 fade-up hover-target">
+                <img src="https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=1200&q=80" alt="Mimari Kesit" class="gallery-img">
+                <div class="gallery-caption">
+                    <span class="caption-meta">Mimari / 2025</span>
+                    <h3 class="caption-title">Sessiz Koridorlar</h3>
+                    <p class="caption-desc">Geometrinin perspektifle buluştuğu o sıfır noktası.</p>
+                </div>
+            </a>
+
+            <!-- Görsel 3: Yatay (Negatif margin ile asimetrik geçiş) -->
+            <a href="#" class="gallery-item gi-3 fade-up hover-target">
+                <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1200&q=80" alt="Soyut Formlar" class="gallery-img">
+                <div class="gallery-caption">
+                    <span class="caption-meta">Dijital Sanat / 2024</span>
+                    <h3 class="caption-title">Monolitik Yapılar</h3>
+                    <p class="caption-desc">Beton ve camın kusursuz, soğuk ama çekici zıtlığı.</p>
+                </div>
+            </a>
+
+            <!-- Görsel 4: Dikey -->
+            <a href="#" class="gallery-item gi-4 fade-up hover-target">
+                <img src="https://images.unsplash.com/photo-1582559937958-3843187a411f?auto=format&fit=crop&w=800&q=80" alt="Heykel Detayı" class="gallery-img">
+                <div class="gallery-caption">
+                    <span class="caption-meta">Heykel / 2023</span>
+                    <h3 class="caption-title">Antik Süreklilik</h3>
+                    <p class="caption-desc">Klasik hatların dijital çağa bıraktığı estetik miras.</p>
+                </div>
+            </a>
+
+        </section>
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const cursor = document.getElementById('custom-cursor');
+            document.addEventListener('mousemove', e => {
+                cursor.style.left = e.clientX + 'px';
+                cursor.style.top = e.clientY + 'px';
+            });
+            document.querySelectorAll('.hover-target, button, a').forEach(t => {
+                t.addEventListener('mouseover', () => cursor.classList.add('hover'));
+                t.addEventListener('mouseout', () => cursor.classList.remove('hover'));
+            });
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+            }, { threshold: 0.1 });
+            document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+            const openBtn = document.getElementById('open-menu');
+            const closeBtn = document.getElementById('close-menu');
+            const overlay = document.getElementById('overlay');
+            const body = document.body;
+
+            const toggleMenu = () => {
+                overlay.classList.toggle('active');
+                body.classList.toggle('no-scroll');
+            };
+
+            openBtn.addEventListener('click', toggleMenu);
+            closeBtn.addEventListener('click', toggleMenu);
+        });
+    </script>
+</body>
+</html>
