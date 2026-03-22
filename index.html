@@ -10,15 +10,14 @@
 
     <style>
         :root {
-            /* Mermer ve Kemik Beyazı Tonları */
+            var(--bg-color): #F5F5F3;
             --bg-color: #F5F5F3;
             --card-bg: #FFFFFF;         
             --text-main: #2C2A29;      
             --text-muted: #7A7A7A;
-            /* Mat Bronz Detaylar */
             --accent: #B39B78;
             --border-color: rgba(179, 155, 120, 0.2); 
-            --transition-premium: all 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+            --transition-premium: all 0.6s cubic-bezier(0.8, 0, 0.2, 1);
             --font-serif: 'Playfair Display', serif;
             --font-sans: 'Tenor Sans', sans-serif;
         }
@@ -34,8 +33,9 @@
             overflow-x: hidden;
             position: relative;
         }
+        
+        body.no-scroll { overflow: hidden; }
 
-        /* DOKU: Kağıt/Taş Pürüzü - Premium Hissiyat */
         body::before {
             content: ""; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background-image: url('data:image/svg+xml,<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><filter id="noiseFilter"><feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/></filter><rect width="100%" height="100%" filter="url(%23noiseFilter)" opacity="0.025"/></svg>');
@@ -51,7 +51,7 @@
 
         .container { max-width: 1200px; margin: 0 auto; padding: 0 4vw; position: relative; z-index: 10; }
 
-        /* ANA MENÜ: Oturaklı ve Planlı Mimari */
+        /* NAVİGASYON */
         nav {
             position: fixed; top: 0; left: 0; width: 100%;
             padding: 40px 0; z-index: 100; transition: var(--transition-premium);
@@ -67,45 +67,68 @@
         .nav-inner { display: flex; justify-content: space-between; align-items: center; }
         .logo { font-family: var(--font-serif); font-size: 1.6rem; font-weight: 700; letter-spacing: -0.5px; text-decoration: none; color: var(--text-main); }
         
-        .nav-links { display: flex; gap: 40px; align-items: center; }
-        .nav-links a.menu-link { 
-            font-size: 0.85rem; text-transform: uppercase; letter-spacing: 2.5px; 
-            color: var(--text-muted); text-decoration: none; transition: 0.3s; 
-            position: relative; padding-bottom: 5px;
+        .nav-actions { display: flex; align-items: center; gap: 30px; }
+        
+        /* ZARİF GİRİŞ BUTONU */
+        .login-btn {
+            font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px;
+            color: var(--accent); text-decoration: none; border: 1px solid var(--border-color);
+            padding: 10px 24px; border-radius: 2px; transition: var(--transition-premium);
         }
-        .nav-links a.menu-link::after {
+        .login-btn:hover { background-color: var(--accent); color: var(--bg-color); border-color: var(--accent); }
+
+        /* MENÜ TETİKLEYİCİ */
+        .menu-toggle {
+            background: none; border: none; font-family: var(--font-sans); font-size: 0.9rem;
+            text-transform: uppercase; letter-spacing: 2.5px; color: var(--text-main);
+            display: flex; align-items: center; gap: 10px; padding: 5px 0; position: relative;
+        }
+        .menu-toggle::after {
             content: ''; position: absolute; bottom: 0; left: 0; width: 0; height: 1px;
             background-color: var(--accent); transition: width 0.3s ease;
         }
-        .nav-links a.menu-link.active, .nav-links a.menu-link:hover { color: var(--text-main); }
-        .nav-links a.menu-link.active::after, .nav-links a.menu-link:hover::after { width: 100%; }
+        .menu-toggle:hover::after { width: 100%; }
 
-        /* ZARİF GİRİŞ BUTONU */
-        .login-btn {
-            font-size: 0.8rem;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            color: var(--accent);
-            text-decoration: none;
-            border: 1px solid var(--border-color);
-            padding: 10px 24px;
-            border-radius: 2px;
-            transition: var(--transition-premium);
-            margin-left: 15px;
+        /* THE BRIDGE: TAM EKRAN MENÜ KATMANI */
+        .menu-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
+            background-color: var(--bg-color); z-index: 999;
+            display: flex; justify-content: center; align-items: center;
+            opacity: 0; visibility: hidden;
+            clip-path: circle(0% at top right);
+            transition: opacity 0.6s ease, visibility 0.6s ease, clip-path 0.8s cubic-bezier(0.77, 0, 0.175, 1);
         }
-        .login-btn:hover {
-            background-color: var(--accent);
-            color: var(--bg-color);
-            border-color: var(--accent);
+        .menu-overlay.active {
+            opacity: 1; visibility: visible;
+            clip-path: circle(150% at top right);
         }
 
-        .hero { height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; }
-        .main-title {
-            font-family: var(--font-serif); font-size: clamp(3rem, 8vw, 7rem);
-            line-height: 1.1; font-weight: 400; letter-spacing: -1.5px;
-            color: var(--text-main); text-align: center;
+        .overlay-close {
+            position: absolute; top: 40px; right: 4vw; font-family: var(--font-sans);
+            font-size: 0.85rem; text-transform: uppercase; letter-spacing: 2px;
+            color: var(--text-main); background: none; border: none; z-index: 1000;
         }
+
+        .overlay-nav { display: flex; flex-direction: column; gap: 40px; text-align: center; }
+        .overlay-link {
+            font-family: var(--font-serif); font-size: clamp(3rem, 6vw, 5rem);
+            color: var(--text-main); text-decoration: none; display: block;
+            transform: translateY(30px); opacity: 0; transition: var(--transition-premium);
+        }
+        .overlay-link span {
+            display: block; font-family: var(--font-sans); font-size: 0.9rem;
+            color: var(--text-muted); text-transform: uppercase; letter-spacing: 4px; margin-top: 10px;
+        }
+        .menu-overlay.active .overlay-link { transform: translateY(0); opacity: 1; }
+        .menu-overlay.active .overlay-link:nth-child(1) { transition-delay: 0.2s; }
+        .menu-overlay.active .overlay-link:nth-child(2) { transition-delay: 0.3s; }
+        .menu-overlay.active .overlay-link:nth-child(3) { transition-delay: 0.4s; }
         
+        .overlay-link:hover { color: var(--accent); letter-spacing: 2px; }
+
+        /* VİTRİN İÇERİKLERİ */
+        .hero { height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; }
+        .main-title { font-family: var(--font-serif); font-size: clamp(3rem, 8vw, 7rem); line-height: 1.1; font-weight: 400; letter-spacing: -1.5px; color: var(--text-main); text-align: center; }
         .hero-desc { font-size: 1.1rem; color: var(--text-muted); font-weight: 300; margin-top: 30px; text-transform: uppercase; letter-spacing: 4px; text-align: center; }
 
         section { padding: 120px 0; }
@@ -113,19 +136,9 @@
         .section-tag { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 3px; color: var(--accent); margin-bottom: 20px; display: block; }
         h2 { font-family: var(--font-serif); font-size: 2.5rem; font-weight: 400; color: var(--text-main); }
 
-        /* BENTO GRID SİSTEMİ */
         .bento-grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: 30px; }
-        .bento-item {
-            background: var(--card-bg); padding: 50px; text-decoration: none; color: inherit;
-            border: 1px solid var(--border-color); box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02); 
-            transition: var(--transition-premium); display: flex; flex-direction: column; justify-content: space-between;
-            position: relative; overflow: hidden;
-        }
-        .bento-item:hover { 
-            transform: translateY(-8px); 
-            border-color: rgba(179, 155, 120, 0.4); 
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.06); 
-        }
+        .bento-item { background: var(--card-bg); padding: 50px; text-decoration: none; color: inherit; border: 1px solid var(--border-color); box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02); transition: var(--transition-premium); display: flex; flex-direction: column; justify-content: space-between; position: relative; overflow: hidden; }
+        .bento-item:hover { transform: translateY(-8px); border-color: rgba(179, 155, 120, 0.4); box-shadow: 0 20px 40px rgba(0, 0, 0, 0.06); }
         .item-8 { grid-column: span 8; min-height: 380px; }
         .item-4 { grid-column: span 4; min-height: 380px; }
         .item-meta { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 2px; color: var(--accent); margin-bottom: 15px; }
@@ -138,27 +151,37 @@
         .fade-up.visible { opacity: 1; transform: translateY(0); }
 
         @media (max-width: 900px) {
-            .nav-links { display: none; }
             .bento-item { grid-column: span 12; }
             nav { border-top: 4px solid var(--text-main); padding: 25px 0; }
+            .login-btn { display: none; } /* Mobilde sadece menü butonu kalsın */
         }
     </style>
 </head>
 <body>
     <div id="custom-cursor"></div>
     
+    <!-- THE BRIDGE (TAM EKRAN MENÜ) -->
+    <div class="menu-overlay" id="overlay">
+        <button class="overlay-close hover-target" id="close-menu">Kapat ✕</button>
+        <nav class="overlay-nav">
+            <a href="#sentez" class="overlay-link hover-target">Sentez <span>Akademik Projeler & Kod</span></a>
+            <a href="#perspektif" class="overlay-link hover-target">Perspektif <span>Entelektüel Denemeler</span></a>
+            <a href="#doku" class="overlay-link hover-target">Doku <span>Sanat & Estetik</span></a>
+        </nav>
+    </div>
+
+    <!-- ANA NAVİGASYON -->
     <nav id="main-nav">
         <div class="container nav-inner">
             <a href="index.html" class="logo hover-target">YK.</a>
-            <div class="nav-links">
-                <a href="#projects" class="menu-link hover-target">Projeler</a>
-                <a href="#archive" class="menu-link hover-target active">Arşiv</a>
-                <a href="#about" class="menu-link hover-target">Hakkında</a>
+            <div class="nav-actions">
                 <a href="login.html" class="login-btn hover-target">Giriş</a>
+                <button class="menu-toggle hover-target" id="open-menu">Menü <i class="fas fa-bars" style="font-size: 0.8rem; margin-left: 5px;"></i></button>
             </div>
         </div>
     </nav>
 
+    <!-- ANA İÇERİK -->
     <main>
         <section class="hero container">
             <div class="title-wrapper">
@@ -196,39 +219,48 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
+            // İmleç Mantığı
             const cursor = document.getElementById('custom-cursor');
-            
-            // Custom Cursor Logic
             document.addEventListener('mousemove', e => {
                 cursor.style.left = e.clientX + 'px';
                 cursor.style.top = e.clientY + 'px';
             });
-            
-            document.querySelectorAll('.hover-target').forEach(t => {
+            document.querySelectorAll('.hover-target, button').forEach(t => {
                 t.addEventListener('mouseover', () => cursor.classList.add('hover'));
                 t.addEventListener('mouseout', () => cursor.classList.remove('hover'));
             });
 
-            // Navigation Scroll Effect
+            // Navigasyon Scroll
             const nav = document.getElementById('main-nav');
             window.addEventListener('scroll', () => {
-                if (window.scrollY > 50) {
-                    nav.classList.add('scrolled');
-                } else {
-                    nav.classList.remove('scrolled');
-                }
+                if (window.scrollY > 50) nav.classList.add('scrolled');
+                else nav.classList.remove('scrolled');
             });
 
-            // Fade Up Animation Observer
+            // Animasyon Gözlemcisi
             const observer = new IntersectionObserver((entries) => {
-                entries.forEach(e => { 
-                    if (e.isIntersecting) {
-                        e.target.classList.add('visible'); 
-                    }
-                });
+                entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
             }, { threshold: 0.1 });
-            
             document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+            // Tam Ekran Menü (The Bridge) Mantığı
+            const openBtn = document.getElementById('open-menu');
+            const closeBtn = document.getElementById('close-menu');
+            const overlay = document.getElementById('overlay');
+            const body = document.body;
+
+            const toggleMenu = () => {
+                overlay.classList.toggle('active');
+                body.classList.toggle('no-scroll');
+            };
+
+            openBtn.addEventListener('click', toggleMenu);
+            closeBtn.addEventListener('click', toggleMenu);
+            
+            // Menü içindeki linklere tıklandığında menüyü kapat
+            document.querySelectorAll('.overlay-link').forEach(link => {
+                link.addEventListener('click', toggleMenu);
+            });
         });
     </script>
 </body>
