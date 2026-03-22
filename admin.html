@@ -3,91 +3,279 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>YK. Panel | Kontrol Merkezi</title>
+    <title>Yönetim | YK. Dijital Arşiv</title>
     
-    <link href="https://fonts.googleapis.com/css2?family=Tenor+Sans&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Tenor+Sans&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
         :root {
-            --bg-dark: #121212; --surface: #1E1E1E; --surface-hover: #2A2A2A;
-            --text-main: #E0E0E0; --text-muted: #888888; --accent: #B39B78; --border: #333333; --transition: all 0.3s ease;
+            --bg-color: #F5F5F3; --card-bg: #FFFFFF; --text-main: #2C2A29;      
+            --text-muted: #7A7A7A; --accent: #B39B78; --border-color: rgba(179, 155, 120, 0.4); 
+            --transition-premium: all 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+            --font-serif: 'Playfair Display', serif; --font-sans: 'Tenor Sans', sans-serif;
         }
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; cursor: none; }
         
-        /* Sayfa yüklenirken içeriği gizle (Titremeyi önlemek için) */
-        body { background-color: var(--bg-dark); color: var(--text-main); font-family: 'Inter', sans-serif; display: none; height: 100vh; overflow: hidden; }
+        /* GÜVENLİK İÇİN ÖNEMLİ: Sayfa yüklenirken gizli başla (titremeyi engeller) */
+        body { background-color: var(--bg-color); color: var(--text-main); font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased; overflow-x: hidden; display: none; height: 100vh; }
+
+        /* DOKU */
+        body::before { content: ""; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-image: url('data:image/svg+xml,<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><filter id="noiseFilter"><feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/></filter><rect width="100%" height="100%" filter="url(%23noiseFilter)" opacity="0.025"/></svg>'); pointer-events: none; z-index: 50; }
+
+        #custom-cursor { position: fixed; width: 6px; height: 6px; background: var(--accent); border-radius: 50%; pointer-events: none; z-index: 10000; transform: translate(-50%, -50%); transition: width 0.3s, height 0.3s, opacity 0.3s; }
+        #custom-cursor.hover { width: 40px; height: 40px; background: rgba(179, 155, 120, 0.05); border: 1px solid var(--accent); opacity: 1; }
+
+        /* YÖNETİM PANELİ DÜZENİ */
+        .admin-sidebar {
+            width: 300px; background-color: rgba(245, 245, 243, 0.95);
+            border-right: 1px solid var(--border-color);
+            display: flex; flex-direction: column; padding: 50px 40px;
+            z-index: 100; position: relative;
+        }
+
+        .brand { font-family: var(--font-serif); font-size: 1.5rem; font-weight: 700; color: var(--text-main); text-decoration: none; margin-bottom: 20px; display: block; letter-spacing: -0.5px; }
+        .brand span { font-family: var(--font-sans); font-size: 0.7rem; text-transform: uppercase; letter-spacing: 4px; color: var(--accent); display: block; font-weight: 400; margin-top: 5px; }
+        .auth-email { font-size: 0.7rem; color: var(--text-muted); margin-bottom: 40px; border-bottom: 1px solid var(--border-color); padding-bottom: 20px; word-break: break-all;}
+
+        .admin-nav { display: flex; flex-direction: column; gap: 20px; flex: 1; }
+        .nav-tab {
+            background: none; border: none; font-family: var(--font-sans);
+            font-size: 0.85rem; text-transform: uppercase; letter-spacing: 2px;
+            color: var(--text-muted); text-align: left; padding: 10px 0;
+            display: flex; align-items: center; gap: 15px; transition: var(--transition-premium);
+            position: relative;
+        }
+        .nav-tab i { font-size: 1rem; color: var(--border-color); transition: var(--transition-premium); }
+        .nav-tab:hover { color: var(--text-main); }
+        .nav-tab:hover i { color: var(--accent); }
+        .nav-tab.active { color: var(--text-main); }
+        .nav-tab.active i { color: var(--accent); }
+        .nav-tab.active::after {
+            content: ''; position: absolute; right: -40px; top: 50%; transform: translateY(-50%);
+            width: 3px; height: 100%; background-color: var(--accent);
+        }
+
+        .logout-btn {
+            background: none; border: none; text-align: left; cursor: none;
+            font-family: var(--font-sans); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px;
+            color: #d9534f; text-decoration: none; display: flex; align-items: center; gap: 10px; transition: 0.3s; margin-top: auto;
+        }
+        .logout-btn:hover { opacity: 0.7; }
+
+        /* İÇERİK ALANI */
+        .admin-content {
+            flex: 1; padding: 60px 8vw; overflow-y: auto; z-index: 10; position: relative;
+        }
+
+        .panel-section { display: none; animation: fadeIn 0.6s cubic-bezier(0.25, 1, 0.5, 1); }
+        .panel-section.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+        .section-header { margin-bottom: 50px; border-bottom: 1px solid var(--border-color); padding-bottom: 30px; }
+        .section-title { font-family: var(--font-serif); font-size: 3rem; font-weight: 400; color: var(--text-main); }
+
+        /* ZARİF FORM YAPISI */
+        .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-bottom: 40px; }
+        .form-full { grid-column: 1 / -1; }
+
+        .input-group { position: relative; margin-bottom: 10px; }
+        .input-group input, .input-group select, .input-group textarea {
+            width: 100%; padding: 15px 0 10px 0;
+            background: transparent; border: none;
+            border-bottom: 1px solid rgba(179, 155, 120, 0.3);
+            font-family: 'Inter', sans-serif; font-size: 1rem; color: var(--text-main);
+            outline: none; transition: var(--transition-premium); resize: none;
+        }
+        .input-group textarea { min-height: 120px; }
+        .input-group input:focus, .input-group select:focus, .input-group textarea:focus { border-bottom-color: var(--accent); }
         
-        .sidebar { width: 260px; background-color: var(--surface); border-right: 1px solid var(--border); display: flex; flex-direction: column; padding: 30px 20px; }
-        .brand { font-family: 'Tenor Sans', sans-serif; font-size: 1.5rem; color: var(--text-main); text-decoration: none; margin-bottom: 50px; padding-left: 10px; letter-spacing: 1px; }
-        .brand span { color: var(--accent); }
-        .nav-menu { list-style: none; display: flex; flex-direction: column; gap: 10px; }
-        .nav-item { display: flex; align-items: center; gap: 15px; padding: 12px 15px; border-radius: 8px; color: var(--text-muted); text-decoration: none; transition: var(--transition); font-weight: 500; font-size: 0.9rem; cursor: pointer; border: none; background: none; width: 100%; text-align: left;}
-        .nav-item:hover, .nav-item.active { background-color: var(--surface-hover); color: var(--text-main); }
-        .nav-item.active i { color: var(--accent); }
-        .main-content { flex: 1; padding: 40px 60px; overflow-y: auto; }
-        .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 40px; }
-        .page-title { font-size: 1.8rem; font-weight: 600; letter-spacing: -0.5px; }
-        .user-profile { display: flex; align-items: center; gap: 15px; }
-        .avatar { width: 40px; height: 40px; background-color: var(--accent); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--bg-dark); font-weight: 600; }
-        .editor-container { background-color: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 30px; }
-        .form-group { margin-bottom: 25px; }
-        .form-group label { display: block; margin-bottom: 10px; font-size: 0.85rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; }
-        .form-control { width: 100%; background-color: var(--bg-dark); border: 1px solid var(--border); color: var(--text-main); padding: 15px; border-radius: 8px; font-family: 'Inter', sans-serif; font-size: 1rem; transition: var(--transition); }
-        .form-control:focus { outline: none; border-color: var(--accent); }
-        select.form-control { appearance: none; cursor: pointer; }
-        .textarea-markdown { height: 300px; resize: vertical; font-family: 'Courier New', Courier, monospace; line-height: 1.6; }
-        .toggle-group { display: flex; align-items: center; gap: 15px; background-color: var(--bg-dark); padding: 15px; border-radius: 8px; border: 1px solid var(--border); }
-        .btn-primary { background-color: var(--accent); color: var(--bg-dark); border: none; padding: 15px 30px; font-size: 1rem; font-weight: 600; border-radius: 8px; cursor: pointer; transition: var(--transition); display: inline-flex; align-items: center; gap: 10px; }
-        .btn-primary:hover { opacity: 0.9; transform: translateY(-2px); }
-        .logout-btn { margin-top: auto; color: #d9534f !important; }
-        .logout-btn:hover { background-color: rgba(217, 83, 79, 0.1) !important; }
+        /* Floating Labels */
+        .input-group label {
+            position: absolute; left: 0; top: 15px;
+            font-size: 0.85rem; text-transform: uppercase; letter-spacing: 2px; color: var(--text-muted);
+            pointer-events: none; transition: var(--transition-premium);
+        }
+        .input-group input:focus ~ label, .input-group input:not(:placeholder-shown) ~ label,
+        .input-group textarea:focus ~ label, .input-group textarea:not(:placeholder-shown) ~ label {
+            top: -10px; font-size: 0.65rem; color: var(--accent);
+        }
+
+        .input-group select ~ label { top: -10px; font-size: 0.65rem; color: var(--accent); }
+
+        .submit-btn {
+            background: transparent; border: 1px solid var(--accent);
+            padding: 15px 40px; font-family: var(--font-sans); font-size: 0.85rem;
+            text-transform: uppercase; letter-spacing: 2px; color: var(--text-main);
+            transition: var(--transition-premium); display: inline-flex; align-items: center; gap: 10px;
+        }
+        .submit-btn:hover { background: var(--accent); color: var(--card-bg); }
+
+        /* LİSTE GÖRÜNÜMÜ */
+        .item-list { margin-top: 60px; border-top: 1px solid var(--border-color); padding-top: 40px; }
+        .list-title { font-family: var(--font-sans); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 2px; color: var(--text-muted); margin-bottom: 30px; }
+        .list-item { display: flex; justify-content: space-between; align-items: center; padding: 20px 0; border-bottom: 1px dashed rgba(179, 155, 120, 0.2); }
+        .item-info h4 { font-family: var(--font-serif); font-size: 1.2rem; font-weight: 400; color: var(--text-main); margin-bottom: 5px; }
+        .item-info span { font-size: 0.8rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; }
+        .item-actions button { background: none; border: none; color: var(--text-muted); font-size: 1rem; margin-left: 15px; transition: 0.3s; }
+        .item-actions button:hover { color: #d9534f; }
+        .item-actions button.edit:hover { color: var(--accent); }
+
     </style>
 </head>
 <body>
+    <div id="custom-cursor"></div>
 
-    <aside class="sidebar">
-        <a href="index.html" class="brand">YK.<span>Panel</span></a>
-        <nav style="display: flex; flex-direction: column; height: 100%;">
-            <ul class="nav-menu">
-                <li><a href="#" class="nav-item"><i class="fas fa-chart-line"></i> <span>Dashboard</span></a></li>
-                <li><a href="#" class="nav-item active"><i class="fas fa-pen-nib"></i> <span>Yeni İçerik</span></a></li>
-                <li><a href="#" class="nav-item"><i class="fas fa-flask"></i> <span>Sentez (Projeler)</span></a></li>
-                <li><a href="#" class="nav-item"><i class="fas fa-feather-alt"></i> <span>Perspektif (Yazılar)</span></a></li>
-                <li><a href="#" class="nav-item"><i class="fas fa-camera-retro"></i> <span>Doku (Sanat)</span></a></li>
-            </ul>
-            <ul class="nav-menu" style="margin-top: auto;">
-                <li><button id="logout-btn" class="nav-item logout-btn"><i class="fas fa-sign-out-alt"></i> <span>Çıkış Yap</span></button></li>
-            </ul>
-        </nav>
+    <!-- SOL NAVİGASYON (Sidebar) -->
+    <aside class="admin-sidebar">
+        <a href="index.html" class="brand hover-target">YK. <span>Yönetim</span></a>
+        <div class="auth-email" id="admin-email">Bağlanıyor...</div>
+        
+        <div class="admin-nav">
+            <button class="nav-tab active hover-target" data-target="sentez-panel">
+                <i class="fas fa-microscope"></i> Sentez (Projeler)
+            </button>
+            <button class="nav-tab hover-target" data-target="perspektif-panel">
+                <i class="fas fa-pen-nib"></i> Perspektif (Yazılar)
+            </button>
+            <button class="nav-tab hover-target" data-target="doku-panel">
+                <i class="fas fa-image"></i> Doku (Galeri)
+            </button>
+        </div>
+
+        <button class="logout-btn hover-target" id="logout-btn">
+            <i class="fas fa-sign-out-alt"></i> Güvenli Çıkış
+        </button>
     </aside>
 
-    <main class="main-content">
-        <header class="header">
-            <h1 class="page-title">Laboratuvar: İçerik Üretimi</h1>
-            <div class="user-profile">
-                <span id="admin-email" style="font-size: 0.9rem; color: var(--text-muted);">Yükleniyor...</span>
-                <div class="avatar">YK</div>
+    <!-- SAĞ İÇERİK ALANI -->
+    <main class="admin-content">
+        
+        <!-- SENTEZ PANELI -->
+        <section id="sentez-panel" class="panel-section active">
+            <div class="section-header">
+                <h2 class="section-title">Yeni Proje Ekle</h2>
             </div>
-        </header>
-
-        <section class="editor-container">
-            <!-- Form Alanı Aynen Korundu -->
-            <form action="#" method="POST">
-                <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 20px;">
-                    <div class="form-group"><label>Başlık</label><input type="text" class="form-control" placeholder="Örn: Onkosklepios Veri Modeli..."></div>
-                    <div class="form-group"><label>Oda (Kategori)</label><select class="form-control"><option value="sentez">Sentez (Akademik & Kod)</option><option value="perspektif">Perspektif (Deneme)</option><option value="doku">Doku (Görsel & Şiir)</option></select></div>
+            
+            <form id="form-sentez">
+                <div class="form-grid">
+                    <div class="input-group form-full">
+                        <input type="text" id="s-title" placeholder=" " required class="hover-target">
+                        <label>Proje Başlığı</label>
+                    </div>
+                    <div class="input-group">
+                        <input type="text" id="s-category" placeholder=" " required class="hover-target">
+                        <label>Kategori (Örn: Veri Bilimi)</label>
+                    </div>
+                    <div class="input-group">
+                        <input type="number" id="s-year" placeholder=" " required class="hover-target">
+                        <label>Yıl</label>
+                    </div>
+                    <div class="input-group form-full">
+                        <textarea id="s-excerpt" placeholder=" " required class="hover-target"></textarea>
+                        <label>Kısa Açıklama / Özeti</label>
+                    </div>
+                    <div class="input-group form-full">
+                        <input type="url" id="s-link" placeholder=" " class="hover-target">
+                        <label>Bağlantı Linki (GitHub, PDF vb. - İsteğe Bağlı)</label>
+                    </div>
                 </div>
-                <div class="form-group"><label>Metin (Markdown Destekli)</label><textarea class="form-control textarea-markdown" placeholder="## Alt Başlık&#10;&#10;İçeriğini buraya Markdown formatında yazabilirsin..."></textarea></div>
-                <button type="submit" class="btn-primary"><i class="fas fa-paper-plane"></i> Arşive Ekle</button>
+                <button type="submit" class="submit-btn hover-target">Arşive Kaydet <i class="fas fa-check"></i></button>
+            </form>
+
+            <div class="item-list">
+                <div class="list-title">Yayındaki Projeler</div>
+                <div id="sentez-list">
+                    <!-- Firebase verileri buraya eklenecek -->
+                    <div class="list-item">
+                        <div class="item-info">
+                            <h4>Onkosklepios: Karar Destek</h4>
+                            <span>Karar Destek Sistemleri • 2024</span>
+                        </div>
+                        <div class="item-actions">
+                            <button class="edit hover-target"><i class="fas fa-edit"></i></button>
+                            <button class="delete hover-target"><i class="fas fa-trash-alt"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PERSPEKTİF PANELI -->
+        <section id="perspektif-panel" class="panel-section">
+            <div class="section-header">
+                <h2 class="section-title">Yeni Yazı Ekle</h2>
+            </div>
+            
+            <form id="form-perspektif">
+                <div class="form-grid">
+                    <div class="input-group form-full">
+                        <input type="text" id="p-title" placeholder=" " required class="hover-target">
+                        <label>Yazı Başlığı</label>
+                    </div>
+                    <div class="input-group">
+                        <select id="p-type" class="hover-target">
+                            <option value="Makale">Makale</option>
+                            <option value="Deneme">Deneme</option>
+                            <option value="Eleştiri">Eleştiri</option>
+                        </select>
+                        <label>Yazı Türü</label>
+                    </div>
+                    <div class="input-group">
+                        <input type="text" id="p-date" placeholder=" " required class="hover-target">
+                        <label>Tarih (Örn: Mart 2026)</label>
+                    </div>
+                    <div class="input-group form-full">
+                        <textarea id="p-excerpt" placeholder=" " required class="hover-target"></textarea>
+                        <label>Yazı Özeti (Sitede görünecek kısım)</label>
+                    </div>
+                </div>
+                <button type="submit" class="submit-btn hover-target">Yazıyı Yayınla <i class="fas fa-check"></i></button>
             </form>
         </section>
+
+        <!-- DOKU PANELI -->
+        <section id="doku-panel" class="panel-section">
+            <div class="section-header">
+                <h2 class="section-title">Galeriye Görsel Ekle</h2>
+            </div>
+            
+            <form id="form-doku">
+                <div class="form-grid">
+                    <div class="input-group form-full">
+                        <input type="text" id="d-title" placeholder=" " required class="hover-target">
+                        <label>Görsel Başlığı</label>
+                    </div>
+                    <div class="input-group">
+                        <input type="text" id="d-category" placeholder=" " required class="hover-target">
+                        <label>Kategori (Mimari, Fotoğraf vb.)</label>
+                    </div>
+                    <div class="input-group">
+                        <input type="number" id="d-year" placeholder=" " required class="hover-target">
+                        <label>Yıl</label>
+                    </div>
+                    <div class="input-group form-full">
+                        <input type="url" id="d-imgurl" placeholder=" " required class="hover-target">
+                        <label>Görsel Bağlantısı (URL)</label>
+                    </div>
+                    <div class="input-group form-full">
+                        <textarea id="d-desc" placeholder=" " required class="hover-target"></textarea>
+                        <label>Alt Açıklama (Caption)</label>
+                    </div>
+                </div>
+                <button type="submit" class="submit-btn hover-target">Görseli Ekle <i class="fas fa-check"></i></button>
+            </form>
+        </section>
+
     </main>
 
+    <!-- FIREBASE IMPORT VE GÜVENLİK KONTROLÜ -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
         import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
 
+        // Seninkiyle birebir aynı olan Firebase konfigürasyonu
         const firebaseConfig = {
             apiKey: "AIzaSyCr4HhlythyRIfy_Xnb-IaWr0Th0TkUQi4",
             authDomain: "yk-blog-9720b.firebaseapp.com",
@@ -100,14 +288,14 @@
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
 
-        // Kimlik Kontrolü
+        // Kimlik Kontrolü ve Sayfa Gösterimi (Eski kodunun birebir entegrasyonu)
         onAuthStateChanged(auth, (user) => {
             if (user) {
-                // Giriş yapılmış, tasarımı göster
+                // Giriş yapılmış, premium tasarımı ve sayfa gövdesini göster
                 document.body.style.display = 'flex';
                 document.getElementById('admin-email').textContent = user.email;
             } else {
-                // Şifresiz giriş denemesi, login'e at
+                // Şifresiz giriş denemesi, anında login'e fırlat
                 window.location.href = 'login.html';
             }
         });
@@ -116,6 +304,36 @@
         document.getElementById('logout-btn').addEventListener('click', () => {
             signOut(auth).then(() => {
                 window.location.href = 'login.html';
+            });
+        });
+    </script>
+
+    <!-- ARAYÜZ ETKİLEŞİMİ (İmleç ve Sekmeler) -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const cursor = document.getElementById('custom-cursor');
+            document.addEventListener('mousemove', e => {
+                cursor.style.left = e.clientX + 'px';
+                cursor.style.top = e.clientY + 'px';
+            });
+            document.querySelectorAll('.hover-target, button, input, textarea, select, a').forEach(t => {
+                t.addEventListener('mouseover', () => cursor.classList.add('hover'));
+                t.addEventListener('mouseout', () => cursor.classList.remove('hover'));
+            });
+
+            // Sekme Değiştirme Animasyonları
+            const tabs = document.querySelectorAll('.nav-tab');
+            const panels = document.querySelectorAll('.panel-section');
+
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    tabs.forEach(t => t.classList.remove('active'));
+                    tab.classList.add('active');
+
+                    const targetId = tab.getAttribute('data-target');
+                    panels.forEach(p => p.classList.remove('active'));
+                    document.getElementById(targetId).classList.add('active');
+                });
             });
         });
     </script>
