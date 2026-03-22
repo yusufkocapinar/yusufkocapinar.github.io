@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sentez | YK. Dijital Arşiv</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Tenor+Sans&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        :root {
+            --bg-color: #F5F5F3; --card-bg: #FFFFFF; --text-main: #2C2A29;      
+            --text-muted: #7A7A7A; --accent: #B39B78; --border-color: rgba(179, 155, 120, 0.2); 
+            --transition-premium: all 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+            --font-serif: 'Playfair Display', serif; --font-sans: 'Tenor Sans', sans-serif; --font-reading: 'Inter', sans-serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; cursor: none; }
+        body { background-color: var(--bg-color); color: var(--text-main); font-family: var(--font-reading); line-height: 1.8; -webkit-font-smoothing: antialiased; overflow-x: hidden; position: relative; }
+        body.no-scroll { overflow: hidden; }
+
+        /* DOKU */
+        body::before { content: ""; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-image: url('data:image/svg+xml,<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><filter id="noiseFilter"><feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/></filter><rect width="100%" height="100%" filter="url(%23noiseFilter)" opacity="0.025"/></svg>'); pointer-events: none; z-index: 50; }
+
+        #custom-cursor { position: fixed; width: 6px; height: 6px; background: var(--accent); border-radius: 50%; pointer-events: none; z-index: 10000; transform: translate(-50%, -50%); transition: width 0.3s, height 0.3s, opacity 0.3s; }
+        #custom-cursor.hover { width: 40px; height: 40px; background: rgba(179, 155, 120, 0.05); border: 1px solid var(--accent); opacity: 1; }
+
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 4vw; position: relative; z-index: 10; }
+        .reading-container { max-width: 800px; margin: 0 auto; } /* Okuma odaklı dar kolon */
+
+        /* NAVİGASYON (Ana sayfa ile aynı kilit mimari) */
+        nav { position: fixed; top: 0; left: 0; width: 100%; background-color: rgba(245, 245, 243, 0.98); backdrop-filter: blur(10px); border-bottom: 1px solid var(--border-color); padding: 20px 0; z-index: 100; transition: var(--transition-premium); }
+        .nav-inner { display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-family: var(--font-serif); font-size: 1.5rem; font-weight: 700; letter-spacing: -0.5px; text-decoration: none; color: var(--text-main); z-index: 2; }
+        .header-journey { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -45%); width: 55%; max-width: 700px; pointer-events: none; opacity: 0.85; transition: var(--transition-premium); }
+        .header-journey:hover { opacity: 1; }
+        .nav-actions { display: flex; align-items: center; gap: 30px; z-index: 2; }
+        .login-btn, .menu-toggle { background: none; border: none; font-family: var(--font-sans); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 2px; color: var(--text-main); text-decoration: none; display: flex; align-items: center; gap: 8px; }
+        .login-btn:hover, .menu-toggle:hover { color: var(--accent); }
+        .menu-toggle i { font-size: 0.9rem; color: var(--accent); }
+
+        /* THE BRIDGE (Menü Katmanı) */
+        .menu-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100vh; background-color: var(--bg-color); z-index: 999; display: flex; justify-content: center; align-items: center; opacity: 0; visibility: hidden; clip-path: circle(0% at top right); transition: opacity 0.6s ease, visibility 0.6s ease, clip-path 0.8s cubic-bezier(0.77, 0, 0.175, 1); }
+        .menu-overlay.active { opacity: 1; visibility: visible; clip-path: circle(150% at top right); }
+        .overlay-close { position: absolute; top: 30px; right: 4vw; font-family: var(--font-sans); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 2px; color: var(--text-main); background: none; border: none; z-index: 1000; }
+        .overlay-nav { display: flex; flex-direction: column; gap: 40px; text-align: center; }
+        .overlay-link { font-family: var(--font-serif); font-size: clamp(3rem, 6vw, 5rem); color: var(--text-main); text-decoration: none; display: block; transform: translateY(30px); opacity: 0; transition: var(--transition-premium); }
+        .overlay-link span { display: block; font-family: var(--font-sans); font-size: 0.9rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 4px; margin-top: 10px; }
+        .menu-overlay.active .overlay-link { transform: translateY(0); opacity: 1; }
+        .overlay-link:hover { color: var(--accent); }
+
+        /* İÇ SAYFA HEADER */
+        .page-header { padding: 180px 0 80px 0; text-align: center; border-bottom: 1px solid var(--border-color); }
+        .room-tag { font-family: var(--font-sans); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 4px; color: var(--accent); margin-bottom: 20px; display: block; }
+        .room-title { font-family: var(--font-serif); font-size: clamp(3rem, 6vw, 5rem); font-weight: 400; color: var(--text-main); line-height: 1.1; margin-bottom: 30px; }
+        .room-desc { font-size: 1.1rem; color: var(--text-muted); font-weight: 300; max-width: 600px; margin: 0 auto; }
+
+        /* SENTEZ (PROJELER) LİSTESİ */
+        .projects-feed { padding: 80px 0 120px 0; }
+        .project-card { display: flex; flex-direction: column; padding: 60px 0; border-bottom: 1px solid var(--border-color); transition: var(--transition-premium); text-decoration: none; color: inherit; }
+        .project-card:hover { transform: translateX(20px); } /* Yana kayma (okuma akışını bozmaz) */
+        
+        .project-meta { font-family: var(--font-sans); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 2px; color: var(--accent); margin-bottom: 15px; display: flex; gap: 20px; }
+        .project-meta span { display: flex; align-items: center; gap: 5px; }
+        
+        .project-title { font-family: var(--font-serif); font-size: 2.2rem; font-weight: 400; margin-bottom: 20px; color: var(--text-main); }
+        .project-excerpt { font-size: 1.05rem; color: var(--text-muted); font-weight: 300; line-height: 1.9; margin-bottom: 30px; }
+        
+        .read-more { font-family: var(--font-sans); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 2px; color: var(--text-main); display: inline-flex; align-items: center; gap: 10px; transition: 0.3s; }
+        .project-card:hover .read-more { color: var(--accent); gap: 20px; } /* Ok uzama efekti */
+
+        .fade-up { opacity: 0; transform: translateY(30px); transition: 1s ease-out; }
+        .fade-up.visible { opacity: 1; transform: translateY(0); }
+
+        @media (max-width: 900px) {
+            .header-journey { display: none; }
+            .project-card:hover { transform: translateX(5px); }
+        }
+    </style>
+</head>
+<body>
+    <div id="custom-cursor"></div>
+    
+    <div class="menu-overlay" id="overlay">
+        <button class="overlay-close hover-target" id="close-menu">Kapat ✕</button>
+        <nav class="overlay-nav">
+            <a href="sentez.html" class="overlay-link hover-target">Sentez <span>Akademik Projeler & Kod</span></a>
+            <a href="perspektif.html" class="overlay-link hover-target">Perspektif <span>Entelektüel Denemeler</span></a>
+            <a href="doku.html" class="overlay-link hover-target">Doku <span>Sanat & Estetik</span></a>
+        </nav>
+    </div>
+
+    <nav id="main-nav">
+        <div class="container nav-inner">
+            <a href="index.html" class="logo hover-target">YK.</a>
+            
+            <div class="header-journey">
+                <svg viewBox="0 0 800 120" preserveAspectRatio="xMidYMid meet" fill="none" stroke="var(--accent)" stroke-linecap="round" stroke-linejoin="round" style="width: 100%; max-height: 80px;">
+                    <path d="M-50,75 C100,125 250,15 400,85 C550,155 700,35 850,65" stroke-width="1" opacity="0.3"/>
+                    <path d="M-20,50 C150,0 250,100 400,50 C550,0 650,100 820,40" stroke-width="0.8" opacity="0.2"/>
+                    <path d="M-50,90 C100,70 200,110 290,90 L310,90 L310,75 L330,75 L330,50 L350,50 C350,10 450,10 450,50 L470,50 L470,75 L490,75 L490,90 C580,110 700,70 850,90" stroke-width="1.5"/>
+                    <path d="M400,22 L400,6 C396,2 404,2 400,6" stroke-width="1.5"/>
+                </svg>
+            </div>
+
+            <div class="nav-actions">
+                <a href="login.html" class="login-btn hover-target">Giriş</a>
+                <button class="menu-toggle hover-target" id="open-menu">Menü <i class="fas fa-bars"></i></button>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <!-- ODA BAŞLIĞI -->
+        <header class="page-header container fade-up">
+            <span class="room-tag">Araştırma & Geliştirme</span>
+            <h1 class="room-title">Sentez Odası.</h1>
+            <p class="room-desc">Biyomühendislik tezleri, akademik araştırmalar ve MATLAB tabanlı veri modelleme süreçlerinin kayıt altına alındığı teknik veri havuzu.</p>
+        </header>
+
+        <!-- PROJELER AKIŞI (Dikey Okuma Düzeni) -->
+        <section class="projects-feed container reading-container">
+            
+            <a href="#" class="project-card fade-up hover-target">
+                <div class="project-meta">
+                    <span><i class="fas fa-microscope"></i> Karar Destek Sistemi</span>
+                    <span><i class="far fa-clock"></i> 12 Dk Okuma</span>
+                </div>
+                <h2 class="project-title">Onkosklepios: Likit Biyopsi ve Sanal Patoloji Ağlarında Veri Entegrasyonu</h2>
+                <p class="project-excerpt">Kanserin erken teşhisi ve kişiselleştirilmiş tedavi süreçleri için geliştirilen onkoloji tabanlı bir karar destek platformunun temel mimarisi, biyobelirteç doğrulama aşamaları ve sanal patoloji analizlerine dair mühendislik yaklaşımım.</p>
+                <div class="read-more">Araştırmayı İncele <i class="fas fa-long-arrow-alt-right"></i></div>
+            </a>
+
+            <a href="#" class="project-card fade-up hover-target">
+                <div class="project-meta">
+                    <span><i class="fas fa-code"></i> Yazılım & Veri</span>
+                    <span><i class="far fa-clock"></i> 8 Dk Okuma</span>
+                </div>
+                <h2 class="project-title">Sinyal İşleme: Middle Eastern Horns and Technology</h2>
+                <p class="project-excerpt">MATLAB ortamında ses sinyallerinin spektral analizi, gürültü filtreleme algoritmaları ve geleneksel akustik enstrümanların dijital ortama aktarım süreçlerindeki modelleme hatalarının giderilmesi üzerine bir çalışma.</p>
+                <div class="read-more">Kodları İncele <i class="fas fa-long-arrow-alt-right"></i></div>
+            </a>
+
+        </section>
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const cursor = document.getElementById('custom-cursor');
+            document.addEventListener('mousemove', e => {
+                cursor.style.left = e.clientX + 'px';
+                cursor.style.top = e.clientY + 'px';
+            });
+            document.querySelectorAll('.hover-target, button').forEach(t => {
+                t.addEventListener('mouseover', () => cursor.classList.add('hover'));
+                t.addEventListener('mouseout', () => cursor.classList.remove('hover'));
+            });
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+            }, { threshold: 0.1 });
+            document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+            const openBtn = document.getElementById('open-menu');
+            const closeBtn = document.getElementById('close-menu');
+            const overlay = document.getElementById('overlay');
+            const body = document.body;
+
+            const toggleMenu = () => {
+                overlay.classList.toggle('active');
+                body.classList.toggle('no-scroll');
+            };
+
+            openBtn.addEventListener('click', toggleMenu);
+            closeBtn.addEventListener('click', toggleMenu);
+        });
+    </script>
+</body>
+</html>
