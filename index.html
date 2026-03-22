@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Yusuf Kocapınar | Dijital Arşiv</title>
     
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Tenor+Sans&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght=0,400;0,600;0,700;1,400&family=Tenor+Sans&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
@@ -41,17 +41,18 @@
             pointer-events: none; z-index: 50;
         }
 
-        /* 2. DOKUNUŞ: Sanatçı İmzası (GÜNCELLENMİŞ VE SIĞDIRILMIŞ)
-           Artık bu çizim yatayda kesilmiyor, sayfaya sığdırıldı.
+        /* 2. DOKUNUŞ: Sanatçı İmzası (GÜNCELLENMİŞ VE BELİRGİN)
+           Bu versiyonda çizim sığdırıldı ve opaklık (görünürlük) %50 artırıldı.
+           Ayrıca silüet Kubbetü's-Sahra formuna getirildi.
         */
         body::after {
             content: ""; position: fixed; 
             top: 20px; bottom: 20px; left: 20px; right: 20px;
-            /* SVG çizimi sığdırılmış ve tam görünür */
+            /* SVG çizimi sığdırılmış, daha kalın ve Kubbetü's-Sahra formunda */
             background-image: url('data:image/svg+xml,<svg width="100%" height="100%" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path d="M-5 50 Q 5 10 30 15 Q 50 20 60 10 L 60 40 Q 60 50 70 50 Q 80 50 90 40 Q 100 30 110 50" fill="none" stroke="%23B39B78" stroke-width="0.15" stroke-linecap="round"/><path d="M0 0 L 10 10 L 0 20 Z" fill="%23B39B78" fill-opacity="0.05" transform="scale(0.8) translate(10 10) rotate(15)"/><path d="M100 100 L 90 90 L 100 80 Z" fill="%23B39B78" fill-opacity="0.05" transform="scale(0.8) translate(-10 -10) rotate(-15)"/></svg>');
             background-repeat: no-repeat;
             background-size: contain; /* Sığdırılmış */
-            opacity: 0.15; /* Çok hafif bir fısıltı */
+            opacity: 0.22; /* Görünürlük %50 artırıldı (önceki 0.15 idi) */
             pointer-events: none;
             z-index: 0;
             transform: scale(0.95); /* Çok hafif bir marj */
