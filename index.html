@@ -15,7 +15,7 @@
             --card-bg: #FFFFFF;        /* Saf Beyaz */
             --text-main: #2C2A29;      /* Antrasit */
             --text-muted: #7A7A7A;
-            --accent: #B39B78;         /* Daha soft, mat bronz */
+            --accent: #B39B78;         /* Mat bronz */
             --border-color: rgba(0, 0, 0, 0.06);
             --transition-premium: all 0.5s cubic-bezier(0.25, 1, 0.5, 1);
             --font-serif: 'Playfair Display', serif;
@@ -34,14 +34,36 @@
             line-height: 1.8;
             -webkit-font-smoothing: antialiased;
             overflow-x: hidden;
+            position: relative;
         }
 
-        /* Sadece zarif bir kağıt/taş dokusu */
+        /* 1. DOKU: Zarif Kağıt/Taş Pürüzü */
         body::before {
             content: "";
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background-image: url('data:image/svg+xml,<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><filter id="noiseFilter"><feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/></filter><rect width="100%" height="100%" filter="url(%23noiseFilter)" opacity="0.025"/></svg>');
             pointer-events: none; z-index: 50;
+        }
+
+        /* 2. DOKU: Dev, Flulu Geometrik Filigran (Rub el Hizb) */
+        body::after {
+            content: "";
+            position: fixed; 
+            top: -15vh;
+            right: -10vw;
+            width: 80vw;
+            height: 80vw;
+            min-width: 600px;
+            min-height: 600px;
+            /* Geleneksel 8 köşeli yıldız ve çemberin son derece minimal vektör çizimi */
+            background-image: url('data:image/svg+xml,<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="%23B39B78" stroke-width="0.3"><rect x="15" y="15" width="70" height="70"/><rect x="15" y="15" width="70" height="70" transform="rotate(45 50 50)"/><circle cx="50" cy="50" r="34"/></g></svg>');
+            background-repeat: no-repeat;
+            background-size: contain;
+            opacity: 0.04; /* Asla bağırmayan, çok hafif bir fısıltı */
+            pointer-events: none;
+            z-index: 0;
+            transform: rotate(15deg);
+            filter: blur(1px); /* Keskinliği kırıp doğrudan mermerin içine gömülmüş hissi verir */
         }
 
         /* Minimalist Bronz Cursor */
@@ -107,7 +129,6 @@
             position: relative;
         }
 
-        /* Parallax Gölge - Sadelik için opaklık azaltıldı */
         .main-title::after {
             content: "Yusuf Kocapınar";
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
@@ -136,7 +157,7 @@
             font-size: 3rem; font-weight: 400; letter-spacing: -0.5px;
         }
 
-        /* --- BENTO KARTLARI (Gerçekçi ve Temiz) --- */
+        /* --- BENTO KARTLARI --- */
         .bento-grid {
             display: grid; grid-template-columns: repeat(12, 1fr); gap: 30px;
         }
@@ -148,10 +169,9 @@
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03); 
             transition: var(--transition-premium);
             display: flex; flex-direction: column; justify-content: space-between;
-            border-radius: 2px; /* Çok hafif yuvarlatma, mimari keskinlik */
+            border-radius: 2px;
         }
 
-        /* 3D yerine zarif bir yükselme ve aydınlanma */
         .bento-item:hover {
             transform: translateY(-8px);
             border-color: rgba(179, 155, 120, 0.2);
@@ -181,7 +201,6 @@
         .minimal-list { border-top: 1px solid var(--border-color); }
         
         .list-item {
-            /* Tam simetrik 3 sütunlu yapı */
             display: grid; grid-template-columns: 1fr 2fr 1fr;
             padding: 40px 0; border-bottom: 1px solid var(--border-color);
             transition: var(--transition-premium);
@@ -205,7 +224,6 @@
             letter-spacing: 2px;
         }
 
-        /* Alt Çizgi Efekti */
         .list-title a { position: relative; display: inline-block; }
         .list-title a::after {
             content: ""; position: absolute; left: 0; bottom: 0; width: 0; height: 1px;
@@ -329,7 +347,7 @@
                 target.addEventListener('mouseout', () => cursor.classList.remove('hover'));
             });
 
-            // Parallax (Sadece ince gölge hareketi)
+            // Parallax
             const parallaxText = document.querySelector('.parallax-text');
             if(window.innerWidth > 900) { 
                 document.addEventListener('mousemove', e => {
