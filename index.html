@@ -15,7 +15,6 @@
             --text-main: #2C2A29;      
             --text-muted: #7A7A7A;
             --accent: #B39B78;         
-            /* Pirinç/bronz tonlu sınır rengimiz */
             --border-color: rgba(179, 155, 120, 0.2); 
             --transition-premium: all 0.5s cubic-bezier(0.25, 1, 0.5, 1);
             --font-serif: 'Playfair Display', serif;
@@ -41,10 +40,25 @@
             pointer-events: none; z-index: 50;
         }
 
-        /* Mimari Omurga Çizgileri (Dergi Hissiyatı) */
+        /* 3. DOKUNUŞ: Çöl Güneşi (Soft Radial Glow) */
+        .ambient-glow {
+            position: fixed; top: -20vh; left: -15vw;
+            width: 80vw; height: 80vw;
+            /* Sol üstten yayılan yumuşak, sıcak şampanya ışıltısı */
+            background: radial-gradient(circle, rgba(179, 155, 120, 0.12) 0%, transparent 70%);
+            pointer-events: none; z-index: 1;
+        }
+        .ambient-glow-alt {
+            position: fixed; bottom: -20vh; right: -15vw;
+            width: 60vw; height: 60vw;
+            /* Sağ alttan yayılan daha hafif denge ışıltısı */
+            background: radial-gradient(circle, rgba(179, 155, 120, 0.08) 0%, transparent 70%);
+            pointer-events: none; z-index: 1;
+        }
+
+        /* 2. DOKUNUŞ: Mimari Omurga Çizgileri (Dergi Hissiyatı) */
         .spine-line {
             position: fixed; top: 0; width: 1px; height: 100vh;
-            /* Ortası belirgin, uçlara doğru silinen pirinç çizgiler */
             background: linear-gradient(to bottom, transparent 5%, var(--border-color) 20%, var(--border-color) 80%, transparent 95%);
             z-index: 5; pointer-events: none;
         }
@@ -80,9 +94,7 @@
 
         .nav-inner { display: flex; justify-content: space-between; align-items: center; }
 
-        .logo {
-            font-family: var(--font-serif); font-size: 1.5rem; font-weight: 700; letter-spacing: -0.5px;
-        }
+        .logo { font-family: var(--font-serif); font-size: 1.5rem; font-weight: 700; letter-spacing: -0.5px; }
 
         .nav-links { display: flex; gap: 40px; }
         .nav-links a {
@@ -127,7 +139,7 @@
         }
         .section-header h2 { font-family: var(--font-serif); font-size: 3rem; font-weight: 400; letter-spacing: -0.5px; }
 
-        /* --- BENTO KARTLARI (Pirinç Çerçeveli) --- */
+        /* --- BENTO KARTLARI --- */
         .bento-grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: 30px; }
 
         .bento-item {
@@ -163,7 +175,7 @@
         }
         
         .list-item:hover {
-            background: rgba(255, 255, 255, 0.4);
+            background: rgba(255, 255, 255, 0.5);
             padding-left: 20px; padding-right: 20px;
         }
 
@@ -191,6 +203,10 @@
     </style>
 </head>
 <body>
+
+    <!-- Yumuşak Çöl Işıltıları (Glow) -->
+    <div class="ambient-glow"></div>
+    <div class="ambient-glow-alt"></div>
 
     <!-- Editoryal Omurga Çizgileri -->
     <div class="spine-line spine-left"></div>
