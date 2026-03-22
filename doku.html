@@ -17,9 +17,10 @@
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; cursor: none; }
-        body { background-color: var(--bg-color); color: var(--text-main); font-family: var(--font-sans); -webkit-font-smoothing: antialiased; overflow-x: hidden; position: relative; }
+        body { background-color: var(--bg-color); color: var(--text-main); font-family: var(--font-sans); -webkit-font-smoothing: antialiased; overflow-x: hidden; }
         body.no-scroll { overflow: hidden; }
 
+        /* MERMER DOKUSU */
         body::before { content: ""; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-image: url('data:image/svg+xml,<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><filter id="noiseFilter"><feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/></filter><rect width="100%" height="100%" filter="url(%23noiseFilter)" opacity="0.025"/></svg>'); pointer-events: none; z-index: 50; }
 
         #custom-cursor { position: fixed; width: 6px; height: 6px; background: var(--accent); border-radius: 50%; pointer-events: none; z-index: 10000; transform: translate(-50%, -50%); transition: width 0.3s, height 0.3s, opacity 0.3s; }
@@ -29,59 +30,50 @@
 
         nav { position: fixed; top: 0; left: 0; width: 100%; background-color: rgba(245, 245, 243, 0.95); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border-color); padding: 20px 0; z-index: 100; }
         .nav-inner { display: flex; justify-content: space-between; align-items: center; }
-        .logo { font-family: var(--font-serif); font-size: 1.5rem; font-weight: 700; letter-spacing: -0.5px; text-decoration: none; color: var(--text-main); z-index: 2; }
+        .logo { font-family: var(--font-serif); font-size: 1.5rem; font-weight: 700; text-decoration: none; color: var(--text-main); }
         
-        .header-journey { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -45%); width: 55%; max-width: 700px; pointer-events: none; opacity: 0.85; }
+        .nav-actions { display: flex; align-items: center; gap: 30px; }
+        .menu-toggle { background: none; border: none; font-family: var(--font-sans); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 2px; color: var(--text-main); display: flex; align-items: center; gap: 8px; }
 
-        .nav-actions { display: flex; align-items: center; gap: 30px; z-index: 2; }
-        .login-btn, .menu-toggle { background: none; border: none; font-family: var(--font-sans); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 2px; color: var(--text-main); text-decoration: none; display: flex; align-items: center; gap: 8px; }
-        .login-btn:hover, .menu-toggle:hover { color: var(--accent); }
-        .menu-toggle i { font-size: 0.9rem; color: var(--accent); }
-
-        .menu-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100vh; background-color: var(--bg-color); z-index: 999; display: flex; justify-content: center; align-items: center; opacity: 0; visibility: hidden; clip-path: circle(0% at top right); transition: opacity 0.6s ease, visibility 0.6s ease, clip-path 0.8s cubic-bezier(0.77, 0, 0.175, 1); }
+        /* MENÜ */
+        .menu-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100vh; background-color: var(--bg-color); z-index: 999; display: flex; justify-content: center; align-items: center; opacity: 0; visibility: hidden; clip-path: circle(0% at top right); transition: all 0.8s cubic-bezier(0.77, 0, 0.175, 1); }
         .menu-overlay.active { opacity: 1; visibility: visible; clip-path: circle(150% at top right); }
-        .overlay-close { position: absolute; top: 30px; right: 4vw; font-family: var(--font-sans); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 2px; color: var(--text-main); background: none; border: none; z-index: 1000; }
         .overlay-nav { display: flex; flex-direction: column; gap: 40px; text-align: center; }
-        .overlay-link { font-family: var(--font-serif); font-size: clamp(3rem, 6vw, 5rem); color: var(--text-main); text-decoration: none; display: block; transform: translateY(30px); opacity: 0; transition: var(--transition-premium); }
-        .overlay-link span { display: block; font-family: var(--font-sans); font-size: 0.9rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 4px; margin-top: 10px; }
-        .menu-overlay.active .overlay-link { transform: translateY(0); opacity: 1; }
-        .overlay-link:hover { color: var(--accent); }
+        .overlay-link { font-family: var(--font-serif); font-size: clamp(3rem, 6vw, 5rem); color: var(--text-main); text-decoration: none; transition: 0.4s; }
+        .overlay-link:hover { color: var(--accent); transform: italic; }
 
-        .page-header { padding: 220px 0 100px 0; display: flex; flex-direction: column; align-items: flex-start; border-bottom: 1px solid var(--border-color); }
-        .room-tag { font-size: 0.85rem; text-transform: uppercase; letter-spacing: 4px; color: var(--accent); margin-bottom: 30px; }
-        .room-title { font-family: var(--font-serif); font-size: clamp(4rem, 10vw, 8rem); font-weight: 400; line-height: 1; margin-bottom: 40px; margin-left: -5px; }
-        .room-desc { font-size: 1.2rem; color: var(--text-muted); max-width: 600px; line-height: 1.8; font-weight: 300; }
+        .page-header { padding: 220px 0 60px 0; border-bottom: 1px solid var(--border-color); }
+        .room-tag { font-size: 0.85rem; text-transform: uppercase; letter-spacing: 4px; color: var(--accent); margin-bottom: 20px; display: block; }
+        .room-title { font-family: var(--font-serif); font-size: clamp(4rem, 10vw, 7rem); font-weight: 400; line-height: 1; margin-bottom: 30px; }
 
-        /* SİNEMATİK GALERİ (Cinematic Grid) */
-        .gallery-grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: 40px; padding: 100px 0 160px 0; }
+        /* FERAH GALERİ DÜZENİ */
+        .gallery-grid { 
+            display: grid; 
+            grid-template-columns: repeat(12, 1fr); 
+            gap: 120px 40px; /* Dikeyde 120px, Yatayda 40px boşluk */
+            padding: 100px 0 160px 0; 
+        }
 
-        .gallery-item { position: relative; overflow: hidden; display: block; text-decoration: none; background: #E8E8E8; opacity: 0; transform: translateY(40px); animation: fadeUpAnim 1s cubic-bezier(0.25, 1, 0.5, 1) forwards; }
-        
-        @keyframes fadeUpAnim { to { opacity: 1; transform: translateY(0); } }
+        .gallery-item { position: relative; overflow: hidden; display: block; background: #E8E8E8; opacity: 0; transform: translateY(30px); animation: fadeUp 1s ease forwards; }
+        @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
 
-        .gallery-img { width: 100%; height: 100%; object-fit: cover; transition: transform 1.5s cubic-bezier(0.25, 1, 0.5, 1), filter 1s ease; filter: grayscale(20%); }
-        .gallery-item:hover .gallery-img { transform: scale(1.04); filter: grayscale(0%); }
+        .gallery-img { width: 100%; height: 100%; object-fit: cover; transition: transform 1.2s ease; filter: grayscale(10%); }
+        .gallery-item:hover .gallery-img { transform: scale(1.03); filter: grayscale(0%); }
 
-        .gallery-caption { position: absolute; bottom: 0; left: 0; width: 100%; padding: 50px 40px 40px 40px; background: linear-gradient(to top, rgba(20,20,20,0.85), transparent); color: #FFFFFF; opacity: 0; transform: translateY(20px); transition: var(--transition-premium); }
-        .gallery-item:hover .gallery-caption { opacity: 1; transform: translateY(0); }
+        .gallery-caption { position: absolute; bottom: 0; left: 0; width: 100%; padding: 40px; background: linear-gradient(to top, rgba(0,0,0,0.7), transparent); color: #fff; opacity: 0; transition: 0.5s; }
+        .gallery-item:hover .gallery-caption { opacity: 1; }
 
-        .caption-meta { font-family: var(--font-sans); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 3px; color: var(--accent); margin-bottom: 10px; display: block; }
-        .caption-title { font-family: var(--font-serif); font-size: 2rem; font-weight: 400; margin-bottom: 10px; line-height: 1.2; }
-        .caption-desc { font-family: var(--font-reading); font-size: 0.95rem; opacity: 0.8; font-weight: 300; }
-
-        /* Asimetrik Galeri Yerleşim Döngüsü */
+        /* ASİMETRİK AMA TEMİZ YERLEŞİM */
         .gi-1 { grid-column: span 5; aspect-ratio: 3/4; }
-        .gi-2 { grid-column: span 7; aspect-ratio: 16/11; }
-        .gi-3 { grid-column: span 7; aspect-ratio: 16/11; margin-top: -80px; } 
-        .gi-4 { grid-column: span 5; aspect-ratio: 3/4; margin-top: 80px; }
+        .gi-2 { grid-column: span 7; aspect-ratio: 16/10; }
+        .gi-3 { grid-column: span 6; aspect-ratio: 1/1; margin-top: 40px; }
+        .gi-4 { grid-column: span 6; aspect-ratio: 16/10; align-self: center; }
 
-        .loading-text { grid-column: 1 / -1; text-align: center; padding: 60px 0; font-family: var(--font-sans); letter-spacing: 3px; color: var(--accent); text-transform: uppercase; font-size: 0.85rem; }
+        .loading-text { grid-column: 1 / -1; text-align: center; font-size: 0.8rem; letter-spacing: 4px; color: var(--accent); text-transform: uppercase; padding: 100px 0; }
 
         @media (max-width: 900px) {
-            .header-journey { display: none; }
-            .gallery-grid { display: flex; flex-direction: column; gap: 40px; padding: 60px 0; }
-            .gi-1, .gi-2, .gi-3, .gi-4 { grid-column: 1 / -1; margin-top: 0; aspect-ratio: 4/3; }
-            .gallery-caption { opacity: 1; transform: translateY(0); background: linear-gradient(to top, rgba(20,20,20,0.9), rgba(20,20,20,0)); padding: 60px 20px 30px 20px; }
+            .gallery-grid { display: flex; flex-direction: column; gap: 60px; }
+            .gi-1, .gi-2, .gi-3, .gi-4 { aspect-ratio: auto; min-height: 400px; margin-top: 0; }
         }
     </style>
 </head>
@@ -89,33 +81,31 @@
     <div id="custom-cursor"></div>
     
     <div class="menu-overlay" id="overlay">
-        <button class="overlay-close hover-target" id="close-menu">Kapat ✕</button>
         <nav class="overlay-nav">
-            <a href="sentez.html" class="overlay-link hover-target">Sentez <span>Akademik Projeler & Kod</span></a>
-            <a href="perspektif.html" class="overlay-link hover-target">Perspektif <span>Entelektüel Denemeler</span></a>
-            <a href="doku.html" class="overlay-link hover-target">Doku <span>Sanat & Estetik</span></a>
+            <a href="index.html" class="overlay-link hover-target">Giriş</a>
+            <a href="sentez.html" class="overlay-link hover-target">Sentez</a>
+            <a href="perspektif.html" class="overlay-link hover-target">Perspektif</a>
+            <a href="doku.html" class="overlay-link hover-target">Doku</a>
         </nav>
     </div>
 
-    <nav id="main-nav">
+    <nav>
         <div class="container nav-inner">
             <a href="index.html" class="logo hover-target">YK.</a>
             <div class="nav-actions">
-                <a href="login.html" class="login-btn hover-target">Giriş</a>
                 <button class="menu-toggle hover-target" id="open-menu">Menü <i class="fas fa-bars"></i></button>
             </div>
         </div>
     </nav>
 
-    <main>
-        <header class="page-header container">
-            <span class="room-tag" style="animation: fadeUpAnim 1s ease forwards;">03 &mdash; Görsel Tasarım & Mimari</span>
-            <h1 class="room-title" style="animation: fadeUpAnim 1.2s ease forwards;">Doku.</h1>
-            <p class="room-desc" style="animation: fadeUpAnim 1.4s ease forwards;">Malzemenin ruhu, ışığın yansıması ve formun şiiri. Dijital ile fiziksel dünyanın kesiştiği estetik denemeler ve görsel kompozisyonlar.</p>
+    <main class="container">
+        <header class="page-header">
+            <span class="room-tag">03 &mdash; Görsel Tasarım</span>
+            <h1 class="room-title">Doku.</h1>
         </header>
 
-        <section class="gallery-grid container" id="dynamic-gallery">
-            <div class="loading-text"><i class="fas fa-circle-notch fa-spin"></i> Arşiv Yükleniyor...</div>
+        <section class="gallery-grid" id="dynamic-gallery">
+            <div class="loading-text">Arşiv Hazırlanıyor...</div>
         </section>
     </main>
 
@@ -123,7 +113,6 @@
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
         import { getFirestore, collection, getDocs, query, orderBy } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
 
-        // Senin Firebase Konfigürasyonun
         const firebaseConfig = {
             apiKey: "AIzaSyCr4HhlythyRIfy_Xnb-IaWr0Th0TkUQi4",
             authDomain: "yk-blog-9720b.firebaseapp.com",
@@ -136,85 +125,50 @@
         const db = getFirestore(app);
 
         async function loadGallery() {
-            const galleryContainer = document.getElementById('dynamic-gallery');
-            
+            const container = document.getElementById('dynamic-gallery');
             try {
-                // Verileri en yeniden eskiye doğru sıralayarak çekiyoruz
                 const q = query(collection(db, "doku"), orderBy("createdAt", "desc"));
-                const querySnapshot = await getDocs(q);
-                
-                galleryContainer.innerHTML = ''; // Yükleniyor yazısını temizle
-                
-                if(querySnapshot.empty) {
-                    galleryContainer.innerHTML = '<div class="loading-text" style="color: var(--text-muted);"><i class="fas fa-box-open"></i> Galeri henüz boş. Yönetim panelinden görsel ekleyin.</div>';
-                    return;
-                }
+                const snap = await getDocs(q);
+                container.innerHTML = '';
 
-                let index = 0;
-                querySnapshot.forEach((doc) => {
+                let i = 0;
+                snap.forEach(doc => {
                     const data = doc.data();
-                    
-                    // Asimetrik mimariyi korumak için sınıfları 1'den 4'e kadar döndürüyoruz (gi-1, gi-2, gi-3, gi-4)
-                    const layoutClass = `gi-${(index % 4) + 1}`; 
-                    
-                    // Her bir öğe için biraz daha gecikmeli animasyon süresi atıyoruz
-                    const animDelay = (index * 0.2) + 's';
-
-                    const itemHTML = `
-                        <a href="${data.imageUrl}" target="_blank" class="gallery-item ${layoutClass} hover-target" style="animation-delay: ${animDelay};">
-                            <img src="${data.imageUrl}" alt="${data.title}" class="gallery-img">
+                    const layout = `gi-${(i % 4) + 1}`;
+                    container.innerHTML += `
+                        <div class="gallery-item ${layout} hover-target">
+                            <img src="${data.imageUrl}" class="gallery-img">
                             <div class="gallery-caption">
-                                <span class="caption-meta">${data.category || 'Görsel'} ${data.year ? '/ ' + data.year : ''}</span>
-                                <h3 class="caption-title">${data.title}</h3>
-                                <p class="caption-desc">${data.desc || ''}</p>
+                                <h3 style="font-family: 'Playfair Display'">${data.title}</h3>
+                                <p style="font-size: 0.8rem; opacity: 0.8">${data.category || ''}</p>
                             </div>
-                        </a>
+                        </div>
                     `;
-                    galleryContainer.innerHTML += itemHTML;
-                    index++;
+                    i++;
                 });
 
-                // Yeni eklenen öğeler için özel imleç (cursor) olaylarını tekrar aktifleştir
+                // İmleç etkisini yeni gelenlere de ekle
                 const cursor = document.getElementById('custom-cursor');
                 document.querySelectorAll('.hover-target').forEach(t => {
                     t.addEventListener('mouseover', () => cursor.classList.add('hover'));
                     t.addEventListener('mouseout', () => cursor.classList.remove('hover'));
                 });
-
-            } catch (error) {
-                console.error("Veriler çekilirken hata oluştu:", error);
-                galleryContainer.innerHTML = '<div class="loading-text" style="color: #d9534f;"><i class="fas fa-exclamation-triangle"></i> Arşiv bağlantısı kurulamadı.</div>';
-            }
+            } catch (e) { container.innerHTML = '<div class="loading-text">Bağlantı Hatası.</div>'; }
         }
-
-        // Sayfa açıldığında galeriyi yükle
         loadGallery();
+
+        // Menü kontrolleri
+        const open = document.getElementById('open-menu');
+        const overlay = document.getElementById('overlay');
+        open.addEventListener('click', () => overlay.classList.toggle('active'));
     </script>
 
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const cursor = document.getElementById('custom-cursor');
-            document.addEventListener('mousemove', e => {
-                cursor.style.left = e.clientX + 'px';
-                cursor.style.top = e.clientY + 'px';
-            });
-            document.querySelectorAll('.hover-target, button, a').forEach(t => {
-                t.addEventListener('mouseover', () => cursor.classList.add('hover'));
-                t.addEventListener('mouseout', () => cursor.classList.remove('hover'));
-            });
-
-            const openBtn = document.getElementById('open-menu');
-            const closeBtn = document.getElementById('close-menu');
-            const overlay = document.getElementById('overlay');
-            const body = document.body;
-
-            const toggleMenu = () => {
-                overlay.classList.toggle('active');
-                body.classList.toggle('no-scroll');
-            };
-
-            openBtn.addEventListener('click', toggleMenu);
-            closeBtn.addEventListener('click', toggleMenu);
+        // İmleç takibi
+        const cursor = document.getElementById('custom-cursor');
+        document.addEventListener('mousemove', e => {
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
         });
     </script>
 </body>
