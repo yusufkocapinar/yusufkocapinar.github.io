@@ -238,33 +238,38 @@
         <!-- DOKU PANELI -->
         <section id="doku-panel" class="panel-section">
             <div class="section-header">
-                <h2 class="section-title">Galeriye Görsel Ekle</h2>
+                <h2 class="section-title">Galeriye Görsel Yükle</h2>
             </div>
             
             <form id="form-doku">
                 <div class="form-grid">
+                    
+                    <!-- Dosya Yükleme Alanı (Link yerine geldi) -->
+                    <div class="input-group form-full" style="border-bottom: 1px solid rgba(179, 155, 120, 0.3); padding-bottom: 10px; margin-top: 10px;">
+                        <label style="position: static; font-size: 0.75rem; color: var(--accent); margin-bottom: 10px; display: block; pointer-events: auto;">Görsel Dosyası Yükle (Zorunlu)</label>
+                        <input type="file" id="d-file" accept="image/*" required class="hover-target" style="border: none; padding: 0;">
+                    </div>
+
                     <div class="input-group form-full">
                         <input type="text" id="d-title" placeholder=" " required class="hover-target">
-                        <label>Görsel Başlığı</label>
+                        <label>Görsel Başlığı (Zorunlu)</label>
+                    </div>
+                    
+                    <!-- Aşağıdakilerden 'required' (zorunluluk) kaldırıldı -->
+                    <div class="input-group">
+                        <input type="text" id="d-category" placeholder=" " class="hover-target">
+                        <label>Kategori (İsteğe Bağlı)</label>
                     </div>
                     <div class="input-group">
-                        <input type="text" id="d-category" placeholder=" " required class="hover-target">
-                        <label>Kategori (Mimari, Fotoğraf vb.)</label>
-                    </div>
-                    <div class="input-group">
-                        <input type="number" id="d-year" placeholder=" " required class="hover-target">
-                        <label>Yıl</label>
+                        <input type="number" id="d-year" placeholder=" " class="hover-target">
+                        <label>Yıl (İsteğe Bağlı)</label>
                     </div>
                     <div class="input-group form-full">
-                        <input type="url" id="d-imgurl" placeholder=" " required class="hover-target">
-                        <label>Görsel Bağlantısı (URL)</label>
-                    </div>
-                    <div class="input-group form-full">
-                        <textarea id="d-desc" placeholder=" " required class="hover-target"></textarea>
-                        <label>Alt Açıklama (Caption)</label>
+                        <textarea id="d-desc" placeholder=" " class="hover-target"></textarea>
+                        <label>Alt Açıklama (İsteğe Bağlı)</label>
                     </div>
                 </div>
-                <button type="submit" class="submit-btn hover-target">Görseli Ekle <i class="fas fa-check"></i></button>
+                <button type="submit" class="submit-btn hover-target">Görseli Yükle <i class="fas fa-upload"></i></button>
             </form>
         </section>
 
