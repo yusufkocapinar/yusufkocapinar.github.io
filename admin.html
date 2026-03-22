@@ -18,57 +18,31 @@
 
         * { margin: 0; padding: 0; box-sizing: border-box; cursor: none; }
         
-        /* GÜVENLİK: Sayfa yüklenirken gizli başla (titremeyi engeller) */
         body { background-color: var(--bg-color); color: var(--text-main); font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased; overflow-x: hidden; display: none; height: 100vh; }
 
-        /* DOKU */
         body::before { content: ""; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-image: url('data:image/svg+xml,<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><filter id="noiseFilter"><feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/></filter><rect width="100%" height="100%" filter="url(%23noiseFilter)" opacity="0.025"/></svg>'); pointer-events: none; z-index: 50; }
 
         #custom-cursor { position: fixed; width: 6px; height: 6px; background: var(--accent); border-radius: 50%; pointer-events: none; z-index: 10000; transform: translate(-50%, -50%); transition: width 0.3s, height 0.3s, opacity 0.3s; }
         #custom-cursor.hover { width: 40px; height: 40px; background: rgba(179, 155, 120, 0.05); border: 1px solid var(--accent); opacity: 1; }
 
-        /* YÖNETİM PANELİ DÜZENİ */
-        .admin-sidebar {
-            width: 300px; background-color: rgba(245, 245, 243, 0.95);
-            border-right: 1px solid var(--border-color);
-            display: flex; flex-direction: column; padding: 50px 40px;
-            z-index: 100; position: relative;
-        }
-
+        .admin-sidebar { width: 300px; background-color: rgba(245, 245, 243, 0.95); border-right: 1px solid var(--border-color); display: flex; flex-direction: column; padding: 50px 40px; z-index: 100; position: relative; }
         .brand { font-family: var(--font-serif); font-size: 1.5rem; font-weight: 700; color: var(--text-main); text-decoration: none; margin-bottom: 20px; display: block; letter-spacing: -0.5px; }
         .brand span { font-family: var(--font-sans); font-size: 0.7rem; text-transform: uppercase; letter-spacing: 4px; color: var(--accent); display: block; font-weight: 400; margin-top: 5px; }
         .auth-email { font-size: 0.7rem; color: var(--text-muted); margin-bottom: 40px; border-bottom: 1px solid var(--border-color); padding-bottom: 20px; word-break: break-all;}
 
         .admin-nav { display: flex; flex-direction: column; gap: 20px; flex: 1; }
-        .nav-tab {
-            background: none; border: none; font-family: var(--font-sans);
-            font-size: 0.85rem; text-transform: uppercase; letter-spacing: 2px;
-            color: var(--text-muted); text-align: left; padding: 10px 0;
-            display: flex; align-items: center; gap: 15px; transition: var(--transition-premium);
-            position: relative;
-        }
+        .nav-tab { background: none; border: none; font-family: var(--font-sans); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 2px; color: var(--text-muted); text-align: left; padding: 10px 0; display: flex; align-items: center; gap: 15px; transition: var(--transition-premium); position: relative; }
         .nav-tab i { font-size: 1rem; color: var(--border-color); transition: var(--transition-premium); }
         .nav-tab:hover { color: var(--text-main); }
         .nav-tab:hover i { color: var(--accent); }
         .nav-tab.active { color: var(--text-main); }
         .nav-tab.active i { color: var(--accent); }
-        .nav-tab.active::after {
-            content: ''; position: absolute; right: -40px; top: 50%; transform: translateY(-50%);
-            width: 3px; height: 100%; background-color: var(--accent);
-        }
+        .nav-tab.active::after { content: ''; position: absolute; right: -40px; top: 50%; transform: translateY(-50%); width: 3px; height: 100%; background-color: var(--accent); }
 
-        .logout-btn {
-            background: none; border: none; text-align: left; cursor: none;
-            font-family: var(--font-sans); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px;
-            color: #d9534f; text-decoration: none; display: flex; align-items: center; gap: 10px; transition: 0.3s; margin-top: auto;
-        }
+        .logout-btn { background: none; border: none; text-align: left; cursor: none; font-family: var(--font-sans); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px; color: #d9534f; text-decoration: none; display: flex; align-items: center; gap: 10px; transition: 0.3s; margin-top: auto; }
         .logout-btn:hover { opacity: 0.7; }
 
-        /* İÇERİK ALANI */
-        .admin-content {
-            flex: 1; padding: 60px 8vw; overflow-y: auto; z-index: 10; position: relative;
-        }
-
+        .admin-content { flex: 1; padding: 60px 8vw; overflow-y: auto; z-index: 10; position: relative; }
         .panel-section { display: none; animation: fadeIn 0.6s cubic-bezier(0.25, 1, 0.5, 1); }
         .panel-section.active { display: block; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
@@ -76,42 +50,21 @@
         .section-header { margin-bottom: 50px; border-bottom: 1px solid var(--border-color); padding-bottom: 30px; }
         .section-title { font-family: var(--font-serif); font-size: 3rem; font-weight: 400; color: var(--text-main); }
 
-        /* ZARİF FORM YAPISI */
         .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-bottom: 40px; }
         .form-full { grid-column: 1 / -1; }
 
         .input-group { position: relative; margin-bottom: 10px; }
-        .input-group input[type="text"], .input-group input[type="number"], .input-group input[type="url"], .input-group select, .input-group textarea {
-            width: 100%; padding: 15px 0 10px 0;
-            background: transparent; border: none;
-            border-bottom: 1px solid rgba(179, 155, 120, 0.3);
-            font-family: 'Inter', sans-serif; font-size: 1rem; color: var(--text-main);
-            outline: none; transition: var(--transition-premium); resize: none;
-        }
+        .input-group input[type="text"], .input-group input[type="number"], .input-group input[type="url"], .input-group select, .input-group textarea { width: 100%; padding: 15px 0 10px 0; background: transparent; border: none; border-bottom: 1px solid rgba(179, 155, 120, 0.3); font-family: 'Inter', sans-serif; font-size: 1rem; color: var(--text-main); outline: none; transition: var(--transition-premium); resize: none; }
         .input-group textarea { min-height: 120px; }
         .input-group input:focus, .input-group select:focus, .input-group textarea:focus { border-bottom-color: var(--accent); }
         
-        /* Floating Labels */
-        .input-group label.floating-label {
-            position: absolute; left: 0; top: 15px;
-            font-size: 0.85rem; text-transform: uppercase; letter-spacing: 2px; color: var(--text-muted);
-            pointer-events: none; transition: var(--transition-premium);
-        }
-        .input-group input:focus ~ label.floating-label, .input-group input:not(:placeholder-shown) ~ label.floating-label,
-        .input-group textarea:focus ~ label.floating-label, .input-group textarea:not(:placeholder-shown) ~ label.floating-label {
-            top: -10px; font-size: 0.65rem; color: var(--accent);
-        }
+        .input-group label.floating-label { position: absolute; left: 0; top: 15px; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 2px; color: var(--text-muted); pointer-events: none; transition: var(--transition-premium); }
+        .input-group input:focus ~ label.floating-label, .input-group input:not(:placeholder-shown) ~ label.floating-label, .input-group textarea:focus ~ label.floating-label, .input-group textarea:not(:placeholder-shown) ~ label.floating-label { top: -10px; font-size: 0.65rem; color: var(--accent); }
         .input-group select ~ label.floating-label { top: -10px; font-size: 0.65rem; color: var(--accent); }
 
-        .submit-btn {
-            background: transparent; border: 1px solid var(--accent);
-            padding: 15px 40px; font-family: var(--font-sans); font-size: 0.85rem;
-            text-transform: uppercase; letter-spacing: 2px; color: var(--text-main);
-            transition: var(--transition-premium); display: inline-flex; align-items: center; gap: 10px;
-        }
+        .submit-btn { background: transparent; border: 1px solid var(--accent); padding: 15px 40px; font-family: var(--font-sans); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 2px; color: var(--text-main); transition: var(--transition-premium); display: inline-flex; align-items: center; gap: 10px; }
         .submit-btn:hover { background: var(--accent); color: var(--card-bg); }
 
-        /* LİSTE GÖRÜNÜMÜ */
         .item-list { margin-top: 60px; border-top: 1px solid var(--border-color); padding-top: 40px; }
         .list-title { font-family: var(--font-sans); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 2px; color: var(--text-muted); margin-bottom: 30px; }
         .list-item { display: flex; justify-content: space-between; align-items: center; padding: 20px 0; border-bottom: 1px dashed rgba(179, 155, 120, 0.2); }
@@ -120,13 +73,11 @@
         .item-actions button { background: none; border: none; color: var(--text-muted); font-size: 1rem; margin-left: 15px; transition: 0.3s; }
         .item-actions button:hover { color: #d9534f; }
         .item-actions button.edit:hover { color: var(--accent); }
-
     </style>
 </head>
 <body>
     <div id="custom-cursor"></div>
 
-    <!-- SOL NAVİGASYON (Sidebar) -->
     <aside class="admin-sidebar">
         <a href="index.html" class="brand hover-target">YK. <span>Yönetim</span></a>
         <div class="auth-email" id="admin-email">Bağlanıyor...</div>
@@ -148,7 +99,6 @@
         </button>
     </aside>
 
-    <!-- SAĞ İÇERİK ALANI -->
     <main class="admin-content">
         
         <!-- SENTEZ PANELI -->
@@ -156,7 +106,6 @@
             <div class="section-header">
                 <h2 class="section-title">Yeni Proje Ekle</h2>
             </div>
-            
             <form id="form-sentez">
                 <div class="form-grid">
                     <div class="input-group form-full">
@@ -182,22 +131,6 @@
                 </div>
                 <button type="submit" class="submit-btn hover-target">Arşive Kaydet <i class="fas fa-check"></i></button>
             </form>
-
-            <div class="item-list">
-                <div class="list-title">Son Eklenen Projeler</div>
-                <div id="sentez-list">
-                    <div class="list-item">
-                        <div class="item-info">
-                            <h4>Onkosklepios: Karar Destek</h4>
-                            <span>Karar Destek Sistemleri • 2024</span>
-                        </div>
-                        <div class="item-actions">
-                            <button class="edit hover-target"><i class="fas fa-edit"></i></button>
-                            <button class="delete hover-target"><i class="fas fa-trash-alt"></i></button>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </section>
 
         <!-- PERSPEKTİF PANELI -->
@@ -205,7 +138,6 @@
             <div class="section-header">
                 <h2 class="section-title">Yeni Yazı Ekle</h2>
             </div>
-            
             <form id="form-perspektif">
                 <div class="form-grid">
                     <div class="input-group form-full">
@@ -233,20 +165,17 @@
             </form>
         </section>
 
-        <!-- DOKU PANELI (Dosya Yükleme Alanı Güncellendi) -->
+        <!-- DOKU PANELI -->
         <section id="doku-panel" class="panel-section">
             <div class="section-header">
                 <h2 class="section-title">Galeriye Görsel Yükle</h2>
             </div>
-            
             <form id="form-doku">
                 <div class="form-grid">
-                    <!-- Dosya Yükleme Alanı -->
                     <div class="input-group form-full" style="border-bottom: 1px solid rgba(179, 155, 120, 0.3); padding-bottom: 10px; margin-top: 10px;">
                         <label style="position: static; font-size: 0.75rem; color: var(--accent); margin-bottom: 10px; display: block; pointer-events: auto;">Görsel Dosyası Yükle (Zorunlu)</label>
                         <input type="file" id="d-file" accept="image/*" required class="hover-target" style="border: none; padding: 0;">
                     </div>
-
                     <div class="input-group form-full">
                         <input type="text" id="d-title" placeholder=" " required class="hover-target">
                         <label class="floating-label">Görsel Başlığı (Zorunlu)</label>
@@ -267,21 +196,21 @@
                 <button type="submit" class="submit-btn hover-target">Görseli Yükle <i class="fas fa-upload"></i></button>
             </form>
         </section>
-
     </main>
 
-    <!-- FIREBASE IMPORT VE VERİTABANI ENTEGRASYONU -->
+    <!-- FIREBASE IMPORT VE IMGBB ENTEGRASYONU -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
         import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
         import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
-        import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-storage.js";
+        
+        // ImgBB API Anahtarı
+        const IMGBB_API_KEY = "cc4c7248a394919486e74ab02cdf1954";
 
         const firebaseConfig = {
             apiKey: "AIzaSyCr4HhlythyRIfy_Xnb-IaWr0Th0TkUQi4",
             authDomain: "yk-blog-9720b.firebaseapp.com",
             projectId: "yk-blog-9720b",
-            storageBucket: "yk-blog-9720b.firebasestorage.app",
             messagingSenderId: "863054301539",
             appId: "1:863054301539:web:4256589fbef613bd0e6b56"
         };
@@ -289,9 +218,8 @@
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
         const db = getFirestore(app);
-        const storage = getStorage(app);
 
-        // Kimlik Kontrolü ve Sayfa Gösterimi
+        // Kimlik Kontrolü
         onAuthStateChanged(auth, (user) => {
             if (user) {
                 document.body.style.display = 'flex';
@@ -303,21 +231,16 @@
 
         // Çıkış Yapma
         document.getElementById('logout-btn').addEventListener('click', () => {
-            signOut(auth).then(() => {
-                window.location.href = 'login.html';
-            });
+            signOut(auth).then(() => { window.location.href = 'login.html'; });
         });
 
-        /* ==========================================
-           1. SENTEZ (Projeler) VERİ EKLEME
-           ========================================== */
+        /* SENTEZ (Projeler) */
         document.getElementById('form-sentez').addEventListener('submit', async (e) => {
             e.preventDefault();
             const btn = e.target.querySelector('button');
             const originalText = btn.innerHTML;
             btn.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> Kaydediliyor...';
-            btn.style.opacity = '0.7';
-
+            
             try {
                 await addDoc(collection(db, "sentez"), {
                     title: document.getElementById('s-title').value,
@@ -327,27 +250,22 @@
                     link: document.getElementById('s-link').value || "",
                     createdAt: serverTimestamp()
                 });
-                
                 e.target.reset();
                 btn.innerHTML = 'Arşive Eklendi <i class="fas fa-check"></i>';
-                btn.style.borderColor = "#4CAF50"; btn.style.color = "#4CAF50";
+                btn.style.color = "#4CAF50"; btn.style.borderColor = "#4CAF50";
             } catch (error) {
-                console.error("Hata:", error);
                 btn.innerHTML = 'Hata Oluştu! <i class="fas fa-times"></i>';
-                btn.style.borderColor = "#d9534f"; btn.style.color = "#d9534f";
+                btn.style.color = "#d9534f"; btn.style.borderColor = "#d9534f";
             }
-            setTimeout(() => { btn.innerHTML = originalText; btn.style = ''; }, 3000);
+            setTimeout(() => { btn.innerHTML = originalText; btn.style.color = ''; btn.style.borderColor = ''; }, 3000);
         });
 
-        /* ==========================================
-           2. PERSPEKTİF (Yazılar) VERİ EKLEME
-           ========================================== */
+        /* PERSPEKTİF (Yazılar) */
         document.getElementById('form-perspektif').addEventListener('submit', async (e) => {
             e.preventDefault();
             const btn = e.target.querySelector('button');
             const originalText = btn.innerHTML;
             btn.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> Yayınlanıyor...';
-            btn.style.opacity = '0.7';
 
             try {
                 await addDoc(collection(db, "perspektif"), {
@@ -357,46 +275,51 @@
                     excerpt: document.getElementById('p-excerpt').value,
                     createdAt: serverTimestamp()
                 });
-                
                 e.target.reset();
                 btn.innerHTML = 'Yazı Yayınlandı <i class="fas fa-check"></i>';
-                btn.style.borderColor = "#4CAF50"; btn.style.color = "#4CAF50";
+                btn.style.color = "#4CAF50"; btn.style.borderColor = "#4CAF50";
             } catch (error) {
-                console.error("Hata:", error);
                 btn.innerHTML = 'Hata Oluştu! <i class="fas fa-times"></i>';
-                btn.style.borderColor = "#d9534f"; btn.style.color = "#d9534f";
+                btn.style.color = "#d9534f"; btn.style.borderColor = "#d9534f";
             }
-            setTimeout(() => { btn.innerHTML = originalText; btn.style = ''; }, 3000);
+            setTimeout(() => { btn.innerHTML = originalText; btn.style.color = ''; btn.style.borderColor = ''; }, 3000);
         });
 
-        /* ==========================================
-           3. DOKU (Galeri) GÖRSEL YÜKLEME VE VERİ EKLEME
-           ========================================== */
+        /* DOKU (Galeri) - YENİ IMGBB SİSTEMİ */
         document.getElementById('form-doku').addEventListener('submit', async (e) => {
             e.preventDefault();
             const btn = e.target.querySelector('button');
             const originalText = btn.innerHTML;
             btn.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> Görsel Yükleniyor...';
-            btn.style.opacity = '0.7';
 
             const fileInput = document.getElementById('d-file');
             const file = fileInput.files[0];
 
             if (!file) {
                 alert("Lütfen bir görsel seçin.");
-                btn.innerHTML = originalText; btn.style.opacity = '1';
+                btn.innerHTML = originalText;
                 return;
             }
 
             try {
-                // 1. Storage'a Yükleme
-                const storageReference = ref(storage, 'gallery/' + Date.now() + '_' + file.name);
-                await uploadBytes(storageReference, file);
-                
-                // 2. İndirme Linkini Alma
-                const downloadURL = await getDownloadURL(storageReference);
+                // ImgBB'ye Yükleme
+                const formData = new FormData();
+                formData.append("image", file);
 
-                // 3. Firestore'a Kaydetme
+                const uploadResponse = await fetch(`https://api.imgbb.com/1/upload?key=${IMGBB_API_KEY}`, {
+                    method: "POST",
+                    body: formData
+                });
+                
+                const uploadData = await uploadResponse.json();
+                
+                if (!uploadData.success) {
+                    throw new Error("ImgBB Yükleme Hatası");
+                }
+
+                const downloadURL = uploadData.data.url;
+
+                // Alınan Linki Firestore'a Kaydetme
                 await addDoc(collection(db, "doku"), {
                     title: document.getElementById('d-title').value,
                     category: document.getElementById('d-category').value || "",
@@ -408,17 +331,17 @@
                 
                 e.target.reset();
                 btn.innerHTML = 'Galeriye Eklendi <i class="fas fa-check"></i>';
-                btn.style.borderColor = "#4CAF50"; btn.style.color = "#4CAF50";
+                btn.style.color = "#4CAF50"; btn.style.borderColor = "#4CAF50";
             } catch (error) {
                 console.error("Hata:", error);
                 btn.innerHTML = 'Hata Oluştu! <i class="fas fa-times"></i>';
-                btn.style.borderColor = "#d9534f"; btn.style.color = "#d9534f";
+                btn.style.color = "#d9534f"; btn.style.borderColor = "#d9534f";
             }
-            setTimeout(() => { btn.innerHTML = originalText; btn.style = ''; }, 3000);
+            setTimeout(() => { btn.innerHTML = originalText; btn.style.color = ''; btn.style.borderColor = ''; }, 3000);
         });
     </script>
 
-    <!-- ARAYÜZ ETKİLEŞİMİ (İmleç ve Sekmeler) -->
+    <!-- Sekme ve İmleç Etkileşimleri -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const cursor = document.getElementById('custom-cursor');
@@ -431,7 +354,6 @@
                 t.addEventListener('mouseout', () => cursor.classList.remove('hover'));
             });
 
-            // Sekme Değiştirme Animasyonları
             const tabs = document.querySelectorAll('.nav-tab');
             const panels = document.querySelectorAll('.panel-section');
 
