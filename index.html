@@ -10,13 +10,13 @@
 
     <style>
         :root {
-            --bg-color: #F5F5F3;       
+            --bg-color: #F8F7F4;       /* Daha somut bir kemik beyazı */
             --card-bg: #FFFFFF;        
-            --text-main: #2C2A29;      
-            --text-muted: #7A7A7A;
-            --accent: #B39B78;         
-            --border-color: rgba(0, 0, 0, 0.06); 
-            --transition-premium: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+            --text-main: #1A1A1A;      
+            --text-muted: #666666;
+            --accent: #9C8461;         /* Daha koyu, görünür pirinç tonu */
+            --border-color: rgba(156, 132, 97, 0.25); 
+            --transition-premium: all 0.5s cubic-bezier(0.2, 1, 0.3, 1);
             --font-serif: 'Playfair Display', serif;
             --font-sans: 'Tenor Sans', sans-serif;
         }
@@ -33,223 +33,193 @@
             position: relative;
         }
 
-        /* DOKU: Mermer/Kağıt Pürüzü */
+        /* DOKU: Mermer/Kağıt Pürüzü (Görünürlüğü artırıldı) */
         body::before {
             content: ""; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background-image: url('data:image/svg+xml,<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><filter id="noiseFilter"><feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/></filter><rect width="100%" height="100%" filter="url(%23noiseFilter)" opacity="0.025"/></svg>');
+            background-image: url('data:image/svg+xml,<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><filter id="noiseFilter"><feTurbulence type="fractalNoise" baseFrequency="0.6" numOctaves="3" stitchTiles="stitch"/></filter><rect width="100%" height="100%" filter="url(%23noiseFilter)" opacity="0.035"/></svg>');
             pointer-events: none; z-index: 50;
         }
 
-        /* 4. DOKUNUŞ: Mimari Kemer Maskesi (Hero Background) */
-        .hero-arch {
-            position: absolute;
-            top: 50%; left: 50%;
-            transform: translate(-50%, -50%);
-            width: 90vw;
-            height: 85vh;
-            /* Orta Doğu tipi sivri kemer formu */
-            clip-path: ellipse(50% 100% at 50% 100%);
-            background: rgba(179, 155, 120, 0.03); /* Çok ama çok hafif bir derinlik */
-            border: 1px solid rgba(179, 155, 120, 0.1);
-            z-index: 1;
+        /* YENİ: Mimari Çerçeve (Tüm sayfayı çevreleyen ince pirinç çerçeve) */
+        body::after {
+            content: ""; position: fixed; 
+            top: 20px; bottom: 20px; left: 20px; right: 20px;
+            border: 1px solid var(--border-color);
+            pointer-events: none; z-index: 40;
         }
 
         /* Minimalist Cursor */
         #custom-cursor {
-            position: fixed; width: 6px; height: 6px; background: var(--accent);
+            position: fixed; width: 8px; height: 8px; background: var(--accent);
             border-radius: 50%; pointer-events: none; z-index: 10000;
-            transform: translate(-50%, -50%); transition: width 0.3s, height 0.3s, opacity 0.3s;
+            transform: translate(-50%, -50%); transition: width 0.3s, height 0.3s;
         }
-        #custom-cursor.hover { width: 45px; height: 45px; background: rgba(179, 155, 120, 0.05); border: 1px solid var(--accent); opacity: 1; }
+        #custom-cursor.hover { width: 40px; height: 40px; background: transparent; border: 1px solid var(--accent); }
 
         a { text-decoration: none; color: inherit; }
         ul { list-style: none; }
 
         .container {
-            max-width: 1200px; margin: 0 auto; padding: 0 4vw;
+            max-width: 1100px; margin: 0 auto; padding: 0 40px;
             position: relative; z-index: 10;
         }
 
-        /* --- NAVİGASYON --- */
+        /* --- NAVİGASYON (Mimari Yapı Kazandırıldı) --- */
         nav {
-            position: fixed; top: 0; left: 0; width: 100%;
-            padding: 35px 0; z-index: 100; transition: var(--transition-premium);
+            position: fixed; top: 40px; left: 50%; transform: translateX(-50%);
+            width: calc(100% - 80px); max-width: 1100px;
+            z-index: 100; transition: var(--transition-premium);
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 15px;
         }
         nav.scrolled {
-            background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(15px);
-            padding: 20px 0; border-bottom: 1px solid var(--border-color);
+            top: 0; width: 100%; max-width: 100%;
+            background: rgba(248, 247, 244, 0.98);
+            padding: 20px 40px; backdrop-filter: blur(10px);
         }
 
-        .nav-inner { display: flex; justify-content: space-between; align-items: center; }
-        .logo { font-family: var(--font-serif); font-size: 1.5rem; font-weight: 700; letter-spacing: -0.5px; }
-        .nav-links { display: flex; gap: 40px; }
+        .nav-inner { display: flex; justify-content: space-between; align-items: baseline; }
+        .logo { font-family: var(--font-serif); font-size: 1.8rem; font-weight: 700; color: var(--text-main); }
+        .nav-links { display: flex; gap: 50px; }
         .nav-links a {
-            font-size: 0.85rem; text-transform: uppercase; letter-spacing: 2.5px;
-            color: var(--text-muted); transition: color 0.3s ease;
+            font-size: 0.8rem; text-transform: uppercase; letter-spacing: 3px;
+            color: var(--text-muted); transition: var(--transition-premium);
         }
-        .nav-links a.active, .nav-links a:hover { color: var(--text-main); }
+        .nav-links a:hover, .nav-links a.active { color: var(--accent); }
 
         /* --- HERO --- */
         .hero {
             height: 100vh; display: flex; flex-direction: column;
-            justify-content: center; align-items: center;
-            overflow: hidden;
+            justify-content: center; align-items: flex-start;
         }
-
         .main-title {
-            font-family: var(--font-serif); font-size: clamp(3rem, 9vw, 8rem);
-            line-height: 1; font-weight: 400; letter-spacing: -2px;
-            color: var(--text-main); position: relative; text-align: center;
-            z-index: 10;
+            font-family: var(--font-serif); font-size: clamp(3.5rem, 10vw, 8rem);
+            line-height: 0.9; font-weight: 600; letter-spacing: -3px;
         }
-
         .hero-desc {
-            font-size: 1.1rem; color: var(--text-muted); font-weight: 300; margin-top: 40px;
-            text-transform: uppercase; letter-spacing: 6px; text-align: center;
-            z-index: 10;
+            font-size: 1rem; color: var(--accent); margin-top: 30px;
+            text-transform: uppercase; letter-spacing: 8px; font-weight: 400;
         }
 
         /* --- BÖLÜMLER --- */
-        section { padding: 140px 0; }
-        .section-header { text-align: center; margin-bottom: 90px; }
+        section { padding: 120px 0; border-top: 1px solid var(--border-color); }
+        .section-header { margin-bottom: 80px; }
         .section-tag {
-            font-size: 0.75rem; text-transform: uppercase; letter-spacing: 4px;
-            color: var(--accent); margin-bottom: 25px; display: block;
+            font-size: 0.7rem; text-transform: uppercase; letter-spacing: 5px;
+            color: var(--accent); margin-bottom: 20px; display: block;
         }
-        .section-header h2 { font-family: var(--font-serif); font-size: 3.5rem; font-weight: 400; letter-spacing: -1px; }
+        .section-header h2 { font-family: var(--font-serif); font-size: 3rem; font-weight: 400; }
 
-        /* --- BENTO KARTLARI --- */
-        .bento-grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: 40px; }
+        /* --- BENTO KARTLARI (Mermer Bloklar) --- */
+        .bento-grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: 1px; background: var(--border-color); border: 1px solid var(--border-color); }
 
         .bento-item {
-            background: var(--card-bg); padding: 60px; 
-            border: 1px solid transparent;
-            box-shadow: 0 5px 30px rgba(0, 0, 0, 0.03); 
+            background: var(--card-bg); padding: 50px; 
             transition: var(--transition-premium);
             display: flex; flex-direction: column; justify-content: space-between;
         }
-
-        .bento-item:hover {
-            transform: translateY(-10px);
-            border-color: rgba(179, 155, 120, 0.2);
-            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.06); 
-        }
+        .bento-item:hover { background: var(--bg-color); }
 
         .item-8 { grid-column: span 8; min-height: 400px; }
         .item-4 { grid-column: span 4; min-height: 400px; }
 
-        .item-meta { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 2px; color: var(--text-muted); margin-bottom: 30px; }
-        .item-title { font-family: var(--font-serif); font-size: 2.2rem; line-height: 1.2; margin-bottom: 20px; font-weight: 400; }
-        .item-desc { font-size: 1.05rem; color: var(--text-muted); font-weight: 300; }
-        .item-icon { font-size: 1.5rem; color: var(--accent); margin-top: auto; padding-top: 40px; opacity: 0.6; }
+        .item-meta { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 3px; color: var(--accent); margin-bottom: 20px; }
+        .item-title { font-family: var(--font-serif); font-size: 2.2rem; line-height: 1.1; margin-bottom: 15px; }
+        .item-desc { font-size: 1rem; color: var(--text-muted); font-weight: 300; }
+        .item-icon { font-size: 1.2rem; color: var(--accent); margin-top: auto; padding-top: 30px; }
 
         /* --- LİSTE --- */
-        .minimal-list { border-top: 1px solid var(--border-color); }
         .list-item {
             display: grid; grid-template-columns: 1fr 2fr 1fr;
-            padding: 50px 0; border-bottom: 1px solid var(--border-color);
+            padding: 40px 0; border-bottom: 1px solid var(--border-color);
             transition: var(--transition-premium); align-items: center;
         }
-        .list-item:hover { background: rgba(255, 255, 255, 0.6); padding-left: 20px; padding-right: 20px; }
-        .list-date { font-size: 0.9rem; color: var(--text-muted); text-align: left; }
-        .list-title { font-family: var(--font-serif); font-size: 1.8rem; font-weight: 400; text-align: center; }
-        .list-category { font-size: 0.8rem; text-align: right; color: var(--accent); text-transform: uppercase; letter-spacing: 3px; }
+        .list-item:hover { padding-left: 20px; background: rgba(156, 132, 97, 0.03); }
+        .list-date { font-size: 0.8rem; color: var(--text-muted); letter-spacing: 1px; }
+        .list-title { font-family: var(--font-serif); font-size: 1.8rem; text-align: center; }
+        .list-category { font-size: 0.75rem; text-align: right; color: var(--accent); text-transform: uppercase; letter-spacing: 3px; }
 
-        .list-title a { position: relative; display: inline-block; }
-        .list-title a::after {
-            content: ""; position: absolute; left: 0; bottom: 0; width: 0; height: 1px;
-            background: var(--text-main); transition: var(--transition-premium);
-        }
-        .list-item:hover .list-title a::after { width: 100%; }
-
-        .fade-up { opacity: 0; transform: translateY(40px); transition: opacity 1.2s ease, transform 1.2s ease; }
+        /* ANİMASYONLAR */
+        .fade-up { opacity: 0; transform: translateY(30px); transition: all 1s ease-out; }
         .fade-up.visible { opacity: 1; transform: translateY(0); }
 
         @media (max-width: 900px) {
-            .nav-links, .hero-arch { display: none; }
-            .bento-item { grid-column: span 12; min-height: 320px; }
-            .list-item { grid-template-columns: 1fr; gap: 15px; text-align: center; }
+            body::after { display: none; }
+            nav { width: calc(100% - 40px); top: 20px; }
+            .bento-item { grid-column: span 12; }
+            .list-item { grid-template-columns: 1fr; gap: 10px; text-align: center; }
             .list-date, .list-category { text-align: center; }
         }
     </style>
 </head>
 <body>
 
-    <!-- 4. DOKUNUŞ: Mimari Kemer (Sadece Hero'da) -->
-    <div class="hero-arch"></div>
-
     <div id="custom-cursor"></div>
 
     <nav id="main-nav">
         <div class="container nav-inner">
-            <a href="#" class="logo hover-target">YK.</a>
+            <a href="#" class="logo hover-target">Y. Kocapınar</a>
             <div class="nav-links">
-                <a href="#projects" class="hover-target">Projeler</a>
+                <a href="#projects" class="hover-target">Çalışmalar</a>
                 <a href="#archive" class="hover-target active">Arşiv</a>
             </div>
         </div>
     </nav>
 
-    <main>
-        <section class="hero container">
+    <main class="container">
+        <section class="hero">
             <h1 class="main-title fade-up">
-                Yusuf Kocapınar.
+                Digital<br>Archive.
             </h1>
             <p class="hero-desc fade-up" style="transition-delay: 0.2s;">
-                Fikirler &middot; Projeler &middot; Notlar
+                İstanbul &middot; 2026
             </p>
         </section>
 
-        <section id="projects" class="container">
+        <section id="projects">
             <div class="section-header fade-up">
-                <span class="section-tag">Seçkiler</span>
-                <h2>Öne Çıkan Çalışmalar</h2>
+                <span class="section-tag">Seçilmiş Projeler</span>
+                <h2>Mimari Yaklaşımlar</h2>
             </div>
 
             <div class="bento-grid">
                 <a href="#" class="bento-item item-8 fade-up hover-target">
                     <div>
-                        <div class="item-meta">Araştırma & Geliştirme</div>
-                        <h3 class="item-title">Onkosklepios: İntegre Karar Destek Sistemi</h3>
-                        <p class="item-desc">Likit biyopsi verileri ve sanal patoloji algoritmaları ile onkolojik analiz platformu.</p>
+                        <div class="item-meta">Ar-Ge</div>
+                        <h3 class="item-title">Onkosklepios: Karar Destek</h3>
+                        <p class="item-desc">Likit biyopsi ve sanal patoloji üzerine kurulu onkolojik analiz platformu.</p>
                     </div>
-                    <div class="item-icon"><i class="fas fa-microscope"></i></div>
+                    <div class="item-icon"><i class="fas fa-arrow-right"></i></div>
                 </a>
 
                 <a href="#" class="bento-item item-4 fade-up hover-target" style="transition-delay: 0.1s;">
                     <div>
                         <div class="item-meta">Yazılım</div>
                         <h3 class="item-title">Sinyal İşleme</h3>
-                        <p class="item-desc">MATLAB tabanlı veri analizi ve modelleme çalışmaları.</p>
+                        <p class="item-desc">Veri modelleme çalışmaları.</p>
                     </div>
-                    <div class="item-icon"><i class="fas fa-code"></i></div>
+                    <div class="item-icon"><i class="fas fa-arrow-right"></i></div>
                 </a>
             </div>
         </section>
 
-        <section id="archive" class="container">
+        <section id="archive">
             <div class="section-header fade-up">
-                <span class="section-tag">Koleksiyon</span>
-                <h2>Son Eklenenler</h2>
+                <span class="section-tag">Yazın Arşivi</span>
+                <h2>Son Notlar</h2>
             </div>
 
             <div class="minimal-list">
                 <div class="list-item fade-up hover-target">
-                    <span class="list-date">Mart 2026</span>
+                    <span class="list-date">22.03.2026</span>
                     <h3 class="list-title"><a href="#">Bir Devrin Kapanışı</a></h3>
                     <span class="list-category">Deneme</span>
                 </div>
                 
                 <div class="list-item fade-up hover-target" style="transition-delay: 0.1s;">
-                    <span class="list-date">Şubat 2026</span>
+                    <span class="list-date">15.02.2026</span>
                     <h3 class="list-title"><a href="#">Holokost Endüstrisi</a></h3>
                     <span class="list-category">Kitaplık</span>
-                </div>
-
-                <div class="list-item fade-up hover-target" style="transition-delay: 0.2s;">
-                    <span class="list-date">Ocak 2026</span>
-                    <h3 class="list-title"><a href="#">Dinleti</a></h3>
-                    <span class="list-category">Fairouz</span>
                 </div>
             </div>
         </section>
@@ -276,15 +246,13 @@
                 else nav.classList.remove('scrolled');
             });
 
-            const observerOptions = { root: null, rootMargin: '0px', threshold: 0.1 };
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
                         entry.target.classList.add('visible');
-                        observer.unobserve(entry.target);
                     }
                 });
-            }, observerOptions);
+            }, { threshold: 0.1 });
 
             document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
         });
