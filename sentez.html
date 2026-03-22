@@ -5,19 +5,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sentez | YK. Dijital Arşiv</title>
     
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Tenor+Sans&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Tenor+Sans&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
         :root {
             --bg-color: #F5F5F3;
+            --card-bg: #FFFFFF;         
             --text-main: #2C2A29;      
             --text-muted: #7A7A7A;
             --accent: #B39B78;
-            --border-color: rgba(179, 155, 120, 0.3); 
-            --transition-premium: all 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+            --border-color: rgba(179, 155, 120, 0.2); 
+            --transition-premium: all 0.5s cubic-bezier(0.25, 1, 0.5, 1);
             --font-serif: 'Playfair Display', serif;
             --font-sans: 'Tenor Sans', sans-serif;
+            --font-reading: 'Inter', sans-serif;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; cursor: none; }
@@ -28,6 +30,7 @@
             font-family: var(--font-sans);
             -webkit-font-smoothing: antialiased;
             overflow-x: hidden;
+            position: relative;
         }
         
         body.no-scroll { overflow: hidden; }
@@ -101,7 +104,7 @@
         .menu-overlay.active .overlay-link { transform: translateY(0); opacity: 1; }
         .overlay-link:hover { color: var(--accent); }
 
-        /* SENTEZ ODASI - EDİTÖRYAL BAŞLIK */
+        /* SENTEZ ODASI - EDİTÖRYAL BAŞLIK (Korundu) */
         .page-header {
             padding: 220px 0 100px 0;
             display: flex; flex-direction: column; align-items: flex-start;
@@ -109,45 +112,50 @@
         }
         .room-tag { font-size: 0.85rem; text-transform: uppercase; letter-spacing: 4px; color: var(--accent); margin-bottom: 30px; }
         .room-title { font-family: var(--font-serif); font-size: clamp(4rem, 10vw, 8rem); font-weight: 400; line-height: 1; margin-bottom: 40px; margin-left: -5px; }
-        .room-desc { font-size: 1.2rem; color: var(--text-muted); max-width: 500px; line-height: 1.8; }
+        .room-desc { font-size: 1.2rem; color: var(--text-muted); max-width: 500px; line-height: 1.8; font-weight: 300; }
 
-        /* ASİMETRİK SERGİ DUVARI (Staggered Editorial Grid) */
+        /* STRUCTURED REFINED BENTO GRID (Lower Part Update) */
         .exhibition-grid {
             display: grid; grid-template-columns: repeat(12, 1fr);
-            gap: 40px; padding: 120px 0;
+            gap: 30px; padding: 120px 0;
         }
         
-        .exhibition-item {
+        .bento-card {
+            background-color: var(--card-bg);
             text-decoration: none; color: inherit; display: block;
-            border-top: 1px solid var(--border-color); padding-top: 40px;
+            border: 1px solid var(--border-color);
+            padding: 50px;
             position: relative; transition: var(--transition-premium);
+            overflow: hidden;
         }
-        .exhibition-item:hover { border-top-color: var(--accent); }
-        .exhibition-item:hover .item-title { color: var(--accent); padding-left: 10px; }
+        .bento-card:hover { 
+            transform: translateY(-8px);
+            border-color: rgba(179, 155, 120, 0.4); 
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.05); 
+        }
         
-        /* Editöryal Asimetri */
-        .item-1 { grid-column: 1 / 8; }
-        .item-2 { grid-column: 6 / 13; margin-top: 15vw; }
-        .item-3 { grid-column: 2 / 9; margin-top: 10vw; }
+        /* structured ama premium grid */
+        .item-big { grid-column: span 8; min-height: 400px; }
+        .item-small { grid-column: span 4; min-height: 400px; }
+        .item-medium { grid-column: span 6; min-height: 400px; }
 
-        .item-meta { display: flex; justify-content: space-between; align-items: center; margin-bottom: 40px; }
+        .item-meta { display: flex; justify-content: space-between; align-items: center; margin-bottom: 40px; border-bottom: 1px solid var(--border-color); padding-bottom: 15px; }
         .item-category { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 3px; color: var(--text-muted); }
         .item-year { font-family: var(--font-serif); font-size: 1.1rem; font-style: italic; color: var(--accent); }
         
-        .item-title { font-family: var(--font-serif); font-size: clamp(2.5rem, 4vw, 3.5rem); font-weight: 400; line-height: 1.2; margin-bottom: 30px; transition: var(--transition-premium); }
-        .item-excerpt { font-size: 1.05rem; color: var(--text-muted); line-height: 1.9; max-width: 80%; }
+        .item-title { font-family: var(--font-serif); font-size: clamp(2.2rem, 3.5vw, 3rem); font-weight: 400; line-height: 1.2; margin-bottom: 30px; transition: var(--transition-premium); color: var(--text-main); }
+        .item-excerpt { font-family: var(--font-reading); font-size: 1rem; color: var(--text-muted); line-height: 1.9; font-weight: 300; }
         
         .explore-btn { margin-top: 40px; display: inline-flex; align-items: center; gap: 15px; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px; color: var(--text-main); transition: var(--transition-premium); }
-        .exhibition-item:hover .explore-btn { gap: 25px; color: var(--accent); }
+        .bento-card:hover .explore-btn { gap: 25px; color: var(--accent); }
 
         .fade-up { opacity: 0; transform: translateY(40px); transition: 1.2s cubic-bezier(0.25, 1, 0.5, 1); }
         .fade-up.visible { opacity: 1; transform: translateY(0); }
 
         @media (max-width: 900px) {
             .header-journey { display: none; }
-            .exhibition-grid { display: flex; flex-direction: column; gap: 80px; padding: 80px 0; }
-            .item-1, .item-2, .item-3 { grid-column: 1 / -1; margin-top: 0; }
-            .item-excerpt { max-width: 100%; }
+            .exhibition-grid { display: flex; flex-direction: column; gap: 40px; padding: 80px 0; }
+            .bento-card { grid-column: 1 / -1; padding: 40px; }
         }
     </style>
 </head>
@@ -184,17 +192,15 @@
     </nav>
 
     <main>
-        <!-- DEVASA EDİTÖRYAL BAŞLIK -->
         <header class="page-header container fade-up">
             <span class="room-tag">01 &mdash; Araştırma & Geliştirme</span>
             <h1 class="room-title">Sentez.</h1>
             <p class="room-desc">Biyomühendislik tezleri, akademik araştırmalar ve veri modelleme süreçlerinin kayıt altına alındığı teknik veri havuzu.</p>
         </header>
 
-        <!-- ASİMETRİK SERGİ DUVARI -->
         <section class="exhibition-grid container">
             
-            <a href="#" class="exhibition-item item-1 fade-up hover-target">
+            <a href="#" class="bento-card item-big fade-up hover-target">
                 <div class="item-meta">
                     <span class="item-category">Karar Destek Sistemleri</span>
                     <span class="item-year">2024</span>
@@ -204,24 +210,34 @@
                 <div class="explore-btn">Raporu İncele <i class="fas fa-long-arrow-alt-right"></i></div>
             </a>
 
-            <a href="#" class="exhibition-item item-2 fade-up hover-target">
+            <a href="#" class="bento-card item-small fade-up hover-target">
                 <div class="item-meta">
                     <span class="item-category">Sinyal İşleme & Yazılım</span>
                     <span class="item-year">2023</span>
                 </div>
                 <h2 class="item-title">Middle Eastern Horns and Technology</h2>
-                <p class="item-excerpt">MATLAB ortamında ses sinyallerinin spektral analizi, gürültü filtreleme algoritmaları ve geleneksel akustik enstrümanların dijital ortama aktarım süreçlerindeki modelleme yaklaşımım.</p>
+                <p class="item-excerpt">MATLAB ortamında ses sinyallerinin spektral analizi ve gürültü filtreleme algoritmaları.</p>
                 <div class="explore-btn">Kod Mimarisini Gör <i class="fas fa-long-arrow-alt-right"></i></div>
             </a>
 
-            <a href="#" class="exhibition-item item-3 fade-up hover-target">
+            <a href="#" class="bento-card item-medium fade-up hover-target">
                 <div class="item-meta">
                     <span class="item-category">Biyomühendislik</span>
                     <span class="item-year">2022</span>
                 </div>
                 <h2 class="item-title">Hücresel Düzeyde Veri Modelleme Algoritmaları</h2>
-                <p class="item-excerpt">Mikroskobik görüntüleme tekniklerinden elde edilen büyük verilerin (big data) anlamlandırılması ve hücresel davranışların matematiksel olarak tahmin edilmesi üzerine literatür derlemesi.</p>
+                <p class="item-excerpt">Mikroskobik görüntüleme tekniklerinden elde edilen büyük verilerin (big data) anlamlandırılması ve hücresel davranışların matematiksel olarak tahmin edilmesi.</p>
                 <div class="explore-btn">Araştırmayı Oku <i class="fas fa-long-arrow-alt-right"></i></div>
+            </a>
+
+            <a href="#" class="bento-card item-medium fade-up hover-target">
+                <div class="item-meta">
+                    <span class="item-category">Veri Bilimi</span>
+                    <span class="item-year">2021</span>
+                </div>
+                <h2 class="item-title">Proteomik Veri Setlerinde Gürültü Analizi</h2>
+                <p class="item-excerpt">Kütle spektrometrisi verilerinin MATLAB ortamında işlenmesi ve biyobelirteç tespit oranlarını artıran yeni bir ön işleme algoritmasının geliştirilmesi üzerine pilot çalışma.</p>
+                <div class="explore-btn">Teknik Rapor <i class="fas fa-long-arrow-alt-right"></i></div>
             </a>
 
         </section>
