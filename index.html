@@ -10,12 +10,10 @@
 
     <style>
         :root {
-            /* Mermer ve Kemik Beyazı Tonları */
             --bg-color: #F5F5F3;
             --card-bg: #FFFFFF;         
             --text-main: #2C2A29;      
             --text-muted: #7A7A7A;
-            /* Mat Bronz Detaylar */
             --accent: #B39B78;
             --border-color: rgba(179, 155, 120, 0.2); 
             --transition-premium: all 0.5s cubic-bezier(0.25, 1, 0.5, 1);
@@ -35,7 +33,6 @@
             position: relative;
         }
 
-        /* DOKU: Zarif Taş Pürüzü */
         body::before {
             content: ""; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background-image: url('data:image/svg+xml,<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><filter id="noiseFilter"><feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/></filter><rect width="100%" height="100%" filter="url(%23noiseFilter)" opacity="0.025"/></svg>');
@@ -51,7 +48,6 @@
 
         .container { max-width: 1200px; margin: 0 auto; padding: 0 4vw; position: relative; z-index: 10; }
 
-        /* ANA MENÜ: Oturaklı ve Planlı Mimari */
         nav {
             position: fixed; top: 0; left: 0; width: 100%;
             background-color: rgba(245, 245, 243, 0.98);
@@ -64,18 +60,24 @@
         .nav-inner { display: flex; justify-content: space-between; align-items: center; }
         .logo { font-family: var(--font-serif); font-size: 1.5rem; font-weight: 700; letter-spacing: -0.5px; text-decoration: none; color: var(--text-main); }
         
-        /* THE JOURNEY: MESCİD-İ AKSA'DAN GÜVERCİNE KALİGRAFİK YOLCULUK */
+        /* THE JOURNEY: KALİGRAFİK VE DALGALI YOLCULUK */
         .header-journey {
             display: flex; align-items: center; flex: 1;
-            margin: 0 50px; opacity: 0.7; transition: var(--transition-premium);
+            margin: 0 50px; opacity: 0.8; transition: var(--transition-premium);
         }
         .header-journey:hover { opacity: 1; }
         
         .journey-line {
-            flex: 1; height: 2px; 
-            background: linear-gradient(to right, rgba(179, 155, 120, 0.4), var(--accent), rgba(179, 155, 120, 0.4));
-            margin: 0 20px;
-            box-shadow: 0 0 5px rgba(179, 155, 120, 0.2);
+            flex: 1; height: 16px; 
+            margin: 0 15px;
+            /* Dalgalı Hat Sanatı Deseni */
+            background-image: url('data:image/svg+xml,<svg width="50" height="16" xmlns="http://www.w3.org/2000/svg"><path d="M0 8 Q 12.5 0, 25 8 T 50 8" fill="none" stroke="%23B39B78" stroke-width="1.2" stroke-linecap="round"/></svg>');
+            background-repeat: repeat-x;
+            background-position: center;
+            opacity: 0.6;
+            /* Uçlara doğru zarifçe silikleşen maske */
+            -webkit-mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);
+            mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);
         }
 
         .nav-actions { display: flex; align-items: center; gap: 30px; border-left: 1px solid var(--border-color); padding-left: 30px; }
@@ -88,7 +90,6 @@
         .login-btn:hover, .menu-toggle:hover { color: var(--accent); }
         .menu-toggle i { font-size: 0.9rem; color: var(--accent); }
 
-        /* THE BRIDGE: TAM EKRAN MENÜ KATMANI */
         .menu-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
             background-color: var(--bg-color); z-index: 999;
@@ -117,7 +118,6 @@
         .menu-overlay.active .overlay-link { transform: translateY(0); opacity: 1; }
         .overlay-link:hover { color: var(--accent); }
 
-        /* VİTRİN İÇERİKLERİ */
         .hero { height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; }
         .main-title { font-family: var(--font-serif); font-size: clamp(3rem, 8vw, 7rem); line-height: 1.1; font-weight: 400; letter-spacing: -1.5px; color: var(--text-main); text-align: center; }
         .hero-desc { font-size: 1.1rem; color: var(--text-muted); font-weight: 300; margin-top: 30px; text-transform: uppercase; letter-spacing: 4px; text-align: center; }
@@ -142,7 +142,7 @@
         .fade-up.visible { opacity: 1; transform: translateY(0); }
 
         @media (max-width: 900px) {
-            .header-journey { display: none; } /* Mobilde logoya ve menüye yer açmak için gizlendi */
+            .header-journey { display: none; }
             .nav-actions { border-left: none; padding-left: 0; }
             .bento-item { grid-column: span 12; }
         }
