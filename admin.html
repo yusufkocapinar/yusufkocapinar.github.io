@@ -18,7 +18,7 @@
 
         * { margin: 0; padding: 0; box-sizing: border-box; cursor: none; }
         
-        /* GÜVENLİK İÇİN ÖNEMLİ: Sayfa yüklenirken gizli başla (titremeyi engeller) */
+        /* GÜVENLİK: Sayfa yüklenirken gizli başla (titremeyi engeller) */
         body { background-color: var(--bg-color); color: var(--text-main); font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased; overflow-x: hidden; display: none; height: 100vh; }
 
         /* DOKU */
@@ -81,7 +81,7 @@
         .form-full { grid-column: 1 / -1; }
 
         .input-group { position: relative; margin-bottom: 10px; }
-        .input-group input, .input-group select, .input-group textarea {
+        .input-group input[type="text"], .input-group input[type="number"], .input-group input[type="url"], .input-group select, .input-group textarea {
             width: 100%; padding: 15px 0 10px 0;
             background: transparent; border: none;
             border-bottom: 1px solid rgba(179, 155, 120, 0.3);
@@ -92,17 +92,16 @@
         .input-group input:focus, .input-group select:focus, .input-group textarea:focus { border-bottom-color: var(--accent); }
         
         /* Floating Labels */
-        .input-group label {
+        .input-group label.floating-label {
             position: absolute; left: 0; top: 15px;
             font-size: 0.85rem; text-transform: uppercase; letter-spacing: 2px; color: var(--text-muted);
             pointer-events: none; transition: var(--transition-premium);
         }
-        .input-group input:focus ~ label, .input-group input:not(:placeholder-shown) ~ label,
-        .input-group textarea:focus ~ label, .input-group textarea:not(:placeholder-shown) ~ label {
+        .input-group input:focus ~ label.floating-label, .input-group input:not(:placeholder-shown) ~ label.floating-label,
+        .input-group textarea:focus ~ label.floating-label, .input-group textarea:not(:placeholder-shown) ~ label.floating-label {
             top: -10px; font-size: 0.65rem; color: var(--accent);
         }
-
-        .input-group select ~ label { top: -10px; font-size: 0.65rem; color: var(--accent); }
+        .input-group select ~ label.floating-label { top: -10px; font-size: 0.65rem; color: var(--accent); }
 
         .submit-btn {
             background: transparent; border: 1px solid var(--accent);
@@ -162,32 +161,31 @@
                 <div class="form-grid">
                     <div class="input-group form-full">
                         <input type="text" id="s-title" placeholder=" " required class="hover-target">
-                        <label>Proje Başlığı</label>
+                        <label class="floating-label">Proje Başlığı</label>
                     </div>
                     <div class="input-group">
                         <input type="text" id="s-category" placeholder=" " required class="hover-target">
-                        <label>Kategori (Örn: Veri Bilimi)</label>
+                        <label class="floating-label">Kategori (Örn: Veri Bilimi)</label>
                     </div>
                     <div class="input-group">
                         <input type="number" id="s-year" placeholder=" " required class="hover-target">
-                        <label>Yıl</label>
+                        <label class="floating-label">Yıl</label>
                     </div>
                     <div class="input-group form-full">
                         <textarea id="s-excerpt" placeholder=" " required class="hover-target"></textarea>
-                        <label>Kısa Açıklama / Özeti</label>
+                        <label class="floating-label">Kısa Açıklama / Özeti</label>
                     </div>
                     <div class="input-group form-full">
                         <input type="url" id="s-link" placeholder=" " class="hover-target">
-                        <label>Bağlantı Linki (GitHub, PDF vb. - İsteğe Bağlı)</label>
+                        <label class="floating-label">Bağlantı Linki (GitHub, PDF vb. - İsteğe Bağlı)</label>
                     </div>
                 </div>
                 <button type="submit" class="submit-btn hover-target">Arşive Kaydet <i class="fas fa-check"></i></button>
             </form>
 
             <div class="item-list">
-                <div class="list-title">Yayındaki Projeler</div>
+                <div class="list-title">Son Eklenen Projeler</div>
                 <div id="sentez-list">
-                    <!-- Firebase verileri buraya eklenecek -->
                     <div class="list-item">
                         <div class="item-info">
                             <h4>Onkosklepios: Karar Destek</h4>
@@ -212,7 +210,7 @@
                 <div class="form-grid">
                     <div class="input-group form-full">
                         <input type="text" id="p-title" placeholder=" " required class="hover-target">
-                        <label>Yazı Başlığı</label>
+                        <label class="floating-label">Yazı Başlığı</label>
                     </div>
                     <div class="input-group">
                         <select id="p-type" class="hover-target">
@@ -220,22 +218,22 @@
                             <option value="Deneme">Deneme</option>
                             <option value="Eleştiri">Eleştiri</option>
                         </select>
-                        <label>Yazı Türü</label>
+                        <label class="floating-label">Yazı Türü</label>
                     </div>
                     <div class="input-group">
                         <input type="text" id="p-date" placeholder=" " required class="hover-target">
-                        <label>Tarih (Örn: Mart 2026)</label>
+                        <label class="floating-label">Tarih (Örn: Mart 2026)</label>
                     </div>
                     <div class="input-group form-full">
                         <textarea id="p-excerpt" placeholder=" " required class="hover-target"></textarea>
-                        <label>Yazı Özeti (Sitede görünecek kısım)</label>
+                        <label class="floating-label">Yazı Özeti (Sitede görünecek kısım)</label>
                     </div>
                 </div>
                 <button type="submit" class="submit-btn hover-target">Yazıyı Yayınla <i class="fas fa-check"></i></button>
             </form>
         </section>
 
-        <!-- DOKU PANELI -->
+        <!-- DOKU PANELI (Dosya Yükleme Alanı Güncellendi) -->
         <section id="doku-panel" class="panel-section">
             <div class="section-header">
                 <h2 class="section-title">Galeriye Görsel Yükle</h2>
@@ -243,8 +241,7 @@
             
             <form id="form-doku">
                 <div class="form-grid">
-                    
-                    <!-- Dosya Yükleme Alanı (Link yerine geldi) -->
+                    <!-- Dosya Yükleme Alanı -->
                     <div class="input-group form-full" style="border-bottom: 1px solid rgba(179, 155, 120, 0.3); padding-bottom: 10px; margin-top: 10px;">
                         <label style="position: static; font-size: 0.75rem; color: var(--accent); margin-bottom: 10px; display: block; pointer-events: auto;">Görsel Dosyası Yükle (Zorunlu)</label>
                         <input type="file" id="d-file" accept="image/*" required class="hover-target" style="border: none; padding: 0;">
@@ -252,21 +249,19 @@
 
                     <div class="input-group form-full">
                         <input type="text" id="d-title" placeholder=" " required class="hover-target">
-                        <label>Görsel Başlığı (Zorunlu)</label>
+                        <label class="floating-label">Görsel Başlığı (Zorunlu)</label>
                     </div>
-                    
-                    <!-- Aşağıdakilerden 'required' (zorunluluk) kaldırıldı -->
                     <div class="input-group">
                         <input type="text" id="d-category" placeholder=" " class="hover-target">
-                        <label>Kategori (İsteğe Bağlı)</label>
+                        <label class="floating-label">Kategori (İsteğe Bağlı)</label>
                     </div>
                     <div class="input-group">
                         <input type="number" id="d-year" placeholder=" " class="hover-target">
-                        <label>Yıl (İsteğe Bağlı)</label>
+                        <label class="floating-label">Yıl (İsteğe Bağlı)</label>
                     </div>
                     <div class="input-group form-full">
                         <textarea id="d-desc" placeholder=" " class="hover-target"></textarea>
-                        <label>Alt Açıklama (İsteğe Bağlı)</label>
+                        <label class="floating-label">Alt Açıklama (İsteğe Bağlı)</label>
                     </div>
                 </div>
                 <button type="submit" class="submit-btn hover-target">Görseli Yükle <i class="fas fa-upload"></i></button>
@@ -275,12 +270,13 @@
 
     </main>
 
-    <!-- FIREBASE IMPORT VE GÜVENLİK KONTROLÜ -->
+    <!-- FIREBASE IMPORT VE VERİTABANI ENTEGRASYONU -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
         import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
+        import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
+        import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-storage.js";
 
-        // Seninkiyle birebir aynı olan Firebase konfigürasyonu
         const firebaseConfig = {
             apiKey: "AIzaSyCr4HhlythyRIfy_Xnb-IaWr0Th0TkUQi4",
             authDomain: "yk-blog-9720b.firebaseapp.com",
@@ -292,24 +288,133 @@
 
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
+        const db = getFirestore(app);
+        const storage = getStorage(app);
 
-        // Kimlik Kontrolü ve Sayfa Gösterimi (Eski kodunun birebir entegrasyonu)
+        // Kimlik Kontrolü ve Sayfa Gösterimi
         onAuthStateChanged(auth, (user) => {
             if (user) {
-                // Giriş yapılmış, premium tasarımı ve sayfa gövdesini göster
                 document.body.style.display = 'flex';
                 document.getElementById('admin-email').textContent = user.email;
             } else {
-                // Şifresiz giriş denemesi, anında login'e fırlat
                 window.location.href = 'login.html';
             }
         });
 
-        // Çıkış Yapma İşlemi
+        // Çıkış Yapma
         document.getElementById('logout-btn').addEventListener('click', () => {
             signOut(auth).then(() => {
                 window.location.href = 'login.html';
             });
+        });
+
+        /* ==========================================
+           1. SENTEZ (Projeler) VERİ EKLEME
+           ========================================== */
+        document.getElementById('form-sentez').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const btn = e.target.querySelector('button');
+            const originalText = btn.innerHTML;
+            btn.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> Kaydediliyor...';
+            btn.style.opacity = '0.7';
+
+            try {
+                await addDoc(collection(db, "sentez"), {
+                    title: document.getElementById('s-title').value,
+                    category: document.getElementById('s-category').value,
+                    year: document.getElementById('s-year').value,
+                    excerpt: document.getElementById('s-excerpt').value,
+                    link: document.getElementById('s-link').value || "",
+                    createdAt: serverTimestamp()
+                });
+                
+                e.target.reset();
+                btn.innerHTML = 'Arşive Eklendi <i class="fas fa-check"></i>';
+                btn.style.borderColor = "#4CAF50"; btn.style.color = "#4CAF50";
+            } catch (error) {
+                console.error("Hata:", error);
+                btn.innerHTML = 'Hata Oluştu! <i class="fas fa-times"></i>';
+                btn.style.borderColor = "#d9534f"; btn.style.color = "#d9534f";
+            }
+            setTimeout(() => { btn.innerHTML = originalText; btn.style = ''; }, 3000);
+        });
+
+        /* ==========================================
+           2. PERSPEKTİF (Yazılar) VERİ EKLEME
+           ========================================== */
+        document.getElementById('form-perspektif').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const btn = e.target.querySelector('button');
+            const originalText = btn.innerHTML;
+            btn.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> Yayınlanıyor...';
+            btn.style.opacity = '0.7';
+
+            try {
+                await addDoc(collection(db, "perspektif"), {
+                    title: document.getElementById('p-title').value,
+                    type: document.getElementById('p-type').value,
+                    date: document.getElementById('p-date').value,
+                    excerpt: document.getElementById('p-excerpt').value,
+                    createdAt: serverTimestamp()
+                });
+                
+                e.target.reset();
+                btn.innerHTML = 'Yazı Yayınlandı <i class="fas fa-check"></i>';
+                btn.style.borderColor = "#4CAF50"; btn.style.color = "#4CAF50";
+            } catch (error) {
+                console.error("Hata:", error);
+                btn.innerHTML = 'Hata Oluştu! <i class="fas fa-times"></i>';
+                btn.style.borderColor = "#d9534f"; btn.style.color = "#d9534f";
+            }
+            setTimeout(() => { btn.innerHTML = originalText; btn.style = ''; }, 3000);
+        });
+
+        /* ==========================================
+           3. DOKU (Galeri) GÖRSEL YÜKLEME VE VERİ EKLEME
+           ========================================== */
+        document.getElementById('form-doku').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const btn = e.target.querySelector('button');
+            const originalText = btn.innerHTML;
+            btn.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> Görsel Yükleniyor...';
+            btn.style.opacity = '0.7';
+
+            const fileInput = document.getElementById('d-file');
+            const file = fileInput.files[0];
+
+            if (!file) {
+                alert("Lütfen bir görsel seçin.");
+                btn.innerHTML = originalText; btn.style.opacity = '1';
+                return;
+            }
+
+            try {
+                // 1. Storage'a Yükleme
+                const storageReference = ref(storage, 'gallery/' + Date.now() + '_' + file.name);
+                await uploadBytes(storageReference, file);
+                
+                // 2. İndirme Linkini Alma
+                const downloadURL = await getDownloadURL(storageReference);
+
+                // 3. Firestore'a Kaydetme
+                await addDoc(collection(db, "doku"), {
+                    title: document.getElementById('d-title').value,
+                    category: document.getElementById('d-category').value || "",
+                    year: document.getElementById('d-year').value || "",
+                    desc: document.getElementById('d-desc').value || "",
+                    imageUrl: downloadURL,
+                    createdAt: serverTimestamp()
+                });
+                
+                e.target.reset();
+                btn.innerHTML = 'Galeriye Eklendi <i class="fas fa-check"></i>';
+                btn.style.borderColor = "#4CAF50"; btn.style.color = "#4CAF50";
+            } catch (error) {
+                console.error("Hata:", error);
+                btn.innerHTML = 'Hata Oluştu! <i class="fas fa-times"></i>';
+                btn.style.borderColor = "#d9534f"; btn.style.color = "#d9534f";
+            }
+            setTimeout(() => { btn.innerHTML = originalText; btn.style = ''; }, 3000);
         });
     </script>
 
