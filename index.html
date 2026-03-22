@@ -5,17 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Yusuf Kocapınar | Dijital Arşiv</title>
     
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght=0,400;0,600;0,700;1,400&family=Tenor+Sans&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Tenor+Sans&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
         :root {
-            /* Saf Mimari Renk Paleti */
-            --bg-color: #F5F5F3;       /* Kemik Beyazı / Açık Mermer */
-            --card-bg: #FFFFFF;        
+            --bg-color: #F5F5F3;       /* Kemik Beyazı */
+            --card-bg: #FFFFFF;         
             --text-main: #2C2A29;      
             --text-muted: #7A7A7A;
-            --accent: #B39B78;         /* Mat bronz (İmza Rengi) */
+            --accent: #B39B78;         /* Mat Bronz */
             --border-color: rgba(179, 155, 120, 0.2); 
             --transition-premium: all 0.5s cubic-bezier(0.25, 1, 0.5, 1);
             --font-serif: 'Playfair Display', serif;
@@ -34,29 +33,36 @@
             position: relative;
         }
 
-        /* 1. DOKU: Zarif Kağıt/Taş Pürüzü (Geri Getirildi) */
+        /* 1. DOKU: Kağıt/Mermer Pürüzü */
         body::before {
             content: ""; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background-image: url('data:image/svg+xml,<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><filter id="noiseFilter"><feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/></filter><rect width="100%" height="100%" filter="url(%23noiseFilter)" opacity="0.025"/></svg>');
             pointer-events: none; z-index: 50;
         }
 
-        /* 2. DOKUNUŞ: Sanatçı İmzası (GÜNCELLENMİŞ VE BELİRGİN)
-           Bu versiyonda çizim sığdırıldı ve opaklık (görünürlük) %50 artırıldı.
-           Ayrıca silüet Kubbetü's-Sahra formuna getirildi.
-        */
-        body::after {
-            content: ""; position: fixed; 
-            top: 20px; bottom: 20px; left: 20px; right: 20px;
-            /* SVG çizimi sığdırılmış, daha kalın ve Kubbetü's-Sahra formunda */
-            background-image: url('data:image/svg+xml,<svg width="100%" height="100%" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path d="M-5 50 Q 5 10 30 15 Q 50 20 60 10 L 60 40 Q 60 50 70 50 Q 80 50 90 40 Q 100 30 110 50" fill="none" stroke="%23B39B78" stroke-width="0.15" stroke-linecap="round"/><path d="M0 0 L 10 10 L 0 20 Z" fill="%23B39B78" fill-opacity="0.05" transform="scale(0.8) translate(10 10) rotate(15)"/><path d="M100 100 L 90 90 L 100 80 Z" fill="%23B39B78" fill-opacity="0.05" transform="scale(0.8) translate(-10 -10) rotate(-15)"/></svg>');
-            background-repeat: no-repeat;
-            background-size: contain; /* Sığdırılmış */
-            opacity: 0.22; /* Görünürlük %50 artırıldı (önceki 0.15 idi) */
-            pointer-events: none;
+        /* 2. ÖZEL SİLÜET: Kubbetü's-Sahra & Güvercin (Tek Çizgi Deseni) */
+        .background-signature {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
             z-index: 0;
-            transform: scale(0.95); /* Çok hafif bir marj */
-            filter: blur(0.5px); /* Mermere gömülmüş hissi */
+            pointer-events: none;
+            opacity: 0.18; /* Hafif transparanlık */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .background-signature svg {
+            width: 90%;
+            height: auto;
+            max-height: 80vh;
+            stroke-dasharray: 1000;
+            stroke-dashoffset: 1000;
+            animation: drawLine 4s ease-out forwards;
+        }
+
+        @keyframes drawLine {
+            to { stroke-dashoffset: 0; }
         }
 
         /* Minimalist Cursor */
@@ -83,7 +89,6 @@
         nav.scrolled {
             background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px);
             padding: 20px 0; border-bottom: 1px solid var(--border-color);
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02);
         }
 
         .nav-inner { display: flex; justify-content: space-between; align-items: center; }
@@ -105,26 +110,10 @@
             line-height: 1.1; font-weight: 400; letter-spacing: -1.5px;
             color: var(--text-main); position: relative; text-align: center;
         }
-        .main-title::after {
-            content: "Yusuf Kocapınar";
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            font-family: var(--font-serif); font-size: 100%;
-            color: rgba(0,0,0,0.02); z-index: -1;
-            transform: translate(var(--shadow-move-x, 0px), var(--shadow-move-y, 0px));
-        }
         .hero-desc {
             font-size: 1.1rem; color: var(--text-muted); font-weight: 300; margin-top: 30px;
             text-transform: uppercase; letter-spacing: 4px; text-align: center;
         }
-
-        /* --- BÖLÜMLER --- */
-        section { padding: 120px 0; }
-        .section-header { text-align: center; margin-bottom: 80px; }
-        .section-tag {
-            font-size: 0.8rem; text-transform: uppercase; letter-spacing: 3px;
-            color: var(--accent); margin-bottom: 20px; display: block;
-        }
-        .section-header h2 { font-family: var(--font-serif); font-size: 3rem; font-weight: 400; letter-spacing: -0.5px; }
 
         /* --- BENTO KARTLARI --- */
         .bento-grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: 30px; }
@@ -134,54 +123,54 @@
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03); 
             transition: var(--transition-premium);
             display: flex; flex-direction: column; justify-content: space-between;
-            border-radius: 2px;
         }
-        .bento-item:hover {
-            transform: translateY(-8px);
-            border-color: rgba(179, 155, 120, 0.2);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.06); 
-        }
-        .item-8 { grid-column: span 8; min-height: 380px; }
-        .item-4 { grid-column: span 4; min-height: 380px; }
-        .item-meta { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 2px; color: var(--text-muted); margin-bottom: 20px; }
-        .item-title { font-family: var(--font-serif); font-size: 2rem; line-height: 1.3; margin-bottom: 15px; font-weight: 400; }
-        .item-desc { font-size: 1rem; color: var(--text-muted); }
-        .item-icon { font-size: 1.5rem; color: var(--accent); margin-top: auto; padding-top: 30px; opacity: 0.7; }
+        .bento-item:hover { transform: translateY(-8px); border-color: var(--accent); }
+        .item-8 { grid-column: span 8; }
+        .item-4 { grid-column: span 4; }
+        .item-title { font-family: var(--font-serif); font-size: 2rem; margin-bottom: 15px; }
 
-        /* --- LİSTE --- */
-        .minimal-list { border-top: 1px solid var(--border-color); }
+        /* --- ARŞİV LİSTESİ --- */
         .list-item {
             display: grid; grid-template-columns: 1fr 2fr 1fr;
             padding: 40px 0; border-bottom: 1px solid var(--border-color);
-            transition: var(--transition-premium); align-items: center;
+            transition: var(--transition-premium);
         }
-        .list-item:hover { background: rgba(255, 255, 255, 0.5); padding-left: 20px; padding-right: 20px; }
-        .list-date { font-size: 0.9rem; color: var(--text-muted); text-align: left; }
-        .list-title { font-family: var(--font-serif); font-size: 1.6rem; font-weight: 400; text-align: center; }
-        .list-category { font-size: 0.8rem; text-align: right; color: var(--accent); text-transform: uppercase; letter-spacing: 2px; }
-        .list-title a { position: relative; display: inline-block; }
-        .list-title a::after {
-            content: ""; position: absolute; left: 0; bottom: 0; width: 0; height: 1px;
-            background: var(--text-main); transition: var(--transition-premium);
-        }
-        .list-item:hover .list-title a::after { width: 100%; }
+        .list-item:hover { padding-left: 20px; color: var(--accent); }
+        .list-title { font-family: var(--font-serif); font-size: 1.6rem; text-align: center; }
 
         /* ANİMASYONLAR */
-        .fade-up { opacity: 0; transform: translateY(30px); transition: opacity 1s ease-out, transform 1s ease-out; }
+        .fade-up { opacity: 0; transform: translateY(30px); transition: 1s ease-out; }
         .fade-up.visible { opacity: 1; transform: translateY(0); }
 
         @media (max-width: 900px) {
-            .nav-links, body::after { display: none; } /* Mobilde "imzayı" ve menüyü gizle */
-            .bento-item { grid-column: span 12; min-height: 300px; }
-            .list-item { grid-template-columns: 1fr; gap: 10px; text-align: center; padding: 30px 10px;}
-            .list-date, .list-category { text-align: center; }
-            section { padding: 80px 0; }
+            .nav-links, .background-signature { display: none; }
+            .bento-item { grid-column: span 12; }
+            .list-item { grid-template-columns: 1fr; text-align: center; gap: 15px; }
         }
     </style>
 </head>
 <body>
 
     <div id="custom-cursor"></div>
+
+    <!-- Yeni Arka Plan Silüeti -->
+    <div class="background-signature">
+        <svg viewBox="0 0 1000 600" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <!-- Tek Parça Akış Çizgisi: Sol Giriş -> Kubbe -> Sağ Çıkış -> Güvercin -->
+            <path d="M-50,450 C100,450 150,450 250,450 
+                     L250,380 L320,380 L320,450 
+                     M320,380 L350,320 C400,200 600,200 650,320 L680,380 
+                     M680,380 L750,380 L750,450 
+                     M650,320 C750,300 850,200 900,100 
+                     M885,115 C880,100 895,85 910,80 C920,85 930,105 915,115 C910,125 895,120 885,115 
+                     M910,80 C930,60 960,70 980,90 M910,80 C890,60 860,70 840,90" 
+                  stroke="#B39B78" stroke-width="0.8" stroke-linecap="round" stroke-linejoin="round"/>
+            
+            <!-- Dekoratif Alt Kemerler (Aynı akışın parçası gibi) -->
+            <path d="M380,380 Q400,340 420,380 M440,380 Q460,340 480,380 M520,380 Q540,340 560,380 M580,380 Q600,340 620,380" 
+                  stroke="#B39B78" stroke-width="0.5" opacity="0.6"/>
+        </svg>
+    </div>
 
     <nav id="main-nav">
         <div class="container nav-inner">
@@ -196,66 +185,60 @@
     <main>
         <section class="hero container">
             <div class="title-wrapper">
-                <span class="section-tag fade-up" style="letter-spacing: 5px;">© 2026 / İstanbul</span>
-                <h1 class="main-title fade-up parallax-text" style="transition-delay: 0.1s;">
+                <span class="section-tag fade-up" style="letter-spacing: 5px; color: var(--accent); display: block; text-align: center; margin-bottom: 20px;">© 2026 / İSTANBUL</span>
+                <h1 class="main-title fade-up">
                     Digital<br>Archive.
                 </h1>
-                <p class="hero-desc fade-up" style="transition-delay: 0.2s;">
+                <p class="hero-desc fade-up">
                     Fikirler &middot; Projeler &middot; Notlar
                 </p>
             </div>
         </section>
 
         <section id="projects" class="container">
-            <div class="section-header fade-up">
-                <span class="section-tag">Seçkiler</span>
-                <h2>Öne Çıkan Çalışmalar</h2>
+            <div class="section-header fade-up" style="text-align: center; margin-bottom: 80px;">
+                <span class="section-tag" style="color: var(--accent); text-transform: uppercase; letter-spacing: 3px;">Seçkiler</span>
+                <h2 style="font-family: var(--font-serif); font-size: 3rem; font-weight: 400;">Öne Çıkan Çalışmalar</h2>
             </div>
 
             <div class="bento-grid">
                 <a href="#" class="bento-item item-8 fade-up hover-target">
                     <div>
-                        <div class="item-meta">Araştırma & Geliştirme</div>
+                        <div style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 2px; color: var(--text-muted); margin-bottom: 20px;">Araştırma & Geliştirme</div>
                         <h3 class="item-title">Onkosklepios: Karar Destek</h3>
-                        <p class="item-desc">Likit biyopsi ve sanal patoloji üzerine kurulu onkolojik analiz platformu.</p>
+                        <p style="color: var(--text-muted);">Likit biyopsi ve sanal patoloji üzerine kurulu onkolojik analiz platformu.</p>
                     </div>
-                    <div class="item-icon"><i class="fas fa-microscope"></i></div>
+                    <div style="font-size: 1.5rem; color: var(--accent); margin-top: 30px;"><i class="fas fa-microscope"></i></div>
                 </a>
 
-                <a href="#" class="bento-item item-4 fade-up hover-target" style="transition-delay: 0.1s;">
+                <a href="#" class="bento-item item-4 fade-up hover-target">
                     <div>
-                        <div class="item-meta">Yazılım</div>
+                        <div style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 2px; color: var(--text-muted); margin-bottom: 20px;">Yazılım</div>
                         <h3 class="item-title">Sinyal İşleme</h3>
-                        <p class="item-desc">MATLAB veri modelleme çalışmaları.</p>
+                        <p style="color: var(--text-muted);">MATLAB veri modelleme çalışmaları.</p>
                     </div>
-                    <div class="item-icon"><i class="fas fa-code"></i></div>
+                    <div style="font-size: 1.5rem; color: var(--accent); margin-top: 30px;"><i class="fas fa-code"></i></div>
                 </a>
             </div>
         </section>
 
         <section id="archive" class="container">
-            <div class="section-header fade-up">
-                <span class="section-tag">Yazın Arşivi</span>
-                <h2>Son Eklenenler</h2>
+            <div class="section-header fade-up" style="text-align: center; margin-bottom: 80px;">
+                <span class="section-tag" style="color: var(--accent); text-transform: uppercase; letter-spacing: 3px;">Yazın Arşivi</span>
+                <h2 style="font-family: var(--font-serif); font-size: 3rem; font-weight: 400;">Son Eklenenler</h2>
             </div>
 
             <div class="minimal-list">
                 <div class="list-item fade-up hover-target">
-                    <span class="list-date">Mart 2026</span>
+                    <span style="font-size: 0.9rem; color: var(--text-muted);">Mart 2026</span>
                     <h3 class="list-title"><a href="#">Bir Devrin Kapanışı</a></h3>
-                    <span class="list-category">Deneme</span>
+                    <span style="font-size: 0.8rem; text-align: right; color: var(--accent); text-transform: uppercase;">Deneme</span>
                 </div>
                 
-                <div class="list-item fade-up hover-target" style="transition-delay: 0.1s;">
-                    <span class="list-date">Şubat 2026</span>
+                <div class="list-item fade-up hover-target">
+                    <span style="font-size: 0.9rem; color: var(--text-muted);">Şubat 2026</span>
                     <h3 class="list-title"><a href="#">Holokost Endüstrisi</a></h3>
-                    <span class="list-category">Kitaplık</span>
-                </div>
-
-                <div class="list-item fade-up hover-target" style="transition-delay: 0.2s;">
-                    <span class="list-date">Ocak 2026</span>
-                    <h3 class="list-title"><a href="#">Dinleti</a></h3>
-                    <span class="list-category">Fairouz</span>
+                    <span style="font-size: 0.8rem; text-align: right; color: var(--accent); text-transform: uppercase;">Kitaplık</span>
                 </div>
             </div>
         </section>
@@ -263,8 +246,6 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            
-            // Cursor
             const cursor = document.getElementById('custom-cursor');
             const hoverTargets = document.querySelectorAll('.hover-target');
 
@@ -278,34 +259,19 @@
                 target.addEventListener('mouseout', () => cursor.classList.remove('hover'));
             });
 
-            // Parallax
-            const parallaxText = document.querySelector('.parallax-text');
-            if(window.innerWidth > 900) { 
-                document.addEventListener('mousemove', e => {
-                    const moveX = (e.clientX - window.innerWidth / 2) * 0.015; 
-                    const moveY = (e.innerHeight > 900 && (e.clientY - window.innerHeight / 2) * 0.015) || 0;
-                    parallaxText.style.setProperty('--shadow-move-x', `${moveX * -1}px`);
-                    parallaxText.style.setProperty('--shadow-move-y', `${moveY * -1}px`);
-                });
-            }
-
-            // Scroll Nav
             const nav = document.getElementById('main-nav');
             window.addEventListener('scroll', () => {
                 if (window.scrollY > 50) nav.classList.add('scrolled');
                 else nav.classList.remove('scrolled');
             });
 
-            // Intersection Observer (Fade Up)
-            const observerOptions = { root: null, rootMargin: '0px', threshold: 0.1 };
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
                         entry.target.classList.add('visible');
-                        observer.unobserve(entry.target);
                     }
                 });
-            }, observerOptions);
+            }, { threshold: 0.1 });
 
             document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
         });
