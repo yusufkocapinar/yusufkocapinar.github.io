@@ -33,6 +33,7 @@
             position: relative;
         }
 
+        /* DOKU: Zarif Taş Pürüzü */
         body::before {
             content: ""; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background-image: url('data:image/svg+xml,<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><filter id="noiseFilter"><feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/></filter><rect width="100%" height="100%" filter="url(%23noiseFilter)" opacity="0.025"/></svg>');
@@ -53,34 +54,24 @@
             background-color: rgba(245, 245, 243, 0.98);
             backdrop-filter: blur(10px);
             border-bottom: 1px solid var(--border-color);
-            padding: 25px 0; z-index: 100;
+            padding: 20px 0; z-index: 100;
             transition: var(--transition-premium);
         }
 
         .nav-inner { display: flex; justify-content: space-between; align-items: center; }
-        .logo { font-family: var(--font-serif); font-size: 1.5rem; font-weight: 700; letter-spacing: -0.5px; text-decoration: none; color: var(--text-main); }
+        .logo { font-family: var(--font-serif); font-size: 1.5rem; font-weight: 700; letter-spacing: -0.5px; text-decoration: none; color: var(--text-main); z-index: 2; }
         
-        /* THE JOURNEY: KALİGRAFİK VE DALGALI YOLCULUK */
+        /* THE JOURNEY: TEK ÇİZGİ SİLÜET (Görseldeki Tasarım) */
         .header-journey {
-            display: flex; align-items: center; flex: 1;
-            margin: 0 50px; opacity: 0.8; transition: var(--transition-premium);
+            position: absolute; left: 50%; top: 50%;
+            transform: translate(-50%, -45%); /* Ortalama ayarı */
+            width: 55%; max-width: 700px;
+            pointer-events: none; /* Tıklamaları engellememesi için */
+            opacity: 0.85; transition: var(--transition-premium);
         }
         .header-journey:hover { opacity: 1; }
-        
-        .journey-line {
-            flex: 1; height: 16px; 
-            margin: 0 15px;
-            /* Dalgalı Hat Sanatı Deseni */
-            background-image: url('data:image/svg+xml,<svg width="50" height="16" xmlns="http://www.w3.org/2000/svg"><path d="M0 8 Q 12.5 0, 25 8 T 50 8" fill="none" stroke="%23B39B78" stroke-width="1.2" stroke-linecap="round"/></svg>');
-            background-repeat: repeat-x;
-            background-position: center;
-            opacity: 0.6;
-            /* Uçlara doğru zarifçe silikleşen maske */
-            -webkit-mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);
-            mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);
-        }
 
-        .nav-actions { display: flex; align-items: center; gap: 30px; border-left: 1px solid var(--border-color); padding-left: 30px; }
+        .nav-actions { display: flex; align-items: center; gap: 30px; z-index: 2; }
         
         .login-btn, .menu-toggle {
             background: none; border: none; font-family: var(--font-sans);
@@ -119,7 +110,7 @@
         .overlay-link:hover { color: var(--accent); }
 
         .hero { height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; }
-        .main-title { font-family: var(--font-serif); font-size: clamp(3rem, 8vw, 7rem); line-height: 1.1; font-weight: 400; letter-spacing: -1.5px; color: var(--text-main); text-align: center; }
+        .main-title { font-family: var(--font-serif); font-size: clamp(3rem, 8vw, 7rem); line-height: 1.1; font-weight: 400; letter-spacing: -1.5px; color: var(--text-main); text-align: center; margin-top: 40px;}
         .hero-desc { font-size: 1.1rem; color: var(--text-muted); font-weight: 300; margin-top: 30px; text-transform: uppercase; letter-spacing: 4px; text-align: center; }
 
         section { padding: 120px 0; }
@@ -143,7 +134,6 @@
 
         @media (max-width: 900px) {
             .header-journey { display: none; }
-            .nav-actions { border-left: none; padding-left: 0; }
             .bento-item { grid-column: span 12; }
         }
     </style>
@@ -164,19 +154,30 @@
         <div class="container nav-inner">
             <a href="index.html" class="logo hover-target">YK.</a>
             
+            <!-- THE JOURNEY: Tek Çizgi Sanatı SVG -->
             <div class="header-journey">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M4 22c0 0 4-4 8-4s8 4 8 4"></path>
-                    <path d="M6 22c0 0 1-5 2-6s4-4 4-4 3 3 4 4 2 6 2 6"></path>
-                    <path d="M9 14c0 0 1-2 3-2s3 2 3 2"></path>
-                    <path d="M12 10V7l-1-1"></path>
-                    <path d="M11 7h2"></path>
-                </svg>
+                <svg viewBox="0 0 800 120" preserveAspectRatio="xMidYMid meet" fill="none" stroke="var(--accent)" stroke-linecap="round" stroke-linejoin="round" style="width: 100%; max-height: 80px;">
+                    
+                    <!-- Arka plan dalgası (soluk ve soyut) -->
+                    <path d="M-50,85 C100,135 250,25 400,95 C550,165 700,45 850,75" stroke-width="1" opacity="0.3"/>
+                    <path d="M-20,60 C150,10 250,110 400,60 C550,10 650,110 820,50" stroke-width="0.8" opacity="0.2"/>
 
-                <div class="journey-line"></div>
+                    <!-- Ana Silüet: Minareler, Kubbeler ve Sürekli Çizgi -->
+                    <path d="M-50,90 C100,60 150,120 220,90
+                             C235,83 245,88 250,90
+                             L250,45 L247,45 L252,25 L257,45 L254,45 L254,90
+                             C265,90 270,78 270,68 C270,78 285,85 290,90
+                             C290,60 310,45 330,45 C350,45 370,60 370,90
+                             C375,85 390,78 390,68 C390,78 395,90 404,90
+                             L404,45 L401,45 L406,25 L411,45 L408,45 L408,90
+                             C440,85 460,105 520,90
+                             C600,65 650,120 750,80 C800,60 820,75 850,80"
+                          stroke-width="1.5"/>
 
-                <svg width="26" height="26" viewBox="0 0 24 24" fill="#FFFFFF" stroke="var(--accent)" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M2 16c0 0 2-4 6-4s6 4 8 2 6-2 8 0 4-8 4-8c0 0-2 4-4 4s-2-2-4 0c-2 2-2 8-2 8l-2 2c0 0-2-2-2-2c0 0-4-2-4-2z"></path>
+                    <!-- Kaligrafik Metinler (Zarafet, Sophia, Süreklilik) -->
+                    <text x="120" y="75" font-family="var(--font-serif)" font-style="italic" font-size="16" fill="var(--text-muted)" stroke="none" opacity="0.8">Zarafet</text>
+                    <text x="440" y="65" font-family="var(--font-serif)" font-style="italic" font-size="16" fill="var(--text-muted)" stroke="none" opacity="0.8">Sophia</text>
+                    <text x="680" y="70" font-family="var(--font-serif)" font-style="italic" font-size="16" fill="var(--text-muted)" stroke="none" opacity="0.8">Süreklilik</text>
                 </svg>
             </div>
 
