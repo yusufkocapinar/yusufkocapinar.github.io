@@ -15,6 +15,7 @@
             --card-bg: #FFFFFF;         
             --text-main: #2C2A29;      
             --text-muted: #7A7A7A;
+            /* Mat Bronz Detaylar */
             --accent: #B39B78;
             --border-color: rgba(179, 155, 120, 0.2); 
             --transition-premium: all 0.5s cubic-bezier(0.25, 1, 0.5, 1);
@@ -50,7 +51,7 @@
 
         .container { max-width: 1200px; margin: 0 auto; padding: 0 4vw; position: relative; z-index: 10; }
 
-        /* ANA MENÜ: Yere Basan, Oturaklı Yapı (Öylesine bırakılmamış) */
+        /* ANA MENÜ: Yere Basan, Oturaklı Yapı */
         nav {
             position: fixed; top: 0; left: 0; width: 100%;
             background-color: rgba(245, 245, 243, 0.98);
@@ -63,13 +64,19 @@
         .nav-inner { display: flex; justify-content: space-between; align-items: center; }
         .logo { font-family: var(--font-serif); font-size: 1.5rem; font-weight: 700; letter-spacing: -0.5px; text-decoration: none; color: var(--text-main); }
         
-        .nav-links { display: flex; gap: 40px; align-items: center; }
-        .nav-links a { 
-            font-size: 0.85rem; text-transform: uppercase; letter-spacing: 2px; 
-            color: var(--text-muted); text-decoration: none; transition: 0.3s;
+        /* THE JOURNEY: MESCİD-İ AKSA'DAN GÜVERCİNE ÇİZGİ ÇALIŞMASI */
+        .header-journey {
+            display: flex; align-items: center; flex: 1;
+            margin: 0 50px; opacity: 0.7; transition: var(--transition-premium);
         }
-        .nav-links a:hover, .nav-links a.active { color: var(--text-main); }
+        .header-journey:hover { opacity: 1; }
         
+        .journey-line {
+            flex: 1; height: 1px; 
+            background-color: rgba(179, 155, 120, 0.4);
+            margin: 0 20px;
+        }
+
         .nav-actions { display: flex; align-items: center; gap: 30px; border-left: 1px solid var(--border-color); padding-left: 30px; }
         
         .login-btn, .menu-toggle {
@@ -134,7 +141,7 @@
         .fade-up.visible { opacity: 1; transform: translateY(0); }
 
         @media (max-width: 900px) {
-            .nav-links { display: none; }
+            .header-journey { display: none; } /* Mobilde logoya ve menüye yer açmak için gizlendi */
             .nav-actions { border-left: none; padding-left: 0; }
             .bento-item { grid-column: span 12; }
         }
@@ -156,10 +163,23 @@
         <div class="container nav-inner">
             <a href="index.html" class="logo hover-target">YK.</a>
             
-            <div class="nav-links">
-                <a href="#projects" class="hover-target">Projeler</a>
-                <a href="#archive" class="hover-target active">Arşiv</a>
-                <a href="#about" class="hover-target">Hakkında</a>
+            <!-- HEADER ÇALIŞMASI: Mescid-i Aksa'dan Beyaz Güvercine Uzanan Çizgi -->
+            <div class="header-journey">
+                <!-- Minimal Mescid-i Aksa Silüeti -->
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M4 22h16"></path>
+                    <path d="M6 22v-5l3-3h6l3 3v5"></path>
+                    <path d="M9 14c0-4 6-4 6 0"></path>
+                    <path d="M12 10V7"></path>
+                    <path d="M11 7h2"></path>
+                </svg>
+
+                <div class="journey-line"></div>
+
+                <!-- Bembeyaz Güvercin (Mat Bronz Çerçeveli) -->
+                <svg width="26" height="26" viewBox="0 0 24 24" fill="#FFFFFF" stroke="var(--accent)" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M2 16c2-4 6-4 8-2 2-2 6 2 8 0 2-2 4-8 4-8s-2 4-4 4c-2 0-2-2-4 0-2 2-2 8-2 8l-2 2-2-2-4-2z"></path>
+                </svg>
             </div>
 
             <div class="nav-actions">
