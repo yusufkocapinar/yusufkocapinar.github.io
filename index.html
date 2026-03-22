@@ -5,20 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Yusuf Kocapınar | Dijital Arşiv</title>
     
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700&family=Tenor+Sans&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Tenor+Sans&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
         :root {
-            /* Mermer ve Premium Renk Paleti */
-            --bg-color: #F8F7F4;       
-            --text-main: #2C2A29;      
-            --text-muted: #8E8B82;
+            --bg-color: #F6F5F2;       /* Gerçek Mermer Tonu */
+            --text-main: #1A1A1A;      
             --accent: #B39B78;         
-            --line-color: rgba(179, 155, 120, 0.25); 
             --font-serif: 'Playfair Display', serif;
             --font-sans: 'Tenor Sans', sans-serif;
-            --transition: all 0.7s cubic-bezier(0.19, 1, 0.22, 1);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; cursor: none; }
@@ -31,209 +27,141 @@
             -webkit-font-smoothing: antialiased;
         }
 
-        /* 1. KATMAN: Mermer Dokusu (Grain) */
+        /* Mermer ve Kağıt Dokusu Overlay */
         body::before {
             content: ""; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background-image: url('data:image/svg+xml,<svg viewBox="0 0 250 250" xmlns="http://www.w3.org/2000/svg"><filter id="n"><feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="4" stitchTiles="stitch"/></filter><rect width="100%" height="100%" filter="url(%23n)" opacity="0.04"/></svg>');
-            pointer-events: none; z-index: 60;
+            background-image: url('data:image/svg+xml,<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><filter id="n"><feTurbulence type="fractalNoise" baseFrequency="0.7" numOctaves="3" stitchTiles="stitch"/></filter><rect width="100%" height="100%" filter="url(%23n)" opacity="0.05"/></svg>');
+            pointer-events: none; z-index: 100;
         }
 
-        /* 2. KATMAN: Kaligrafik Silüet (Sadece Welcome Page'de) */
-        .hero-art {
+        /* HERO ART: Kaligrafik Kubbe ve Güvercin */
+        .hero-canvas {
             position: absolute; top: 0; left: 0; width: 100%; height: 100vh;
-            display: flex; align-items: center; justify-content: center;
-            z-index: 1; pointer-events: none; opacity: 0.18;
-            mask-image: linear-gradient(to bottom, black 80%, transparent 100%);
+            z-index: 1; display: flex; align-items: center; justify-content: center;
+            opacity: 0.25; /* Görünürlük ayarı */
+            pointer-events: none;
         }
 
-        .hero-art svg { width: 95%; max-width: 1300px; height: auto; }
+        .hero-canvas svg { width: 90%; max-width: 1200px; height: auto; }
 
-        /* Minimalist Cursor */
-        #custom-cursor {
-            position: fixed; width: 8px; height: 8px; background: var(--accent);
-            border-radius: 50%; pointer-events: none; z-index: 10000;
-            transform: translate(-50%, -50%); transition: width 0.3s, height 0.3s;
-        }
-        #custom-cursor.hover { width: 50px; height: 50px; background: rgba(179, 155, 120, 0.08); border: 0.5px solid var(--accent); }
-
-        /* NAVİGASYON */
+        /* NAVİGASYON: Keskinlikten uzak, yumuşak menü */
         nav {
-            position: fixed; top: 0; left: 0; width: 100%; padding: 45px 0;
-            z-index: 100; transition: var(--transition);
+            position: fixed; top: 0; left: 0; width: 100%; padding: 50px 0;
+            z-index: 1000;
         }
-        nav.scrolled {
-            background: rgba(248, 247, 244, 0.85); backdrop-filter: blur(20px);
-            padding: 25px 0; border-bottom: 0.5px solid var(--line-color);
-        }
-        .container { max-width: 1400px; margin: 0 auto; padding: 0 6vw; position: relative; }
+        .container { max-width: 1400px; margin: 0 auto; padding: 0 5vw; }
         .nav-inner { display: flex; justify-content: space-between; align-items: center; }
         
-        .logo { font-family: var(--font-serif); font-size: 1.8rem; font-weight: 700; letter-spacing: -1px; }
-        .nav-links { display: flex; gap: 50px; }
-        .nav-links a {
-            font-size: 0.85rem; text-transform: uppercase; letter-spacing: 4px;
-            color: var(--text-main); font-weight: 300; opacity: 0.7; transition: 0.4s;
+        .logo { 
+            font-family: var(--font-serif); font-size: 1.8rem; font-weight: 700; 
+            letter-spacing: -1px; position: relative;
         }
-        .nav-links a:hover { opacity: 1; letter-spacing: 5px; }
+        .logo::after { content: ""; position: absolute; bottom: -5px; left: 0; width: 100%; height: 1px; background: var(--accent); opacity: 0.4; }
 
-        /* HERO SECTION */
+        .nav-links { display: flex; gap: 60px; }
+        .nav-links a {
+            font-size: 0.8rem; text-transform: uppercase; letter-spacing: 5px;
+            color: var(--text-main); font-weight: 300; opacity: 0.6; transition: 0.5s;
+        }
+        .nav-links a:hover { opacity: 1; color: var(--accent); }
+
+        /* HERO CONTENT */
         .hero {
             height: 100vh; display: flex; flex-direction: column;
             justify-content: center; align-items: center; position: relative; z-index: 10;
         }
-        .hero-meta { font-size: 0.8rem; letter-spacing: 8px; color: var(--accent); margin-bottom: 30px; text-transform: uppercase; }
+        .hero-meta { font-size: 0.75rem; letter-spacing: 10px; color: var(--accent); margin-bottom: 40px; }
+        
         .main-title {
-            font-family: var(--font-serif); font-size: clamp(3.5rem, 10vw, 8rem);
-            font-weight: 400; line-height: 0.95; letter-spacing: -3px; text-align: center;
+            font-family: var(--font-serif); font-size: clamp(4rem, 12vw, 9rem);
+            font-weight: 700; line-height: 0.85; letter-spacing: -4px; text-align: center;
         }
+        .main-title span { font-weight: 400; font-style: italic; opacity: 0.8; }
+
         .hero-desc {
-            margin-top: 30px; font-size: 1rem; color: var(--text-muted);
-            letter-spacing: 5px; text-transform: uppercase; font-weight: 300;
+            margin-top: 40px; font-size: 0.9rem; color: var(--text-main);
+            letter-spacing: 6px; text-transform: uppercase; opacity: 0.7;
         }
 
-        /* İÇERİK BÖLÜMLERİ */
-        section { padding: 160px 0; background: var(--bg-color); position: relative; z-index: 20; }
-        .section-header { margin-bottom: 100px; text-align: center; }
-        .section-header h2 { font-family: var(--font-serif); font-size: 3rem; font-weight: 400; }
-
-        .bento-grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: 40px; }
-        .bento-item {
-            background: #FFFFFF; padding: 60px; border: 0.5px solid var(--line-color);
-            transition: var(--transition); grid-column: span 6;
-            display: flex; flex-direction: column; justify-content: space-between;
+        /* CURSOR */
+        #cursor {
+            position: fixed; width: 10px; height: 10px; background: var(--accent);
+            border-radius: 50%; pointer-events: none; z-index: 10001;
+            transform: translate(-50%, -50%); transition: width 0.3s, height 0.3s;
         }
-        .bento-item:hover { transform: translateY(-15px); box-shadow: 0 30px 60px rgba(0,0,0,0.04); border-color: var(--accent); }
+        #cursor.hover { width: 60px; height: 60px; background: rgba(179, 155, 120, 0.1); border: 0.5px solid var(--accent); }
 
-        .list-item {
-            display: grid; grid-template-columns: 1fr 2.5fr 1fr;
-            padding: 50px 0; border-bottom: 1px solid var(--line-color);
-            transition: var(--transition); align-items: center;
-        }
-        .list-item:hover { background: rgba(255,255,255,0.6); padding-left: 30px; }
-
-        .fade-in { opacity: 0; transform: translateY(50px); transition: 1.5s cubic-bezier(0.19, 1, 0.22, 1); }
-        .fade-in.visible { opacity: 1; transform: translateY(0); }
+        /* SECTION GEÇİŞİ */
+        section { background: var(--bg-color); position: relative; z-index: 20; padding: 100px 0; }
 
         @media (max-width: 1000px) {
-            .nav-links, .hero-art { display: none; }
-            .bento-item { grid-column: span 12; }
-            .list-item { grid-template-columns: 1fr; text-align: center; gap: 20px; }
+            .nav-links, .hero-canvas { display: none; }
+            .main-title { font-size: 4rem; }
         }
     </style>
 </head>
 <body>
 
-    <div id="custom-cursor"></div>
+    <div id="cursor"></div>
 
-    <!-- Kaligrafik Welcome Page Art -->
-    <div class="hero-art">
-        <svg viewBox="0 0 1200 700" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <!-- Kubbetü's-Sahra Kaligrafik Silüeti -->
-            <path d="M100,600 C250,600 280,620 300,550 
-                     M300,550 L300,420 L380,420 L380,550 
-                     M380,420 C450,300 750,300 820,420 
-                     M820,420 L900,420 L900,550 
-                     M600,200 L600,160 M580,210 C600,180 620,210 600,210
-                     M300,550 L900,550 M300,420 L900,420
-                     /* Mimari Kavisler ve Kaligrafik Akış */
-                     M450,420 Q500,360 550,420 M650,420 Q700,360 750,420
-                     M300,550 C200,500 100,350 150,200 C200,50 400,100 600,100 
-                     C850,100 1000,250 1100,100 
-                     /* Sağ Üst Güvercin Dönüşümü */
-                     M1100,100 C1120,70 1150,70 1170,100 C1180,125 1150,160 1120,150 
-                     M1120,150 C1100,140 1080,110 1100,80 M1100,80 L1070,60 
-                     M1100,80 L1130,60" 
-                  stroke="#B39B78" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <div class="hero-canvas">
+        <svg viewBox="0 0 1000 500" xmlns="http://www.w3.org/2000/svg">
+            <!-- Kaligrafik Kubbetü's-Sahra Formu -->
+            <path d="M200,400 Q200,380 220,380 L350,380 L350,320 C350,220 650,220 650,320 L650,380 L780,380 Q800,380 800,400" 
+                  stroke="#B39B78" stroke-width="2.5" fill="none" stroke-linecap="round" />
+            <path d="M350,380 L650,380 M400,380 L400,340 M450,380 L450,340 M550,380 L550,340 M600,380 L600,340" 
+                  stroke="#B39B78" stroke-width="1" opacity="0.5" />
+            <!-- Akışkan Hatlar -->
+            <path d="M100,450 C250,450 300,300 500,300 C700,300 800,450 950,450" 
+                  stroke="#2C2A29" stroke-width="0.5" fill="none" opacity="0.3" />
+            <!-- Güvercin Formuna Uzanan Çizgi -->
+            <path d="M650,250 C750,200 850,250 900,100" 
+                  stroke="#B39B78" stroke-width="1.5" fill="none" stroke-dasharray="2 2" />
+            <!-- Güvercin Silüeti -->
+            <path d="M900,100 C910,80 940,85 950,110 C930,120 910,130 890,115 M900,100 L870,80 M900,100 L920,70" 
+                  stroke="#B39B78" stroke-width="2" fill="none" />
         </svg>
     </div>
 
-    <nav id="main-nav">
+    <nav>
         <div class="container nav-inner">
             <a href="#" class="logo hover-target">YK.</a>
             <div class="nav-links">
-                <a href="#projects" class="hover-target">Projeler</a>
-                <a href="#archive" class="hover-target">Arşiv</a>
+                <a href="#" class="hover-target">Projeler</a>
+                <a href="#" class="hover-target">Arşiv</a>
             </div>
         </div>
     </nav>
 
     <main>
         <section class="hero">
-            <div class="fade-in">
-                <p class="hero-meta">© 2026 / İSTANBUL</p>
-                <h1 class="main-title">Digital<br>Archive.</h1>
-                <p class="hero-desc">Fikirler &middot; Projeler &middot; Notlar</p>
-            </div>
+            <p class="hero-meta">© 2026 / İSTANBUL</p>
+            <h1 class="main-title">Digital<br><span>Archive.</span></h1>
+            <p class="hero-desc">Fikirler &middot; Projeler &middot; Notlar</p>
         </section>
 
-        <section id="projects" class="container">
-            <div class="section-header fade-in">
-                <h2 style="letter-spacing: -1px;">Seçilmiş Çalışmalar</h2>
-            </div>
-            <div class="bento-grid">
-                <a href="#" class="bento-item fade-in hover-target">
-                    <div>
-                        <small style="letter-spacing: 3px; color: var(--accent);">01. PROJE</small>
-                        <h3 style="font-family: var(--font-serif); font-size: 2.2rem; margin: 20px 0;">Onkosklepios</h3>
-                        <p style="color: var(--text-muted); line-height: 1.6;">Likit biyopsi tabanlı onkolojik karar destek sistemleri ve sanal patoloji analizi.</p>
-                    </div>
-                    <i class="fas fa-arrow-right" style="color: var(--accent); margin-top: 40px;"></i>
-                </a>
-                <a href="#" class="bento-item fade-in hover-target" style="transition-delay: 0.1s;">
-                    <div>
-                        <small style="letter-spacing: 3px; color: var(--accent);">02. ANALİZ</small>
-                        <h3 style="font-family: var(--font-serif); font-size: 2.2rem; margin: 20px 0;">Sinyal İşleme</h3>
-                        <p style="color: var(--text-muted); line-height: 1.6;">MATLAB ortamında biyolojik verilerin frekans analizi ve modelleme çalışmaları.</p>
-                    </div>
-                    <i class="fas fa-arrow-right" style="color: var(--accent); margin-top: 40px;"></i>
-                </a>
-            </div>
-        </section>
-
-        <section id="archive" class="container">
-            <div class="section-header fade-in">
-                <h2 style="letter-spacing: -1px;">Yazın Arşivi</h2>
-            </div>
-            <div class="list-wrapper">
-                <div class="list-item fade-in hover-target">
-                    <span style="font-size: 0.9rem; color: var(--text-muted);">Mart 2026</span>
-                    <h3 style="font-family: var(--font-serif); font-size: 1.8rem; font-weight: 400;">Bir Devrin Kapanışı</h3>
-                    <span style="color: var(--accent); text-align: right; letter-spacing: 2px; font-size: 0.8rem; text-transform: uppercase;">Deneme</span>
-                </div>
-                <div class="list-item fade-in hover-target">
-                    <span style="font-size: 0.9rem; color: var(--text-muted);">Şubat 2026</span>
-                    <h3 style="font-family: var(--font-serif); font-size: 1.8rem; font-weight: 400;">Holokost Endüstrisi</h3>
-                    <span style="color: var(--accent); text-align: right; letter-spacing: 2px; font-size: 0.8rem; text-transform: uppercase;">Okumalar</span>
-                </div>
-            </div>
-        </section>
+        <!-- Diğer içerikler buraya gelecek -->
+        <section id="content" style="height: 100vh;"></section>
     </main>
 
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const cursor = document.getElementById('custom-cursor');
-            const targets = document.querySelectorAll('.hover-target');
+        const cursor = document.getElementById('cursor');
+        document.addEventListener('mousemove', e => {
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
+        });
 
-            document.addEventListener('mousemove', e => {
-                cursor.style.left = e.clientX + 'px';
-                cursor.style.top = e.clientY + 'px';
-            });
+        document.querySelectorAll('.hover-target').forEach(item => {
+            item.addEventListener('mouseenter', () => cursor.classList.add('hover'));
+            item.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
+        });
 
-            targets.forEach(t => {
-                t.addEventListener('mouseover', () => cursor.classList.add('hover'));
-                t.addEventListener('mouseout', () => cursor.classList.remove('hover'));
-            });
-
-            const nav = document.getElementById('main-nav');
-            window.addEventListener('scroll', () => {
-                if (window.scrollY > 80) nav.classList.add('scrolled');
-                else nav.classList.remove('scrolled');
-            });
-
-            const observer = new IntersectionObserver(entries => {
-                entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); });
-            }, { threshold: 0.1 });
-            document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+        // Parallax etkisi (hafif)
+        document.addEventListener('mousemove', e => {
+            const art = document.querySelector('.hero-canvas svg');
+            const x = (window.innerWidth - e.pageX * 2) / 100;
+            const y = (window.innerHeight - e.pageY * 2) / 100;
+            art.style.transform = `translateX(${x}px) translateY(${y}px)`;
         });
     </script>
 </body>
