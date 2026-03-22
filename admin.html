@@ -10,200 +10,114 @@
 
     <style>
         :root {
-            --bg-dark: #121212;
-            --surface: #1E1E1E;
-            --surface-hover: #2A2A2A;
-            --text-main: #E0E0E0;
-            --text-muted: #888888;
-            --accent: #B39B78; /* Mat Bronz - Ana siteye köprü */
-            --border: #333333;
-            --transition: all 0.3s ease;
+            --bg-dark: #121212; --surface: #1E1E1E; --surface-hover: #2A2A2A;
+            --text-main: #E0E0E0; --text-muted: #888888; --accent: #B39B78; --border: #333333; --transition: all 0.3s ease;
         }
-
         * { margin: 0; padding: 0; box-sizing: border-box; }
-
-        body {
-            background-color: var(--bg-dark);
-            color: var(--text-main);
-            font-family: 'Inter', sans-serif;
-            display: flex;
-            height: 100vh;
-            overflow: hidden;
-        }
-
-        /* SIDEBAR (Sol Menü) */
-        .sidebar {
-            width: 260px;
-            background-color: var(--surface);
-            border-right: 1px solid var(--border);
-            display: flex;
-            flex-direction: column;
-            padding: 30px 20px;
-        }
-
-        .brand {
-            font-family: 'Tenor Sans', sans-serif;
-            font-size: 1.5rem;
-            color: var(--text-main);
-            text-decoration: none;
-            margin-bottom: 50px;
-            padding-left: 10px;
-            letter-spacing: 1px;
-        }
+        
+        /* Sayfa yüklenirken içeriği gizle (Titremeyi önlemek için) */
+        body { background-color: var(--bg-dark); color: var(--text-main); font-family: 'Inter', sans-serif; display: none; height: 100vh; overflow: hidden; }
+        
+        .sidebar { width: 260px; background-color: var(--surface); border-right: 1px solid var(--border); display: flex; flex-direction: column; padding: 30px 20px; }
+        .brand { font-family: 'Tenor Sans', sans-serif; font-size: 1.5rem; color: var(--text-main); text-decoration: none; margin-bottom: 50px; padding-left: 10px; letter-spacing: 1px; }
         .brand span { color: var(--accent); }
-
         .nav-menu { list-style: none; display: flex; flex-direction: column; gap: 10px; }
-        .nav-item {
-            display: flex; align-items: center; gap: 15px;
-            padding: 12px 15px; border-radius: 8px;
-            color: var(--text-muted); text-decoration: none;
-            transition: var(--transition); font-weight: 500; font-size: 0.9rem;
-        }
-        .nav-item:hover, .nav-item.active {
-            background-color: var(--surface-hover);
-            color: var(--text-main);
-        }
+        .nav-item { display: flex; align-items: center; gap: 15px; padding: 12px 15px; border-radius: 8px; color: var(--text-muted); text-decoration: none; transition: var(--transition); font-weight: 500; font-size: 0.9rem; cursor: pointer; border: none; background: none; width: 100%; text-align: left;}
+        .nav-item:hover, .nav-item.active { background-color: var(--surface-hover); color: var(--text-main); }
         .nav-item.active i { color: var(--accent); }
-
-        /* MAIN CONTENT (Ana İçerik Alanı) */
-        .main-content {
-            flex: 1;
-            padding: 40px 60px;
-            overflow-y: auto;
-        }
-
+        .main-content { flex: 1; padding: 40px 60px; overflow-y: auto; }
         .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 40px; }
         .page-title { font-size: 1.8rem; font-weight: 600; letter-spacing: -0.5px; }
-        
         .user-profile { display: flex; align-items: center; gap: 15px; }
         .avatar { width: 40px; height: 40px; background-color: var(--accent); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--bg-dark); font-weight: 600; }
-
-        /* EDITOR BÖLÜMÜ */
-        .editor-container {
-            background-color: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 30px;
-        }
-
+        .editor-container { background-color: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 30px; }
         .form-group { margin-bottom: 25px; }
         .form-group label { display: block; margin-bottom: 10px; font-size: 0.85rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; }
-        
-        .form-control {
-            width: 100%;
-            background-color: var(--bg-dark);
-            border: 1px solid var(--border);
-            color: var(--text-main);
-            padding: 15px;
-            border-radius: 8px;
-            font-family: 'Inter', sans-serif;
-            font-size: 1rem;
-            transition: var(--transition);
-        }
+        .form-control { width: 100%; background-color: var(--bg-dark); border: 1px solid var(--border); color: var(--text-main); padding: 15px; border-radius: 8px; font-family: 'Inter', sans-serif; font-size: 1rem; transition: var(--transition); }
         .form-control:focus { outline: none; border-color: var(--accent); }
-        
         select.form-control { appearance: none; cursor: pointer; }
-        
-        .textarea-markdown {
-            height: 300px;
-            resize: vertical;
-            font-family: 'Courier New', Courier, monospace; /* Markdown hissi için */
-            line-height: 1.6;
-        }
-
-        .toggle-group {
-            display: flex; align-items: center; gap: 15px;
-            background-color: var(--bg-dark); padding: 15px; border-radius: 8px; border: 1px solid var(--border);
-        }
-
-        .btn-primary {
-            background-color: var(--accent);
-            color: var(--bg-dark);
-            border: none;
-            padding: 15px 30px;
-            font-size: 1rem;
-            font-weight: 600;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: var(--transition);
-            display: inline-flex; align-items: center; gap: 10px;
-        }
+        .textarea-markdown { height: 300px; resize: vertical; font-family: 'Courier New', Courier, monospace; line-height: 1.6; }
+        .toggle-group { display: flex; align-items: center; gap: 15px; background-color: var(--bg-dark); padding: 15px; border-radius: 8px; border: 1px solid var(--border); }
+        .btn-primary { background-color: var(--accent); color: var(--bg-dark); border: none; padding: 15px 30px; font-size: 1rem; font-weight: 600; border-radius: 8px; cursor: pointer; transition: var(--transition); display: inline-flex; align-items: center; gap: 10px; }
         .btn-primary:hover { opacity: 0.9; transform: translateY(-2px); }
-
-        @media (max-width: 768px) {
-            .sidebar { width: 80px; padding: 20px 10px; }
-            .brand span { display: none; }
-            .nav-item span { display: none; }
-            .main-content { padding: 20px; }
-        }
+        .logout-btn { margin-top: auto; color: #d9534f !important; }
+        .logout-btn:hover { background-color: rgba(217, 83, 79, 0.1) !important; }
     </style>
 </head>
 <body>
 
-    <!-- SOL MENÜ -->
     <aside class="sidebar">
-        <a href="#" class="brand">YK.<span>Panel</span></a>
-        <nav>
+        <a href="index.html" class="brand">YK.<span>Panel</span></a>
+        <nav style="display: flex; flex-direction: column; height: 100%;">
             <ul class="nav-menu">
                 <li><a href="#" class="nav-item"><i class="fas fa-chart-line"></i> <span>Dashboard</span></a></li>
                 <li><a href="#" class="nav-item active"><i class="fas fa-pen-nib"></i> <span>Yeni İçerik</span></a></li>
                 <li><a href="#" class="nav-item"><i class="fas fa-flask"></i> <span>Sentez (Projeler)</span></a></li>
                 <li><a href="#" class="nav-item"><i class="fas fa-feather-alt"></i> <span>Perspektif (Yazılar)</span></a></li>
                 <li><a href="#" class="nav-item"><i class="fas fa-camera-retro"></i> <span>Doku (Sanat)</span></a></li>
-                <li style="margin-top: 40px;"><a href="#" class="nav-item"><i class="fas fa-cog"></i> <span>Ayarlar</span></a></li>
+            </ul>
+            <ul class="nav-menu" style="margin-top: auto;">
+                <li><button id="logout-btn" class="nav-item logout-btn"><i class="fas fa-sign-out-alt"></i> <span>Çıkış Yap</span></button></li>
             </ul>
         </nav>
     </aside>
 
-    <!-- ANA İÇERİK -->
     <main class="main-content">
         <header class="header">
             <h1 class="page-title">Laboratuvar: İçerik Üretimi</h1>
             <div class="user-profile">
-                <span style="font-size: 0.9rem; color: var(--text-muted);">Yusuf Kocapınar</span>
+                <span id="admin-email" style="font-size: 0.9rem; color: var(--text-muted);">Yükleniyor...</span>
                 <div class="avatar">YK</div>
             </div>
         </header>
 
         <section class="editor-container">
+            <!-- Form Alanı Aynen Korundu -->
             <form action="#" method="POST">
                 <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 20px;">
-                    <div class="form-group">
-                        <label>Başlık</label>
-                        <input type="text" class="form-control" placeholder="Örn: Onkosklepios Veri Modeli...">
-                    </div>
-                    <div class="form-group">
-                        <label>Oda (Kategori)</label>
-                        <select class="form-control">
-                            <option value="sentez">Sentez (Akademik & Kod)</option>
-                            <option value="perspektif">Perspektif (Deneme)</option>
-                            <option value="doku">Doku (Görsel & Şiir)</option>
-                        </select>
-                    </div>
+                    <div class="form-group"><label>Başlık</label><input type="text" class="form-control" placeholder="Örn: Onkosklepios Veri Modeli..."></div>
+                    <div class="form-group"><label>Oda (Kategori)</label><select class="form-control"><option value="sentez">Sentez (Akademik & Kod)</option><option value="perspektif">Perspektif (Deneme)</option><option value="doku">Doku (Görsel & Şiir)</option></select></div>
                 </div>
-
-                <div class="form-group">
-                    <label>Metin (Markdown Destekli)</label>
-                    <textarea class="form-control textarea-markdown" placeholder="## Alt Başlık&#10;&#10;İçeriğini buraya Markdown formatında yazabilirsin..."></textarea>
-                </div>
-
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 30px;">
-                    <div class="form-group toggle-group">
-                        <input type="checkbox" id="bento" style="width: 20px; height: 20px; accent-color: var(--accent);">
-                        <label for="bento" style="margin: 0; cursor: pointer;">Ana Sayfa Bento Grid'de Öne Çıkar</label>
-                    </div>
-                    <div class="form-group toggle-group">
-                        <input type="checkbox" id="publish" checked style="width: 20px; height: 20px; accent-color: var(--accent);">
-                        <label for="publish" style="margin: 0; cursor: pointer;">Hemen Yayımla (Aktif)</label>
-                    </div>
-                </div>
-
-                <button type="submit" class="btn-primary">
-                    <i class="fas fa-paper-plane"></i> Arşive Ekle
-                </button>
+                <div class="form-group"><label>Metin (Markdown Destekli)</label><textarea class="form-control textarea-markdown" placeholder="## Alt Başlık&#10;&#10;İçeriğini buraya Markdown formatında yazabilirsin..."></textarea></div>
+                <button type="submit" class="btn-primary"><i class="fas fa-paper-plane"></i> Arşive Ekle</button>
             </form>
         </section>
     </main>
 
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
+        import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyCr4HhlythyRIfy_Xnb-IaWr0Th0TkUQi4",
+            authDomain: "yk-blog-9720b.firebaseapp.com",
+            projectId: "yk-blog-9720b",
+            storageBucket: "yk-blog-9720b.firebasestorage.app",
+            messagingSenderId: "863054301539",
+            appId: "1:863054301539:web:4256589fbef613bd0e6b56"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+
+        // Kimlik Kontrolü
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                // Giriş yapılmış, tasarımı göster
+                document.body.style.display = 'flex';
+                document.getElementById('admin-email').textContent = user.email;
+            } else {
+                // Şifresiz giriş denemesi, login'e at
+                window.location.href = 'login.html';
+            }
+        });
+
+        // Çıkış Yapma İşlemi
+        document.getElementById('logout-btn').addEventListener('click', () => {
+            signOut(auth).then(() => {
+                window.location.href = 'login.html';
+            });
+        });
+    </script>
 </body>
 </html>

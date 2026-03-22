@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Giriş | YK. Dijital Arşiv</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600&family=Tenor+Sans&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        :root {
+            --bg-color: #F5F5F3; --card-bg: #FFFFFF; --text-main: #2C2A29;      
+            --text-muted: #7A7A7A; --accent: #B39B78; --border-color: rgba(179, 155, 120, 0.2); 
+            --font-serif: 'Playfair Display', serif; --font-sans: 'Tenor Sans', sans-serif; --font-ui: 'Inter', sans-serif;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background-color: var(--bg-color); color: var(--text-main); font-family: var(--font-ui); height: 100vh; display: flex; justify-content: center; align-items: center; position: relative; overflow: hidden; }
+        body::before { content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-image: url('data:image/svg+xml,<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><filter id="noiseFilter"><feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/></filter><rect width="100%" height="100%" filter="url(%23noiseFilter)" opacity="0.025"/></svg>'); pointer-events: none; z-index: 0; }
+        
+        .login-wrapper { background: var(--card-bg); width: 100%; max-width: 420px; padding: 50px 40px; border: 1px solid var(--border-color); box-shadow: 0 10px 40px rgba(0, 0, 0, 0.03); position: relative; z-index: 10; opacity: 0; transform: translateY(20px); animation: fadeUp 0.8s ease forwards; }
+        @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
+        
+        .brand { text-align: center; margin-bottom: 40px; }
+        .brand a { font-family: var(--font-serif); font-size: 2rem; color: var(--text-main); text-decoration: none; }
+        .brand p { font-family: var(--font-sans); font-size: 0.85rem; color: var(--text-muted); letter-spacing: 2px; text-transform: uppercase; margin-top: 10px; }
+        .form-group { margin-bottom: 25px; position: relative; }
+        .form-control { width: 100%; background: transparent; border: none; border-bottom: 1px solid rgba(0,0,0,0.1); padding: 10px 0; font-family: var(--font-ui); font-size: 1rem; color: var(--text-main); transition: all 0.3s ease; }
+        .form-control:focus { outline: none; border-bottom-color: var(--accent); }
+        .form-control::placeholder { color: #b0b0b0; font-weight: 300; }
+        .btn-submit { width: 100%; background-color: var(--text-main); color: var(--bg-color); border: none; padding: 15px; font-family: var(--font-sans); font-size: 0.9rem; text-transform: uppercase; letter-spacing: 2px; cursor: pointer; transition: all 0.3s ease; margin-top: 10px; }
+        .btn-submit:hover { background-color: var(--accent); }
+        .error-msg { color: #d9534f; font-size: 0.85rem; text-align: center; margin-bottom: 15px; display: none; }
+    </style>
+</head>
+<body>
+
+    <div class="login-wrapper">
+        <div class="brand">
+            <a href="index.html">YK.</a>
+            <p>Kimlik Doğrulama</p>
+        </div>
+
+        <div id="error-message" class="error-msg">Giriş başarısız. Bilgilerinizi kontrol edin.</div>
+
+        <form id="auth-form">
+            <div class="form-group">
+                <input type="email" id="email-input" class="form-control" placeholder="E-posta Adresi" required>
+            </div>
+            <div class="form-group">
+                <input type="password" id="password-input" class="form-control" placeholder="Şifre" required>
+            </div>
+            <button type="submit" class="btn-submit" id="submit-btn">Sisteme Gir</button>
+        </form>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
+        import { getAuth, signInWithEmailAndPassword, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyCr4HhlythyRIfy_Xnb-IaWr0Th0TkUQi4",
+            authDomain: "yk-blog-9720b.firebaseapp.com",
+            projectId: "yk-blog-9720b",
+            storageBucket: "yk-blog-9720b.firebasestorage.app",
+            messagingSenderId: "863054301539",
+            appId: "1:863054301539:web:4256589fbef613bd0e6b56"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+
+        // Kullanıcı zaten giriş yaptıysa direkt panele yönlendir
+        onAuthStateChanged(auth, (user) => {
+            if (user) window.location.href = 'admin.html';
+        });
+
+        const form = document.getElementById('auth-form');
+        const emailInput = document.getElementById('email-input');
+        const passwordInput = document.getElementById('password-input');
+        const errorMessage = document.getElementById('error-message');
+        const submitBtn = document.getElementById('submit-btn');
+
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            submitBtn.textContent = "Giriş Yapılıyor...";
+            errorMessage.style.display = 'none';
+
+            signInWithEmailAndPassword(auth, emailInput.value, passwordInput.value)
+                .then(() => {
+                    window.location.href = 'admin.html';
+                })
+                .catch((error) => {
+                    errorMessage.style.display = 'block';
+                    submitBtn.textContent = "Sisteme Gir";
+                });
+        });
+    </script>
+</body>
+</html>
