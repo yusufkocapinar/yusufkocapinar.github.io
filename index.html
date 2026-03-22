@@ -10,21 +10,22 @@
 
     <style>
         :root {
-            /* Renk paleti daha zengin tonlarla güncellendi */
-            --bg-color: #f6f3ef; /* Çok hafif sıcak, mat kağıt tonu */
-            --text-main: #0a0a0a; /* Tam siyah değil, çok koyu mat gri */
-            --text-muted: #555555;
-            --accent: #9c8461; /* Daha zengin, koyu bronz/altın tonu (Brass) */
-            --saffron: #f4c430; /* Saffron rengi (Ortadoğu esintisi) */
-            --border-color: rgba(0, 0, 0, 0.06);
+            /* Birleştirilmiş Yeni Renk Paleti */
+            --bg-color: #F5F5F3;       /* Kemik Beyazı / Açık Mermer */
+            --card-bg: #FFFFFF;        /* Mermer blokları için saf beyaz */
+            --text-main: #2C2A29;      /* Antrasit (Daha okunaklı ve premium) */
+            --text-muted: #666666;
+            --accent: #C5A880;         /* Mat Bronz / Şampanya */
+            --saffron: #f4c430;        /* Hover ve ince detaylar için */
+            --border-color: rgba(0, 0, 0, 0.05);
             --transition-premium: all 0.8s cubic-bezier(0.23, 1, 0.32, 1);
             --font-serif: 'Playfair Display', serif;
-            --font-sans: 'Tenor Sans', sans-serif; /* Daha editoryal bir sans-serif */
+            --font-sans: 'Tenor Sans', sans-serif;
         }
 
         * {
             margin: 0; padding: 0; box-sizing: border-box;
-            cursor: none; /* Özel cursor için varsayılanı gizle */
+            cursor: none;
         }
 
         body {
@@ -41,7 +42,7 @@
         body::before {
             content: "";
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background-image: url('data:image/svg+xml,<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><filter id="noiseFilter"><feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/></filter><rect width="100%" height="100%" filter="url(%23noiseFilter)" opacity="0.04"/></svg>');
+            background-image: url('data:image/svg+xml,<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><filter id="noiseFilter"><feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/></filter><rect width="100%" height="100%" filter="url(%23noiseFilter)" opacity="0.03"/></svg>');
             pointer-events: none; z-index: 50;
         }
 
@@ -49,7 +50,7 @@
         body::after {
             content: "";
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background-image: url('data:image/svg+xml,<svg width="100%" height="100%" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><g fill="%23a38f72" fill-opacity="0.01"><path d="M10 10 L20 10 L20 20 L10 20 Z M30 10 L40 10 L40 20 L30 20 Z M50 10 L60 10 L60 20 L50 20 Z" /></g></svg>'); /* Basit bir desen, gerçek bir SVG arabesque ile değiştirilebilir */
+            background-image: url('data:image/svg+xml,<svg width="100%" height="100%" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><g fill="%23C5A880" fill-opacity="0.015"><path d="M10 10 L20 10 L20 20 L10 20 Z M30 10 L40 10 L40 20 L30 20 Z M50 10 L60 10 L60 20 L50 20 Z" /></g></svg>');
             pointer-events: none; z-index: 1;
         }
 
@@ -71,17 +72,18 @@
             position: relative; z-index: 10;
         }
 
-        /* --- NAVİGASYON --- */
+        /* --- NAVİGASYON (Geliştirilmiş Omurga Yapısı) --- */
         nav {
             position: fixed; top: 0; left: 0; width: 100%;
             padding: 30px 0; z-index: 100;
             transition: var(--transition-premium);
         }
         nav.scrolled {
-            background: rgba(246, 243, 239, 0.95);
+            background: rgba(255, 255, 255, 0.98); /* Saf beyaz bazlı cam efekti */
             backdrop-filter: blur(10px);
             padding: 20px 0;
-            border-bottom: 1px solid var(--border-color);
+            border-bottom: 1px solid #EAEAEA;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04); /* Menüyü sabitleyen yumuşak gölge */
         }
 
         .nav-inner { display: flex; justify-content: space-between; align-items: center; }
@@ -97,8 +99,9 @@
             font-size: 0.8rem; text-transform: uppercase;
             letter-spacing: 2.5px; color: var(--text-muted);
             transition: var(--transition-premium);
+            font-weight: 600;
         }
-        .nav-links a.active { color: var(--saffron); } /* Saffron rengi aktif link */
+        .nav-links a.active { color: var(--accent); } 
         .nav-links a:hover { color: var(--text-main); }
 
         /* --- HERO (GİRİŞ) --- */
@@ -107,7 +110,6 @@
             justify-content: center; position: relative;
         }
 
-        /* DOKUNUŞ 4: Editoryal Tipografi ve Mouse Parallax (3D Derinlik) */
         .title-wrapper { position: relative; max-width: 1000px; }
         .main-title {
             font-family: var(--font-serif);
@@ -115,18 +117,17 @@
             line-height: 1; font-weight: 600;
             letter-spacing: -2.5px; color: var(--text-main);
             text-align: center;
-            /* Mouse Parallax efekti için sınıflar */
             transition: transform 0.1s ease-out;
             will-change: transform;
             position: relative;
         }
-        /* Başlığın arkasına hafif 3D gölge efekti */
+        /* Düzeltilmiş Parallax Gölge Efekti */
         .main-title::after {
             content: "Yusuf Kocapınar";
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
             font-family: var(--font-serif); font-size: 100%;
-            color: rgba(0,0,0,0.02); z-index: -1;
-            transform: translateZ(-2px) scale(0.98);
+            color: rgba(0,0,0,0.03); z-index: -1;
+            transform: translateZ(-2px) scale(0.98) translate(var(--shadow-move-x, 0px), var(--shadow-move-y, 0px));
         }
 
         .hero-desc {
@@ -146,6 +147,7 @@
             font-size: 0.8rem; text-transform: uppercase;
             letter-spacing: 3px; color: var(--accent);
             margin-bottom: 15px; display: block;
+            font-weight: 600;
         }
         .section-header h2 {
             font-family: var(--font-serif);
@@ -153,44 +155,43 @@
             line-height: 1.2; letter-spacing: -1px;
         }
 
-        /* DOKUNUŞ 5: 3D Bento Kartı (Basit 2D görüntüden kurtuluş) */
+        /* --- BENTO KARTLARI (Mermer Blok Hissi) --- */
         .bento-grid {
             display: grid; grid-template-columns: repeat(12, 1fr);
             gap: 40px;
-            perspective: 1000px; /* 3D derinlik efekti için gerekli */
+            perspective: 1000px; 
         }
 
         .bento-item {
-            background: rgba(255,255,255,0.6);
-            padding: 50px; border: 1px solid var(--border-color);
+            background: var(--card-bg); /* Saf beyaz arka plan */
+            padding: 50px; 
+            border: 1px solid var(--border-color);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.02); /* Statik yumuşak gölge */
             transition: var(--transition-premium);
             display: flex; flex-direction: column; justify-content: space-between;
-            position: relative; overflow: visible; /* Derinlik elementlerinin görünmesi için */
+            position: relative; overflow: visible; 
+            border-radius: 4px;
         }
 
-        /* 3D Derinlik Efekti: Hover'da Kartın Fiziksel Olarak Yükselmesi */
         .bento-item:hover {
-            border-color: rgba(156, 132, 97, 0.3);
-            background: rgba(255,255,255,0.9);
-            transform: rotateY(15deg) rotateX(5deg) translateZ(50px); /* 3D dönme ve yükselme */
-            box-shadow: 0 40px 80px rgba(156, 132, 97, 0.1); /* Derinlik gölgesi */
+            border-color: rgba(197, 168, 128, 0.3); /* Bronz kenarlık */
+            transform: rotateY(10deg) rotateX(4deg) translateZ(30px); /* 3D efekt biraz yumuşatıldı */
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.06); 
         }
 
-        /* Kartın Fiziksel Kalınlığını Simüle Etme (Brass Edges) */
         .bento-item::before {
             content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background: var(--accent); opacity: 0.1;
-            z-index: -1; transform: translateZ(-2px) scale(0.99); /* Arka panel */
+            background: var(--accent); opacity: 0.05;
+            z-index: -1; transform: translateZ(-2px) scale(0.99); 
         }
         .bento-item::after {
             content: ""; position: absolute; top: 0; left: 100%; width: 20px; height: 100%;
-            background: var(--accent); opacity: 0.2;
-            transform-origin: left; transform: rotateY(-90deg); /* Yan panel */
+            background: var(--accent); opacity: 0.15;
+            transform-origin: left; transform: rotateY(-90deg); 
         }
 
-        /* DOKUNUŞ 6: Kart Altında Teal/Gold Glow Efekti */
         .bento-item.depth-glow:hover {
-            filter: drop-shadow(0 15px 30px rgba(244, 196, 48, 0.2)); /* Saffron glow */
+            filter: drop-shadow(0 15px 30px rgba(197, 168, 128, 0.15)); /* Bronz glow */
         }
 
         .item-12 { grid-column: span 12; min-height: 400px; }
@@ -200,19 +201,20 @@
         .item-meta {
             font-size: 0.7rem; text-transform: uppercase;
             letter-spacing: 2px; color: var(--accent);
-            margin-bottom: 25px; font-weight: 400;
+            margin-bottom: 25px; font-weight: 600;
         }
         .item-title {
             font-family: var(--font-serif);
             font-size: 2.2rem; line-height: 1.2;
             margin-bottom: 20px; font-weight: 600;
+            color: var(--text-main);
         }
         .item-desc {
             font-size: 1rem; color: var(--text-muted);
             max-width: 80%;
         }
         .item-icon {
-            font-size: 1.5rem; color: rgba(156, 132, 97, 0.4);
+            font-size: 1.5rem; color: rgba(197, 168, 128, 0.5);
             margin-top: auto; padding-top: 30px;
         }
 
@@ -225,29 +227,29 @@
             transition: var(--transition-premium);
             align-items: center;
         }
-        /* DOKUNUŞ 7: Belli belirsiz Ortadoğu Kemer Motifi (Liste Kenarlarında) */
+        
         .list-item::before, .list-item::after {
             content: ""; position: absolute; left: 0; width: 50px; height: 100%;
-            background-image: url('data:image/svg+xml,<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path d="M0 100 L0 0 C0 20, 100 20, 100 0 L100 100 Z" fill="%23a38f72" fill-opacity="0.005"/></svg>'); /* Basit bir kemer SVGsi */
+            background-image: url('data:image/svg+xml,<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path d="M0 100 L0 0 C0 20, 100 20, 100 0 L100 100 Z" fill="%23C5A880" fill-opacity="0.015"/></svg>'); 
             pointer-events: none; z-index: 1;
         }
         .list-item::after { left: auto; right: 0; transform: scaleX(-1); }
 
         .list-item:hover {
-            background: rgba(255,255,255,0.4);
+            background: rgba(255,255,255,0.6);
             padding-left: 25px; padding-right: 25px;
         }
 
-        .list-date { font-size: 0.9rem; color: var(--text-muted); }
+        .list-date { font-size: 0.9rem; color: var(--text-muted); font-weight: 500;}
         .list-title {
             font-family: var(--font-serif);
             font-size: 1.8rem; font-weight: 400;
             text-align: center;
         }
-        /* Kaligrafik alt çizgi efekti hover'da */
+        
         .list-item a::after {
             content: ""; position: absolute; left: 50%; bottom: -5px; width: 0; height: 1px;
-            background: var(--saffron); transition: var(--transition-premium);
+            background: var(--accent); transition: var(--transition-premium);
             transform: translateX(-50%);
         }
         .list-item:hover a::after { width: 50%; }
@@ -255,7 +257,7 @@
         .list-category {
             font-size: 0.8rem; text-align: right;
             color: var(--accent); text-transform: uppercase;
-            letter-spacing: 2px;
+            letter-spacing: 2px; font-weight: 600;
         }
 
         /* ANİMASYON SINIFLARI */
@@ -268,7 +270,7 @@
         /* RESPONSIVE */
         @media (max-width: 1000px) {
             .nav-links { display: none; }
-            .bento-item { grid-column: span 12; min-height: 300px;}
+            .bento-item { grid-column: span 12; min-height: 300px; transform: none !important;}
             .list-item { grid-template-columns: 1fr; gap: 15px; padding: 30px 15px;}
             .list-category { text-align: left; }
             section { padding: 80px 0; }
@@ -360,7 +362,7 @@
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             
-            // --- DOKUNUŞ 3: Özel Cursor Mantığı ---
+            // Özel Cursor
             const cursor = document.getElementById('custom-cursor');
             const hoverTargets = document.querySelectorAll('.hover-target');
 
@@ -374,29 +376,28 @@
                 target.addEventListener('mouseout', () => cursor.classList.remove('hover'));
             });
 
-            // --- DOKUNUŞ 4: Mouse Parallax Efekti (Hero Başlığı - 3D Derinlik) ---
+            // Parallax Efekti
             const parallaxText = document.querySelector('.parallax-text');
             
-            if(window.innerWidth > 1000) { // Sadece masaüstünde çalışsın
+            if(window.innerWidth > 1000) { 
                 document.addEventListener('mousemove', e => {
-                    const moveX = (e.clientX - window.innerWidth / 2) * 0.01; // Hassasiyet ayarı
+                    const moveX = (e.clientX - window.innerWidth / 2) * 0.01; 
                     const moveY = (e.clientY - window.innerHeight / 2) * 0.01;
                     
-                    // Derinlik gölgesini de parallax'a dahil et
                     parallaxText.style.transform = `translate(${moveX}px, ${moveY}px)`;
                     parallaxText.style.setProperty('--shadow-move-x', `${moveX * -2}px`);
                     parallaxText.style.setProperty('--shadow-move-y', `${moveY * -2}px`);
                 });
             }
 
-            // --- Navigasyon Scroll Efekti ---
+            // Scroll Efekti
             const nav = document.getElementById('main-nav');
             window.addEventListener('scroll', () => {
                 if (window.scrollY > 50) nav.classList.add('scrolled');
                 else nav.classList.remove('scrolled');
             });
 
-            // --- Giriş Animasyonları (Intersection Observer) ---
+            // Animasyonlar
             const observerOptions = { root: null, rootMargin: '0px', threshold: 0.1 };
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
