@@ -15,7 +15,7 @@
             --text-main: #2C2A29;      
             --text-muted: #7A7A7A;
             --accent: #B39B78;         
-            /* Ruhsuz gri yerine, pirinç/bronz tonlu yeni sınır rengimiz */
+            /* Pirinç/bronz tonlu sınır rengimiz */
             --border-color: rgba(179, 155, 120, 0.2); 
             --transition-premium: all 0.5s cubic-bezier(0.25, 1, 0.5, 1);
             --font-serif: 'Playfair Display', serif;
@@ -34,25 +34,14 @@
             position: relative;
         }
 
-        /* 1. DOKU: Zarif Kağıt/Taş Pürüzü */
+        /* DOKU: Zarif Kağıt/Taş Pürüzü */
         body::before {
             content: ""; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background-image: url('data:image/svg+xml,<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><filter id="noiseFilter"><feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/></filter><rect width="100%" height="100%" filter="url(%23noiseFilter)" opacity="0.025"/></svg>');
             pointer-events: none; z-index: 50;
         }
 
-        /* 2. DOKU: Dev Filigran (Biraz daha belirginleştirildi - %7) */
-        body::after {
-            content: ""; position: fixed; top: -15vh; right: -10vw;
-            width: 80vw; height: 80vw; min-width: 600px; min-height: 600px;
-            background-image: url('data:image/svg+xml,<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="%23B39B78" stroke-width="0.3"><rect x="15" y="15" width="70" height="70"/><rect x="15" y="15" width="70" height="70" transform="rotate(45 50 50)"/><circle cx="50" cy="50" r="34"/></g></svg>');
-            background-repeat: no-repeat; background-size: contain;
-            opacity: 0.07; 
-            pointer-events: none; z-index: 0;
-            transform: rotate(15deg); filter: blur(1px);
-        }
-
-        /* YENİ DOKUNUŞ: Mimari Omurga Çizgileri (Dergi Hissiyatı) */
+        /* Mimari Omurga Çizgileri (Dergi Hissiyatı) */
         .spine-line {
             position: fixed; top: 0; width: 1px; height: 100vh;
             /* Ortası belirgin, uçlara doğru silinen pirinç çizgiler */
@@ -85,7 +74,7 @@
         }
         nav.scrolled {
             background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px);
-            padding: 20px 0; border-bottom: 1px solid var(--border-color); /* Pirinç sınır */
+            padding: 20px 0; border-bottom: 1px solid var(--border-color);
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02);
         }
 
@@ -143,7 +132,7 @@
 
         .bento-item {
             background: var(--card-bg); padding: 50px; 
-            border: 1px solid var(--border-color); /* Şeffaf yerine sabit ince pirinç çerçeve */
+            border: 1px solid var(--border-color);
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02); 
             transition: var(--transition-premium);
             display: flex; flex-direction: column; justify-content: space-between;
@@ -152,7 +141,7 @@
 
         .bento-item:hover {
             transform: translateY(-8px);
-            border-color: rgba(179, 155, 120, 0.4); /* Hover'da belirginleşen bronz */
+            border-color: rgba(179, 155, 120, 0.4);
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.05); 
         }
 
@@ -193,7 +182,7 @@
         .fade-up.visible { opacity: 1; transform: translateY(0); }
 
         @media (max-width: 900px) {
-            .nav-links, .spine-line { display: none; } /* Mobilde omurga çizgilerini gizle */
+            .nav-links, .spine-line { display: none; }
             .bento-item { grid-column: span 12; min-height: 300px; }
             .list-item { grid-template-columns: 1fr; gap: 10px; text-align: center; padding: 30px 10px;}
             .list-date, .list-category { text-align: center; }
@@ -203,7 +192,7 @@
 </head>
 <body>
 
-    <!-- YENİ: Editoryal Omurga Çizgileri -->
+    <!-- Editoryal Omurga Çizgileri -->
     <div class="spine-line spine-left"></div>
     <div class="spine-line spine-right"></div>
 
