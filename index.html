@@ -36,12 +36,14 @@
             position: relative;
         }
 
+        /* DOKU: Zarif Taş Pürüzü */
         body::before {
             content: ""; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background-image: url('data:image/svg+xml,<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><filter id="noiseFilter"><feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/></filter><rect width="100%" height="100%" filter="url(%23noiseFilter)" opacity="0.025"/></svg>');
             pointer-events: none; z-index: 50;
         }
 
+        /* HIZLI İMLEÇ VE MOBİL İPTALİ */
         @media (pointer: fine) {
             * { cursor: none; }
             #custom-cursor {
@@ -58,74 +60,70 @@
 
         .container { max-width: 1200px; margin: 0 auto; padding: 0 4vw; position: relative; z-index: 10; }
 
-        /* GÜNCELLENEN HEADER DÜZENİ */
-        nav {
+        /* YENİ "SÜRPRİZ" HEADER TASARIMI (FLOATING CAPSULE) */
+        header {
             position: fixed; top: 0; left: 0; width: 100%;
-            background-color: rgba(245, 245, 243, 0.98);
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid var(--border-color);
-            padding: 20px 0; z-index: 100;
-            transition: var(--transition-premium);
+            padding: 30px 4vw; z-index: 100;
+            display: flex; justify-content: space-between; align-items: flex-start;
+            pointer-events: none; /* Boşluklara tıklamayı engeller, mermer hissini korur */
         }
 
-        .nav-inner { 
-            display: grid; 
-            grid-template-columns: 1fr auto 1fr; 
-            align-items: center; 
+        /* SOL: HARİTA VE İMZA GRUBU */
+        .brand-group {
+            display: flex; align-items: center; gap: 15px;
+            pointer-events: auto; transition: var(--transition-premium);
         }
+        .brand-group:hover { transform: scale(1.02); }
         
-        .header-left { display: flex; align-items: center; }
-        .palestine-map { height: 40px; width: auto; transition: var(--transition-premium); }
-        .palestine-map:hover { opacity: 0.7; transform: scale(1.05); }
+        .palestine-crest {
+            height: 45px; width: auto; 
+            stroke: var(--accent); stroke-width: 3; fill: none;
+            stroke-linecap: round; stroke-linejoin: round;
+        }
 
         .logo-signature { 
             font-family: var(--font-signature); 
             font-size: 2.8rem; 
             color: var(--text-main); 
             text-decoration: none; 
-            z-index: 2; 
             line-height: 1;
-            transform: rotate(-2deg);
-            display: inline-block;
+            transform: rotate(-3deg);
+            padding-top: 10px; /* İmzayı haritayla hizalamak için ufak dokunuş */
+        }
+
+        /* SAĞ: KAPSÜL MENÜ (PILL DESIGN) */
+        .header-controls {
+            pointer-events: auto;
+            background: rgba(245, 245, 243, 0.6);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(179, 155, 120, 0.3);
+            border-radius: 50px;
+            display: flex; align-items: center; gap: 20px;
+            padding: 6px 6px 6px 25px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.03);
             transition: var(--transition-premium);
-            justify-self: center;
-            margin: 0;
         }
-        .logo-signature:hover { color: var(--accent); transform: rotate(0deg) scale(1.05); }
+        .header-controls:hover { border-color: var(--accent); background: rgba(245, 245, 243, 0.9); }
 
-        .header-right { display: flex; justify-content: flex-end; align-items: center; gap: 30px; }
-
-        /* İTALİK FONT KALDIRILDI */
-        .desktop-nav { display: flex; gap: 40px; align-items: center; z-index: 2; }
-        .desktop-nav a { 
-            font-family: var(--font-serif); 
-            font-size: 1.1rem; 
-            color: var(--text-main); 
-            text-decoration: none; 
-            position: relative; 
-            transition: var(--transition-premium); 
-            padding-bottom: 2px;
-        }
-        .desktop-nav a::after { 
-            content: ''; position: absolute; width: 0; height: 1px; 
-            bottom: 0; left: 50%; background-color: var(--accent); 
-            transition: var(--transition-premium); transform: translateX(-50%); 
-        }
-        .desktop-nav a:hover { color: var(--accent); }
-        .desktop-nav a:hover::after { width: 100%; }
-        
-        .login-btn { 
+        .login-link {
             font-family: var(--font-sans); font-size: 0.75rem; 
             text-transform: uppercase; letter-spacing: 2px; 
             color: var(--text-muted); text-decoration: none; 
-            border: 1px solid var(--border-color); padding: 8px 20px; 
-            border-radius: 30px; transition: var(--transition-premium);
-            margin-left: 20px;
+            transition: 0.3s;
         }
-        .login-btn:hover { border-color: var(--accent); color: var(--accent); }
+        .login-link:hover { color: var(--accent); }
 
-        .menu-toggle { display: none; background: none; border: none; font-family: var(--font-sans); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 2px; color: var(--text-main); align-items: center; gap: 8px; z-index: 2;}
+        .menu-toggle {
+            background: var(--text-main); color: var(--bg-color);
+            border: none; border-radius: 40px; padding: 12px 25px;
+            font-family: var(--font-sans); font-size: 0.75rem; 
+            text-transform: uppercase; letter-spacing: 2px; 
+            display: flex; align-items: center; gap: 10px;
+            transition: var(--transition-premium);
+        }
+        .menu-toggle:hover { background: var(--accent); transform: scale(1.05); }
 
+        /* OVERLAY (TAM EKRAN) MENÜ */
         .menu-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
             background-color: var(--bg-color); z-index: 999;
@@ -154,6 +152,7 @@
         .menu-overlay.active .overlay-link { transform: translateY(0); opacity: 1; }
         .overlay-link:hover { color: var(--accent); }
 
+        /* HERO & İÇERİK BÖLÜMLERİ */
         .hero { height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; }
         .main-title { font-family: var(--font-serif); font-size: clamp(3rem, 8vw, 7rem); line-height: 1.1; font-weight: 400; letter-spacing: -1.5px; color: var(--text-main); text-align: center; margin-top: 40px;}
         .hero-desc { font-size: 1.1rem; color: var(--text-muted); font-weight: 300; margin-top: 30px; text-transform: uppercase; letter-spacing: 4px; text-align: center; }
@@ -183,7 +182,7 @@
         .fade-up { opacity: 0; transform: translateY(30px); transition: 1s ease-out; }
         .fade-up.visible { opacity: 1; transform: translateY(0); }
 
-        /* YENİ EKLENEN ŞIK FOOTER */
+        /* YENİ ŞIK VE TEMİZ FOOTER (İmzasız) */
         .site-footer { border-top: 1px solid var(--border-color); padding: 60px 0; margin-top: 40px; position: relative; z-index: 10; }
         .footer-inner { display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 20px; }
         .footer-socials { display: flex; gap: 35px; align-items: center; }
@@ -191,12 +190,13 @@
         .footer-socials a:hover { color: var(--accent); transform: translateY(-3px); }
         .footer-text { font-family: var(--font-sans); font-size: 0.7rem; letter-spacing: 4px; color: var(--text-muted); text-transform: uppercase; margin-top: 10px;}
 
+        /* MOBİL UYUM */
         @media (max-width: 900px) {
-            .nav-inner { grid-template-columns: auto 1fr auto; gap: 15px; }
-            .palestine-map { height: 30px; }
-            .logo-signature { font-size: 2rem; }
-            .desktop-nav { display: none; }
-            .menu-toggle { display: flex; }
+            header { padding: 20px 4vw; }
+            .palestine-crest { height: 35px; }
+            .logo-signature { font-size: 2.2rem; }
+            .header-controls { padding: 5px 5px 5px 15px; gap: 15px; }
+            .login-link { display: none; } /* Mobilde girişi gizle, sadeliği koru */
             .bento-item { grid-column: span 12; }
             .about-grid { grid-template-columns: 1fr; gap: 40px; }
             .about-quote { font-size: 1.5rem; }
@@ -213,33 +213,22 @@
             <a href="sentez.html" class="overlay-link hover-target">Sentez <span>Akademik Projeler & Kod</span></a>
             <a href="perspektif.html" class="overlay-link hover-target">Perspektif <span>Entelektüel Denemeler</span></a>
             <a href="doku.html" class="overlay-link hover-target">Doku <span>Sanat & Estetik</span></a>
-            <a href="admin.html" class="overlay-link hover-target" style="font-size: 2rem; margin-top: 30px; color: var(--accent);">Yönetim Paneli</a>
         </nav>
     </div>
 
-    <nav id="main-nav">
-        <div class="container nav-inner">
-            
-            <div class="header-left">
-                <svg class="palestine-map hover-target" viewBox="0 0 100 200" fill="none" stroke="var(--accent)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" title="Palestine">
-                    <path d="M 50,10 L 60,30 C 65,50 60,80 60,100 L 45,180 L 10,100 C 15,70 30,30 50,10 Z"/>
-                </svg>
-            </div>
-
-            <a href="index.html" class="logo-signature hover-target">Y. Kocapınar</a>
-            
-            <div class="header-right">
-                <div class="desktop-nav">
-                    <a href="sentez.html" class="hover-target">Sentez</a>
-                    <a href="perspektif.html" class="hover-target">Perspektif</a>
-                    <a href="doku.html" class="hover-target">Doku</a>
-                    <a href="login.html" class="login-btn hover-target">Giriş</a>
-                </div>
-                <button class="menu-toggle hover-target" id="open-menu">Menü <i class="fas fa-bars"></i></button>
-            </div>
-
+    <header>
+        <div class="brand-group hover-target">
+            <svg class="palestine-crest" viewBox="0 0 100 200" title="Palestine">
+                <path d="M45,5 L60,25 C65,40 60,70 55,100 L40,185 C35,195 25,195 20,185 L10,120 C5,90 15,45 45,5 Z"/>
+            </svg>
+            <a href="index.html" class="logo-signature">Y. Kocapınar</a>
         </div>
-    </nav>
+
+        <div class="header-controls">
+            <a href="login.html" class="login-link hover-target">Giriş</a>
+            <button class="menu-toggle hover-target" id="open-menu">Menü <i class="fas fa-bars"></i></button>
+        </div>
+    </header>
 
     <main>
         <section class="hero container">
@@ -305,6 +294,7 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
+            // HIZLI İMLEÇ ETKİLEŞİMİ (Sadece Masaüstü)
             if (window.matchMedia("(pointer: fine)").matches) {
                 const cursor = document.getElementById('custom-cursor');
                 document.addEventListener('mousemove', e => {
@@ -317,11 +307,13 @@
                 });
             }
 
+            // AŞAĞI KAYDIRDIKÇA BELİRME (FADE-UP)
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
             }, { threshold: 0.1 });
             document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
 
+            // MOBİL MENÜ KONTROLLERİ
             const openBtn = document.getElementById('open-menu');
             const closeBtn = document.getElementById('close-menu');
             const overlay = document.getElementById('overlay');
