@@ -16,14 +16,22 @@
             --font-serif: 'Playfair Display', serif; --font-sans: 'Tenor Sans', sans-serif;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; cursor: none; }
+        /* İMLEÇ ve MOBİL OPTİMİZASYONU DÜZELTİLDİ */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         
+        @media (pointer: fine) {
+            * { cursor: none; }
+            #custom-cursor { position: fixed; width: 6px; height: 6px; background: var(--accent); border-radius: 50%; pointer-events: none; z-index: 10000; transform: translate(-50%, -50%); transition: width 0.15s ease-out, height 0.15s ease-out, background 0.15s ease-out; }
+            #custom-cursor.hover { width: 40px; height: 40px; background: rgba(179, 155, 120, 0.1); border: 1px solid var(--accent); opacity: 1; }
+        }
+        @media (pointer: coarse) {
+            #custom-cursor { display: none !important; }
+            * { cursor: auto !important; }
+        }
+
         body { background-color: var(--bg-color); color: var(--text-main); font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased; overflow-x: hidden; display: none; height: 100vh; }
 
         body::before { content: ""; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-image: url('data:image/svg+xml,<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><filter id="noiseFilter"><feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/></filter><rect width="100%" height="100%" filter="url(%23noiseFilter)" opacity="0.025"/></svg>'); pointer-events: none; z-index: 50; }
-
-        #custom-cursor { position: fixed; width: 6px; height: 6px; background: var(--accent); border-radius: 50%; pointer-events: none; z-index: 10000; transform: translate(-50%, -50%); transition: width 0.3s, height 0.3s, opacity 0.3s; }
-        #custom-cursor.hover { width: 40px; height: 40px; background: rgba(179, 155, 120, 0.05); border: 1px solid var(--accent); opacity: 1; }
 
         .admin-sidebar { width: 300px; background-color: rgba(245, 245, 243, 0.95); border-right: 1px solid var(--border-color); display: flex; flex-direction: column; padding: 50px 40px; z-index: 100; position: relative; }
         .brand { font-family: var(--font-serif); font-size: 1.5rem; font-weight: 700; color: var(--text-main); text-decoration: none; margin-bottom: 20px; display: block; letter-spacing: -0.5px; }
@@ -39,7 +47,7 @@
         .nav-tab.active i { color: var(--accent); }
         .nav-tab.active::after { content: ''; position: absolute; right: -40px; top: 50%; transform: translateY(-50%); width: 3px; height: 100%; background-color: var(--accent); }
 
-        .logout-btn { background: none; border: none; text-align: left; cursor: none; font-family: var(--font-sans); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px; color: #d9534f; text-decoration: none; display: flex; align-items: center; gap: 10px; transition: 0.3s; margin-top: auto; }
+        .logout-btn { background: none; border: none; text-align: left; font-family: var(--font-sans); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px; color: #d9534f; text-decoration: none; display: flex; align-items: center; gap: 10px; transition: 0.3s; margin-top: auto; }
         .logout-btn:hover { opacity: 0.7; }
 
         .admin-content { flex: 1; padding: 60px 8vw; overflow-y: auto; z-index: 10; position: relative; }
@@ -72,6 +80,13 @@
         .item-info span { font-size: 0.8rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; }
         .item-actions button { background: none; border: 1px solid #d9534f; color: #d9534f; padding: 8px 15px; font-size: 0.75rem; letter-spacing: 1px; transition: 0.3s; border-radius: 4px; }
         .item-actions button:hover { background: #d9534f; color: #fff; }
+
+        @media (max-width: 768px) {
+            body { flex-direction: column; }
+            .admin-sidebar { width: 100%; border-right: none; border-bottom: 1px solid var(--border-color); padding: 30px 5vw; }
+            .admin-content { padding: 40px 5vw; }
+            .form-grid { grid-template-columns: 1fr; }
+        }
     </style>
 </head>
 <body>
@@ -157,6 +172,11 @@
                         <textarea id="p-excerpt" placeholder=" " required class="hover-target"></textarea>
                         <label class="floating-label">Yazı Özeti (Sitede görünecek kısım)</label>
                     </div>
+                    
+                    <div class="input-group form-full">
+                        <textarea id="p-content" placeholder=" " required class="hover-target" style="min-height: 250px;"></textarea>
+                        <label class="floating-label">Yazının Tamamı (İçerik)</label>
+                    </div>
                 </div>
                 <button type="submit" class="submit-btn hover-target">Yazıyı Yayınla <i class="fas fa-check"></i></button>
             </form>
@@ -204,12 +224,10 @@
     </main>
 
     <script type="module">
-        // Güncellenmiş importlar (Silme ve Listeleme için gerekli modüller eklendi)
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
         import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
         import { getFirestore, collection, addDoc, serverTimestamp, getDocs, query, orderBy, limit, deleteDoc, doc } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
         
-        // ImgBB API Anahtarı
         const IMGBB_API_KEY = "cc4c7248a394919486e74ab02cdf1954";
 
         const firebaseConfig = {
@@ -224,7 +242,6 @@
         const auth = getAuth(app);
         const db = getFirestore(app);
 
-        // Kimlik Kontrolü
         onAuthStateChanged(auth, (user) => {
             if (user) {
                 document.body.style.display = 'flex';
@@ -234,16 +251,14 @@
             }
         });
 
-        // Çıkış Yapma
         document.getElementById('logout-btn').addEventListener('click', () => {
             signOut(auth).then(() => { window.location.href = 'login.html'; });
         });
 
-        /* SENTEZ (Projeler) */
+        /* SENTEZ */
         document.getElementById('form-sentez').addEventListener('submit', async (e) => {
             e.preventDefault();
-            const btn = e.target.querySelector('button');
-            const originalText = btn.innerHTML;
+            const btn = e.target.querySelector('button'); const originalText = btn.innerHTML;
             btn.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> Kaydediliyor...';
             
             try {
@@ -258,7 +273,7 @@
                 e.target.reset();
                 btn.innerHTML = 'Arşive Eklendi <i class="fas fa-check"></i>';
                 btn.style.color = "#4CAF50"; btn.style.borderColor = "#4CAF50";
-                setTimeout(() => { loadManagement(); }, 1000); // Listeyi yenile
+                setTimeout(() => { loadManagement(); }, 1000); 
             } catch (error) {
                 btn.innerHTML = 'Hata Oluştu! <i class="fas fa-times"></i>';
                 btn.style.color = "#d9534f"; btn.style.borderColor = "#d9534f";
@@ -266,11 +281,10 @@
             setTimeout(() => { btn.innerHTML = originalText; btn.style.color = ''; btn.style.borderColor = ''; }, 3000);
         });
 
-        /* PERSPEKTİF (Yazılar) */
+        /* PERSPEKTİF (TAM METİN İLE GÜNCELLENDİ) */
         document.getElementById('form-perspektif').addEventListener('submit', async (e) => {
             e.preventDefault();
-            const btn = e.target.querySelector('button');
-            const originalText = btn.innerHTML;
+            const btn = e.target.querySelector('button'); const originalText = btn.innerHTML;
             btn.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> Yayınlanıyor...';
 
             try {
@@ -279,12 +293,13 @@
                     type: document.getElementById('p-type').value,
                     date: document.getElementById('p-date').value,
                     excerpt: document.getElementById('p-excerpt').value,
+                    content: document.getElementById('p-content').value, // YENİ EKLENEN VERİ
                     createdAt: serverTimestamp()
                 });
                 e.target.reset();
                 btn.innerHTML = 'Yazı Yayınlandı <i class="fas fa-check"></i>';
                 btn.style.color = "#4CAF50"; btn.style.borderColor = "#4CAF50";
-                setTimeout(() => { loadManagement(); }, 1000); // Listeyi yenile
+                setTimeout(() => { loadManagement(); }, 1000);
             } catch (error) {
                 btn.innerHTML = 'Hata Oluştu! <i class="fas fa-times"></i>';
                 btn.style.color = "#d9534f"; btn.style.borderColor = "#d9534f";
@@ -292,31 +307,20 @@
             setTimeout(() => { btn.innerHTML = originalText; btn.style.color = ''; btn.style.borderColor = ''; }, 3000);
         });
 
-        /* DOKU (Galeri) - IMGBB SİSTEMİ */
+        /* DOKU */
         document.getElementById('form-doku').addEventListener('submit', async (e) => {
             e.preventDefault();
-            const btn = e.target.querySelector('button');
-            const originalText = btn.innerHTML;
+            const btn = e.target.querySelector('button'); const originalText = btn.innerHTML;
             btn.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> Görsel Yükleniyor...';
 
             const fileInput = document.getElementById('d-file');
             const file = fileInput.files[0];
 
-            if (!file) {
-                alert("Lütfen bir görsel seçin.");
-                btn.innerHTML = originalText;
-                return;
-            }
+            if (!file) { alert("Lütfen bir görsel seçin."); btn.innerHTML = originalText; return; }
 
             try {
-                const formData = new FormData();
-                formData.append("image", file);
-
-                const uploadResponse = await fetch(`https://api.imgbb.com/1/upload?key=${IMGBB_API_KEY}`, {
-                    method: "POST",
-                    body: formData
-                });
-                
+                const formData = new FormData(); formData.append("image", file);
+                const uploadResponse = await fetch(`https://api.imgbb.com/1/upload?key=${IMGBB_API_KEY}`, { method: "POST", body: formData });
                 const uploadData = await uploadResponse.json();
                 if (!uploadData.success) throw new Error("ImgBB Yükleme Hatası");
 
@@ -334,7 +338,7 @@
                 e.target.reset();
                 btn.innerHTML = 'Galeriye Eklendi <i class="fas fa-check"></i>';
                 btn.style.color = "#4CAF50"; btn.style.borderColor = "#4CAF50";
-                setTimeout(() => { loadManagement(); }, 1000); // Listeyi yenile
+                setTimeout(() => { loadManagement(); }, 1000);
             } catch (error) {
                 btn.innerHTML = 'Hata Oluştu! <i class="fas fa-times"></i>';
                 btn.style.color = "#d9534f"; btn.style.borderColor = "#d9534f";
@@ -342,7 +346,7 @@
             setTimeout(() => { btn.innerHTML = originalText; btn.style.color = ''; btn.style.borderColor = ''; }, 3000);
         });
 
-        /* SİLME / ARŞİV YÖNETİMİ FONKSİYONU */
+        /* SİLME İŞLEMİ */
         async function loadManagement() {
             const listDiv = document.getElementById('admin-management-list');
             listDiv.innerHTML = '';
@@ -375,13 +379,9 @@
                     });
                 }
 
-                if(!hasItem) {
-                    listDiv.innerHTML = '<div style="padding: 20px 0; color: var(--text-muted);">Arşivde silinecek içerik bulunmuyor.</div>';
-                }
+                if(!hasItem) { listDiv.innerHTML = '<div style="padding: 20px 0; color: var(--text-muted);">Arşivde silinecek içerik bulunmuyor.</div>'; }
 
-                // Silme İşlemleri İçin Event Listener
                 document.querySelectorAll('.delete-btn').forEach(btn => {
-                    // İmleç efektini tetiklemek için manuel eklenti
                     const cursor = document.getElementById('custom-cursor');
                     btn.addEventListener('mouseover', () => cursor.classList.add('hover'));
                     btn.addEventListener('mouseout', () => cursor.classList.remove('hover'));
@@ -397,35 +397,30 @@
                             try {
                                 await deleteDoc(doc(db, coll, id));
                                 btnEl.closest('.list-item').remove();
-                            } catch (err) {
-                                alert("Silme başarısız!");
-                                btnEl.innerHTML = '<i class="fas fa-trash-alt"></i> SİL';
-                            }
+                            } catch (err) { alert("Silme başarısız!"); btnEl.innerHTML = '<i class="fas fa-trash-alt"></i> SİL'; }
                         }
                     });
                 });
-
-            } catch (err) {
-                listDiv.innerHTML = '<div style="padding: 20px 0; color: #d9534f;">İçerikler yüklenemedi.</div>';
-            }
+            } catch (err) { listDiv.innerHTML = '<div style="padding: 20px 0; color: #d9534f;">İçerikler yüklenemedi.</div>'; }
         }
 
-        // Sayfa açıldığında listeyi yükle
         loadManagement();
-
     </script>
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            const cursor = document.getElementById('custom-cursor');
-            document.addEventListener('mousemove', e => {
-                cursor.style.left = e.clientX + 'px';
-                cursor.style.top = e.clientY + 'px';
-            });
-            document.querySelectorAll('.hover-target, button, input, textarea, select, a').forEach(t => {
-                t.addEventListener('mouseover', () => cursor.classList.add('hover'));
-                t.addEventListener('mouseout', () => cursor.classList.remove('hover'));
-            });
+            // İMLEÇ DÜZELTMESİ JS: Sadece masaüstünde (pointer: fine) çalışacak şekilde ayarlandı.
+            if (window.matchMedia("(pointer: fine)").matches) {
+                const cursor = document.getElementById('custom-cursor');
+                document.addEventListener('mousemove', e => {
+                    cursor.style.left = e.clientX + 'px';
+                    cursor.style.top = e.clientY + 'px';
+                });
+                document.querySelectorAll('.hover-target, button, input, textarea, select, a').forEach(t => {
+                    t.addEventListener('mouseover', () => cursor.classList.add('hover'));
+                    t.addEventListener('mouseout', () => cursor.classList.remove('hover'));
+                });
+            }
 
             const tabs = document.querySelectorAll('.nav-tab');
             const panels = document.querySelectorAll('.panel-section');
