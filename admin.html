@@ -66,13 +66,12 @@
         .submit-btn:hover { background: var(--accent); color: var(--card-bg); }
 
         .item-list { margin-top: 60px; border-top: 1px solid var(--border-color); padding-top: 40px; }
-        .list-title { font-family: var(--font-sans); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 2px; color: var(--text-muted); margin-bottom: 30px; }
+        .list-title { font-family: var(--font-serif); font-size: 2rem; color: var(--text-main); margin-bottom: 30px; font-weight: 400; }
         .list-item { display: flex; justify-content: space-between; align-items: center; padding: 20px 0; border-bottom: 1px dashed rgba(179, 155, 120, 0.2); }
         .item-info h4 { font-family: var(--font-serif); font-size: 1.2rem; font-weight: 400; color: var(--text-main); margin-bottom: 5px; }
         .item-info span { font-size: 0.8rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; }
-        .item-actions button { background: none; border: none; color: var(--text-muted); font-size: 1rem; margin-left: 15px; transition: 0.3s; }
-        .item-actions button:hover { color: #d9534f; }
-        .item-actions button.edit:hover { color: var(--accent); }
+        .item-actions button { background: none; border: 1px solid #d9534f; color: #d9534f; padding: 8px 15px; font-size: 0.75rem; letter-spacing: 1px; transition: 0.3s; border-radius: 4px; }
+        .item-actions button:hover { background: #d9534f; color: #fff; }
     </style>
 </head>
 <body>
@@ -101,7 +100,6 @@
 
     <main class="admin-content">
         
-        <!-- SENTEZ PANELI -->
         <section id="sentez-panel" class="panel-section active">
             <div class="section-header">
                 <h2 class="section-title">Yeni Proje Ekle</h2>
@@ -133,7 +131,6 @@
             </form>
         </section>
 
-        <!-- PERSPEKTİF PANELI -->
         <section id="perspektif-panel" class="panel-section">
             <div class="section-header">
                 <h2 class="section-title">Yeni Yazı Ekle</h2>
@@ -165,7 +162,6 @@
             </form>
         </section>
 
-        <!-- DOKU PANELI -->
         <section id="doku-panel" class="panel-section">
             <div class="section-header">
                 <h2 class="section-title">Galeriye Görsel Yükle</h2>
@@ -196,13 +192,22 @@
                 <button type="submit" class="submit-btn hover-target">Görseli Yükle <i class="fas fa-upload"></i></button>
             </form>
         </section>
+
+        <section class="item-list">
+            <h2 class="list-title">Arşiv Yönetimi</h2>
+            <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 20px;">Son yüklenen içeriklerinizi buradan silebilirsiniz.</p>
+            <div id="admin-management-list">
+                <div style="padding: 20px 0; color: var(--accent);"><i class="fas fa-circle-notch fa-spin"></i> Veriler getiriliyor...</div>
+            </div>
+        </section>
+
     </main>
 
-    <!-- FIREBASE IMPORT VE IMGBB ENTEGRASYONU -->
     <script type="module">
+        // Güncellenmiş importlar (Silme ve Listeleme için gerekli modüller eklendi)
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
         import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
-        import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
+        import { getFirestore, collection, addDoc, serverTimestamp, getDocs, query, orderBy, limit, deleteDoc, doc } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
         
         // ImgBB API Anahtarı
         const IMGBB_API_KEY = "cc4c7248a394919486e74ab02cdf1954";
@@ -253,6 +258,7 @@
                 e.target.reset();
                 btn.innerHTML = 'Arşive Eklendi <i class="fas fa-check"></i>';
                 btn.style.color = "#4CAF50"; btn.style.borderColor = "#4CAF50";
+                setTimeout(() => { loadManagement(); }, 1000); // Listeyi yenile
             } catch (error) {
                 btn.innerHTML = 'Hata Oluştu! <i class="fas fa-times"></i>';
                 btn.style.color = "#d9534f"; btn.style.borderColor = "#d9534f";
@@ -278,6 +284,7 @@
                 e.target.reset();
                 btn.innerHTML = 'Yazı Yayınlandı <i class="fas fa-check"></i>';
                 btn.style.color = "#4CAF50"; btn.style.borderColor = "#4CAF50";
+                setTimeout(() => { loadManagement(); }, 1000); // Listeyi yenile
             } catch (error) {
                 btn.innerHTML = 'Hata Oluştu! <i class="fas fa-times"></i>';
                 btn.style.color = "#d9534f"; btn.style.borderColor = "#d9534f";
@@ -285,7 +292,7 @@
             setTimeout(() => { btn.innerHTML = originalText; btn.style.color = ''; btn.style.borderColor = ''; }, 3000);
         });
 
-        /* DOKU (Galeri) - YENİ IMGBB SİSTEMİ */
+        /* DOKU (Galeri) - IMGBB SİSTEMİ */
         document.getElementById('form-doku').addEventListener('submit', async (e) => {
             e.preventDefault();
             const btn = e.target.querySelector('button');
@@ -302,7 +309,6 @@
             }
 
             try {
-                // ImgBB'ye Yükleme
                 const formData = new FormData();
                 formData.append("image", file);
 
@@ -312,14 +318,10 @@
                 });
                 
                 const uploadData = await uploadResponse.json();
-                
-                if (!uploadData.success) {
-                    throw new Error("ImgBB Yükleme Hatası");
-                }
+                if (!uploadData.success) throw new Error("ImgBB Yükleme Hatası");
 
                 const downloadURL = uploadData.data.url;
 
-                // Alınan Linki Firestore'a Kaydetme
                 await addDoc(collection(db, "doku"), {
                     title: document.getElementById('d-title').value,
                     category: document.getElementById('d-category').value || "",
@@ -332,16 +334,87 @@
                 e.target.reset();
                 btn.innerHTML = 'Galeriye Eklendi <i class="fas fa-check"></i>';
                 btn.style.color = "#4CAF50"; btn.style.borderColor = "#4CAF50";
+                setTimeout(() => { loadManagement(); }, 1000); // Listeyi yenile
             } catch (error) {
-                console.error("Hata:", error);
                 btn.innerHTML = 'Hata Oluştu! <i class="fas fa-times"></i>';
                 btn.style.color = "#d9534f"; btn.style.borderColor = "#d9534f";
             }
             setTimeout(() => { btn.innerHTML = originalText; btn.style.color = ''; btn.style.borderColor = ''; }, 3000);
         });
+
+        /* SİLME / ARŞİV YÖNETİMİ FONKSİYONU */
+        async function loadManagement() {
+            const listDiv = document.getElementById('admin-management-list');
+            listDiv.innerHTML = '';
+            
+            try {
+                const collections = ['sentez', 'perspektif', 'doku'];
+                let hasItem = false;
+
+                for (const collName of collections) {
+                    const q = query(collection(db, collName), orderBy("createdAt", "desc"), limit(4));
+                    const snap = await getDocs(q);
+                    
+                    snap.forEach(d => {
+                        hasItem = true;
+                        const data = d.data();
+                        const div = document.createElement('div');
+                        div.className = 'list-item';
+                        div.innerHTML = `
+                            <div class="item-info">
+                                <h4>${data.title}</h4>
+                                <span>Kategori: ${collName.toUpperCase()}</span>
+                            </div>
+                            <div class="item-actions">
+                                <button class="delete-btn hover-target" data-id="${d.id}" data-coll="${collName}">
+                                    <i class="fas fa-trash-alt"></i> SİL
+                                </button>
+                            </div>
+                        `;
+                        listDiv.appendChild(div);
+                    });
+                }
+
+                if(!hasItem) {
+                    listDiv.innerHTML = '<div style="padding: 20px 0; color: var(--text-muted);">Arşivde silinecek içerik bulunmuyor.</div>';
+                }
+
+                // Silme İşlemleri İçin Event Listener
+                document.querySelectorAll('.delete-btn').forEach(btn => {
+                    // İmleç efektini tetiklemek için manuel eklenti
+                    const cursor = document.getElementById('custom-cursor');
+                    btn.addEventListener('mouseover', () => cursor.classList.add('hover'));
+                    btn.addEventListener('mouseout', () => cursor.classList.remove('hover'));
+
+                    btn.addEventListener('click', async (e) => {
+                        e.preventDefault();
+                        if(confirm("Bu içeriği arşivden tamamen silmek istediğine emin misin?")) {
+                            const btnEl = e.currentTarget;
+                            const id = btnEl.getAttribute('data-id');
+                            const coll = btnEl.getAttribute('data-coll');
+                            btnEl.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i>';
+                            
+                            try {
+                                await deleteDoc(doc(db, coll, id));
+                                btnEl.closest('.list-item').remove();
+                            } catch (err) {
+                                alert("Silme başarısız!");
+                                btnEl.innerHTML = '<i class="fas fa-trash-alt"></i> SİL';
+                            }
+                        }
+                    });
+                });
+
+            } catch (err) {
+                listDiv.innerHTML = '<div style="padding: 20px 0; color: #d9534f;">İçerikler yüklenemedi.</div>';
+            }
+        }
+
+        // Sayfa açıldığında listeyi yükle
+        loadManagement();
+
     </script>
 
-    <!-- Sekme ve İmleç Etkileşimleri -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const cursor = document.getElementById('custom-cursor');
