@@ -58,6 +58,7 @@
 
         .container { max-width: 1200px; margin: 0 auto; padding: 0 4vw; position: relative; z-index: 10; }
 
+        /* FLOATING CAPSULE HEADER */
         header {
             position: fixed; top: 0; left: 0; width: 100%;
             padding: 30px 4vw; z-index: 100;
@@ -66,19 +67,25 @@
         }
 
         .brand-group {
-            display: flex; align-items: center;
+            display: flex; align-items: center; gap: 15px;
             pointer-events: auto; transition: var(--transition-premium);
         }
         .brand-group:hover { transform: scale(1.02); }
         
+        .palestine-crest {
+            height: 45px; width: auto; 
+            stroke: var(--accent); stroke-width: 3; fill: none;
+            stroke-linecap: round; stroke-linejoin: round;
+        }
+
         .logo-signature { 
             font-family: var(--font-signature); 
-            font-size: 3rem; 
+            font-size: 2.8rem; 
             color: var(--text-main); 
             text-decoration: none; 
             line-height: 1;
             transform: rotate(-3deg);
-            display: inline-block;
+            padding-top: 10px;
         }
 
         .header-controls {
@@ -112,6 +119,7 @@
         }
         .menu-toggle:hover { background: var(--accent); transform: scale(1.05); }
 
+        /* OVERLAY (TAM EKRAN) MENÜ */
         .menu-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
             background-color: var(--bg-color); z-index: 999;
@@ -178,6 +186,7 @@
 
         @media (max-width: 900px) {
             header { padding: 20px 4vw; }
+            .palestine-crest { height: 35px; }
             .logo-signature { font-size: 2.2rem; }
             .header-controls { padding: 5px 5px 5px 15px; gap: 15px; }
             .login-link { display: none; }
@@ -197,14 +206,17 @@
             <a href="sentez.html" class="overlay-link hover-target">Sentez <span>Akademik Projeler & Kod</span></a>
             <a href="perspektif.html" class="overlay-link hover-target">Perspektif <span>Entelektüel Denemeler</span></a>
             <a href="doku.html" class="overlay-link hover-target">Doku <span>Sanat & Estetik</span></a>
-            <a href="admin.html" class="overlay-link hover-target" style="font-size: 2rem; margin-top: 30px; color: var(--accent);">Yönetim Paneli</a>
         </nav>
     </div>
 
     <header>
         <div class="brand-group hover-target">
+            <svg class="palestine-crest" viewBox="0 0 100 200" title="Palestine">
+                <path d="M45,5 L60,25 C65,40 60,70 55,100 L40,185 C35,195 25,195 20,185 L10,120 C5,90 15,45 45,5 Z"/>
+            </svg>
             <a href="index.html" class="logo-signature">Y. Kocapınar</a>
         </div>
+
         <div class="header-controls">
             <a href="login.html" class="login-link hover-target">Giriş</a>
             <button class="menu-toggle hover-target" id="open-menu">Menü <i class="fas fa-bars"></i></button>
@@ -275,14 +287,12 @@
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
 
-        // GÜNCEL: TÜM KOLEKSİYONLARDAN YILDIZLI İÇERİKLERİ GETİR
         async function loadFeaturedProjects() {
             const bentoContainer = document.getElementById('dynamic-bento');
             try {
                 const collectionsToSearch = ['sentez', 'perspektif', 'doku'];
                 let allFeaturedItems = [];
 
-                // 3 odayı da tara
                 for (const collName of collectionsToSearch) {
                     const q = query(collection(db, collName), where("isFeatured", "==", true));
                     const snap = await getDocs(q);
@@ -294,10 +304,7 @@
                     });
                 }
 
-                // En yenileri üste alacak şekilde zamana göre sırala
                 allFeaturedItems.sort((a, b) => b.createdAt.toMillis() - a.createdAt.toMillis());
-
-                // Sadece son 4 tanesini vitrine al (Kutu tasarımının mozaik dengesi için)
                 const itemsToShow = allFeaturedItems.slice(0, 4);
 
                 bentoContainer.innerHTML = '';
@@ -308,7 +315,6 @@
                 }
 
                 itemsToShow.forEach((data, i) => {
-                    // Bento dizilimi: 8, 4, 4, 8 şeklinde asimetrik mozaik
                     const gridClass = (i % 4 === 0 || i % 4 === 3) ? 'item-8' : 'item-4'; 
                     
                     let iconClass = 'fa-star';
@@ -316,7 +322,6 @@
                     let metaText = '';
                     let descText = '';
 
-                    // Hangi odadan geldiyse ona göre stil ve ikon belirle
                     if (data.collectionName === 'sentez') {
                         iconClass = (data.category && data.category.toLowerCase().includes('yazılım')) ? 'fa-code' : 'fa-microscope';
                         linkHref = 'sentez.html';
