@@ -58,7 +58,6 @@
 
         .container { max-width: 1200px; margin: 0 auto; padding: 0 4vw; position: relative; z-index: 10; }
 
-        /* FLOATING CAPSULE HEADER */
         header {
             position: fixed; top: 0; left: 0; width: 100%;
             padding: 30px 4vw; z-index: 100;
@@ -119,7 +118,6 @@
         }
         .menu-toggle:hover { background: var(--accent); transform: scale(1.05); }
 
-        /* OVERLAY (TAM EKRAN) MENÜ (Yönetim Paneli Yok) */
         .menu-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
             background-color: var(--bg-color); z-index: 999;
@@ -149,7 +147,6 @@
         .overlay-link:hover { color: var(--accent); }
 
         .hero { height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; }
-        /* 1- ANA BAŞLIK GÜNCELLENDİ */
         .main-title { font-family: var(--font-serif); font-size: clamp(3rem, 8vw, 7rem); line-height: 1.1; font-weight: 400; letter-spacing: -1.5px; color: var(--text-main); text-align: center; margin-top: 40px;}
         .hero-desc { font-size: 1.1rem; color: var(--text-muted); font-weight: 300; margin-top: 30px; text-transform: uppercase; letter-spacing: 4px; text-align: center; }
 
@@ -159,11 +156,10 @@
         h2 { font-family: var(--font-serif); font-size: 2.5rem; font-weight: 400; color: var(--text-main); }
 
         .about-grid { display: grid; grid-template-columns: 1fr 1.5fr; gap: 80px; align-items: center; border-top: 1px solid var(--border-color); padding-top: 80px; }
-        /* 2- ALINTI METNİ GÜNCELLENDİ */
         .about-quote { font-family: var(--font-serif); font-style: italic; font-size: 1.8rem; color: var(--accent); line-height: 1.4; border-left: 2px solid var(--accent); padding-left: 25px; }
-        .about-text { font-size: 1.1rem; line-height: 1.8; color: var(--text-muted); }
-        .about-text strong { color: var(--text-main); font-weight: 600; }
-        .about-name { font-family: var(--font-serif); font-size: 3rem; font-weight: 400; color: var(--text-main); margin-bottom: 20px; }
+        .about-text { font-size: 1.15rem; line-height: 1.9; color: var(--text-main); opacity: 0.9; font-weight: 300; }
+        .about-text strong { font-weight: 600; }
+        .about-name { font-family: var(--font-serif); font-size: 3.5rem; font-weight: 400; color: var(--text-main); margin-bottom: 30px; }
 
         .bento-grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: 30px; }
         .bento-item { background: var(--card-bg); padding: 50px; text-decoration: none; color: inherit; border: 1px solid var(--border-color); box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02); transition: var(--transition-premium); display: flex; flex-direction: column; justify-content: space-between; position: relative; overflow: hidden; }
@@ -195,7 +191,7 @@
             .bento-item { grid-column: span 12; }
             .about-grid { grid-template-columns: 1fr; gap: 40px; }
             .about-quote { font-size: 1.5rem; }
-            .about-name { font-size: 2.2rem; }
+            .about-name { font-size: 2.8rem; }
         }
     </style>
 </head>
@@ -238,12 +234,17 @@
                     "Ben öyle bilirim ki, yaşamak berrak bir gökte çocuklar aşkına savaşmaktır."
                 </div>
                 <div class="about-text">
-                    <h2 class="about-name">Yusuf Kocapınar</h2>
                     <p style="margin-bottom: 20px;">
-                        Biyomühendislik öğrencisi ve araştırmacı. <strong>Onkosklepios</strong> takımı ile Glioblastoma tanısı üzerine yapay zeka ve likit biyopsi entegrasyonlu projeler geliştiriyorum.
+                        <strong>Ben Yusuf.</strong> Hakikati aramanın, doğruyu bulmanın inceliğine meftunum.
+                    </p>
+                    <p style="margin-bottom: 20px;">
+                        Hayatın sadece telaşlı döngülerden ibaret olmadığını görecek kadar yürüdüm. Bir selamın tebessüm ettiren samimiyetine, kelimelerin ağırlığına ve sükûnetin gücüne inanıyorum. Burası benim seyir defterim; yolum uzun, uçsuz, bucaksız...
+                    </p>
+                    <p style="margin-bottom: 20px;">
+                        Yazdığım her bir satırda, işlediğim her bir mısrada, hatta hayatın en ufak detaylarında hep o asil duruşun peşindeyim. Savrulmadan; estetiği, zarafeti ve insan kalabilmenin o onurlu güzelliğini ıskalamadan yürümeye gayret ediyorum.
                     </p>
                     <p>
-                        Bu dijital arşiv; teknik birikimin estetikle sentezlendiği, kişisel bir sığınak ve entelektüel bir vitrindir.
+                        Çünkü en nihayetinde; bu namert, riyakâr ve zalim dünyanın ortasında tertemiz duruyorum hayata karşı. Seviyorum yaşamayı, hürriyeti ve kuşları.
                     </p>
                 </div>
             </div>
@@ -269,7 +270,7 @@
                 <a href="https://www.linkedin.com/in/yusufkocapinar" target="_blank" class="hover-target" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
                 <a href="https://instagram.com/kpyusufi" target="_blank" class="hover-target" title="Instagram"><i class="fab fa-instagram"></i></a>
             </div>
-            <div class="footer-text">YK. Dijital Arşiv</div>
+            <div class="footer-text">YK. Dijital Günlük</div>
         </div>
     </footer>
 
