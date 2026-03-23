@@ -49,12 +49,12 @@
         .header-controls:hover { border-color: var(--accent); background: rgba(245, 245, 243, 0.9); }
         .login-link { font-family: var(--font-sans); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 2px; color: var(--text-muted); text-decoration: none; transition: 0.3s; }
         .login-link:hover { color: var(--accent); }
-        .menu-toggle { background: var(--text-main); color: var(--bg-color); border: none; border-radius: 40px; padding: 12px 25px; font-family: var(--font-sans); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 2px; display: flex; align-items: center; gap: 10px; transition: var(--transition-premium); }
+        .menu-toggle { background: var(--text-main); color: var(--bg-color); border: none; border-radius: 40px; padding: 12px 25px; font-family: var(--font-sans); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 2px; display: flex; align-items: center; gap: 10px; transition: var(--transition-premium); cursor: pointer;}
         .menu-toggle:hover { background: var(--accent); transform: scale(1.05); }
 
         .menu-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100vh; background-color: var(--bg-color); z-index: 999; display: flex; justify-content: center; align-items: center; opacity: 0; visibility: hidden; clip-path: circle(0% at top right); transition: opacity 0.6s ease, visibility 0.6s ease, clip-path 0.8s cubic-bezier(0.77, 0, 0.175, 1); }
         .menu-overlay.active { opacity: 1; visibility: visible; clip-path: circle(150% at top right); }
-        .overlay-close { position: absolute; top: 30px; right: 4vw; font-family: var(--font-sans); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 2px; color: var(--text-main); background: none; border: none; z-index: 1000; padding: 10px; }
+        .overlay-close { position: absolute; top: 30px; right: 4vw; font-family: var(--font-sans); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 2px; color: var(--text-main); background: none; border: none; z-index: 1000; padding: 10px; cursor: pointer;}
         
         .overlay-nav { display: flex; flex-direction: column; gap: 40px; text-align: center; }
         .overlay-link { font-family: var(--font-serif); font-size: clamp(3rem, 6vw, 5rem); color: var(--text-main); text-decoration: none; display: block; transform: translateY(30px); opacity: 0; transition: var(--transition-premium); }
@@ -66,14 +66,12 @@
         .room-tag { font-family: var(--font-sans); font-size: 0.75rem; letter-spacing: 4px; color: var(--accent); text-transform: uppercase; margin-bottom: 20px; display: block; }
         .room-title { font-family: var(--font-serif); font-size: clamp(3.5rem, 8vw, 6rem); font-weight: 400; line-height: 1.1; }
 
-        /* YENİ PERSPEKTİF JOURNAL (DERGİ) TASARIMI */
         .journal-list { max-width: 750px; margin: 0 auto; padding-bottom: 150px; }
         
         .journal-item { 
             text-align: center; padding: 60px 0; border-bottom: 1px dashed var(--border-color); 
             opacity: 0; transform: translateY(20px); animation: fadeUp 1s ease forwards;
-            transition: var(--transition-premium); cursor: pointer;
-            outline: none; /* Odaklanmada default stili kapat, focus-visible ile verdik */
+            transition: var(--transition-premium); cursor: pointer; outline: none;
         }
         .journal-item:last-child { border-bottom: none; }
         .journal-item:hover { transform: translateY(-5px); }
@@ -86,7 +84,7 @@
 
         .j-excerpt { font-size: 1.1rem; line-height: 1.8; color: var(--text-muted); font-weight: 300; margin-bottom: 30px; max-width: 600px; margin-left: auto; margin-right: auto; }
         
-        .read-more { display: inline-block; font-family: var(--font-sans); font-size: 0.7rem; letter-spacing: 2px; text-transform: uppercase; color: var(--text-main); border-bottom: 1px solid var(--accent); padding-bottom: 2px; font-weight: 600; transition: 0.3s; background: none; border-top: none; border-left: none; border-right: none;}
+        .read-more { display: inline-block; font-family: var(--font-sans); font-size: 0.7rem; letter-spacing: 2px; text-transform: uppercase; color: var(--text-main); border-bottom: 1px solid var(--accent); padding-bottom: 2px; font-weight: 600; transition: 0.3s; background: none; border-top: none; border-left: none; border-right: none; cursor: pointer;}
         .journal-item:hover .read-more { color: var(--accent); border-bottom-color: transparent; }
 
         .loading-text { text-align: center; padding: 100px 0; font-family: var(--font-sans); letter-spacing: 3px; color: var(--accent); text-transform: uppercase; }
@@ -94,18 +92,22 @@
         #reading-modal { position: fixed; top: 0; left: 0; width: 100%; height: 100vh; background: var(--bg-color); z-index: 9999; overflow-y: auto; display: none; opacity: 0; transition: opacity 0.4s ease; padding: 60px 4vw; }
         #reading-modal.active { display: block; opacity: 1; }
         .reading-container { max-width: 800px; margin: 0 auto; background: var(--card-bg); padding: 80px 60px; box-shadow: 0 20px 50px rgba(0,0,0,0.03); border: 1px solid var(--border-color); position: relative; }
-        #close-reading { position: absolute; top: 20px; right: 20px; background: none; border: none; font-family: var(--font-sans); font-size: 0.8rem; letter-spacing: 2px; color: var(--text-muted); transition: 0.3s; padding: 10px; }
+        #close-reading { position: absolute; top: 20px; right: 20px; background: none; border: none; font-family: var(--font-sans); font-size: 0.8rem; letter-spacing: 2px; color: var(--text-muted); transition: 0.3s; padding: 10px; cursor: pointer; }
         #close-reading:hover { color: #d9534f; }
         #read-title { font-family: var(--font-serif); font-size: 2.8rem; margin-bottom: 10px; line-height: 1.2; font-weight: 400; color: var(--text-main); }
         #read-meta { font-family: var(--font-sans); font-size: 0.8rem; color: var(--accent); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 40px; display: block; border-bottom: 1px solid var(--border-color); padding-bottom: 20px; }
         #read-content { font-size: 1.1rem; line-height: 2; color: var(--text-main); font-weight: 300; white-space: pre-wrap; }
 
+        /* MOBİL GÜNCELLEMELERİ VE ÇARPIŞMA ENGELLEYİCİ */
         @media (max-width: 900px) {
-            header.top-nav { padding: 20px 4vw; }
-            .palestine-crest { height: 35px; }
-            .logo-signature { font-size: 2.2rem; }
-            .header-controls { padding: 5px 5px 5px 15px; gap: 15px; }
-            .login-link { display: none; }
+            header.top-nav { padding: 15px 4vw; }
+            .brand-group { gap: 8px; }
+            .palestine-crest { height: 26px; }
+            .logo-signature { font-size: 1.6rem; padding-top: 5px; }
+            .header-controls { padding: 4px; gap: 0; border-radius: 40px;}
+            .login-link { display: none !important; }
+            .menu-toggle { padding: 8px 16px; font-size: 0.65rem; gap: 6px; }
+            
             .reading-container { padding: 50px 25px; border: none; box-shadow: none; background: transparent; }
             #read-title { font-size: 2rem; }
         }
@@ -158,25 +160,34 @@
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
-        import { getFirestore, collection, getDocs, query, orderBy } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
+        import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
 
         const firebaseConfig = { apiKey: "AIzaSyCr4HhlythyRIfy_Xnb-IaWr0Th0TkUQi4", authDomain: "yk-blog-9720b.firebaseapp.com", projectId: "yk-blog-9720b", messagingSenderId: "863054301539", appId: "1:863054301539:web:4256589fbef613bd0e6b56" };
         const app = initializeApp(firebaseConfig); const db = getFirestore(app);
 
+        // GÜNCELLEME: Firebase Hatasını önleyen Kurşungeçirmez Sıralama Sistemi
         async function loadWritings() {
             const container = document.getElementById('dynamic-writings');
             try {
-                const q = query(collection(db, "perspektif"), orderBy("createdAt", "desc"));
-                const snap = await getDocs(q);
+                const snap = await getDocs(collection(db, "perspektif"));
                 container.innerHTML = '';
 
                 if(snap.empty) { container.innerHTML = '<div class="loading-text">Bu odada henüz bir düşünce paylaşılmadı.</div>'; return; }
 
-                snap.forEach(doc => {
-                    const data = doc.data();
+                let items = [];
+                snap.forEach(doc => items.push({id: doc.id, ...doc.data()}));
+
+                // JavaScript ile en yeni üste gelecek şekilde sıralama
+                items.sort((a, b) => {
+                    const timeA = a.createdAt ? a.createdAt.toMillis() : 0;
+                    const timeB = b.createdAt ? b.createdAt.toMillis() : 0;
+                    return timeB - timeA;
+                });
+
+                items.forEach(data => {
                     const article = document.createElement('article');
                     article.className = 'journal-item hover-target';
-                    article.setAttribute('tabindex', '0'); // Klavye Focus
+                    article.setAttribute('tabindex', '0'); 
                     
                     article.innerHTML = `
                         <div class="j-meta">
@@ -186,7 +197,7 @@
                         </div>
                         <h2 class="j-title">${data.title}</h2>
                         <p class="j-excerpt">${data.excerpt}</p>
-                        <span class="read-more">Tamamını Oku &rarr;</span>
+                        <span class="read-more" tabindex="-1">Tamamını Oku &rarr;</span>
                     `;
 
                     const openModal = () => {
@@ -211,7 +222,10 @@
                         t.addEventListener('mouseout', () => cursor.classList.remove('hover'));
                     });
                 }
-            } catch (e) { container.innerHTML = '<div class="loading-text">Bağlantı Hatası.</div>'; }
+            } catch (e) { 
+                console.error(e);
+                container.innerHTML = '<div class="loading-text">İçerikler Yüklenirken Bir Hata Oluştu.</div>'; 
+            }
         }
         loadWritings();
 
@@ -227,7 +241,6 @@
         document.getElementById('close-menu').addEventListener('click', toggleMenu);
         document.querySelectorAll('.overlay-link').forEach(link => { link.addEventListener('click', toggleMenu); });
 
-        // ESC İLE KAPATMA
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape') {
                 if(document.getElementById('reading-modal').classList.contains('active')) closeModal();

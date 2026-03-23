@@ -58,15 +58,14 @@
 
         .container { max-width: 1200px; margin: 0 auto; padding: 0 4vw; position: relative; z-index: 10; }
 
-        /* --- GÜNCELLEME: SABİT (FIXED) SOFT HEADER --- */
         header {
             position: fixed; top: 0; left: 0; width: 100%;
             padding: 30px 4vw; z-index: 1000;
-            display: flex; justify-content: space-between; align-items: flex-start;
+            display: flex; justify-content: space-between; align-items: center;
             pointer-events: none; 
-            /* Soft geçiş efekti: Şeffaf arka plan, bulanıklık ve gölge */
             background: rgba(245, 245, 243, 0.6);
             backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
             border-bottom: 1px solid rgba(179, 155, 120, 0.1);
             box-shadow: 0 10px 30px rgba(0,0,0,0.02);
             transition: var(--transition-premium);
@@ -97,7 +96,6 @@
         .header-controls {
             pointer-events: auto;
             background: rgba(245, 245, 243, 0.6);
-            backdrop-filter: blur(15px);
             border: 1px solid rgba(179, 155, 120, 0.3);
             border-radius: 50px;
             display: flex; align-items: center; gap: 20px;
@@ -121,11 +119,10 @@
             font-family: var(--font-sans); font-size: 0.75rem; 
             text-transform: uppercase; letter-spacing: 2px; 
             display: flex; align-items: center; gap: 10px;
-            transition: var(--transition-premium);
+            transition: var(--transition-premium); cursor: pointer;
         }
         .menu-toggle:hover { background: var(--accent); transform: scale(1.05); }
 
-        /* OVERLAY MENU (Yönetim Paneli Kaldırıldı) */
         .menu-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
             background-color: var(--bg-color); z-index: 999;
@@ -138,7 +135,7 @@
         .overlay-close {
             position: absolute; top: 30px; right: 4vw; font-family: var(--font-sans);
             font-size: 0.85rem; text-transform: uppercase; letter-spacing: 2px;
-            color: var(--text-main); background: none; border: none; z-index: 1000;
+            color: var(--text-main); background: none; border: none; z-index: 1000; padding: 10px; cursor: pointer;
         }
 
         .overlay-nav { display: flex; flex-direction: column; gap: 40px; text-align: center; }
@@ -154,7 +151,7 @@
         .menu-overlay.active .overlay-link { transform: translateY(0); opacity: 1; }
         .overlay-link:hover { color: var(--accent); }
 
-        main { margin-top: 150px; } /* Header sabit olduğu için main'e üstten boşluk verdik */
+        main { margin-top: 150px; }
 
         .hero { height: calc(100vh - 150px); display: flex; flex-direction: column; justify-content: center; align-items: center; }
         .main-title { font-family: var(--font-serif); font-size: clamp(3rem, 8vw, 7rem); line-height: 1.1; font-weight: 400; letter-spacing: -1.5px; color: var(--text-main); text-align: center; margin-top: 40px;}
@@ -192,11 +189,17 @@
         .footer-socials a:hover { color: var(--accent); transform: translateY(-3px); }
         .footer-text { font-family: var(--font-sans); font-size: 0.7rem; letter-spacing: 4px; color: var(--text-muted); text-transform: uppercase; margin-top: 10px;}
 
+        /* GÜNCELLEME: MOBİLDE SIKIŞMAYI VE ÇARPIŞMAYI ÖNLEYEN KESİN ÇÖZÜM */
         @media (max-width: 900px) {
-            header { padding: 20px 4vw; }
-            .logo-signature { font-size: 2.2rem; }
-            .header-controls { padding: 5px 5px 5px 15px; gap: 15px; }
-            .login-link { display: none; }
+            header { padding: 15px 4vw; }
+            .brand-group { gap: 8px; }
+            .palestine-crest { height: 26px; }
+            .logo-signature { font-size: 1.6rem; padding-top: 5px; }
+            
+            .header-controls { padding: 4px; gap: 0; border-radius: 40px;}
+            .login-link { display: none !important; }
+            .menu-toggle { padding: 8px 16px; font-size: 0.65rem; gap: 6px; }
+            
             main { margin-top: 100px; }
             .hero { height: calc(100vh - 100px); }
             .bento-item { grid-column: span 12; }
@@ -210,7 +213,7 @@
     <div id="custom-cursor"></div>
     
     <div class="menu-overlay" id="overlay">
-        <button class="overlay-close hover-target" id="close-menu">Kapat ✕</button>
+        <button class="overlay-close hover-target" id="close-menu" tabindex="0">Kapat ✕</button>
         <nav class="overlay-nav">
             <a href="sentez.html" class="overlay-link hover-target">Sentez <span>Akademik Projeler & Kod</span></a>
             <a href="perspektif.html" class="overlay-link hover-target">Perspektif <span>Entelektüel Denemeler</span></a>
@@ -227,7 +230,7 @@
         </div>
         <div class="header-controls">
             <a href="login.html" class="login-link hover-target">Giriş</a>
-            <button class="menu-toggle hover-target" id="open-menu">Menü <i class="fas fa-bars"></i></button>
+            <button class="menu-toggle hover-target" id="open-menu" tabindex="0">Menü <i class="fas fa-bars"></i></button>
         </div>
     </header>
 
@@ -281,40 +284,26 @@
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
         import { getFirestore, collection, query, where, getDocs, getDoc, doc } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
 
-        const firebaseConfig = {
-            apiKey: "AIzaSyCr4HhlythyRIfy_Xnb-IaWr0Th0TkUQi4",
-            authDomain: "yk-blog-9720b.firebaseapp.com",
-            projectId: "yk-blog-9720b",
-            messagingSenderId: "863054301539",
-            appId: "1:863054301539:web:4256589fbef613bd0e6b56"
-        };
+        const firebaseConfig = { apiKey: "AIzaSyCr4HhlythyRIfy_Xnb-IaWr0Th0TkUQi4", authDomain: "yk-blog-9720b.firebaseapp.com", projectId: "yk-blog-9720b", messagingSenderId: "863054301539", appId: "1:863054301539:web:4256589fbef613bd0e6b56" };
+        const app = initializeApp(firebaseConfig); const db = getFirestore(app);
 
-        const app = initializeApp(firebaseConfig);
-        const db = getFirestore(app);
-
-        // --- YENİ: DİNAMİK METİNLERİ YÜKLE (Quote & About) ---
         async function loadDynamicTexts() {
             const quoteEl = document.getElementById('dynamic-quote');
             const aboutEl = document.getElementById('dynamic-about');
-
             try {
-                // 'settings' koleksiyonundaki 'home_page' dokümanını al
                 const docRef = doc(db, "settings", "home_page");
                 const docSnap = await getDoc(docRef);
-
                 if (docSnap.exists()) {
                     const data = docSnap.data();
                     quoteEl.innerText = data.quoteText || '"Ben öyle bilirim ki, yaşamak berrak bir gökte çocuklar aşkına savaşmaktır."';
-                    aboutEl.innerHTML = data.aboutText || '<p style="margin-bottom: 20px;">Maddenin köklerine inmekle, ruhun ve anlamın derinliklerine inmek arasında bir yerde duruyorum. Yaşamı salt formüllerden ibaret mekanik bir süreç olarak değil; bilimin, estetiğin ve sarsılmaz düşüncelerin ince bir işçilikle örüldüğü bir bütün olarak görüyorum.</p><p style="margin-bottom: 20px;">Burası bir portfolyo veya kuru bir özgeçmiş değil; burası benim dijital günlüğüm. Sınırları aşan fikirlerin, asil dokuların ve zihnimde demlenen perspektiflerin bir araya geldiği kişisel bir sığınak.</p><p>En karmaşık tekniklerin bile nihayetinde samimiyete ve insana hizmet etmesi gerektiğine inanıyor; doğruyu savunmanın, inceliği hissetmenin ve şu gök kubbeyi biraz daha berrak kılmanın peşinden gidiyorum.<br><br><em>Sığınağıma hoş geldin.</em></p>';
+                    aboutEl.innerHTML = data.aboutText || '<p style="margin-bottom: 20px;"><strong>Ben Yusuf.</strong> Hakikati aramanın, doğruyu bulmanın inceliğine meftunum.</p><p style="margin-bottom: 20px;">Hayatın sadece telaşlı döngülerden ibaret olmadığını görecek kadar yürüdüm. Bir selamın tebessüm ettiren samimiyetine, kelimelerin ağırlığına ve sükûnetin gücüne inanıyorum. Burası benim seyir defterim; yolum uzun, uçsuz, bucaksız...</p><p style="margin-bottom: 20px;">Yazdığım her bir satırda, işlediğim her bir mısrada, hatta hayatın en ufak detaylarında hep o asil duruşun peşindeyim. Savrulmadan; estetiği, zarafeti ve insan kalabilmenin o onurlu güzelliğini ıskalamadan yürümeye gayret ediyorum.</p><p>Çünkü en nihayetinde; bu namert, riyakâr ve zalim dünyanın ortasında tertemiz duruyorum hayata karşı. Seviyorum yaşamayı, hürriyeti ve kuşları.</p>';
                 } else {
-                    console.log("Firebase'de 'settings/home_page' dokümanı bulunamadı. Lütfen Admin'den oluştur.");
+                    quoteEl.innerText = '"Ben öyle bilirim ki, yaşamak berrak bir gökte çocuklar aşkına savaşmaktır."';
+                    aboutEl.innerHTML = '<p style="margin-bottom: 20px;"><strong>Ben Yusuf.</strong> Hakikati aramanın, doğruyu bulmanın inceliğine meftunum.</p><p style="margin-bottom: 20px;">Hayatın sadece telaşlı döngülerden ibaret olmadığını görecek kadar yürüdüm. Bir selamın tebessüm ettiren samimiyetine, kelimelerin ağırlığına ve sükûnetin gücüne inanıyorum. Burası benim seyir defterim; yolum uzun, uçsuz, bucaksız...</p><p style="margin-bottom: 20px;">Yazdığım her bir satırda, işlediğim her bir mısrada, hatta hayatın en ufak detaylarında hep o asil duruşun peşindeyim. Savrulmadan; estetiği, zarafeti ve insan kalabilmenin o onurlu güzelliğini ıskalamadan yürümeye gayret ediyorum.</p><p>Çünkü en nihayetinde; bu namert, riyakâr ve zalim dünyanın ortasında tertemiz duruyorum hayata karşı. Seviyorum yaşamayı, hürriyeti ve kuşları.</p>';
                 }
-            } catch (error) {
-                console.error("Metinler Firebase'den yüklenirken hata oluştu:", error);
-            }
+            } catch (error) { console.error(error); }
         }
 
-        // --- MEVCUT: ÖNE ÇIKAN PROJELERİ YÜKLE ---
         async function loadFeaturedProjects() {
             const bentoContainer = document.getElementById('dynamic-bento');
             try {
@@ -324,78 +313,40 @@
                 for (const collName of collectionsToSearch) {
                     const q = query(collection(db, collName), where("isFeatured", "==", true));
                     const snap = await getDocs(q);
-                    snap.forEach(doc => {
-                        let data = doc.data();
-                        data.id = doc.id;
-                        data.collectionName = collName;
-                        allFeaturedItems.push(data);
-                    });
+                    snap.forEach(doc => { let data = doc.data(); data.id = doc.id; data.collectionName = collName; allFeaturedItems.push(data); });
                 }
 
                 allFeaturedItems.sort((a, b) => b.createdAt.toMillis() - a.createdAt.toMillis());
                 const itemsToShow = allFeaturedItems.slice(0, 4);
 
                 bentoContainer.innerHTML = '';
-                
-                if (itemsToShow.length === 0) {
-                    bentoContainer.innerHTML = '<div style="grid-column: span 12; text-align: center; color: var(--text-muted); font-size: 0.85rem; letter-spacing: 2px; text-transform: uppercase;">Henüz öne çıkarılan bir içerik yok. Admin panelinden yıldızlayabilirsiniz.</div>';
-                    return;
-                }
+                if (itemsToShow.length === 0) { bentoContainer.innerHTML = '<div style="grid-column: span 12; text-align: center; color: var(--text-muted); font-size: 0.85rem; letter-spacing: 2px; text-transform: uppercase;">Henüz öne çıkarılan bir içerik yok. Admin panelinden yıldızlayabilirsiniz.</div>'; return; }
 
                 itemsToShow.forEach((data, i) => {
                     const gridClass = (i % 4 === 0 || i % 4 === 3) ? 'item-8' : 'item-4'; 
-                    
-                    let iconClass = 'fa-star';
-                    let linkHref = '#';
-                    let metaText = '';
-                    let descText = '';
+                    let iconClass = 'fa-star'; let linkHref = '#'; let metaText = ''; let descText = '';
 
-                    if (data.collectionName === 'sentez') {
-                        iconClass = (data.category && data.category.toLowerCase().includes('yazılım')) ? 'fa-code' : 'fa-microscope';
-                        linkHref = 'sentez.html';
-                        metaText = data.category || 'Proje';
-                        descText = data.excerpt || '';
-                    } else if (data.collectionName === 'perspektif') {
-                        iconClass = 'fa-pen-nib';
-                        linkHref = 'perspektif.html';
-                        metaText = data.type || 'Yazı';
-                        descText = data.excerpt || '';
-                    } else if (data.collectionName === 'doku') {
-                        iconClass = 'fa-image';
-                        linkHref = 'doku.html';
-                        metaText = data.category || 'Görsel Arşiv';
-                        descText = data.desc || 'Tıklayarak inceleyin.';
-                    }
+                    if (data.collectionName === 'sentez') { iconClass = (data.category && data.category.toLowerCase().includes('yazılım')) ? 'fa-code' : 'fa-microscope'; linkHref = 'sentez.html'; metaText = data.category || 'Proje'; descText = data.excerpt || ''; } 
+                    else if (data.collectionName === 'perspektif') { iconClass = 'fa-pen-nib'; linkHref = 'perspektif.html'; metaText = data.type || 'Yazı'; descText = data.excerpt || ''; } 
+                    else if (data.collectionName === 'doku') { iconClass = 'fa-image'; linkHref = 'doku.html'; metaText = data.category || 'Görsel Arşiv'; descText = data.desc || 'Tıklayarak inceleyin.'; }
 
                     if(data.year) metaText += ` — ${data.year}`;
 
                     bentoContainer.innerHTML += `
                         <a href="${linkHref}" class="bento-item ${gridClass} fade-up hover-target visible">
-                            <div>
-                                <div class="item-meta">${metaText}</div>
-                                <h3 class="item-title">${data.title}</h3>
-                                <p class="item-desc">${descText}</p>
-                            </div>
+                            <div><div class="item-meta">${metaText}</div><h3 class="item-title">${data.title}</h3><p class="item-desc">${descText}</p></div>
                             <div class="item-icon"><i class="fas ${iconClass}"></i></div>
                         </a>
                     `;
                 });
 
-                // HoverTargetları yenile (dinamik içerik için)
                 if (window.matchMedia("(pointer: fine)").matches) {
                     const cursor = document.getElementById('custom-cursor');
-                    document.querySelectorAll('.hover-target').forEach(t => {
-                        t.addEventListener('mouseover', () => cursor.classList.add('hover'));
-                        t.addEventListener('mouseout', () => cursor.classList.remove('hover'));
-                    });
+                    document.querySelectorAll('.hover-target').forEach(t => { t.addEventListener('mouseover', () => cursor.classList.add('hover')); t.addEventListener('mouseout', () => cursor.classList.remove('hover')); });
                 }
-            } catch (e) {
-                console.error(e);
-                bentoContainer.innerHTML = '<div style="grid-column: span 12; text-align: center; color: #d9534f; font-size: 0.85rem;">Bağlantı Hatası.</div>';
-            }
+            } catch (e) { console.error(e); bentoContainer.innerHTML = '<div style="grid-column: span 12; text-align: center; color: #d9534f; font-size: 0.85rem;">Bağlantı Hatası.</div>'; }
         }
 
-        // Sayfa yüklendiğinde çalıştır
         loadDynamicTexts();
         loadFeaturedProjects();
     </script>
@@ -404,19 +355,11 @@
         document.addEventListener('DOMContentLoaded', () => {
             if (window.matchMedia("(pointer: fine)").matches) {
                 const cursor = document.getElementById('custom-cursor');
-                document.addEventListener('mousemove', e => {
-                    cursor.style.left = e.clientX + 'px';
-                    cursor.style.top = e.clientY + 'px';
-                });
-                document.querySelectorAll('.hover-target, button, a').forEach(t => {
-                    t.addEventListener('mouseover', () => cursor.classList.add('hover'));
-                    t.addEventListener('mouseout', () => cursor.classList.remove('hover'));
-                });
+                document.addEventListener('mousemove', e => { cursor.style.left = e.clientX + 'px'; cursor.style.top = e.clientY + 'px'; });
+                document.querySelectorAll('.hover-target, button, a').forEach(t => { t.addEventListener('mouseover', () => cursor.classList.add('hover')); t.addEventListener('mouseout', () => cursor.classList.remove('hover')); });
             }
 
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
-            }, { threshold: 0.1 });
+            const observer = new IntersectionObserver((entries) => { entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); }); }, { threshold: 0.1 });
             document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
 
             const openBtn = document.getElementById('open-menu');
@@ -424,16 +367,10 @@
             const overlay = document.getElementById('overlay');
             const body = document.body;
 
-            const toggleMenu = () => {
-                overlay.classList.toggle('active');
-                body.classList.toggle('no-scroll');
-            };
-
+            const toggleMenu = () => { overlay.classList.toggle('active'); body.classList.toggle('no-scroll'); };
             openBtn.addEventListener('click', toggleMenu);
             closeBtn.addEventListener('click', toggleMenu);
-            document.querySelectorAll('.overlay-link').forEach(link => {
-                link.addEventListener('click', toggleMenu);
-            });
+            document.querySelectorAll('.overlay-link').forEach(link => { link.addEventListener('click', toggleMenu); });
         });
     </script>
 </body>
