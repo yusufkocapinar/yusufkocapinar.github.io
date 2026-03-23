@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Yönetim | YK. Dijital Arşiv</title>
     
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%2275%22 font-family=%22'Playfair Display', serif%22 font-size=%2280%22 font-weight=%22bold%22 fill=%22%232C2A29%22>YK.</text></svg>">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Tenor+Sans&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
@@ -29,6 +30,7 @@
         }
 
         body { background-color: var(--bg-color); color: var(--text-main); font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased; overflow-x: hidden; display: none; height: 100vh; }
+        *:focus-visible { outline: 1px dashed var(--accent); outline-offset: 4px; }
 
         body::before { content: ""; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-image: url('data:image/svg+xml,<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><filter id="noiseFilter"><feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/></filter><rect width="100%" height="100%" filter="url(%23noiseFilter)" opacity="0.025"/></svg>'); pointer-events: none; z-index: 50; }
 
@@ -38,16 +40,16 @@
         .auth-email { font-size: 0.7rem; color: var(--text-muted); margin-bottom: 40px; border-bottom: 1px solid var(--border-color); padding-bottom: 20px; word-break: break-all;}
 
         .admin-nav { display: flex; flex-direction: column; gap: 20px; flex: 1; }
-        .nav-tab { background: none; border: none; font-family: var(--font-sans); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 2px; color: var(--text-muted); text-align: left; padding: 10px 0; display: flex; align-items: center; gap: 15px; transition: var(--transition-premium); position: relative; }
+        .nav-tab { background: none; border: none; font-family: var(--font-sans); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 2px; color: var(--text-muted); text-align: left; padding: 10px 0; display: flex; align-items: center; gap: 15px; transition: var(--transition-premium); position: relative; cursor: pointer; outline: none; }
         .nav-tab i { font-size: 1rem; color: var(--border-color); transition: var(--transition-premium); }
-        .nav-tab:hover { color: var(--text-main); }
-        .nav-tab:hover i { color: var(--accent); }
+        .nav-tab:hover, .nav-tab:focus-visible { color: var(--text-main); }
+        .nav-tab:hover i, .nav-tab:focus-visible i { color: var(--accent); }
         .nav-tab.active { color: var(--text-main); }
         .nav-tab.active i { color: var(--accent); }
         .nav-tab.active::after { content: ''; position: absolute; right: -40px; top: 50%; transform: translateY(-50%); width: 3px; height: 100%; background-color: var(--accent); }
 
-        .logout-btn { background: none; border: none; text-align: left; font-family: var(--font-sans); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px; color: #d9534f; text-decoration: none; display: flex; align-items: center; gap: 10px; transition: 0.3s; margin-top: auto; }
-        .logout-btn:hover { opacity: 0.7; }
+        .logout-btn { background: none; border: none; text-align: left; font-family: var(--font-sans); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px; color: #d9534f; text-decoration: none; display: flex; align-items: center; gap: 10px; transition: 0.3s; margin-top: auto; outline: none; }
+        .logout-btn:hover, .logout-btn:focus-visible { opacity: 0.7; }
 
         .admin-content { flex: 1; padding: 60px 8vw; overflow-y: auto; z-index: 10; position: relative; }
         .panel-section { display: none; animation: fadeIn 0.6s cubic-bezier(0.25, 1, 0.5, 1); }
@@ -69,8 +71,8 @@
         .input-group input:focus ~ label.floating-label, .input-group input:not(:placeholder-shown) ~ label.floating-label, .input-group textarea:focus ~ label.floating-label, .input-group textarea:not(:placeholder-shown) ~ label.floating-label { top: -10px; font-size: 0.65rem; color: var(--accent); }
         .input-group select ~ label.floating-label { top: -10px; font-size: 0.65rem; color: var(--accent); }
 
-        .submit-btn { background: transparent; border: 1px solid var(--accent); padding: 15px 40px; font-family: var(--font-sans); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 2px; color: var(--text-main); transition: var(--transition-premium); display: inline-flex; align-items: center; gap: 10px; }
-        .submit-btn:hover { background: var(--accent); color: var(--card-bg); }
+        .submit-btn { background: transparent; border: 1px solid var(--accent); padding: 15px 40px; font-family: var(--font-sans); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 2px; color: var(--text-main); transition: var(--transition-premium); display: inline-flex; align-items: center; gap: 10px; outline: none; }
+        .submit-btn:hover, .submit-btn:focus-visible { background: var(--accent); color: var(--card-bg); }
 
         .item-list { margin-top: 60px; border-top: 1px solid var(--border-color); padding-top: 40px; }
         .list-title { font-family: var(--font-serif); font-size: 2rem; color: var(--text-main); margin-bottom: 30px; font-weight: 400; }
@@ -78,15 +80,14 @@
         .item-info h4 { font-family: var(--font-serif); font-size: 1.2rem; font-weight: 400; color: var(--text-main); margin-bottom: 5px; }
         .item-info span { font-size: 0.8rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; }
         .item-actions { display: flex; gap: 10px;}
-        .item-actions button { background: none; padding: 8px 15px; font-size: 0.75rem; letter-spacing: 1px; transition: 0.3s; border-radius: 4px; }
+        .item-actions button { background: none; padding: 8px 15px; font-size: 0.75rem; letter-spacing: 1px; transition: 0.3s; border-radius: 4px; outline: none; }
         
         .delete-btn { border: 1px solid #d9534f; color: #d9534f; }
-        .delete-btn:hover { background: #d9534f; color: #fff; }
+        .delete-btn:hover, .delete-btn:focus-visible { background: #d9534f; color: #fff; }
         
-        /* ÖNE ÇIKAR BUTONU STİLİ */
         .feature-btn { border: 1px solid var(--accent); color: var(--accent); }
         .feature-btn.active { background: var(--accent); color: #fff; }
-        .feature-btn:hover { background: var(--accent); color: #fff; }
+        .feature-btn:hover, .feature-btn:focus-visible { background: var(--accent); color: #fff; }
 
         @media (max-width: 768px) {
             body { flex-direction: column; }
@@ -105,25 +106,48 @@
         <div class="auth-email" id="admin-email">Bağlanıyor...</div>
         
         <div class="admin-nav">
-            <button class="nav-tab active hover-target" data-target="sentez-panel">
+            <button class="nav-tab active hover-target" data-target="home-panel" tabindex="0">
+                <i class="fas fa-home"></i> Ana Sayfa Metinleri
+            </button>
+            <button class="nav-tab hover-target" data-target="sentez-panel" tabindex="0">
                 <i class="fas fa-microscope"></i> Sentez (Projeler)
             </button>
-            <button class="nav-tab hover-target" data-target="perspektif-panel">
+            <button class="nav-tab hover-target" data-target="perspektif-panel" tabindex="0">
                 <i class="fas fa-pen-nib"></i> Perspektif (Yazılar)
             </button>
-            <button class="nav-tab hover-target" data-target="doku-panel">
+            <button class="nav-tab hover-target" data-target="doku-panel" tabindex="0">
                 <i class="fas fa-image"></i> Doku (Galeri)
             </button>
         </div>
 
-        <button class="logout-btn hover-target" id="logout-btn">
+        <button class="logout-btn hover-target" id="logout-btn" tabindex="0">
             <i class="fas fa-sign-out-alt"></i> Güvenli Çıkış
         </button>
     </aside>
 
     <main class="admin-content">
+
+        <section id="home-panel" class="panel-section active">
+            <div class="section-header">
+                <h2 class="section-title">Vitrin Metinleri</h2>
+                <p style="color: var(--text-muted); font-size: 0.85rem; margin-top: 10px; font-family: var(--font-sans); letter-spacing: 1px;">Ana sayfadaki alıntıyı ve "Hakkımda" manifestonu buradan güncelleyebilirsin. (Paragraf boşlukları için HTML &lt;p&gt; etiketi kullanılmıştır).</p>
+            </div>
+            <form id="form-home">
+                <div class="form-grid">
+                    <div class="input-group form-full">
+                        <textarea id="h-quote" placeholder=" " required class="hover-target" style="min-height: 80px;"></textarea>
+                        <label class="floating-label">Alıntı (Quote) Metni</label>
+                    </div>
+                    <div class="input-group form-full">
+                        <textarea id="h-about" placeholder=" " required class="hover-target" style="min-height: 350px; font-family: monospace; font-size: 0.9rem;"></textarea>
+                        <label class="floating-label">Hakkımda Manifestosu (HTML Destekler)</label>
+                    </div>
+                </div>
+                <button type="submit" class="submit-btn hover-target" tabindex="0">Metinleri Güncelle & Kaydet <i class="fas fa-save"></i></button>
+            </form>
+        </section>
         
-        <section id="sentez-panel" class="panel-section active">
+        <section id="sentez-panel" class="panel-section">
             <div class="section-header">
                 <h2 class="section-title">Yeni Proje Ekle</h2>
             </div>
@@ -154,7 +178,7 @@
                         <label class="floating-label">Bağlantı Linki (GitHub, PDF vb. - İsteğe Bağlı)</label>
                     </div>
                 </div>
-                <button type="submit" class="submit-btn hover-target">Arşive Kaydet <i class="fas fa-check"></i></button>
+                <button type="submit" class="submit-btn hover-target" tabindex="0">Arşive Kaydet <i class="fas fa-check"></i></button>
             </form>
         </section>
 
@@ -189,7 +213,7 @@
                         <label class="floating-label">Yazının Tamamı (İçerik)</label>
                     </div>
                 </div>
-                <button type="submit" class="submit-btn hover-target">Yazıyı Yayınla <i class="fas fa-check"></i></button>
+                <button type="submit" class="submit-btn hover-target" tabindex="0">Yazıyı Yayınla <i class="fas fa-check"></i></button>
             </form>
         </section>
 
@@ -201,7 +225,7 @@
                 <div class="form-grid">
                     <div class="input-group form-full" style="border-bottom: 1px solid rgba(179, 155, 120, 0.3); padding-bottom: 10px; margin-top: 10px;">
                         <label style="position: static; font-size: 0.75rem; color: var(--accent); margin-bottom: 10px; display: block; pointer-events: auto;">Görsel Dosyası Yükle (Zorunlu)</label>
-                        <input type="file" id="d-file" accept="image/*" required class="hover-target" style="border: none; padding: 0;">
+                        <input type="file" id="d-file" accept="image/*" required class="hover-target" tabindex="0" style="border: none; padding: 0;">
                     </div>
                     <div class="input-group form-full">
                         <input type="text" id="d-title" placeholder=" " required class="hover-target">
@@ -220,7 +244,7 @@
                         <label class="floating-label">Alt Açıklama (İsteğe Bağlı)</label>
                     </div>
                 </div>
-                <button type="submit" class="submit-btn hover-target">Görseli Yükle <i class="fas fa-upload"></i></button>
+                <button type="submit" class="submit-btn hover-target" tabindex="0">Görseli Yükle <i class="fas fa-upload"></i></button>
             </form>
         </section>
 
@@ -237,7 +261,7 @@
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
         import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
-        import { getFirestore, collection, addDoc, serverTimestamp, getDocs, query, orderBy, limit, deleteDoc, doc, updateDoc } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
+        import { getFirestore, collection, addDoc, serverTimestamp, getDocs, getDoc, query, orderBy, limit, deleteDoc, doc, updateDoc, setDoc } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
         
         const IMGBB_API_KEY = "cc4c7248a394919486e74ab02cdf1954";
 
@@ -266,7 +290,48 @@
             signOut(auth).then(() => { window.location.href = 'login.html'; });
         });
 
-        /* SENTEZ KAYIT (isFeatured: false ile) */
+        /* --- YENİ: ANA SAYFA METİNLERİNİ YÖNETME --- */
+        const defaultQuote = '"Ben öyle bilirim ki, yaşamak berrak bir gökte çocuklar aşkına savaşmaktır."';
+        const defaultAbout = `<p style="margin-bottom: 20px;"><strong>Ben Yusuf.</strong> Hakikati aramanın, doğruyu bulmanın inceliğine meftunum.</p>
+<p style="margin-bottom: 20px;">Hayatın sadece telaşlı döngülerden ibaret olmadığını görecek kadar yürüdüm. Bir selamın tebessüm ettiren samimiyetine, kelimelerin ağırlığına ve sükûnetin gücüne inanıyorum. Burası benim seyir defterim; yolum uzun, uçsuz, bucaksız...</p>
+<p style="margin-bottom: 20px;">Yazdığım her bir satırda, işlediğim her bir mısrada, hatta hayatın en ufak detaylarında hep o asil duruşun peşindeyim. Savrulmadan; estetiği, zarafeti ve insan kalabilmenin o onurlu güzelliğini ıskalamadan yürümeye gayret ediyorum.</p>
+<p>Çünkü en nihayetinde; bu namert, riyakâr ve zalim dünyanın ortasında tertemiz duruyorum hayata karşı. Seviyorum yaşamayı, hürriyeti ve kuşları.</p>`;
+
+        async function loadHomeSettings() {
+            try {
+                const docRef = doc(db, "settings", "home_page");
+                const docSnap = await getDoc(docRef);
+                if (docSnap.exists()) {
+                    document.getElementById('h-quote').value = docSnap.data().quoteText || defaultQuote;
+                    document.getElementById('h-about').value = docSnap.data().aboutText || defaultAbout;
+                } else {
+                    // İlk kez giriliyorsa varsayılan manifestoyu doldur
+                    document.getElementById('h-quote').value = defaultQuote;
+                    document.getElementById('h-about').value = defaultAbout;
+                }
+            } catch (e) {
+                console.error("Metinler yüklenemedi:", e);
+            }
+        }
+        loadHomeSettings();
+
+        document.getElementById('form-home').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const btn = e.target.querySelector('button'); const originalText = btn.innerHTML;
+            btn.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> Kaydediliyor...';
+            try {
+                await setDoc(doc(db, "settings", "home_page"), {
+                    quoteText: document.getElementById('h-quote').value,
+                    aboutText: document.getElementById('h-about').value,
+                    updatedAt: serverTimestamp()
+                }, { merge: true });
+                btn.innerHTML = 'Güncellendi <i class="fas fa-check"></i>'; btn.style.color = "#4CAF50"; btn.style.borderColor = "#4CAF50";
+            } catch (error) { btn.innerHTML = 'Hata Oluştu! <i class="fas fa-times"></i>'; btn.style.color = "#d9534f"; btn.style.borderColor = "#d9534f"; }
+            setTimeout(() => { btn.innerHTML = originalText; btn.style.color = ''; btn.style.borderColor = ''; }, 3000);
+        });
+
+
+        /* --- DİĞER FORMLAR (Değişmedi) --- */
         document.getElementById('form-sentez').addEventListener('submit', async (e) => {
             e.preventDefault();
             const btn = e.target.querySelector('button'); const originalText = btn.innerHTML;
@@ -288,7 +353,6 @@
             setTimeout(() => { btn.innerHTML = originalText; btn.style.color = ''; btn.style.borderColor = ''; }, 3000);
         });
 
-        /* PERSPEKTİF KAYIT (isFeatured: false ile) */
         document.getElementById('form-perspektif').addEventListener('submit', async (e) => {
             e.preventDefault();
             const btn = e.target.querySelector('button'); const originalText = btn.innerHTML;
@@ -309,7 +373,6 @@
             setTimeout(() => { btn.innerHTML = originalText; btn.style.color = ''; btn.style.borderColor = ''; }, 3000);
         });
 
-        /* DOKU KAYIT (isFeatured: false ile) */
         document.getElementById('form-doku').addEventListener('submit', async (e) => {
             e.preventDefault();
             const btn = e.target.querySelector('button'); const originalText = btn.innerHTML;
@@ -337,7 +400,6 @@
             setTimeout(() => { btn.innerHTML = originalText; btn.style.color = ''; btn.style.borderColor = ''; }, 3000);
         });
 
-        /* TÜM KOLEKSİYONLAR İÇİN EVRENSEL YILDIZ VE SİL SİSTEMİ */
         async function loadManagement() {
             const listDiv = document.getElementById('admin-management-list');
             listDiv.innerHTML = '';
@@ -356,11 +418,10 @@
                         const div = document.createElement('div');
                         div.className = 'list-item';
                         
-                        // EVRENSEL YILDIZ BUTONU
                         const isFeaturedClass = data.isFeatured ? 'active' : '';
                         const isFeaturedTitle = data.isFeatured ? 'Öne Çıkarıldı' : 'Vitrine Ekle';
                         const featureButtonHTML = `
-                            <button class="feature-btn hover-target ${isFeaturedClass}" data-id="${d.id}" data-coll="${collName}" data-featured="${data.isFeatured || false}" title="${isFeaturedTitle}">
+                            <button class="feature-btn hover-target ${isFeaturedClass}" data-id="${d.id}" data-coll="${collName}" data-featured="${data.isFeatured || false}" title="${isFeaturedTitle}" tabindex="0">
                                 <i class="fas fa-star"></i>
                             </button>
                         `;
@@ -372,7 +433,7 @@
                             </div>
                             <div class="item-actions">
                                 ${featureButtonHTML}
-                                <button class="delete-btn hover-target" data-id="${d.id}" data-coll="${collName}">
+                                <button class="delete-btn hover-target" data-id="${d.id}" data-coll="${collName}" tabindex="0">
                                     <i class="fas fa-trash-alt"></i> SİL
                                 </button>
                             </div>
@@ -385,7 +446,6 @@
 
                 const cursor = document.getElementById('custom-cursor');
                 
-                // Silme Eventi
                 document.querySelectorAll('.delete-btn').forEach(btn => {
                     btn.addEventListener('mouseover', () => { if(cursor) cursor.classList.add('hover'); });
                     btn.addEventListener('mouseout', () => { if(cursor) cursor.classList.remove('hover'); });
@@ -404,7 +464,6 @@
                     });
                 });
 
-                // Öne Çıkarma (Yıldız) Eventi Artık Tüm İçerikler İçin Geçerli
                 document.querySelectorAll('.feature-btn').forEach(btn => {
                     btn.addEventListener('mouseover', () => { if(cursor) cursor.classList.add('hover'); });
                     btn.addEventListener('mouseout', () => { if(cursor) cursor.classList.remove('hover'); });
@@ -460,15 +519,19 @@
             const tabs = document.querySelectorAll('.nav-tab');
             const panels = document.querySelectorAll('.panel-section');
 
+            // KLAVYE (Enter) ve CLICK desteği
             tabs.forEach(tab => {
-                tab.addEventListener('click', () => {
+                const activateTab = () => {
                     tabs.forEach(t => t.classList.remove('active'));
                     tab.classList.add('active');
 
                     const targetId = tab.getAttribute('data-target');
                     panels.forEach(p => p.classList.remove('active'));
                     document.getElementById(targetId).classList.add('active');
-                });
+                };
+
+                tab.addEventListener('click', activateTab);
+                tab.addEventListener('keydown', (e) => { if(e.key === 'Enter') activateTab(); });
             });
         });
     </script>
