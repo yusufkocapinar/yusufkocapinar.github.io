@@ -71,7 +71,6 @@
         }
         .brand-group:hover { transform: scale(1.02); }
         
-        /* HARİTA KALDIRILDI, İMZA DİREKT GÖRÜNÜYOR */
         .logo-signature { 
             font-family: var(--font-signature); 
             font-size: 3rem; 
@@ -263,7 +262,7 @@
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
-        import { getFirestore, collection, query, where, getDocs, limit } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
+        import { getFirestore, collection, query, where, getDocs } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyCr4HhlythyRIfy_Xnb-IaWr0Th0TkUQi4",
@@ -276,44 +275,79 @@
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
 
+        // GÜNCEL: TÜM KOLEKSİYONLARDAN YILDIZLI İÇERİKLERİ GETİR
         async function loadFeaturedProjects() {
             const bentoContainer = document.getElementById('dynamic-bento');
             try {
-                // Admin panelinde 'isFeatured: true' yapılan projeleri getirir
-                const q = query(collection(db, "sentez"), where("isFeatured", "==", true), limit(2));
-                const snap = await getDocs(q);
-                
+                const collectionsToSearch = ['sentez', 'perspektif', 'doku'];
+                let allFeaturedItems = [];
+
+                // 3 odayı da tara
+                for (const collName of collectionsToSearch) {
+                    const q = query(collection(db, collName), where("isFeatured", "==", true));
+                    const snap = await getDocs(q);
+                    snap.forEach(doc => {
+                        let data = doc.data();
+                        data.id = doc.id;
+                        data.collectionName = collName;
+                        allFeaturedItems.push(data);
+                    });
+                }
+
+                // En yenileri üste alacak şekilde zamana göre sırala
+                allFeaturedItems.sort((a, b) => b.createdAt.toMillis() - a.createdAt.toMillis());
+
+                // Sadece son 4 tanesini vitrine al (Kutu tasarımının mozaik dengesi için)
+                const itemsToShow = allFeaturedItems.slice(0, 4);
+
                 bentoContainer.innerHTML = '';
                 
-                if (snap.empty) {
-                    bentoContainer.innerHTML = '<div style="grid-column: span 12; text-align: center; color: var(--text-muted); font-size: 0.85rem; letter-spacing: 2px; text-transform: uppercase;">Henüz öne çıkarılan bir çalışma yok. Admin panelinden yıldızlayabilirsiniz.</div>';
+                if (itemsToShow.length === 0) {
+                    bentoContainer.innerHTML = '<div style="grid-column: span 12; text-align: center; color: var(--text-muted); font-size: 0.85rem; letter-spacing: 2px; text-transform: uppercase;">Henüz öne çıkarılan bir içerik yok. Admin panelinden yıldızlayabilirsiniz.</div>';
                     return;
                 }
 
-                let i = 0;
-                snap.forEach(doc => {
-                    const data = doc.data();
-                    const gridClass = (i === 0) ? 'item-8' : 'item-4'; // İlki büyük, ikincisi küçük kutu
+                itemsToShow.forEach((data, i) => {
+                    // Bento dizilimi: 8, 4, 4, 8 şeklinde asimetrik mozaik
+                    const gridClass = (i % 4 === 0 || i % 4 === 3) ? 'item-8' : 'item-4'; 
                     
-                    // Kategoriye göre ikon belirleme
-                    let iconClass = 'fa-microscope';
-                    if(data.category && data.category.toLowerCase().includes('yazılım')) iconClass = 'fa-code';
-                    else if(data.category && data.category.toLowerCase().includes('tasarım')) iconClass = 'fa-pen-nib';
+                    let iconClass = 'fa-star';
+                    let linkHref = '#';
+                    let metaText = '';
+                    let descText = '';
+
+                    // Hangi odadan geldiyse ona göre stil ve ikon belirle
+                    if (data.collectionName === 'sentez') {
+                        iconClass = (data.category && data.category.toLowerCase().includes('yazılım')) ? 'fa-code' : 'fa-microscope';
+                        linkHref = 'sentez.html';
+                        metaText = data.category || 'Proje';
+                        descText = data.excerpt || '';
+                    } else if (data.collectionName === 'perspektif') {
+                        iconClass = 'fa-pen-nib';
+                        linkHref = 'perspektif.html';
+                        metaText = data.type || 'Yazı';
+                        descText = data.excerpt || '';
+                    } else if (data.collectionName === 'doku') {
+                        iconClass = 'fa-image';
+                        linkHref = 'doku.html';
+                        metaText = data.category || 'Görsel Arşiv';
+                        descText = data.desc || 'Tıklayarak inceleyin.';
+                    }
+
+                    if(data.year) metaText += ` — ${data.year}`;
 
                     bentoContainer.innerHTML += `
-                        <a href="sentez.html" class="bento-item ${gridClass} fade-up hover-target visible">
+                        <a href="${linkHref}" class="bento-item ${gridClass} fade-up hover-target visible">
                             <div>
-                                <div class="item-meta">${data.category || 'Araştırma'} — ${data.year || ''}</div>
+                                <div class="item-meta">${metaText}</div>
                                 <h3 class="item-title">${data.title}</h3>
-                                <p class="item-desc">${data.excerpt || ''}</p>
+                                <p class="item-desc">${descText}</p>
                             </div>
                             <div class="item-icon"><i class="fas ${iconClass}"></i></div>
                         </a>
                     `;
-                    i++;
                 });
 
-                // Fare imleci için listenerları yeniden ekle
                 if (window.matchMedia("(pointer: fine)").matches) {
                     const cursor = document.getElementById('custom-cursor');
                     document.querySelectorAll('.hover-target').forEach(t => {

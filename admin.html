@@ -83,7 +83,7 @@
         .delete-btn { border: 1px solid #d9534f; color: #d9534f; }
         .delete-btn:hover { background: #d9534f; color: #fff; }
         
-        /* YENİ EKLENEN YILDIZ (ÖNE ÇIKAR) BUTONU STİLİ */
+        /* ÖNE ÇIKAR BUTONU STİLİ */
         .feature-btn { border: 1px solid var(--accent); color: var(--accent); }
         .feature-btn.active { background: var(--accent); color: #fff; }
         .feature-btn:hover { background: var(--accent); color: #fff; }
@@ -235,7 +235,6 @@
     </main>
 
     <script type="module">
-        // updateDoc eklendi (Veri güncellemek/yıldızlamak için)
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
         import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
         import { getFirestore, collection, addDoc, serverTimestamp, getDocs, query, orderBy, limit, deleteDoc, doc, updateDoc } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
@@ -267,12 +266,11 @@
             signOut(auth).then(() => { window.location.href = 'login.html'; });
         });
 
-        /* SENTEZ */
+        /* SENTEZ KAYIT (isFeatured: false ile) */
         document.getElementById('form-sentez').addEventListener('submit', async (e) => {
             e.preventDefault();
             const btn = e.target.querySelector('button'); const originalText = btn.innerHTML;
             btn.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> Kaydediliyor...';
-            
             try {
                 await addDoc(collection(db, "sentez"), {
                     title: document.getElementById('s-title').value,
@@ -281,26 +279,20 @@
                     excerpt: document.getElementById('s-excerpt').value,
                     content: document.getElementById('s-content').value,
                     link: document.getElementById('s-link').value || "",
-                    isFeatured: false, // Yeni projeler default olarak öne çıkmaz
+                    isFeatured: false,
                     createdAt: serverTimestamp()
                 });
-                e.target.reset();
-                btn.innerHTML = 'Arşive Eklendi <i class="fas fa-check"></i>';
-                btn.style.color = "#4CAF50"; btn.style.borderColor = "#4CAF50";
+                e.target.reset(); btn.innerHTML = 'Arşive Eklendi <i class="fas fa-check"></i>'; btn.style.color = "#4CAF50"; btn.style.borderColor = "#4CAF50";
                 setTimeout(() => { loadManagement(); }, 1000); 
-            } catch (error) {
-                btn.innerHTML = 'Hata Oluştu! <i class="fas fa-times"></i>';
-                btn.style.color = "#d9534f"; btn.style.borderColor = "#d9534f";
-            }
+            } catch (error) { btn.innerHTML = 'Hata Oluştu! <i class="fas fa-times"></i>'; btn.style.color = "#d9534f"; btn.style.borderColor = "#d9534f"; }
             setTimeout(() => { btn.innerHTML = originalText; btn.style.color = ''; btn.style.borderColor = ''; }, 3000);
         });
 
-        /* PERSPEKTİF */
+        /* PERSPEKTİF KAYIT (isFeatured: false ile) */
         document.getElementById('form-perspektif').addEventListener('submit', async (e) => {
             e.preventDefault();
             const btn = e.target.querySelector('button'); const originalText = btn.innerHTML;
             btn.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> Yayınlanıyor...';
-
             try {
                 await addDoc(collection(db, "perspektif"), {
                     title: document.getElementById('p-title').value,
@@ -308,59 +300,44 @@
                     date: document.getElementById('p-date').value,
                     excerpt: document.getElementById('p-excerpt').value,
                     content: document.getElementById('p-content').value,
+                    isFeatured: false,
                     createdAt: serverTimestamp()
                 });
-                e.target.reset();
-                btn.innerHTML = 'Yazı Yayınlandı <i class="fas fa-check"></i>';
-                btn.style.color = "#4CAF50"; btn.style.borderColor = "#4CAF50";
+                e.target.reset(); btn.innerHTML = 'Yazı Yayınlandı <i class="fas fa-check"></i>'; btn.style.color = "#4CAF50"; btn.style.borderColor = "#4CAF50";
                 setTimeout(() => { loadManagement(); }, 1000);
-            } catch (error) {
-                btn.innerHTML = 'Hata Oluştu! <i class="fas fa-times"></i>';
-                btn.style.color = "#d9534f"; btn.style.borderColor = "#d9534f";
-            }
+            } catch (error) { btn.innerHTML = 'Hata Oluştu! <i class="fas fa-times"></i>'; btn.style.color = "#d9534f"; btn.style.borderColor = "#d9534f"; }
             setTimeout(() => { btn.innerHTML = originalText; btn.style.color = ''; btn.style.borderColor = ''; }, 3000);
         });
 
-        /* DOKU */
+        /* DOKU KAYIT (isFeatured: false ile) */
         document.getElementById('form-doku').addEventListener('submit', async (e) => {
             e.preventDefault();
             const btn = e.target.querySelector('button'); const originalText = btn.innerHTML;
             btn.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> Görsel Yükleniyor...';
-
-            const fileInput = document.getElementById('d-file');
-            const file = fileInput.files[0];
-
+            const file = document.getElementById('d-file').files[0];
             if (!file) { alert("Lütfen bir görsel seçin."); btn.innerHTML = originalText; return; }
-
             try {
                 const formData = new FormData(); formData.append("image", file);
                 const uploadResponse = await fetch(`https://api.imgbb.com/1/upload?key=${IMGBB_API_KEY}`, { method: "POST", body: formData });
                 const uploadData = await uploadResponse.json();
                 if (!uploadData.success) throw new Error("ImgBB Yükleme Hatası");
-
                 const downloadURL = uploadData.data.url;
-
                 await addDoc(collection(db, "doku"), {
                     title: document.getElementById('d-title').value,
                     category: document.getElementById('d-category').value || "",
                     year: document.getElementById('d-year').value || "",
                     desc: document.getElementById('d-desc').value || "",
                     imageUrl: downloadURL,
+                    isFeatured: false,
                     createdAt: serverTimestamp()
                 });
-                
-                e.target.reset();
-                btn.innerHTML = 'Galeriye Eklendi <i class="fas fa-check"></i>';
-                btn.style.color = "#4CAF50"; btn.style.borderColor = "#4CAF50";
+                e.target.reset(); btn.innerHTML = 'Galeriye Eklendi <i class="fas fa-check"></i>'; btn.style.color = "#4CAF50"; btn.style.borderColor = "#4CAF50";
                 setTimeout(() => { loadManagement(); }, 1000);
-            } catch (error) {
-                btn.innerHTML = 'Hata Oluştu! <i class="fas fa-times"></i>';
-                btn.style.color = "#d9534f"; btn.style.borderColor = "#d9534f";
-            }
+            } catch (error) { btn.innerHTML = 'Hata Oluştu! <i class="fas fa-times"></i>'; btn.style.color = "#d9534f"; btn.style.borderColor = "#d9534f"; }
             setTimeout(() => { btn.innerHTML = originalText; btn.style.color = ''; btn.style.borderColor = ''; }, 3000);
         });
 
-        /* YÖNETİM VE ÖNE ÇIKARMA SİSTEMİ */
+        /* TÜM KOLEKSİYONLAR İÇİN EVRENSEL YILDIZ VE SİL SİSTEMİ */
         async function loadManagement() {
             const listDiv = document.getElementById('admin-management-list');
             listDiv.innerHTML = '';
@@ -370,8 +347,7 @@
                 let hasItem = false;
 
                 for (const collName of collections) {
-                    // Yönetim listesine son eklenen 5 öğeyi getir
-                    const q = query(collection(db, collName), orderBy("createdAt", "desc"), limit(5));
+                    const q = query(collection(db, collName), orderBy("createdAt", "desc"), limit(4));
                     const snap = await getDocs(q);
                     
                     snap.forEach(d => {
@@ -380,17 +356,14 @@
                         const div = document.createElement('div');
                         div.className = 'list-item';
                         
-                        // Eğer koleksiyon sentez ise "Yıldız" butonu ekle
-                        let featureButtonHTML = '';
-                        if (collName === 'sentez') {
-                            const isFeaturedClass = data.isFeatured ? 'active' : '';
-                            const isFeaturedTitle = data.isFeatured ? 'Öne Çıkarıldı' : 'Vitrine Ekle';
-                            featureButtonHTML = `
-                                <button class="feature-btn hover-target ${isFeaturedClass}" data-id="${d.id}" data-featured="${data.isFeatured || false}" title="${isFeaturedTitle}">
-                                    <i class="fas fa-star"></i>
-                                </button>
-                            `;
-                        }
+                        // EVRENSEL YILDIZ BUTONU
+                        const isFeaturedClass = data.isFeatured ? 'active' : '';
+                        const isFeaturedTitle = data.isFeatured ? 'Öne Çıkarıldı' : 'Vitrine Ekle';
+                        const featureButtonHTML = `
+                            <button class="feature-btn hover-target ${isFeaturedClass}" data-id="${d.id}" data-coll="${collName}" data-featured="${data.isFeatured || false}" title="${isFeaturedTitle}">
+                                <i class="fas fa-star"></i>
+                            </button>
+                        `;
 
                         div.innerHTML = `
                             <div class="item-info">
@@ -410,14 +383,12 @@
 
                 if(!hasItem) { listDiv.innerHTML = '<div style="padding: 20px 0; color: var(--text-muted);">Arşivde yönetilecek içerik bulunmuyor.</div>'; }
 
-                // İMLEÇ VE BUTON EVENTLERİ EKLENİYOR
                 const cursor = document.getElementById('custom-cursor');
                 
                 // Silme Eventi
                 document.querySelectorAll('.delete-btn').forEach(btn => {
                     btn.addEventListener('mouseover', () => { if(cursor) cursor.classList.add('hover'); });
                     btn.addEventListener('mouseout', () => { if(cursor) cursor.classList.remove('hover'); });
-
                     btn.addEventListener('click', async (e) => {
                         e.preventDefault();
                         if(confirm("Bu içeriği arşivden tamamen silmek istediğine emin misin?")) {
@@ -425,7 +396,6 @@
                             const id = btnEl.getAttribute('data-id');
                             const coll = btnEl.getAttribute('data-coll');
                             btnEl.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i>';
-                            
                             try {
                                 await deleteDoc(doc(db, coll, id));
                                 btnEl.closest('.list-item').remove();
@@ -434,24 +404,23 @@
                     });
                 });
 
-                // Öne Çıkarma (Yıldız) Eventi
+                // Öne Çıkarma (Yıldız) Eventi Artık Tüm İçerikler İçin Geçerli
                 document.querySelectorAll('.feature-btn').forEach(btn => {
                     btn.addEventListener('mouseover', () => { if(cursor) cursor.classList.add('hover'); });
                     btn.addEventListener('mouseout', () => { if(cursor) cursor.classList.remove('hover'); });
-
                     btn.addEventListener('click', async (e) => {
                         e.preventDefault();
                         const btnEl = e.currentTarget;
                         const id = btnEl.getAttribute('data-id');
+                        const coll = btnEl.getAttribute('data-coll');
                         const isCurrentlyFeatured = btnEl.getAttribute('data-featured') === 'true';
                         
                         btnEl.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i>';
                         
                         try {
-                            const projectRef = doc(db, 'sentez', id);
-                            await updateDoc(projectRef, { isFeatured: !isCurrentlyFeatured });
+                            const itemRef = doc(db, coll, id);
+                            await updateDoc(itemRef, { isFeatured: !isCurrentlyFeatured });
                             
-                            // Arayüzü güncelle
                             btnEl.setAttribute('data-featured', !isCurrentlyFeatured);
                             btnEl.innerHTML = '<i class="fas fa-star"></i>';
                             if (!isCurrentlyFeatured) {
