@@ -5,7 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sentez | YK. Dijital Arşiv</title>
     
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Tenor+Sans&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%2275%22 font-family=%22'Playfair Display', serif%22 font-size=%2280%22 font-weight=%22bold%22 fill=%22%232C2A29%22>YK.</text></svg>">
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Tenor+Sans&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
@@ -13,16 +14,17 @@
             --bg-color: #F5F5F3; --text-main: #2C2A29; --text-muted: #7A7A7A;
             --accent: #B39B78; --border-color: rgba(179, 155, 120, 0.2); 
             --font-serif: 'Playfair Display', serif; --font-sans: 'Tenor Sans', sans-serif;
+            --font-signature: 'Great Vibes', cursive;
             --card-bg: #FFFFFF;
+            --transition-premium: all 0.5s cubic-bezier(0.25, 1, 0.5, 1);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { background-color: var(--bg-color); color: var(--text-main); font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+        body.no-scroll { overflow: hidden; }
 
-        /* MERMER DOKUSU */
         body::before { content: ""; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-image: url('data:image/svg+xml,<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><filter id="noiseFilter"><feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/></filter><rect width="100%" height="100%" filter="url(%23noiseFilter)" opacity="0.025"/></svg>'); pointer-events: none; z-index: 50; }
 
-        /* HIZLI İMLEÇ VE MOBİL İPTALİ */
         @media (pointer: fine) {
             * { cursor: none; }
             #custom-cursor { position: fixed; width: 6px; height: 6px; background: var(--accent); border-radius: 50%; pointer-events: none; z-index: 10000; transform: translate(-50%, -50%); transition: width 0.15s ease-out, height 0.15s ease-out, background 0.15s ease-out; }
@@ -35,24 +37,101 @@
 
         .container { max-width: 1100px; margin: 0 auto; padding: 0 4vw; position: relative; z-index: 10; }
 
-        /* ESTETİK İÇ NAVİGASYON */
-        nav { position: fixed; top: 0; width: 100%; background: rgba(245, 245, 243, 0.95); backdrop-filter: blur(10px); border-bottom: 1px solid var(--border-color); padding: 20px 0; z-index: 100; }
-        .nav-inner { display: flex; justify-content: space-between; align-items: center; }
-        .logo { font-family: var(--font-serif); font-size: 1.5rem; text-decoration: none; color: var(--text-main); font-weight: 700; }
-        
-        .internal-nav { display: flex; gap: 15px; align-items: center; font-family: var(--font-sans); font-size: 0.8rem; letter-spacing: 2px; text-transform: uppercase; }
-        .internal-nav a { text-decoration: none; color: var(--text-muted); transition: 0.3s; }
-        .internal-nav a:hover { color: var(--accent); }
-        .internal-nav .active { color: var(--text-main); font-weight: 600; }
-        .internal-nav .sep { color: var(--border-color); }
+        /* YENİ KAPSÜL HEADER TASARIMI */
+        header {
+            position: fixed; top: 0; left: 0; width: 100%;
+            padding: 30px 4vw; z-index: 100;
+            display: flex; justify-content: space-between; align-items: flex-start;
+            pointer-events: none; 
+        }
 
-        .page-header { padding: 180px 0 80px 0; border-bottom: 1px solid var(--border-color); }
+        .brand-group {
+            display: flex; align-items: center; gap: 15px;
+            pointer-events: auto; transition: var(--transition-premium);
+        }
+        .brand-group:hover { transform: scale(1.02); }
+        
+        .palestine-crest {
+            height: 45px; width: auto; 
+            stroke: var(--accent); stroke-width: 3; fill: none;
+            stroke-linecap: round; stroke-linejoin: round;
+        }
+
+        .logo-signature { 
+            font-family: var(--font-signature); 
+            font-size: 2.8rem; 
+            color: var(--text-main); 
+            text-decoration: none; 
+            line-height: 1;
+            transform: rotate(-3deg);
+            padding-top: 10px;
+        }
+
+        .header-controls {
+            pointer-events: auto;
+            background: rgba(245, 245, 243, 0.6);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(179, 155, 120, 0.3);
+            border-radius: 50px;
+            display: flex; align-items: center; gap: 20px;
+            padding: 6px 6px 6px 25px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.03);
+            transition: var(--transition-premium);
+        }
+        .header-controls:hover { border-color: var(--accent); background: rgba(245, 245, 243, 0.9); }
+
+        .login-link {
+            font-family: var(--font-sans); font-size: 0.75rem; 
+            text-transform: uppercase; letter-spacing: 2px; 
+            color: var(--text-muted); text-decoration: none; 
+            transition: 0.3s;
+        }
+        .login-link:hover { color: var(--accent); }
+
+        .menu-toggle {
+            background: var(--text-main); color: var(--bg-color);
+            border: none; border-radius: 40px; padding: 12px 25px;
+            font-family: var(--font-sans); font-size: 0.75rem; 
+            text-transform: uppercase; letter-spacing: 2px; 
+            display: flex; align-items: center; gap: 10px;
+            transition: var(--transition-premium);
+        }
+        .menu-toggle:hover { background: var(--accent); transform: scale(1.05); }
+
+        /* OVERLAY MENÜSÜ */
+        .menu-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
+            background-color: var(--bg-color); z-index: 999;
+            display: flex; justify-content: center; align-items: center;
+            opacity: 0; visibility: hidden; clip-path: circle(0% at top right);
+            transition: opacity 0.6s ease, visibility 0.6s ease, clip-path 0.8s cubic-bezier(0.77, 0, 0.175, 1);
+        }
+        .menu-overlay.active { opacity: 1; visibility: visible; clip-path: circle(150% at top right); }
+        
+        .overlay-close {
+            position: absolute; top: 30px; right: 4vw; font-family: var(--font-sans);
+            font-size: 0.85rem; text-transform: uppercase; letter-spacing: 2px;
+            color: var(--text-main); background: none; border: none; z-index: 1000;
+        }
+
+        .overlay-nav { display: flex; flex-direction: column; gap: 40px; text-align: center; }
+        .overlay-link {
+            font-family: var(--font-serif); font-size: clamp(3rem, 6vw, 5rem);
+            color: var(--text-main); text-decoration: none; display: block;
+            transform: translateY(30px); opacity: 0; transition: var(--transition-premium);
+        }
+        .overlay-link span {
+            display: block; font-family: var(--font-sans); font-size: 0.9rem;
+            color: var(--text-muted); text-transform: uppercase; letter-spacing: 4px; margin-top: 10px;
+        }
+        .menu-overlay.active .overlay-link { transform: translateY(0); opacity: 1; }
+        .overlay-link:hover { color: var(--accent); }
+
+        .page-header { padding: 180px 0 80px 0; border-bottom: 1px solid var(--border-color); text-align: center; }
         .room-tag { font-family: var(--font-sans); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 4px; color: var(--accent); margin-bottom: 20px; display: block; }
         .room-title { font-family: var(--font-serif); font-size: clamp(3.5rem, 8vw, 6rem); font-weight: 400; line-height: 1; }
 
-        /* PROJE LİSTESİ */
         .project-list { padding: 60px 0 150px 0; }
-        
         .project-item { 
             display: grid; grid-template-columns: 120px 1fr; gap: 40px; padding: 50px 0; 
             border-bottom: 1px solid rgba(179, 155, 120, 0.15); transition: 0.4s;
@@ -61,23 +140,19 @@
         @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
 
         .project-year { font-family: var(--font-serif); font-size: 1.8rem; color: var(--accent); font-style: italic; }
-        
         .project-content h2 { font-family: var(--font-serif); font-size: 2.2rem; font-weight: 400; margin-bottom: 15px; transition: 0.3s; }
         .project-item:hover .project-content h2 { color: var(--accent); }
-        
         .project-meta { font-family: var(--font-sans); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 2px; color: var(--text-muted); margin-bottom: 20px; display: block; }
         .project-excerpt { font-size: 1.05rem; line-height: 1.8; color: var(--text-main); opacity: 0.8; max-width: 800px; margin-bottom: 25px; font-weight: 300; }
 
         .project-actions { display: flex; gap: 20px; align-items: center; }
         .read-more { background: none; border: none; font-family: var(--font-sans); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 2px; color: var(--text-main); border-bottom: 1px solid var(--accent); padding-bottom: 3px; font-weight: 600; transition: 0.3s; }
         .read-more:hover { color: var(--accent); border-bottom-color: transparent; }
-
         .project-link { display: inline-flex; align-items: center; gap: 8px; font-family: var(--font-sans); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 2px; color: var(--text-muted); text-decoration: none; transition: 0.3s; }
         .project-link:hover { color: var(--accent); }
 
         .loading-text { text-align: center; padding: 100px 0; font-family: var(--font-sans); letter-spacing: 3px; color: var(--accent); text-transform: uppercase; }
 
-        /* TAM METİN OKUMA EKRANI (MODAL) */
         #reading-modal { position: fixed; top: 0; left: 0; width: 100%; height: 100vh; background: var(--bg-color); z-index: 9999; overflow-y: auto; display: none; opacity: 0; transition: opacity 0.5s ease; padding: 100px 4vw; }
         #reading-modal.active { display: block; opacity: 1; }
         .reading-container { max-width: 800px; margin: 0 auto; background: var(--card-bg); padding: 80px 60px; box-shadow: 0 20px 50px rgba(0,0,0,0.03); border: 1px solid var(--border-color); position: relative; }
@@ -87,12 +162,15 @@
         #read-meta { font-family: var(--font-sans); font-size: 0.8rem; color: var(--accent); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 40px; display: block; border-bottom: 1px solid var(--border-color); padding-bottom: 20px; }
         #read-content { font-size: 1.15rem; line-height: 2; color: var(--text-main); font-weight: 300; white-space: pre-wrap; }
 
-        /* MOBİL OPTİMİZASYON */
-        @media (max-width: 768px) {
+        @media (max-width: 900px) {
+            header { padding: 20px 4vw; }
+            .palestine-crest { height: 35px; }
+            .logo-signature { font-size: 2.2rem; }
+            .header-controls { padding: 5px 5px 5px 15px; gap: 15px; }
+            .login-link { display: none; }
             .project-item { grid-template-columns: 1fr; gap: 15px; }
             .project-year { font-size: 1.4rem; }
             .project-content h2 { font-size: 1.8rem; }
-            .internal-nav { font-size: 0.7rem; gap: 10px; }
             .reading-container { padding: 40px 20px; border: none; box-shadow: none; background: transparent; }
             #read-title { font-size: 2.2rem; }
             #read-content { font-size: 1.05rem; }
@@ -103,18 +181,28 @@
 <body>
     <div id="custom-cursor"></div>
     
-    <nav>
-        <div class="container nav-inner">
-            <a href="index.html" class="logo hover-target">YK.</a>
-            <div class="internal-nav">
-                <span class="active">Sentez</span>
-                <span class="sep">/</span>
-                <a href="perspektif.html" class="hover-target">Perspektif</a>
-                <span class="sep">/</span>
-                <a href="doku.html" class="hover-target">Doku</a>
-            </div>
+    <div class="menu-overlay" id="overlay">
+        <button class="overlay-close hover-target" id="close-menu">Kapat ✕</button>
+        <nav class="overlay-nav">
+            <a href="index.html" class="overlay-link hover-target">Giriş <span>Ana Sayfa & Vitrin</span></a>
+            <a href="sentez.html" class="overlay-link hover-target">Sentez <span>Akademik Projeler & Kod</span></a>
+            <a href="perspektif.html" class="overlay-link hover-target">Perspektif <span>Entelektüel Denemeler</span></a>
+            <a href="doku.html" class="overlay-link hover-target">Doku <span>Sanat & Estetik</span></a>
+        </nav>
+    </div>
+
+    <header>
+        <div class="brand-group hover-target">
+            <svg class="palestine-crest" viewBox="0 0 100 200" title="Palestine">
+                <path d="M45,5 L60,25 C65,40 60,70 55,100 L40,185 C35,195 25,195 20,185 L10,120 C5,90 15,45 45,5 Z"/>
+            </svg>
+            <a href="index.html" class="logo-signature">Y. Kocapınar</a>
         </div>
-    </nav>
+        <div class="header-controls">
+            <a href="login.html" class="login-link hover-target">Giriş</a>
+            <button class="menu-toggle hover-target" id="open-menu">Menü <i class="fas fa-bars"></i></button>
+        </div>
+    </header>
 
     <main class="container">
         <header class="page-header">
@@ -140,16 +228,8 @@
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
         import { getFirestore, collection, getDocs, query, orderBy } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
 
-        const firebaseConfig = {
-            apiKey: "AIzaSyCr4HhlythyRIfy_Xnb-IaWr0Th0TkUQi4",
-            authDomain: "yk-blog-9720b.firebaseapp.com",
-            projectId: "yk-blog-9720b",
-            messagingSenderId: "863054301539",
-            appId: "1:863054301539:web:4256589fbef613bd0e6b56"
-        };
-
-        const app = initializeApp(firebaseConfig);
-        const db = getFirestore(app);
+        const firebaseConfig = { apiKey: "AIzaSyCr4HhlythyRIfy_Xnb-IaWr0Th0TkUQi4", authDomain: "yk-blog-9720b.firebaseapp.com", projectId: "yk-blog-9720b", messagingSenderId: "863054301539", appId: "1:863054301539:web:4256589fbef613bd0e6b56" };
+        const app = initializeApp(firebaseConfig); const db = getFirestore(app);
 
         async function loadProjects() {
             const container = document.getElementById('dynamic-projects');
@@ -158,17 +238,12 @@
                 const snap = await getDocs(q);
                 container.innerHTML = '';
 
-                if(snap.empty) {
-                    container.innerHTML = '<div class="loading-text">Henüz kayıtlı bir proje bulunamadı.</div>';
-                    return;
-                }
+                if(snap.empty) { container.innerHTML = '<div class="loading-text">Henüz kayıtlı bir proje bulunamadı.</div>'; return; }
 
                 snap.forEach(doc => {
                     const data = doc.data();
-                    
                     const article = document.createElement('article');
                     article.className = 'project-item';
-                    
                     const linkHTML = data.link ? `<a href="${data.link}" target="_blank" class="project-link hover-target"><i class="fas fa-external-link-alt"></i> Dış Bağlantı</a>` : '';
                     
                     article.innerHTML = `
@@ -184,7 +259,6 @@
                         </div>
                     `;
 
-                    // Okuma Ekranını Açma İşlemi
                     const readButton = article.querySelector('.read-more');
                     const titleClick = article.querySelector('h2');
                     
@@ -192,18 +266,13 @@
                         document.getElementById('read-title').innerText = data.title;
                         document.getElementById('read-meta').innerText = `${data.category || 'Genel Proje'} — ${data.year || ''}`;
                         document.getElementById('read-content').innerText = data.content || data.excerpt + "\n\n(Bu projenin tam detay metni arşivde bulunamadı.)";
-                        
                         document.body.style.overflow = 'hidden';
                         document.getElementById('reading-modal').classList.add('active');
                     };
-
-                    readButton.onclick = openModal;
-                    titleClick.onclick = openModal;
-
+                    readButton.onclick = openModal; titleClick.onclick = openModal;
                     container.appendChild(article);
                 });
 
-                // İmleç Etkileşimi
                 if (window.matchMedia("(pointer: fine)").matches) {
                     const cursor = document.getElementById('custom-cursor');
                     document.querySelectorAll('.hover-target').forEach(t => {
@@ -211,27 +280,29 @@
                         t.addEventListener('mouseout', () => cursor.classList.remove('hover'));
                     });
                 }
-
-            } catch (e) { 
-                console.error(e);
-                container.innerHTML = '<div class="loading-text">Bağlantı Hatası.</div>';
-            }
+            } catch (e) { container.innerHTML = '<div class="loading-text">Bağlantı Hatası.</div>'; }
         }
         loadProjects();
 
-        // Okuma Ekranını Kapatma
         document.getElementById('close-reading').addEventListener('click', () => {
             document.getElementById('reading-modal').classList.remove('active');
             document.body.style.overflow = 'auto'; 
         });
 
-        // Hızlı İmleç Takibi
+        // Menü Kontrolleri
+        const openBtn = document.getElementById('open-menu');
+        const closeBtn = document.getElementById('close-menu');
+        const overlay = document.getElementById('overlay');
+        const body = document.body;
+
+        const toggleMenu = () => { overlay.classList.toggle('active'); body.classList.toggle('no-scroll'); };
+        openBtn.addEventListener('click', toggleMenu);
+        closeBtn.addEventListener('click', toggleMenu);
+        document.querySelectorAll('.overlay-link').forEach(link => { link.addEventListener('click', toggleMenu); });
+
         if (window.matchMedia("(pointer: fine)").matches) {
             const cursor = document.getElementById('custom-cursor');
-            document.addEventListener('mousemove', e => {
-                cursor.style.left = e.clientX + 'px';
-                cursor.style.top = e.clientY + 'px';
-            });
+            document.addEventListener('mousemove', e => { cursor.style.left = e.clientX + 'px'; cursor.style.top = e.clientY + 'px'; });
         }
     </script>
 </body>
