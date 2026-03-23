@@ -7,7 +7,7 @@
     
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%2275%22 font-family=%22'Playfair Display', serif%22 font-size=%2280%22 font-weight=%22bold%22 fill=%22%232C2A29%22>YK.</text></svg>">
     
-    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Tenor+Sans&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:wght@400;600;700&family=Tenor+Sans&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
@@ -36,14 +36,12 @@
             position: relative;
         }
 
-        /* DOKU: Zarif Taş Pürüzü */
         body::before {
             content: ""; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background-image: url('data:image/svg+xml,<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><filter id="noiseFilter"><feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/></filter><rect width="100%" height="100%" filter="url(%23noiseFilter)" opacity="0.025"/></svg>');
             pointer-events: none; z-index: 50;
         }
 
-        /* HIZLI İMLEÇ VE MOBİL İPTALİ */
         @media (pointer: fine) {
             * { cursor: none; }
             #custom-cursor {
@@ -60,6 +58,7 @@
 
         .container { max-width: 1200px; margin: 0 auto; padding: 0 4vw; position: relative; z-index: 10; }
 
+        /* GÜNCELLENEN HEADER DÜZENİ */
         nav {
             position: fixed; top: 0; left: 0; width: 100%;
             background-color: rgba(245, 245, 243, 0.98);
@@ -69,12 +68,19 @@
             transition: var(--transition-premium);
         }
 
-        .nav-inner { display: flex; justify-content: space-between; align-items: center; }
+        .nav-inner { 
+            display: grid; 
+            grid-template-columns: 1fr auto 1fr; 
+            align-items: center; 
+        }
         
-        /* YENİ İMZA LOGO */
+        .header-left { display: flex; align-items: center; }
+        .palestine-map { height: 40px; width: auto; transition: var(--transition-premium); }
+        .palestine-map:hover { opacity: 0.7; transform: scale(1.05); }
+
         .logo-signature { 
             font-family: var(--font-signature); 
-            font-size: 2.6rem; 
+            font-size: 2.8rem; 
             color: var(--text-main); 
             text-decoration: none; 
             z-index: 2; 
@@ -82,14 +88,17 @@
             transform: rotate(-2deg);
             display: inline-block;
             transition: var(--transition-premium);
+            justify-self: center;
+            margin: 0;
         }
         .logo-signature:hover { color: var(--accent); transform: rotate(0deg) scale(1.05); }
 
-        /* YENİ ESTETİK MENÜ (DESKTOP) */
+        .header-right { display: flex; justify-content: flex-end; align-items: center; gap: 30px; }
+
+        /* İTALİK FONT KALDIRILDI */
         .desktop-nav { display: flex; gap: 40px; align-items: center; z-index: 2; }
         .desktop-nav a { 
             font-family: var(--font-serif); 
-            font-style: italic; 
             font-size: 1.1rem; 
             color: var(--text-main); 
             text-decoration: none; 
@@ -116,16 +125,6 @@
         .login-btn:hover { border-color: var(--accent); color: var(--accent); }
 
         .menu-toggle { display: none; background: none; border: none; font-family: var(--font-sans); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 2px; color: var(--text-main); align-items: center; gap: 8px; z-index: 2;}
-
-        /* THE JOURNEY: TEK ÇİZGİ KUBBET-ÜS-SAHRA SİLÜETİ */
-        .header-journey {
-            position: absolute; left: 50%; top: 50%;
-            transform: translate(-50%, -45%);
-            width: 55%; max-width: 700px;
-            pointer-events: none; 
-            opacity: 0.85; transition: var(--transition-premium);
-        }
-        .header-journey:hover { opacity: 1; }
 
         .menu-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
@@ -185,23 +184,23 @@
         .fade-up.visible { opacity: 1; transform: translateY(0); }
 
         /* YENİ EKLENEN ŞIK FOOTER */
-        .site-footer { border-top: 1px solid var(--border-color); padding: 50px 0; margin-top: 40px; position: relative; z-index: 10; }
-        .footer-inner { display: flex; justify-content: space-between; align-items: center; }
-        .footer-logo { font-family: var(--font-signature); font-size: 2rem; color: var(--text-muted); text-decoration: none; transition: var(--transition-premium); }
-        .footer-logo:hover { color: var(--accent); }
-        .footer-socials { display: flex; gap: 25px; align-items: center; }
-        .footer-socials a { color: var(--text-muted); font-size: 1.2rem; transition: var(--transition-premium); }
+        .site-footer { border-top: 1px solid var(--border-color); padding: 60px 0; margin-top: 40px; position: relative; z-index: 10; }
+        .footer-inner { display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 20px; }
+        .footer-socials { display: flex; gap: 35px; align-items: center; }
+        .footer-socials a { color: var(--text-main); font-size: 1.4rem; transition: var(--transition-premium); }
         .footer-socials a:hover { color: var(--accent); transform: translateY(-3px); }
+        .footer-text { font-family: var(--font-sans); font-size: 0.7rem; letter-spacing: 4px; color: var(--text-muted); text-transform: uppercase; margin-top: 10px;}
 
         @media (max-width: 900px) {
-            .header-journey { display: none; }
-            .desktop-nav { display: none; } /* Mobilde estetik menü gizlenir */
-            .menu-toggle { display: flex; } /* Mobilde hamburger ikon gösterilir */
+            .nav-inner { grid-template-columns: auto 1fr auto; gap: 15px; }
+            .palestine-map { height: 30px; }
+            .logo-signature { font-size: 2rem; }
+            .desktop-nav { display: none; }
+            .menu-toggle { display: flex; }
             .bento-item { grid-column: span 12; }
             .about-grid { grid-template-columns: 1fr; gap: 40px; }
             .about-quote { font-size: 1.5rem; }
             .about-name { font-size: 2.2rem; }
-            .footer-inner { flex-direction: column; gap: 20px; text-align: center; }
         }
     </style>
 </head>
@@ -220,33 +219,25 @@
 
     <nav id="main-nav">
         <div class="container nav-inner">
-            <a href="index.html" class="logo-signature hover-target">Y. Kocapınar</a>
             
-            <div class="header-journey">
-                <svg viewBox="0 0 800 120" preserveAspectRatio="xMidYMid meet" fill="none" stroke="var(--accent)" stroke-linecap="round" stroke-linejoin="round" style="width: 100%; max-height: 80px;">
-                    <path d="M-50,75 C100,125 250,15 400,85 C550,155 700,35 850,65" stroke-width="1" opacity="0.3"/>
-                    <path d="M-20,50 C150,0 250,100 400,50 C550,0 650,100 820,40" stroke-width="0.8" opacity="0.2"/>
-
-                    <path d="M-50,90 C100,70 200,110 290,90
-                             L310,90 L310,75 L330,75
-                             L330,50 L350,50
-                             C350,10 450,10 450,50
-                             L470,50 L470,75 L490,75
-                             L490,90 C580,110 700,70 850,90"
-                          stroke-width="1.5"/>
-
-                    <path d="M400,22 L400,6 C396,2 404,2 400,6" stroke-width="1.5"/>
+            <div class="header-left">
+                <svg class="palestine-map hover-target" viewBox="0 0 100 200" fill="none" stroke="var(--accent)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" title="Palestine">
+                    <path d="M 50,10 L 60,30 C 65,50 60,80 60,100 L 45,180 L 10,100 C 15,70 30,30 50,10 Z"/>
                 </svg>
             </div>
 
-            <div class="desktop-nav">
-                <a href="sentez.html" class="hover-target">Sentez</a>
-                <a href="perspektif.html" class="hover-target">Perspektif</a>
-                <a href="doku.html" class="hover-target">Doku</a>
-                <a href="login.html" class="login-btn hover-target">Giriş</a>
+            <a href="index.html" class="logo-signature hover-target">Y. Kocapınar</a>
+            
+            <div class="header-right">
+                <div class="desktop-nav">
+                    <a href="sentez.html" class="hover-target">Sentez</a>
+                    <a href="perspektif.html" class="hover-target">Perspektif</a>
+                    <a href="doku.html" class="hover-target">Doku</a>
+                    <a href="login.html" class="login-btn hover-target">Giriş</a>
+                </div>
+                <button class="menu-toggle hover-target" id="open-menu">Menü <i class="fas fa-bars"></i></button>
             </div>
 
-            <button class="menu-toggle hover-target" id="open-menu">Menü <i class="fas fa-bars"></i></button>
         </div>
     </nav>
 
@@ -303,18 +294,17 @@
 
     <footer class="site-footer container">
         <div class="footer-inner fade-up">
-            <a href="#" class="footer-logo hover-target">Yusuf Kocapınar</a>
             <div class="footer-socials">
-                <a href="mailto:ornekmail@gmail.com" class="hover-target" title="E-Posta Gönder"><i class="far fa-envelope"></i></a>
+                <a href="mailto:yusufkocapinar92@gmail.com" class="hover-target" title="E-Posta Gönder"><i class="far fa-envelope"></i></a>
                 <a href="https://www.linkedin.com/in/yusufkocapinar" target="_blank" class="hover-target" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
-                <a href="https://instagram.com/yusufkocapinar" target="_blank" class="hover-target" title="Instagram"><i class="fab fa-instagram"></i></a>
+                <a href="https://instagram.com/kpyusufi" target="_blank" class="hover-target" title="Instagram"><i class="fab fa-instagram"></i></a>
             </div>
+            <div class="footer-text">YK. Dijital Arşiv</div>
         </div>
     </footer>
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            // HIZLI İMLEÇ ETKİLEŞİMİ (Sadece Masaüstü)
             if (window.matchMedia("(pointer: fine)").matches) {
                 const cursor = document.getElementById('custom-cursor');
                 document.addEventListener('mousemove', e => {
@@ -327,13 +317,11 @@
                 });
             }
 
-            // AŞAĞI KAYDIRDIKÇA BELİRME (FADE-UP)
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
             }, { threshold: 0.1 });
             document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
 
-            // MOBİL MENÜ KONTROLLERİ
             const openBtn = document.getElementById('open-menu');
             const closeBtn = document.getElementById('close-menu');
             const overlay = document.getElementById('overlay');
