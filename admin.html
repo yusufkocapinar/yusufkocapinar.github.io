@@ -16,7 +16,6 @@
             --font-serif: 'Playfair Display', serif; --font-sans: 'Tenor Sans', sans-serif;
         }
 
-        /* İMLEÇ ve MOBİL OPTİMİZASYONU DÜZELTİLDİ */
         * { margin: 0; padding: 0; box-sizing: border-box; }
         
         @media (pointer: fine) {
@@ -138,6 +137,10 @@
                         <label class="floating-label">Kısa Açıklama / Özeti</label>
                     </div>
                     <div class="input-group form-full">
+                        <textarea id="s-content" placeholder=" " class="hover-target" style="min-height: 250px;"></textarea>
+                        <label class="floating-label">Proje Detayı / Tam Metin (İsteğe Bağlı)</label>
+                    </div>
+                    <div class="input-group form-full">
                         <input type="url" id="s-link" placeholder=" " class="hover-target">
                         <label class="floating-label">Bağlantı Linki (GitHub, PDF vb. - İsteğe Bağlı)</label>
                     </div>
@@ -172,7 +175,6 @@
                         <textarea id="p-excerpt" placeholder=" " required class="hover-target"></textarea>
                         <label class="floating-label">Yazı Özeti (Sitede görünecek kısım)</label>
                     </div>
-                    
                     <div class="input-group form-full">
                         <textarea id="p-content" placeholder=" " required class="hover-target" style="min-height: 250px;"></textarea>
                         <label class="floating-label">Yazının Tamamı (İçerik)</label>
@@ -255,7 +257,7 @@
             signOut(auth).then(() => { window.location.href = 'login.html'; });
         });
 
-        /* SENTEZ */
+        /* SENTEZ - TAM METİN EKLENDİ */
         document.getElementById('form-sentez').addEventListener('submit', async (e) => {
             e.preventDefault();
             const btn = e.target.querySelector('button'); const originalText = btn.innerHTML;
@@ -267,6 +269,7 @@
                     category: document.getElementById('s-category').value,
                     year: document.getElementById('s-year').value,
                     excerpt: document.getElementById('s-excerpt').value,
+                    content: document.getElementById('s-content').value, // YENİ EKLENEN VERİ
                     link: document.getElementById('s-link').value || "",
                     createdAt: serverTimestamp()
                 });
@@ -281,7 +284,7 @@
             setTimeout(() => { btn.innerHTML = originalText; btn.style.color = ''; btn.style.borderColor = ''; }, 3000);
         });
 
-        /* PERSPEKTİF (TAM METİN İLE GÜNCELLENDİ) */
+        /* PERSPEKTİF */
         document.getElementById('form-perspektif').addEventListener('submit', async (e) => {
             e.preventDefault();
             const btn = e.target.querySelector('button'); const originalText = btn.innerHTML;
@@ -293,7 +296,7 @@
                     type: document.getElementById('p-type').value,
                     date: document.getElementById('p-date').value,
                     excerpt: document.getElementById('p-excerpt').value,
-                    content: document.getElementById('p-content').value, // YENİ EKLENEN VERİ
+                    content: document.getElementById('p-content').value,
                     createdAt: serverTimestamp()
                 });
                 e.target.reset();
@@ -409,7 +412,6 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            // İMLEÇ DÜZELTMESİ JS: Sadece masaüstünde (pointer: fine) çalışacak şekilde ayarlandı.
             if (window.matchMedia("(pointer: fine)").matches) {
                 const cursor = document.getElementById('custom-cursor');
                 document.addEventListener('mousemove', e => {
