@@ -36,14 +36,12 @@
             position: relative;
         }
 
-        /* DOKU: Zarif Taş Pürüzü */
         body::before {
             content: ""; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background-image: url('data:image/svg+xml,<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><filter id="noiseFilter"><feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/></filter><rect width="100%" height="100%" filter="url(%23noiseFilter)" opacity="0.025"/></svg>');
             pointer-events: none; z-index: 50;
         }
 
-        /* HIZLI İMLEÇ VE MOBİL İPTALİ */
         @media (pointer: fine) {
             * { cursor: none; }
             #custom-cursor {
@@ -60,38 +58,30 @@
 
         .container { max-width: 1200px; margin: 0 auto; padding: 0 4vw; position: relative; z-index: 10; }
 
-        /* YENİ "SÜRPRİZ" HEADER TASARIMI (FLOATING CAPSULE) */
         header {
             position: fixed; top: 0; left: 0; width: 100%;
             padding: 30px 4vw; z-index: 100;
             display: flex; justify-content: space-between; align-items: flex-start;
-            pointer-events: none; /* Boşluklara tıklamayı engeller, mermer hissini korur */
+            pointer-events: none; 
         }
 
-        /* SOL: HARİTA VE İMZA GRUBU */
         .brand-group {
-            display: flex; align-items: center; gap: 15px;
+            display: flex; align-items: center;
             pointer-events: auto; transition: var(--transition-premium);
         }
         .brand-group:hover { transform: scale(1.02); }
         
-        .palestine-crest {
-            height: 45px; width: auto; 
-            stroke: var(--accent); stroke-width: 3; fill: none;
-            stroke-linecap: round; stroke-linejoin: round;
-        }
-
+        /* HARİTA KALDIRILDI, İMZA DİREKT GÖRÜNÜYOR */
         .logo-signature { 
             font-family: var(--font-signature); 
-            font-size: 2.8rem; 
+            font-size: 3rem; 
             color: var(--text-main); 
             text-decoration: none; 
             line-height: 1;
             transform: rotate(-3deg);
-            padding-top: 10px; /* İmzayı haritayla hizalamak için ufak dokunuş */
+            display: inline-block;
         }
 
-        /* SAĞ: KAPSÜL MENÜ (PILL DESIGN) */
         .header-controls {
             pointer-events: auto;
             background: rgba(245, 245, 243, 0.6);
@@ -123,7 +113,6 @@
         }
         .menu-toggle:hover { background: var(--accent); transform: scale(1.05); }
 
-        /* OVERLAY (TAM EKRAN) MENÜ */
         .menu-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
             background-color: var(--bg-color); z-index: 999;
@@ -152,7 +141,6 @@
         .menu-overlay.active .overlay-link { transform: translateY(0); opacity: 1; }
         .overlay-link:hover { color: var(--accent); }
 
-        /* HERO & İÇERİK BÖLÜMLERİ */
         .hero { height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; }
         .main-title { font-family: var(--font-serif); font-size: clamp(3rem, 8vw, 7rem); line-height: 1.1; font-weight: 400; letter-spacing: -1.5px; color: var(--text-main); text-align: center; margin-top: 40px;}
         .hero-desc { font-size: 1.1rem; color: var(--text-muted); font-weight: 300; margin-top: 30px; text-transform: uppercase; letter-spacing: 4px; text-align: center; }
@@ -174,7 +162,7 @@
         .item-8 { grid-column: span 8; min-height: 380px; }
         .item-4 { grid-column: span 4; min-height: 380px; }
         .item-meta { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 2px; color: var(--accent); margin-bottom: 15px; }
-        .item-title { font-family: var(--font-serif); font-size: 2rem; font-weight: 400; margin-bottom: 15px; }
+        .item-title { font-family: var(--font-serif); font-size: 2rem; font-weight: 400; margin-bottom: 15px; line-height: 1.2; }
         .item-desc { color: var(--text-muted); font-size: 0.95rem; }
         .item-icon { position: absolute; bottom: 50px; right: 50px; font-size: 1.5rem; color: var(--border-color); transition: var(--transition-premium); }
         .bento-item:hover .item-icon { color: var(--accent); transform: scale(1.1); }
@@ -182,7 +170,6 @@
         .fade-up { opacity: 0; transform: translateY(30px); transition: 1s ease-out; }
         .fade-up.visible { opacity: 1; transform: translateY(0); }
 
-        /* YENİ ŞIK VE TEMİZ FOOTER (İmzasız) */
         .site-footer { border-top: 1px solid var(--border-color); padding: 60px 0; margin-top: 40px; position: relative; z-index: 10; }
         .footer-inner { display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 20px; }
         .footer-socials { display: flex; gap: 35px; align-items: center; }
@@ -190,13 +177,11 @@
         .footer-socials a:hover { color: var(--accent); transform: translateY(-3px); }
         .footer-text { font-family: var(--font-sans); font-size: 0.7rem; letter-spacing: 4px; color: var(--text-muted); text-transform: uppercase; margin-top: 10px;}
 
-        /* MOBİL UYUM */
         @media (max-width: 900px) {
             header { padding: 20px 4vw; }
-            .palestine-crest { height: 35px; }
             .logo-signature { font-size: 2.2rem; }
             .header-controls { padding: 5px 5px 5px 15px; gap: 15px; }
-            .login-link { display: none; } /* Mobilde girişi gizle, sadeliği koru */
+            .login-link { display: none; }
             .bento-item { grid-column: span 12; }
             .about-grid { grid-template-columns: 1fr; gap: 40px; }
             .about-quote { font-size: 1.5rem; }
@@ -213,17 +198,14 @@
             <a href="sentez.html" class="overlay-link hover-target">Sentez <span>Akademik Projeler & Kod</span></a>
             <a href="perspektif.html" class="overlay-link hover-target">Perspektif <span>Entelektüel Denemeler</span></a>
             <a href="doku.html" class="overlay-link hover-target">Doku <span>Sanat & Estetik</span></a>
+            <a href="admin.html" class="overlay-link hover-target" style="font-size: 2rem; margin-top: 30px; color: var(--accent);">Yönetim Paneli</a>
         </nav>
     </div>
 
     <header>
         <div class="brand-group hover-target">
-            <svg class="palestine-crest" viewBox="0 0 100 200" title="Palestine">
-                <path d="M45,5 L60,25 C65,40 60,70 55,100 L40,185 C35,195 25,195 20,185 L10,120 C5,90 15,45 45,5 Z"/>
-            </svg>
             <a href="index.html" class="logo-signature">Y. Kocapınar</a>
         </div>
-
         <div class="header-controls">
             <a href="login.html" class="login-link hover-target">Giriş</a>
             <button class="menu-toggle hover-target" id="open-menu">Menü <i class="fas fa-bars"></i></button>
@@ -260,23 +242,10 @@
                 <span class="section-tag">Seçkiler</span>
                 <h2>Öne Çıkan Çalışmalar</h2>
             </div>
-            <div class="bento-grid">
-                <a href="sentez.html" class="bento-item item-8 fade-up hover-target">
-                    <div>
-                        <div class="item-meta">Araştırma & Geliştirme</div>
-                        <h3 class="item-title">Onkosklepios: Karar Destek</h3>
-                        <p class="item-desc">Likit biyopsi ve sanal patoloji analiz platformu.</p>
-                    </div>
-                    <div class="item-icon"><i class="fas fa-microscope"></i></div>
-                </a>
-                <a href="sentez.html" class="bento-item item-4 fade-up hover-target">
-                    <div>
-                        <div class="item-meta">Yazılım</div>
-                        <h3 class="item-title">Sinyal İşleme</h3>
-                        <p class="item-desc">MATLAB veri modelleme ve analiz süreçleri.</p>
-                    </div>
-                    <div class="item-icon"><i class="fas fa-code"></i></div>
-                </a>
+            <div class="bento-grid" id="dynamic-bento">
+                <div style="grid-column: span 12; text-align: center; color: var(--accent); padding: 40px; font-size: 0.85rem; letter-spacing: 2px; text-transform: uppercase;">
+                    <i class="fas fa-circle-notch fa-spin"></i> Vitrin Güncelleniyor...
+                </div>
             </div>
         </section>
     </main>
@@ -292,9 +261,77 @@
         </div>
     </footer>
 
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
+        import { getFirestore, collection, query, where, getDocs, limit } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyCr4HhlythyRIfy_Xnb-IaWr0Th0TkUQi4",
+            authDomain: "yk-blog-9720b.firebaseapp.com",
+            projectId: "yk-blog-9720b",
+            messagingSenderId: "863054301539",
+            appId: "1:863054301539:web:4256589fbef613bd0e6b56"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        async function loadFeaturedProjects() {
+            const bentoContainer = document.getElementById('dynamic-bento');
+            try {
+                // Admin panelinde 'isFeatured: true' yapılan projeleri getirir
+                const q = query(collection(db, "sentez"), where("isFeatured", "==", true), limit(2));
+                const snap = await getDocs(q);
+                
+                bentoContainer.innerHTML = '';
+                
+                if (snap.empty) {
+                    bentoContainer.innerHTML = '<div style="grid-column: span 12; text-align: center; color: var(--text-muted); font-size: 0.85rem; letter-spacing: 2px; text-transform: uppercase;">Henüz öne çıkarılan bir çalışma yok. Admin panelinden yıldızlayabilirsiniz.</div>';
+                    return;
+                }
+
+                let i = 0;
+                snap.forEach(doc => {
+                    const data = doc.data();
+                    const gridClass = (i === 0) ? 'item-8' : 'item-4'; // İlki büyük, ikincisi küçük kutu
+                    
+                    // Kategoriye göre ikon belirleme
+                    let iconClass = 'fa-microscope';
+                    if(data.category && data.category.toLowerCase().includes('yazılım')) iconClass = 'fa-code';
+                    else if(data.category && data.category.toLowerCase().includes('tasarım')) iconClass = 'fa-pen-nib';
+
+                    bentoContainer.innerHTML += `
+                        <a href="sentez.html" class="bento-item ${gridClass} fade-up hover-target visible">
+                            <div>
+                                <div class="item-meta">${data.category || 'Araştırma'} — ${data.year || ''}</div>
+                                <h3 class="item-title">${data.title}</h3>
+                                <p class="item-desc">${data.excerpt || ''}</p>
+                            </div>
+                            <div class="item-icon"><i class="fas ${iconClass}"></i></div>
+                        </a>
+                    `;
+                    i++;
+                });
+
+                // Fare imleci için listenerları yeniden ekle
+                if (window.matchMedia("(pointer: fine)").matches) {
+                    const cursor = document.getElementById('custom-cursor');
+                    document.querySelectorAll('.hover-target').forEach(t => {
+                        t.addEventListener('mouseover', () => cursor.classList.add('hover'));
+                        t.addEventListener('mouseout', () => cursor.classList.remove('hover'));
+                    });
+                }
+            } catch (e) {
+                console.error(e);
+                bentoContainer.innerHTML = '<div style="grid-column: span 12; text-align: center; color: #d9534f; font-size: 0.85rem;">Bağlantı Hatası.</div>';
+            }
+        }
+
+        loadFeaturedProjects();
+    </script>
+
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            // HIZLI İMLEÇ ETKİLEŞİMİ (Sadece Masaüstü)
             if (window.matchMedia("(pointer: fine)").matches) {
                 const cursor = document.getElementById('custom-cursor');
                 document.addEventListener('mousemove', e => {
@@ -307,13 +344,11 @@
                 });
             }
 
-            // AŞAĞI KAYDIRDIKÇA BELİRME (FADE-UP)
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
             }, { threshold: 0.1 });
             document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
 
-            // MOBİL MENÜ KONTROLLERİ
             const openBtn = document.getElementById('open-menu');
             const closeBtn = document.getElementById('close-menu');
             const overlay = document.getElementById('overlay');
