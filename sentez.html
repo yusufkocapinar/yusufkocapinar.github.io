@@ -20,8 +20,12 @@
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
+        
         body { background-color: var(--bg-color); color: var(--text-main); font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
         body.no-scroll { overflow: hidden; }
+
+        /* KLAVYE ODAKLANMA (ACCESSIBILITY) */
+        *:focus-visible { outline: 1px dashed var(--accent); outline-offset: 4px; }
 
         body::before { content: ""; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-image: url('data:image/svg+xml,<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><filter id="noiseFilter"><feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/></filter><rect width="100%" height="100%" filter="url(%23noiseFilter)" opacity="0.025"/></svg>'); pointer-events: none; z-index: 50; }
 
@@ -35,146 +39,89 @@
             * { cursor: auto !important; }
         }
 
-        .container { max-width: 1100px; margin: 0 auto; padding: 0 4vw; position: relative; z-index: 10; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 4vw; position: relative; z-index: 10; }
 
-        /* YENİ KAPSÜL HEADER TASARIMI */
-        header {
-            position: fixed; top: 0; left: 0; width: 100%;
-            padding: 30px 4vw; z-index: 100;
-            display: flex; justify-content: space-between; align-items: flex-start;
-            pointer-events: none; 
+        header.top-nav {
+            position: fixed; top: 0; left: 0; width: 100%; padding: 30px 4vw; z-index: 100;
+            display: flex; justify-content: space-between; align-items: flex-start; pointer-events: none; 
         }
-
-        .brand-group {
-            display: flex; align-items: center; gap: 15px;
-            pointer-events: auto; transition: var(--transition-premium);
-        }
+        .brand-group { display: flex; align-items: center; gap: 15px; pointer-events: auto; transition: var(--transition-premium); }
         .brand-group:hover { transform: scale(1.02); }
-        
-        .palestine-crest {
-            height: 45px; width: auto; 
-            stroke: var(--accent); stroke-width: 3; fill: none;
-            stroke-linecap: round; stroke-linejoin: round;
-        }
+        .palestine-crest { height: 45px; width: auto; stroke: var(--accent); stroke-width: 3; fill: none; stroke-linecap: round; stroke-linejoin: round; }
+        .logo-signature { font-family: var(--font-signature); font-size: 2.8rem; color: var(--text-main); text-decoration: none; line-height: 1; transform: rotate(-3deg); padding-top: 10px; }
 
-        .logo-signature { 
-            font-family: var(--font-signature); 
-            font-size: 2.8rem; 
-            color: var(--text-main); 
-            text-decoration: none; 
-            line-height: 1;
-            transform: rotate(-3deg);
-            padding-top: 10px;
-        }
-
-        .header-controls {
-            pointer-events: auto;
-            background: rgba(245, 245, 243, 0.6);
-            backdrop-filter: blur(15px);
-            border: 1px solid rgba(179, 155, 120, 0.3);
-            border-radius: 50px;
-            display: flex; align-items: center; gap: 20px;
-            padding: 6px 6px 6px 25px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.03);
-            transition: var(--transition-premium);
-        }
+        .header-controls { pointer-events: auto; background: rgba(245, 245, 243, 0.6); backdrop-filter: blur(15px); border: 1px solid rgba(179, 155, 120, 0.3); border-radius: 50px; display: flex; align-items: center; gap: 20px; padding: 6px 6px 6px 25px; box-shadow: 0 10px 30px rgba(0,0,0,0.03); transition: var(--transition-premium); }
         .header-controls:hover { border-color: var(--accent); background: rgba(245, 245, 243, 0.9); }
-
-        .login-link {
-            font-family: var(--font-sans); font-size: 0.75rem; 
-            text-transform: uppercase; letter-spacing: 2px; 
-            color: var(--text-muted); text-decoration: none; 
-            transition: 0.3s;
-        }
+        .login-link { font-family: var(--font-sans); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 2px; color: var(--text-muted); text-decoration: none; transition: 0.3s; }
         .login-link:hover { color: var(--accent); }
-
-        .menu-toggle {
-            background: var(--text-main); color: var(--bg-color);
-            border: none; border-radius: 40px; padding: 12px 25px;
-            font-family: var(--font-sans); font-size: 0.75rem; 
-            text-transform: uppercase; letter-spacing: 2px; 
-            display: flex; align-items: center; gap: 10px;
-            transition: var(--transition-premium);
-        }
+        .menu-toggle { background: var(--text-main); color: var(--bg-color); border: none; border-radius: 40px; padding: 12px 25px; font-family: var(--font-sans); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 2px; display: flex; align-items: center; gap: 10px; transition: var(--transition-premium); }
         .menu-toggle:hover { background: var(--accent); transform: scale(1.05); }
 
-        /* OVERLAY MENÜSÜ */
-        .menu-overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
-            background-color: var(--bg-color); z-index: 999;
-            display: flex; justify-content: center; align-items: center;
-            opacity: 0; visibility: hidden; clip-path: circle(0% at top right);
-            transition: opacity 0.6s ease, visibility 0.6s ease, clip-path 0.8s cubic-bezier(0.77, 0, 0.175, 1);
-        }
+        .menu-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100vh; background-color: var(--bg-color); z-index: 999; display: flex; justify-content: center; align-items: center; opacity: 0; visibility: hidden; clip-path: circle(0% at top right); transition: opacity 0.6s ease, visibility 0.6s ease, clip-path 0.8s cubic-bezier(0.77, 0, 0.175, 1); }
         .menu-overlay.active { opacity: 1; visibility: visible; clip-path: circle(150% at top right); }
+        .overlay-close { position: absolute; top: 30px; right: 4vw; font-family: var(--font-sans); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 2px; color: var(--text-main); background: none; border: none; z-index: 1000; padding: 10px; }
         
-        .overlay-close {
-            position: absolute; top: 30px; right: 4vw; font-family: var(--font-sans);
-            font-size: 0.85rem; text-transform: uppercase; letter-spacing: 2px;
-            color: var(--text-main); background: none; border: none; z-index: 1000;
-        }
-
         .overlay-nav { display: flex; flex-direction: column; gap: 40px; text-align: center; }
-        .overlay-link {
-            font-family: var(--font-serif); font-size: clamp(3rem, 6vw, 5rem);
-            color: var(--text-main); text-decoration: none; display: block;
-            transform: translateY(30px); opacity: 0; transition: var(--transition-premium);
-        }
-        .overlay-link span {
-            display: block; font-family: var(--font-sans); font-size: 0.9rem;
-            color: var(--text-muted); text-transform: uppercase; letter-spacing: 4px; margin-top: 10px;
-        }
+        .overlay-link { font-family: var(--font-serif); font-size: clamp(3rem, 6vw, 5rem); color: var(--text-main); text-decoration: none; display: block; transform: translateY(30px); opacity: 0; transition: var(--transition-premium); }
+        .overlay-link span { display: block; font-family: var(--font-sans); font-size: 0.9rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 4px; margin-top: 10px; }
         .menu-overlay.active .overlay-link { transform: translateY(0); opacity: 1; }
         .overlay-link:hover { color: var(--accent); }
 
-        .page-header { padding: 180px 0 80px 0; border-bottom: 1px solid var(--border-color); text-align: center; }
+        .page-header { padding: 180px 0 60px 0; border-bottom: 1px solid var(--border-color); text-align: center; margin-bottom: 60px;}
         .room-tag { font-family: var(--font-sans); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 4px; color: var(--accent); margin-bottom: 20px; display: block; }
         .room-title { font-family: var(--font-serif); font-size: clamp(3.5rem, 8vw, 6rem); font-weight: 400; line-height: 1; }
 
-        .project-list { padding: 60px 0 150px 0; }
-        .project-item { 
-            display: grid; grid-template-columns: 120px 1fr; gap: 40px; padding: 50px 0; 
-            border-bottom: 1px solid rgba(179, 155, 120, 0.15); transition: 0.4s;
+        /* YENİ SENTEZ GRID TASARIMI */
+        .project-grid { 
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); 
+            gap: 40px; padding-bottom: 150px; 
+        }
+        
+        .project-card { 
+            background: rgba(255, 255, 255, 0.4); border: 1px solid var(--border-color); 
+            padding: 40px; transition: var(--transition-premium); 
+            display: flex; flex-direction: column; justify-content: space-between;
             opacity: 0; transform: translateY(20px); animation: fadeUp 0.8s ease forwards;
         }
         @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
+        
+        .project-card:hover { transform: translateY(-8px); border-color: rgba(179, 155, 120, 0.6); background: var(--card-bg); box-shadow: 0 15px 30px rgba(0,0,0,0.03); }
+        
+        .card-header { margin-bottom: 30px; display: flex; justify-content: space-between; align-items: flex-start; }
+        .project-meta { font-family: var(--font-sans); font-size: 0.7rem; text-transform: uppercase; letter-spacing: 2px; color: var(--accent); }
+        .project-year { font-family: var(--font-serif); font-size: 1.2rem; color: var(--text-muted); font-style: italic; }
+        
+        .project-content h2 { font-family: var(--font-serif); font-size: 1.8rem; font-weight: 400; margin-bottom: 15px; line-height: 1.2; color: var(--text-main); transition: 0.3s; }
+        .project-card:hover .project-content h2 { color: var(--accent); }
+        .project-excerpt { font-size: 1rem; line-height: 1.7; color: var(--text-muted); margin-bottom: 30px; font-weight: 300; }
 
-        .project-year { font-family: var(--font-serif); font-size: 1.8rem; color: var(--accent); font-style: italic; }
-        .project-content h2 { font-family: var(--font-serif); font-size: 2.2rem; font-weight: 400; margin-bottom: 15px; transition: 0.3s; }
-        .project-item:hover .project-content h2 { color: var(--accent); }
-        .project-meta { font-family: var(--font-sans); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 2px; color: var(--text-muted); margin-bottom: 20px; display: block; }
-        .project-excerpt { font-size: 1.05rem; line-height: 1.8; color: var(--text-main); opacity: 0.8; max-width: 800px; margin-bottom: 25px; font-weight: 300; }
-
-        .project-actions { display: flex; gap: 20px; align-items: center; }
-        .read-more { background: none; border: none; font-family: var(--font-sans); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 2px; color: var(--text-main); border-bottom: 1px solid var(--accent); padding-bottom: 3px; font-weight: 600; transition: 0.3s; }
+        .project-actions { display: flex; gap: 15px; align-items: center; margin-top: auto; }
+        .read-more { background: none; border: none; font-family: var(--font-sans); font-size: 0.7rem; text-transform: uppercase; letter-spacing: 2px; color: var(--text-main); padding-bottom: 2px; border-bottom: 1px solid var(--accent); font-weight: 600; transition: 0.3s; }
         .read-more:hover { color: var(--accent); border-bottom-color: transparent; }
-        .project-link { display: inline-flex; align-items: center; gap: 8px; font-family: var(--font-sans); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 2px; color: var(--text-muted); text-decoration: none; transition: 0.3s; }
+        .project-link { font-family: var(--font-sans); font-size: 0.7rem; text-transform: uppercase; letter-spacing: 2px; color: var(--text-muted); text-decoration: none; transition: 0.3s; }
         .project-link:hover { color: var(--accent); }
 
-        .loading-text { text-align: center; padding: 100px 0; font-family: var(--font-sans); letter-spacing: 3px; color: var(--accent); text-transform: uppercase; }
+        .loading-text { text-align: center; padding: 100px 0; font-family: var(--font-sans); letter-spacing: 3px; color: var(--accent); text-transform: uppercase; grid-column: 1 / -1;}
 
-        #reading-modal { position: fixed; top: 0; left: 0; width: 100%; height: 100vh; background: var(--bg-color); z-index: 9999; overflow-y: auto; display: none; opacity: 0; transition: opacity 0.5s ease; padding: 100px 4vw; }
+        /* MODAL EKRANI GÜNCELLEMELERİ (MOBİL İÇİN ÇARPI BÜYÜTÜLDÜ) */
+        #reading-modal { position: fixed; top: 0; left: 0; width: 100%; height: 100vh; background: var(--bg-color); z-index: 9999; overflow-y: auto; display: none; opacity: 0; transition: opacity 0.4s ease; padding: 60px 4vw; }
         #reading-modal.active { display: block; opacity: 1; }
         .reading-container { max-width: 800px; margin: 0 auto; background: var(--card-bg); padding: 80px 60px; box-shadow: 0 20px 50px rgba(0,0,0,0.03); border: 1px solid var(--border-color); position: relative; }
-        #close-reading { position: absolute; top: 30px; right: 30px; background: none; border: none; font-family: var(--font-sans); font-size: 0.8rem; letter-spacing: 2px; color: var(--text-muted); transition: 0.3s; }
+        #close-reading { position: absolute; top: 20px; right: 20px; background: none; border: none; font-family: var(--font-sans); font-size: 0.8rem; letter-spacing: 2px; color: var(--text-muted); transition: 0.3s; padding: 10px; }
         #close-reading:hover { color: #d9534f; }
-        #read-title { font-family: var(--font-serif); font-size: 3rem; margin-bottom: 10px; line-height: 1.2; font-weight: 400; color: var(--text-main); }
+        #read-title { font-family: var(--font-serif); font-size: 2.8rem; margin-bottom: 10px; line-height: 1.2; font-weight: 400; color: var(--text-main); }
         #read-meta { font-family: var(--font-sans); font-size: 0.8rem; color: var(--accent); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 40px; display: block; border-bottom: 1px solid var(--border-color); padding-bottom: 20px; }
-        #read-content { font-size: 1.15rem; line-height: 2; color: var(--text-main); font-weight: 300; white-space: pre-wrap; }
+        #read-content { font-size: 1.1rem; line-height: 2; color: var(--text-main); font-weight: 300; white-space: pre-wrap; }
 
         @media (max-width: 900px) {
-            header { padding: 20px 4vw; }
+            header.top-nav { padding: 20px 4vw; }
             .palestine-crest { height: 35px; }
             .logo-signature { font-size: 2.2rem; }
             .header-controls { padding: 5px 5px 5px 15px; gap: 15px; }
             .login-link { display: none; }
-            .project-item { grid-template-columns: 1fr; gap: 15px; }
-            .project-year { font-size: 1.4rem; }
-            .project-content h2 { font-size: 1.8rem; }
-            .reading-container { padding: 40px 20px; border: none; box-shadow: none; background: transparent; }
-            #read-title { font-size: 2.2rem; }
-            #read-content { font-size: 1.05rem; }
-            #close-reading { top: 10px; right: 10px; }
+            .project-grid { grid-template-columns: 1fr; gap: 20px; }
+            .reading-container { padding: 50px 25px; border: none; box-shadow: none; background: transparent; }
+            #read-title { font-size: 2rem; }
         }
     </style>
 </head>
@@ -182,16 +129,15 @@
     <div id="custom-cursor"></div>
     
     <div class="menu-overlay" id="overlay">
-        <button class="overlay-close hover-target" id="close-menu">Kapat ✕</button>
+        <button class="overlay-close hover-target" tabindex="0" id="close-menu">Kapat ✕</button>
         <nav class="overlay-nav">
             <a href="index.html" class="overlay-link hover-target">Giriş <span>Ana Sayfa & Vitrin</span></a>
-            <a href="sentez.html" class="overlay-link hover-target">Sentez <span>Akademik Projeler & Kod</span></a>
             <a href="perspektif.html" class="overlay-link hover-target">Perspektif <span>Entelektüel Denemeler</span></a>
             <a href="doku.html" class="overlay-link hover-target">Doku <span>Sanat & Estetik</span></a>
         </nav>
     </div>
 
-    <header>
+    <header class="top-nav">
         <div class="brand-group hover-target">
             <svg class="palestine-crest" viewBox="0 0 100 200" title="Palestine">
                 <path d="M45,5 L60,25 C65,40 60,70 55,100 L40,185 C35,195 25,195 20,185 L10,120 C5,90 15,45 45,5 Z"/>
@@ -210,14 +156,14 @@
             <h1 class="room-title">Sentez.</h1>
         </header>
 
-        <section class="project-list" id="dynamic-projects">
+        <section class="project-grid" id="dynamic-projects">
             <div class="loading-text">Arşiv Taranıyor...</div>
         </section>
     </main>
 
-    <div id="reading-modal">
+    <div id="reading-modal" role="dialog" aria-modal="true">
         <div class="reading-container">
-            <button id="close-reading" class="hover-target">KAPAT ✕</button>
+            <button id="close-reading" class="hover-target" tabindex="0">KAPAT ✕</button>
             <h2 id="read-title">Başlık</h2>
             <span id="read-meta">Kategori - Yıl</span>
             <div id="read-content">İçerik buraya gelecek...</div>
@@ -243,33 +189,45 @@
                 snap.forEach(doc => {
                     const data = doc.data();
                     const article = document.createElement('article');
-                    article.className = 'project-item';
-                    const linkHTML = data.link ? `<a href="${data.link}" target="_blank" class="project-link hover-target"><i class="fas fa-external-link-alt"></i> Dış Bağlantı</a>` : '';
+                    article.className = 'project-card';
+                    article.setAttribute('tabindex', '0'); // Klavye ile odaklanılabilir
+                    
+                    const linkHTML = data.link ? `<a href="${data.link}" target="_blank" tabindex="0" class="project-link hover-target"><i class="fas fa-external-link-alt"></i> Dış Bağlantı</a>` : '';
                     
                     article.innerHTML = `
-                        <div class="project-year">${data.year || '—'}</div>
-                        <div class="project-content">
-                            <span class="project-meta">${data.category || 'Genel Proje'}</span>
-                            <h2 class="hover-target">${data.title}</h2>
-                            <p class="project-excerpt">${data.excerpt}</p>
-                            <div class="project-actions">
-                                <button class="read-more hover-target">Detayları İncele</button>
-                                ${linkHTML}
+                        <div>
+                            <div class="card-header">
+                                <span class="project-meta">${data.category || 'Genel Proje'}</span>
+                                <span class="project-year">${data.year || '—'}</span>
                             </div>
+                            <div class="project-content">
+                                <h2 class="hover-target">${data.title}</h2>
+                                <p class="project-excerpt">${data.excerpt}</p>
+                            </div>
+                        </div>
+                        <div class="project-actions">
+                            <button class="read-more hover-target" tabindex="0">Detayları İncele</button>
+                            ${linkHTML}
                         </div>
                     `;
 
-                    const readButton = article.querySelector('.read-more');
-                    const titleClick = article.querySelector('h2');
-                    
                     const openModal = () => {
                         document.getElementById('read-title').innerText = data.title;
                         document.getElementById('read-meta').innerText = `${data.category || 'Genel Proje'} — ${data.year || ''}`;
                         document.getElementById('read-content').innerText = data.content || data.excerpt + "\n\n(Bu projenin tam detay metni arşivde bulunamadı.)";
                         document.body.style.overflow = 'hidden';
                         document.getElementById('reading-modal').classList.add('active');
+                        document.getElementById('close-reading').focus(); // Ekran okuyucu odaklanması
                     };
-                    readButton.onclick = openModal; titleClick.onclick = openModal;
+
+                    article.querySelector('.read-more').onclick = openModal; 
+                    article.querySelector('h2').onclick = openModal;
+                    
+                    // Klavye Enter ile açma desteği
+                    article.addEventListener('keydown', (e) => {
+                        if (e.key === 'Enter') openModal();
+                    });
+
                     container.appendChild(article);
                 });
 
@@ -284,21 +242,30 @@
         }
         loadProjects();
 
-        document.getElementById('close-reading').addEventListener('click', () => {
+        // Kapatma Fonksiyonları
+        const closeModal = () => {
             document.getElementById('reading-modal').classList.remove('active');
             document.body.style.overflow = 'auto'; 
-        });
+        }
+        document.getElementById('close-reading').addEventListener('click', closeModal);
 
-        // Menü Kontrolleri
-        const openBtn = document.getElementById('open-menu');
-        const closeBtn = document.getElementById('close-menu');
-        const overlay = document.getElementById('overlay');
-        const body = document.body;
-
-        const toggleMenu = () => { overlay.classList.toggle('active'); body.classList.toggle('no-scroll'); };
-        openBtn.addEventListener('click', toggleMenu);
-        closeBtn.addEventListener('click', toggleMenu);
+        const toggleMenu = () => { 
+            const overlay = document.getElementById('overlay');
+            overlay.classList.toggle('active'); 
+            document.body.classList.toggle('no-scroll'); 
+            if(overlay.classList.contains('active')) document.getElementById('close-menu').focus();
+        };
+        document.getElementById('open-menu').addEventListener('click', toggleMenu);
+        document.getElementById('close-menu').addEventListener('click', toggleMenu);
         document.querySelectorAll('.overlay-link').forEach(link => { link.addEventListener('click', toggleMenu); });
+
+        // KLAVYE (ESC) İLE KAPATMA
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                if(document.getElementById('reading-modal').classList.contains('active')) closeModal();
+                if(document.getElementById('overlay').classList.contains('active')) toggleMenu();
+            }
+        });
 
         if (window.matchMedia("(pointer: fine)").matches) {
             const cursor = document.getElementById('custom-cursor');

@@ -23,6 +23,8 @@
         body { background-color: var(--bg-color); color: var(--text-main); font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased; overflow-x: hidden;}
         body.no-scroll { overflow: hidden; }
 
+        *:focus-visible { outline: 1px dashed var(--accent); outline-offset: 4px; }
+
         body::before { content: ""; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-image: url('data:image/svg+xml,<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><filter id="noiseFilter"><feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/></filter><rect width="100%" height="100%" filter="url(%23noiseFilter)" opacity="0.025"/></svg>'); pointer-events: none; z-index: 50; }
 
         @media (pointer: fine) {
@@ -37,138 +39,75 @@
 
         .container { max-width: 900px; margin: 0 auto; padding: 0 5vw; position: relative; z-index: 10; }
 
-        /* YENİ KAPSÜL HEADER TASARIMI */
-        header {
-            position: fixed; top: 0; left: 0; width: 100%;
-            padding: 30px 4vw; z-index: 100;
-            display: flex; justify-content: space-between; align-items: flex-start;
-            pointer-events: none; 
-        }
-
-        .brand-group {
-            display: flex; align-items: center; gap: 15px;
-            pointer-events: auto; transition: var(--transition-premium);
-        }
+        header.top-nav { position: fixed; top: 0; left: 0; width: 100%; padding: 30px 4vw; z-index: 100; display: flex; justify-content: space-between; align-items: flex-start; pointer-events: none; }
+        .brand-group { display: flex; align-items: center; gap: 15px; pointer-events: auto; transition: var(--transition-premium); }
         .brand-group:hover { transform: scale(1.02); }
-        
-        .palestine-crest {
-            height: 45px; width: auto; 
-            stroke: var(--accent); stroke-width: 3; fill: none;
-            stroke-linecap: round; stroke-linejoin: round;
-        }
+        .palestine-crest { height: 45px; width: auto; stroke: var(--accent); stroke-width: 3; fill: none; stroke-linecap: round; stroke-linejoin: round; }
+        .logo-signature { font-family: var(--font-signature); font-size: 2.8rem; color: var(--text-main); text-decoration: none; line-height: 1; transform: rotate(-3deg); padding-top: 10px; }
 
-        .logo-signature { 
-            font-family: var(--font-signature); 
-            font-size: 2.8rem; 
-            color: var(--text-main); 
-            text-decoration: none; 
-            line-height: 1;
-            transform: rotate(-3deg);
-            padding-top: 10px;
-        }
-
-        .header-controls {
-            pointer-events: auto;
-            background: rgba(245, 245, 243, 0.6);
-            backdrop-filter: blur(15px);
-            border: 1px solid rgba(179, 155, 120, 0.3);
-            border-radius: 50px;
-            display: flex; align-items: center; gap: 20px;
-            padding: 6px 6px 6px 25px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.03);
-            transition: var(--transition-premium);
-        }
+        .header-controls { pointer-events: auto; background: rgba(245, 245, 243, 0.6); backdrop-filter: blur(15px); border: 1px solid rgba(179, 155, 120, 0.3); border-radius: 50px; display: flex; align-items: center; gap: 20px; padding: 6px 6px 6px 25px; box-shadow: 0 10px 30px rgba(0,0,0,0.03); transition: var(--transition-premium); }
         .header-controls:hover { border-color: var(--accent); background: rgba(245, 245, 243, 0.9); }
-
-        .login-link {
-            font-family: var(--font-sans); font-size: 0.75rem; 
-            text-transform: uppercase; letter-spacing: 2px; 
-            color: var(--text-muted); text-decoration: none; 
-            transition: 0.3s;
-        }
+        .login-link { font-family: var(--font-sans); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 2px; color: var(--text-muted); text-decoration: none; transition: 0.3s; }
         .login-link:hover { color: var(--accent); }
-
-        .menu-toggle {
-            background: var(--text-main); color: var(--bg-color);
-            border: none; border-radius: 40px; padding: 12px 25px;
-            font-family: var(--font-sans); font-size: 0.75rem; 
-            text-transform: uppercase; letter-spacing: 2px; 
-            display: flex; align-items: center; gap: 10px;
-            transition: var(--transition-premium);
-        }
+        .menu-toggle { background: var(--text-main); color: var(--bg-color); border: none; border-radius: 40px; padding: 12px 25px; font-family: var(--font-sans); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 2px; display: flex; align-items: center; gap: 10px; transition: var(--transition-premium); }
         .menu-toggle:hover { background: var(--accent); transform: scale(1.05); }
 
-        /* OVERLAY MENÜSÜ */
-        .menu-overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
-            background-color: var(--bg-color); z-index: 999;
-            display: flex; justify-content: center; align-items: center;
-            opacity: 0; visibility: hidden; clip-path: circle(0% at top right);
-            transition: opacity 0.6s ease, visibility 0.6s ease, clip-path 0.8s cubic-bezier(0.77, 0, 0.175, 1);
-        }
+        .menu-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100vh; background-color: var(--bg-color); z-index: 999; display: flex; justify-content: center; align-items: center; opacity: 0; visibility: hidden; clip-path: circle(0% at top right); transition: opacity 0.6s ease, visibility 0.6s ease, clip-path 0.8s cubic-bezier(0.77, 0, 0.175, 1); }
         .menu-overlay.active { opacity: 1; visibility: visible; clip-path: circle(150% at top right); }
+        .overlay-close { position: absolute; top: 30px; right: 4vw; font-family: var(--font-sans); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 2px; color: var(--text-main); background: none; border: none; z-index: 1000; padding: 10px; }
         
-        .overlay-close {
-            position: absolute; top: 30px; right: 4vw; font-family: var(--font-sans);
-            font-size: 0.85rem; text-transform: uppercase; letter-spacing: 2px;
-            color: var(--text-main); background: none; border: none; z-index: 1000;
-        }
-
         .overlay-nav { display: flex; flex-direction: column; gap: 40px; text-align: center; }
-        .overlay-link {
-            font-family: var(--font-serif); font-size: clamp(3rem, 6vw, 5rem);
-            color: var(--text-main); text-decoration: none; display: block;
-            transform: translateY(30px); opacity: 0; transition: var(--transition-premium);
-        }
-        .overlay-link span {
-            display: block; font-family: var(--font-sans); font-size: 0.9rem;
-            color: var(--text-muted); text-transform: uppercase; letter-spacing: 4px; margin-top: 10px;
-        }
+        .overlay-link { font-family: var(--font-serif); font-size: clamp(3rem, 6vw, 5rem); color: var(--text-main); text-decoration: none; display: block; transform: translateY(30px); opacity: 0; transition: var(--transition-premium); }
+        .overlay-link span { display: block; font-family: var(--font-sans); font-size: 0.9rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 4px; margin-top: 10px; }
         .menu-overlay.active .overlay-link { transform: translateY(0); opacity: 1; }
         .overlay-link:hover { color: var(--accent); }
 
-        .page-header { padding: 200px 0 80px 0; text-align: center; border-bottom: 1px solid var(--border-color); }
-        .room-tag { font-family: var(--font-sans); font-size: 0.7rem; letter-spacing: 5px; color: var(--accent); text-transform: uppercase; margin-bottom: 20px; display: block; }
-        .room-title { font-family: var(--font-serif); font-size: clamp(3rem, 10vw, 5.5rem); font-weight: 400; line-height: 1.1; }
+        .page-header { padding: 180px 0 60px 0; text-align: center; border-bottom: 1px solid var(--border-color); margin-bottom: 60px;}
+        .room-tag { font-family: var(--font-sans); font-size: 0.75rem; letter-spacing: 4px; color: var(--accent); text-transform: uppercase; margin-bottom: 20px; display: block; }
+        .room-title { font-family: var(--font-serif); font-size: clamp(3.5rem, 8vw, 6rem); font-weight: 400; line-height: 1.1; }
 
-        .writing-list { padding: 80px 0 150px 0; }
-        .writing-item { margin-bottom: 100px; opacity: 0; transform: translateY(30px); animation: fadeUp 1s ease forwards; }
-        @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
+        /* YENİ PERSPEKTİF JOURNAL (DERGİ) TASARIMI */
+        .journal-list { max-width: 750px; margin: 0 auto; padding-bottom: 150px; }
+        
+        .journal-item { 
+            text-align: center; padding: 60px 0; border-bottom: 1px dashed var(--border-color); 
+            opacity: 0; transform: translateY(20px); animation: fadeUp 1s ease forwards;
+            transition: var(--transition-premium); cursor: pointer;
+            outline: none; /* Odaklanmada default stili kapat, focus-visible ile verdik */
+        }
+        .journal-item:last-child { border-bottom: none; }
+        .journal-item:hover { transform: translateY(-5px); }
 
-        .w-meta { font-family: var(--font-sans); font-size: 0.75rem; letter-spacing: 2px; color: var(--accent); margin-bottom: 15px; display: block; text-transform: uppercase; }
-        .w-title { font-family: var(--font-serif); font-size: clamp(2rem, 5vw, 2.8rem); font-weight: 400; margin-bottom: 25px; line-height: 1.3; transition: 0.3s; }
-        .writing-item:hover .w-title { color: var(--accent); font-style: italic; }
-        .w-excerpt { font-size: 1.15rem; line-height: 1.9; color: var(--text-main); opacity: 0.85; font-weight: 300; margin-bottom: 30px; }
+        .j-meta { font-family: var(--font-sans); font-size: 0.7rem; letter-spacing: 3px; color: var(--accent); margin-bottom: 20px; display: flex; justify-content: center; gap: 15px; align-items: center; text-transform: uppercase; }
+        .j-meta span.sep { color: var(--border-color); }
         
-        .w-footer { display: flex; justify-content: space-between; align-items: center; padding-top: 20px; border-top: 1px dashed var(--border-color); }
-        .w-date { font-size: 0.8rem; color: var(--text-muted); font-family: var(--font-sans); letter-spacing: 1px; }
+        .j-title { font-family: var(--font-serif); font-size: clamp(2.2rem, 5vw, 3.2rem); font-weight: 400; margin-bottom: 25px; line-height: 1.2; color: var(--text-main); transition: 0.3s; }
+        .journal-item:hover .j-title, .journal-item:focus-visible .j-title { color: var(--accent); font-style: italic; }
+
+        .j-excerpt { font-size: 1.1rem; line-height: 1.8; color: var(--text-muted); font-weight: 300; margin-bottom: 30px; max-width: 600px; margin-left: auto; margin-right: auto; }
         
-        .read-more { background: none; border: none; font-family: var(--font-sans); font-size: 0.7rem; letter-spacing: 2px; text-transform: uppercase; color: var(--text-main); font-weight: 600; padding-bottom: 2px; border-bottom: 1px solid var(--accent); transition: 0.3s; }
-        .read-more:hover { color: var(--accent); border-bottom-color: transparent; }
+        .read-more { display: inline-block; font-family: var(--font-sans); font-size: 0.7rem; letter-spacing: 2px; text-transform: uppercase; color: var(--text-main); border-bottom: 1px solid var(--accent); padding-bottom: 2px; font-weight: 600; transition: 0.3s; background: none; border-top: none; border-left: none; border-right: none;}
+        .journal-item:hover .read-more { color: var(--accent); border-bottom-color: transparent; }
 
         .loading-text { text-align: center; padding: 100px 0; font-family: var(--font-sans); letter-spacing: 3px; color: var(--accent); text-transform: uppercase; }
 
-        #reading-modal { position: fixed; top: 0; left: 0; width: 100%; height: 100vh; background: var(--bg-color); z-index: 9999; overflow-y: auto; display: none; opacity: 0; transition: opacity 0.5s ease; padding: 100px 4vw; }
+        #reading-modal { position: fixed; top: 0; left: 0; width: 100%; height: 100vh; background: var(--bg-color); z-index: 9999; overflow-y: auto; display: none; opacity: 0; transition: opacity 0.4s ease; padding: 60px 4vw; }
         #reading-modal.active { display: block; opacity: 1; }
         .reading-container { max-width: 800px; margin: 0 auto; background: var(--card-bg); padding: 80px 60px; box-shadow: 0 20px 50px rgba(0,0,0,0.03); border: 1px solid var(--border-color); position: relative; }
-        #close-reading { position: absolute; top: 30px; right: 30px; background: none; border: none; font-family: var(--font-sans); font-size: 0.8rem; letter-spacing: 2px; color: var(--text-muted); transition: 0.3s; }
+        #close-reading { position: absolute; top: 20px; right: 20px; background: none; border: none; font-family: var(--font-sans); font-size: 0.8rem; letter-spacing: 2px; color: var(--text-muted); transition: 0.3s; padding: 10px; }
         #close-reading:hover { color: #d9534f; }
-        #read-title { font-family: var(--font-serif); font-size: 3rem; margin-bottom: 10px; line-height: 1.2; font-weight: 400; color: var(--text-main); }
+        #read-title { font-family: var(--font-serif); font-size: 2.8rem; margin-bottom: 10px; line-height: 1.2; font-weight: 400; color: var(--text-main); }
         #read-meta { font-family: var(--font-sans); font-size: 0.8rem; color: var(--accent); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 40px; display: block; border-bottom: 1px solid var(--border-color); padding-bottom: 20px; }
-        #read-content { font-size: 1.15rem; line-height: 2; color: var(--text-main); font-weight: 300; white-space: pre-wrap; }
+        #read-content { font-size: 1.1rem; line-height: 2; color: var(--text-main); font-weight: 300; white-space: pre-wrap; }
 
         @media (max-width: 900px) {
-            header { padding: 20px 4vw; }
+            header.top-nav { padding: 20px 4vw; }
             .palestine-crest { height: 35px; }
             .logo-signature { font-size: 2.2rem; }
             .header-controls { padding: 5px 5px 5px 15px; gap: 15px; }
             .login-link { display: none; }
-            .page-header { padding: 160px 0 50px 0; }
-            .w-title { font-size: 1.8rem; }
-            .reading-container { padding: 40px 20px; border: none; box-shadow: none; background: transparent; }
-            #read-title { font-size: 2.2rem; }
-            #read-content { font-size: 1.05rem; }
-            #close-reading { top: 10px; right: 10px;}
+            .reading-container { padding: 50px 25px; border: none; box-shadow: none; background: transparent; }
+            #read-title { font-size: 2rem; }
         }
     </style>
 </head>
@@ -176,16 +115,15 @@
     <div id="custom-cursor"></div>
     
     <div class="menu-overlay" id="overlay">
-        <button class="overlay-close hover-target" id="close-menu">Kapat ✕</button>
+        <button class="overlay-close hover-target" tabindex="0" id="close-menu">Kapat ✕</button>
         <nav class="overlay-nav">
             <a href="index.html" class="overlay-link hover-target">Giriş <span>Ana Sayfa & Vitrin</span></a>
             <a href="sentez.html" class="overlay-link hover-target">Sentez <span>Akademik Projeler & Kod</span></a>
-            <a href="perspektif.html" class="overlay-link hover-target">Perspektif <span>Entelektüel Denemeler</span></a>
             <a href="doku.html" class="overlay-link hover-target">Doku <span>Sanat & Estetik</span></a>
         </nav>
     </div>
 
-    <header>
+    <header class="top-nav">
         <div class="brand-group hover-target">
             <svg class="palestine-crest" viewBox="0 0 100 200" title="Palestine">
                 <path d="M45,5 L60,25 C65,40 60,70 55,100 L40,185 C35,195 25,195 20,185 L10,120 C5,90 15,45 45,5 Z"/>
@@ -204,14 +142,14 @@
             <h1 class="room-title">Perspektif.</h1>
         </header>
 
-        <section class="writing-list" id="dynamic-writings">
+        <section class="journal-list" id="dynamic-writings">
             <div class="loading-text">Düşünceler Toplanıyor...</div>
         </section>
     </main>
 
-    <div id="reading-modal">
+    <div id="reading-modal" role="dialog" aria-modal="true">
         <div class="reading-container">
-            <button id="close-reading" class="hover-target">KAPAT ✕</button>
+            <button id="close-reading" class="hover-target" tabindex="0">KAPAT ✕</button>
             <h2 id="read-title">Başlık</h2>
             <span id="read-meta">Kategori - Tarih</span>
             <div id="read-content">İçerik buraya gelecek...</div>
@@ -237,30 +175,32 @@
                 snap.forEach(doc => {
                     const data = doc.data();
                     const article = document.createElement('article');
-                    article.className = 'writing-item';
+                    article.className = 'journal-item hover-target';
+                    article.setAttribute('tabindex', '0'); // Klavye Focus
                     
                     article.innerHTML = `
-                        <span class="w-meta">${data.type || 'Deneme'}</span>
-                        <h2 class="w-title hover-target">${data.title}</h2>
-                        <p class="w-excerpt">${data.excerpt}</p>
-                        <div class="w-footer">
-                            <span class="w-date">${data.date || '—'}</span>
-                            <button class="read-more hover-target">Tamamını Oku &rarr;</button>
+                        <div class="j-meta">
+                            <span>${data.type || 'Deneme'}</span>
+                            <span class="sep">/</span>
+                            <span>${data.date || '—'}</span>
                         </div>
+                        <h2 class="j-title">${data.title}</h2>
+                        <p class="j-excerpt">${data.excerpt}</p>
+                        <span class="read-more">Tamamını Oku &rarr;</span>
                     `;
 
-                    const readButton = article.querySelector('.read-more');
-                    const titleClick = article.querySelector('.w-title');
-                    
                     const openModal = () => {
                         document.getElementById('read-title').innerText = data.title;
                         document.getElementById('read-meta').innerText = `${data.type || 'Deneme'} — ${data.date || ''}`;
                         document.getElementById('read-content').innerText = data.content || data.excerpt + "\n\n(Bu yazının tam metni arşivde bulunamadı.)";
                         document.body.style.overflow = 'hidden';
                         document.getElementById('reading-modal').classList.add('active');
+                        document.getElementById('close-reading').focus();
                     };
 
-                    readButton.onclick = openModal; titleClick.onclick = openModal;
+                    article.onclick = openModal;
+                    article.addEventListener('keydown', (e) => { if (e.key === 'Enter') openModal(); });
+                    
                     container.appendChild(article);
                 });
 
@@ -275,21 +215,25 @@
         }
         loadWritings();
 
-        document.getElementById('close-reading').addEventListener('click', () => {
-            document.getElementById('reading-modal').classList.remove('active');
-            document.body.style.overflow = 'auto';
-        });
+        const closeModal = () => { document.getElementById('reading-modal').classList.remove('active'); document.body.style.overflow = 'auto'; }
+        document.getElementById('close-reading').addEventListener('click', closeModal);
 
-        // Menü Kontrolleri
-        const openBtn = document.getElementById('open-menu');
-        const closeBtn = document.getElementById('close-menu');
-        const overlay = document.getElementById('overlay');
-        const body = document.body;
-
-        const toggleMenu = () => { overlay.classList.toggle('active'); body.classList.toggle('no-scroll'); };
-        openBtn.addEventListener('click', toggleMenu);
-        closeBtn.addEventListener('click', toggleMenu);
+        const toggleMenu = () => { 
+            const overlay = document.getElementById('overlay');
+            overlay.classList.toggle('active'); document.body.classList.toggle('no-scroll'); 
+            if(overlay.classList.contains('active')) document.getElementById('close-menu').focus();
+        };
+        document.getElementById('open-menu').addEventListener('click', toggleMenu);
+        document.getElementById('close-menu').addEventListener('click', toggleMenu);
         document.querySelectorAll('.overlay-link').forEach(link => { link.addEventListener('click', toggleMenu); });
+
+        // ESC İLE KAPATMA
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                if(document.getElementById('reading-modal').classList.contains('active')) closeModal();
+                if(document.getElementById('overlay').classList.contains('active')) toggleMenu();
+            }
+        });
 
         if (window.matchMedia("(pointer: fine)").matches) {
             const cursor = document.getElementById('custom-cursor');

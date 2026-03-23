@@ -22,10 +22,10 @@
         body { background-color: var(--bg-color); color: var(--text-main); font-family: var(--font-sans); -webkit-font-smoothing: antialiased; }
         body.no-scroll { overflow: hidden; }
 
-        /* MERMER DOKUSU */
+        *:focus-visible { outline: 1px dashed var(--accent); outline-offset: 4px; }
+
         body::before { content: ""; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-image: url('data:image/svg+xml,<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><filter id="noiseFilter"><feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/></filter><rect width="100%" height="100%" filter="url(%23noiseFilter)" opacity="0.025"/></svg>'); pointer-events: none; z-index: 50; }
 
-        /* HIZLI İMLEÇ VE MOBİL İPTALİ */
         @media (pointer: fine) {
             * { cursor: none; }
             #custom-cursor { position: fixed; width: 6px; height: 6px; background: var(--accent); border-radius: 50%; pointer-events: none; z-index: 10000; transform: translate(-50%, -50%); transition: width 0.15s ease-out, height 0.15s ease-out, background 0.15s ease-out; }
@@ -38,128 +38,62 @@
 
         .container { max-width: 1400px; margin: 0 auto; padding: 0 4vw; position: relative; z-index: 10;}
 
-        /* YENİ KAPSÜL HEADER TASARIMI */
-        header {
-            position: fixed; top: 0; left: 0; width: 100%;
-            padding: 30px 4vw; z-index: 100;
-            display: flex; justify-content: space-between; align-items: flex-start;
-            pointer-events: none; 
-        }
-
-        .brand-group {
-            display: flex; align-items: center; gap: 15px;
-            pointer-events: auto; transition: var(--transition-premium);
-        }
+        header.top-nav { position: fixed; top: 0; left: 0; width: 100%; padding: 30px 4vw; z-index: 100; display: flex; justify-content: space-between; align-items: flex-start; pointer-events: none; }
+        .brand-group { display: flex; align-items: center; gap: 15px; pointer-events: auto; transition: var(--transition-premium); }
         .brand-group:hover { transform: scale(1.02); }
-        
-        .palestine-crest {
-            height: 45px; width: auto; 
-            stroke: var(--accent); stroke-width: 3; fill: none;
-            stroke-linecap: round; stroke-linejoin: round;
-        }
+        .palestine-crest { height: 45px; width: auto; stroke: var(--accent); stroke-width: 3; fill: none; stroke-linecap: round; stroke-linejoin: round; }
+        .logo-signature { font-family: var(--font-signature); font-size: 2.8rem; color: var(--text-main); text-decoration: none; line-height: 1; transform: rotate(-3deg); padding-top: 10px; }
 
-        .logo-signature { 
-            font-family: var(--font-signature); 
-            font-size: 2.8rem; 
-            color: var(--text-main); 
-            text-decoration: none; 
-            line-height: 1;
-            transform: rotate(-3deg);
-            padding-top: 10px;
-        }
-
-        .header-controls {
-            pointer-events: auto;
-            background: rgba(245, 245, 243, 0.6);
-            backdrop-filter: blur(15px);
-            border: 1px solid rgba(179, 155, 120, 0.3);
-            border-radius: 50px;
-            display: flex; align-items: center; gap: 20px;
-            padding: 6px 6px 6px 25px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.03);
-            transition: var(--transition-premium);
-        }
+        .header-controls { pointer-events: auto; background: rgba(245, 245, 243, 0.6); backdrop-filter: blur(15px); border: 1px solid rgba(179, 155, 120, 0.3); border-radius: 50px; display: flex; align-items: center; gap: 20px; padding: 6px 6px 6px 25px; box-shadow: 0 10px 30px rgba(0,0,0,0.03); transition: var(--transition-premium); }
         .header-controls:hover { border-color: var(--accent); background: rgba(245, 245, 243, 0.9); }
-
-        .login-link {
-            font-family: var(--font-sans); font-size: 0.75rem; 
-            text-transform: uppercase; letter-spacing: 2px; 
-            color: var(--text-muted); text-decoration: none; 
-            transition: 0.3s;
-        }
+        .login-link { font-family: var(--font-sans); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 2px; color: var(--text-muted); text-decoration: none; transition: 0.3s; }
         .login-link:hover { color: var(--accent); }
-
-        .menu-toggle {
-            background: var(--text-main); color: var(--bg-color);
-            border: none; border-radius: 40px; padding: 12px 25px;
-            font-family: var(--font-sans); font-size: 0.75rem; 
-            text-transform: uppercase; letter-spacing: 2px; 
-            display: flex; align-items: center; gap: 10px;
-            transition: var(--transition-premium);
-        }
+        .menu-toggle { background: var(--text-main); color: var(--bg-color); border: none; border-radius: 40px; padding: 12px 25px; font-family: var(--font-sans); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 2px; display: flex; align-items: center; gap: 10px; transition: var(--transition-premium); }
         .menu-toggle:hover { background: var(--accent); transform: scale(1.05); }
 
-        /* OVERLAY MENÜSÜ */
-        .menu-overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
-            background-color: var(--bg-color); z-index: 999;
-            display: flex; justify-content: center; align-items: center;
-            opacity: 0; visibility: hidden; clip-path: circle(0% at top right);
-            transition: opacity 0.6s ease, visibility 0.6s ease, clip-path 0.8s cubic-bezier(0.77, 0, 0.175, 1);
-        }
+        .menu-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100vh; background-color: var(--bg-color); z-index: 999; display: flex; justify-content: center; align-items: center; opacity: 0; visibility: hidden; clip-path: circle(0% at top right); transition: opacity 0.6s ease, visibility 0.6s ease, clip-path 0.8s cubic-bezier(0.77, 0, 0.175, 1); }
         .menu-overlay.active { opacity: 1; visibility: visible; clip-path: circle(150% at top right); }
+        .overlay-close { position: absolute; top: 30px; right: 4vw; font-family: var(--font-sans); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 2px; color: var(--text-main); background: none; border: none; z-index: 1000; padding: 10px;}
         
-        .overlay-close {
-            position: absolute; top: 30px; right: 4vw; font-family: var(--font-sans);
-            font-size: 0.85rem; text-transform: uppercase; letter-spacing: 2px;
-            color: var(--text-main); background: none; border: none; z-index: 1000;
-        }
-
         .overlay-nav { display: flex; flex-direction: column; gap: 40px; text-align: center; }
-        .overlay-link {
-            font-family: var(--font-serif); font-size: clamp(3rem, 6vw, 5rem);
-            color: var(--text-main); text-decoration: none; display: block;
-            transform: translateY(30px); opacity: 0; transition: var(--transition-premium);
-        }
-        .overlay-link span {
-            display: block; font-family: var(--font-sans); font-size: 0.9rem;
-            color: var(--text-muted); text-transform: uppercase; letter-spacing: 4px; margin-top: 10px;
-        }
+        .overlay-link { font-family: var(--font-serif); font-size: clamp(3rem, 6vw, 5rem); color: var(--text-main); text-decoration: none; display: block; transform: translateY(30px); opacity: 0; transition: var(--transition-premium); }
+        .overlay-link span { display: block; font-family: var(--font-sans); font-size: 0.9rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 4px; margin-top: 10px; }
         .menu-overlay.active .overlay-link { transform: translateY(0); opacity: 1; }
         .overlay-link:hover { color: var(--accent); }
 
-        .page-header { padding: 180px 0 60px 0; text-align: center; }
-        .room-title { font-family: var(--font-serif); font-size: clamp(3rem, 8vw, 5rem); font-weight: 400; margin-bottom: 10px; }
-        .room-tag { font-size: 0.7rem; letter-spacing: 5px; color: var(--accent); text-transform: uppercase; }
+        .page-header { padding: 180px 0 60px 0; text-align: center; margin-bottom: 40px;}
+        .room-title { font-family: var(--font-serif); font-size: clamp(3.5rem, 8vw, 6rem); font-weight: 400; margin-bottom: 10px; }
+        .room-tag { font-size: 0.75rem; letter-spacing: 4px; color: var(--accent); text-transform: uppercase; }
 
-        /* MASONRY (DÜZENLİ SÜTUN) YAPISI */
+        /* YENİ GÖRSEL DOKU TASARIMI (Gri arka plan silindi, zarif duruş eklendi) */
         .gallery-container { columns: 2; column-gap: 40px; padding-bottom: 100px; }
-        .gallery-item { break-inside: avoid; margin-bottom: 40px; position: relative; overflow: hidden; background: #eee; display: block; }
+        .gallery-item { break-inside: avoid; margin-bottom: 60px; position: relative; display: block; outline: none; }
+        .img-wrapper { overflow: hidden; position: relative; box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
         .gallery-img { width: 100%; display: block; transition: transform 0.8s cubic-bezier(0.25, 1, 0.5, 1); filter: grayscale(15%); }
-        .gallery-item:hover .gallery-img { transform: scale(1.02); filter: grayscale(0%); }
-        .gallery-info { padding: 20px 0; border-top: 1px solid var(--border-color); margin-top: 10px; }
-        .gallery-info h3 { font-family: var(--font-serif); font-size: 1.2rem; font-weight: 400; }
-        .gallery-info p { font-size: 0.75rem; color: var(--accent); text-transform: uppercase; letter-spacing: 1px; margin-top: 5px; }
+        .gallery-item:hover .gallery-img, .gallery-item:focus-visible .gallery-img { transform: scale(1.03); filter: grayscale(0%); }
+        
+        .gallery-info { padding: 20px 0 0 0; }
+        .gallery-info h3 { font-family: var(--font-serif); font-size: 1.4rem; font-weight: 400; color: var(--text-main); transition: 0.3s;}
+        .gallery-item:hover h3, .gallery-item:focus-visible h3 { color: var(--accent); }
+        .gallery-info p { font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 2px; margin-top: 8px; }
 
-        /* GÖRSEL MODALI (LIGHTBOX) STİLLERİ */
-        #modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(245,245,243,0.98); z-index: 9999; display: none; align-items: center; justify-content: center; opacity: 0; transition: opacity 0.4s ease; }
+        #modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(245,245,243,0.98); z-index: 9999; display: none; align-items: center; justify-content: center; opacity: 0; transition: opacity 0.4s ease; padding: 20px;}
         #modal.active { display: flex; opacity: 1; }
         #modal-content { text-align: center; max-width: 90%; max-height: 90vh; display: flex; flex-direction: column; align-items: center; justify-content: center; }
-        #modal-img { max-height: 75vh; max-width: 100%; box-shadow: 0 30px 60px rgba(0,0,0,0.15); margin-bottom: 25px; object-fit: contain; }
-        #close-modal { position: absolute; top: 40px; right: 4vw; border: none; background: none; font-family: var(--font-sans); font-size: 0.85rem; letter-spacing: 3px; color: var(--text-main); transition: 0.3s; z-index: 10000; }
+        #modal-img { max-height: 70vh; max-width: 100%; box-shadow: 0 30px 60px rgba(0,0,0,0.15); margin-bottom: 25px; object-fit: contain; }
+        #close-modal { position: absolute; top: 30px; right: 4vw; border: none; background: none; font-family: var(--font-sans); font-size: 0.85rem; letter-spacing: 3px; color: var(--text-main); transition: 0.3s; z-index: 10000; padding: 10px;}
         #close-modal:hover { color: #d9534f; }
         #modal-title { font-family: var(--font-serif); font-size: 2.2rem; margin-bottom: 10px; font-weight: 400; color: var(--text-main); }
         #modal-desc { font-family: var(--font-sans); font-size: 0.85rem; letter-spacing: 2px; color: var(--accent); text-transform: uppercase; }
 
-        /* MOBİL UYUM DÜZELTMELERİ */
         @media (max-width: 900px) { 
-            header { padding: 20px 4vw; }
+            header.top-nav { padding: 20px 4vw; }
             .palestine-crest { height: 35px; }
             .logo-signature { font-size: 2.2rem; }
             .header-controls { padding: 5px 5px 5px 15px; gap: 15px; }
             .login-link { display: none; }
             .gallery-container { columns: 1; }
-            #close-modal { top: 20px; right: 20px; font-size: 0.7rem; }
+            #close-modal { top: 15px; right: 15px; }
             #modal-title { font-size: 1.8rem; }
         }
     </style>
@@ -168,16 +102,15 @@
     <div id="custom-cursor"></div>
     
     <div class="menu-overlay" id="overlay">
-        <button class="overlay-close hover-target" id="close-menu">Kapat ✕</button>
+        <button class="overlay-close hover-target" tabindex="0" id="close-menu">Kapat ✕</button>
         <nav class="overlay-nav">
             <a href="index.html" class="overlay-link hover-target">Giriş <span>Ana Sayfa & Vitrin</span></a>
             <a href="sentez.html" class="overlay-link hover-target">Sentez <span>Akademik Projeler & Kod</span></a>
             <a href="perspektif.html" class="overlay-link hover-target">Perspektif <span>Entelektüel Denemeler</span></a>
-            <a href="doku.html" class="overlay-link hover-target">Doku <span>Sanat & Estetik</span></a>
         </nav>
     </div>
 
-    <header>
+    <header class="top-nav">
         <div class="brand-group hover-target">
             <svg class="palestine-crest" viewBox="0 0 100 200" title="Palestine">
                 <path d="M45,5 L60,25 C65,40 60,70 55,100 L40,185 C35,195 25,195 20,185 L10,120 C5,90 15,45 45,5 Z"/>
@@ -200,8 +133,8 @@
             </section>
     </main>
 
-    <div id="modal">
-        <button id="close-modal" class="hover-target">KAPAT ✕</button>
+    <div id="modal" role="dialog" aria-modal="true">
+        <button id="close-modal" class="hover-target" tabindex="0">KAPAT ✕</button>
         <div id="modal-content">
             <img id="modal-img" src="" alt="Detaylı Görsel">
             <h2 id="modal-title"></h2>
@@ -227,17 +160,22 @@
                     const data = doc.data();
                     const itemDiv = document.createElement('div');
                     itemDiv.className = 'gallery-item hover-target';
+                    itemDiv.setAttribute('tabindex', '0'); // Klavye Desteği
                     
-                    itemDiv.onclick = () => {
+                    const openModal = () => {
                         document.getElementById('modal-img').src = data.imageUrl;
                         document.getElementById('modal-title').innerText = data.title;
                         document.getElementById('modal-desc').innerText = `${data.category || 'Genel'} — ${data.year || ''}`;
                         document.body.style.overflow = 'hidden'; 
                         document.getElementById('modal').classList.add('active');
+                        document.getElementById('close-modal').focus();
                     };
 
+                    itemDiv.onclick = openModal;
+                    itemDiv.addEventListener('keydown', (e) => { if(e.key === 'Enter') openModal(); });
+
                     itemDiv.innerHTML = `
-                        <img src="${data.imageUrl}" class="gallery-img">
+                        <div class="img-wrapper"><img src="${data.imageUrl}" class="gallery-img"></div>
                         <div class="gallery-info">
                             <h3>${data.title}</h3>
                             <p>${data.category || 'Genel'} — ${data.year || ''}</p>
@@ -257,23 +195,26 @@
         }
         loadGallery();
 
-        document.getElementById('close-modal').addEventListener('click', () => {
-            document.getElementById('modal').classList.remove('active');
-            document.body.style.overflow = 'auto'; 
-        });
+        const closeModalFunc = () => { document.getElementById('modal').classList.remove('active'); document.body.style.overflow = 'auto'; }
+        document.getElementById('close-modal').addEventListener('click', closeModalFunc);
 
-        // Menü Kontrolleri
-        const openBtn = document.getElementById('open-menu');
-        const closeBtn = document.getElementById('close-menu');
-        const overlay = document.getElementById('overlay');
-        const body = document.body;
-
-        const toggleMenu = () => { overlay.classList.toggle('active'); body.classList.toggle('no-scroll'); };
-        openBtn.addEventListener('click', toggleMenu);
-        closeBtn.addEventListener('click', toggleMenu);
+        const toggleMenu = () => { 
+            const overlay = document.getElementById('overlay');
+            overlay.classList.toggle('active'); document.body.classList.toggle('no-scroll'); 
+            if(overlay.classList.contains('active')) document.getElementById('close-menu').focus();
+        };
+        document.getElementById('open-menu').addEventListener('click', toggleMenu);
+        document.getElementById('close-menu').addEventListener('click', toggleMenu);
         document.querySelectorAll('.overlay-link').forEach(link => { link.addEventListener('click', toggleMenu); });
 
-        // Hızlı İmleç Takibi
+        // ESC İLE KAPATMA
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                if(document.getElementById('modal').classList.contains('active')) closeModalFunc();
+                if(document.getElementById('overlay').classList.contains('active')) toggleMenu();
+            }
+        });
+
         if (window.matchMedia("(pointer: fine)").matches) {
             const cursor = document.getElementById('custom-cursor');
             document.addEventListener('mousemove', e => { cursor.style.left = e.clientX + 'px'; cursor.style.top = e.clientY + 'px'; });
