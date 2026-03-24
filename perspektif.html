@@ -68,13 +68,29 @@
 
         .journal-list { max-width: 750px; margin: 0 auto; padding-bottom: 150px; }
         
+        /* BUG FIX: Added animation-fill-mode: forwards to the shorthand so items stay visible */
         .journal-item { 
             text-align: center; padding: 60px 0; border-bottom: 1px dashed var(--border-color); 
-            opacity: 0; transform: translateY(20px); animation: fadeUp 1s ease forwards;
-            transition: var(--transition-premium); cursor: pointer; outline: none;
+            opacity: 0; transform: translateY(20px);
+            animation: fadeUp 1s ease forwards; /* 'forwards' keeps final state (opacity:1) */
+            transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+            cursor: pointer; outline: none;
         }
+        /* Stagger each item's animation delay */
+        .journal-item:nth-child(1) { animation-delay: 0.05s; }
+        .journal-item:nth-child(2) { animation-delay: 0.15s; }
+        .journal-item:nth-child(3) { animation-delay: 0.25s; }
+        .journal-item:nth-child(4) { animation-delay: 0.35s; }
+        .journal-item:nth-child(5) { animation-delay: 0.45s; }
+        .journal-item:nth-child(n+6) { animation-delay: 0.55s; }
+
         .journal-item:last-child { border-bottom: none; }
         .journal-item:hover { transform: translateY(-5px); }
+
+        @keyframes fadeUp { 
+            from { opacity: 0; transform: translateY(20px); } 
+            to   { opacity: 1; transform: translateY(0); } 
+        }
 
         .j-meta { font-family: var(--font-sans); font-size: 0.7rem; letter-spacing: 3px; color: var(--accent); margin-bottom: 20px; display: flex; justify-content: center; gap: 15px; align-items: center; text-transform: uppercase; }
         .j-meta span.sep { color: var(--border-color); }
@@ -98,7 +114,6 @@
         #read-meta { font-family: var(--font-sans); font-size: 0.8rem; color: var(--accent); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 40px; display: block; border-bottom: 1px solid var(--border-color); padding-bottom: 20px; }
         #read-content { font-size: 1.1rem; line-height: 2; color: var(--text-main); font-weight: 300; white-space: pre-wrap; }
 
-        /* MOBİL GÜNCELLEMELERİ VE ÇARPIŞMA ENGELLEYİCİ */
         @media (max-width: 900px) {
             header.top-nav { padding: 15px 4vw; }
             .brand-group { gap: 8px; }
@@ -145,11 +160,11 @@
         </header>
 
         <section class="journal-list" id="dynamic-writings">
-            <div class="loading-text">Düşünceler Toplanıyor...</div>
+            <div class="loading-text"><i class="fas fa-circle-notch fa-spin"></i> Düşünceler Toplanıyor...</div>
         </section>
     </main>
 
-    <div id="reading-modal" role="dialog" aria-modal="true">
+    <div id="reading-modal" role="dialog" aria-modal="true" aria-labelledby="read-title">
         <div class="reading-container">
             <button id="close-reading" class="hover-target" tabindex="0">KAPAT ✕</button>
             <h2 id="read-title">Başlık</h2>
@@ -163,21 +178,24 @@
         import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
 
         const firebaseConfig = { apiKey: "AIzaSyCr4HhlythyRIfy_Xnb-IaWr0Th0TkUQi4", authDomain: "yk-blog-9720b.firebaseapp.com", projectId: "yk-blog-9720b", messagingSenderId: "863054301539", appId: "1:863054301539:web:4256589fbef613bd0e6b56" };
-        const app = initializeApp(firebaseConfig); const db = getFirestore(app);
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
 
-        // GÜNCELLEME: Firebase Hatasını önleyen Kurşungeçirmez Sıralama Sistemi
         async function loadWritings() {
             const container = document.getElementById('dynamic-writings');
             try {
                 const snap = await getDocs(collection(db, "perspektif"));
                 container.innerHTML = '';
 
-                if(snap.empty) { container.innerHTML = '<div class="loading-text">Bu odada henüz bir düşünce paylaşılmadı.</div>'; return; }
+                if (snap.empty) {
+                    container.innerHTML = '<div class="loading-text">Bu odada henüz bir düşünce paylaşılmadı.</div>';
+                    return;
+                }
 
                 let items = [];
-                snap.forEach(doc => items.push({id: doc.id, ...doc.data()}));
+                snap.forEach(doc => items.push({ id: doc.id, ...doc.data() }));
 
-                // JavaScript ile en yeni üste gelecek şekilde sıralama
+                // Sort newest first in JS (avoids Firestore composite index requirement)
                 items.sort((a, b) => {
                     const timeA = a.createdAt ? a.createdAt.toMillis() : 0;
                     const timeB = b.createdAt ? b.createdAt.toMillis() : 0;
@@ -187,7 +205,9 @@
                 items.forEach(data => {
                     const article = document.createElement('article');
                     article.className = 'journal-item hover-target';
-                    article.setAttribute('tabindex', '0'); 
+                    article.setAttribute('tabindex', '0');
+                    article.setAttribute('role', 'button');
+                    article.setAttribute('aria-label', `Yazıyı oku: ${data.title}`);
                     
                     article.innerHTML = `
                         <div class="j-meta">
@@ -197,7 +217,7 @@
                         </div>
                         <h2 class="j-title">${data.title}</h2>
                         <p class="j-excerpt">${data.excerpt}</p>
-                        <span class="read-more" tabindex="-1">Tamamını Oku &rarr;</span>
+                        <span class="read-more" tabindex="-1" aria-hidden="true">Tamamını Oku &rarr;</span>
                     `;
 
                     const openModal = () => {
@@ -205,16 +225,18 @@
                         document.getElementById('read-meta').innerText = `${data.type || 'Deneme'} — ${data.date || ''}`;
                         document.getElementById('read-content').innerText = data.content || data.excerpt + "\n\n(Bu yazının tam metni arşivde bulunamadı.)";
                         document.body.style.overflow = 'hidden';
-                        document.getElementById('reading-modal').classList.add('active');
+                        const modal = document.getElementById('reading-modal');
+                        modal.classList.add('active');
                         document.getElementById('close-reading').focus();
                     };
 
-                    article.onclick = openModal;
-                    article.addEventListener('keydown', (e) => { if (e.key === 'Enter') openModal(); });
+                    article.addEventListener('click', openModal);
+                    article.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openModal(); } });
                     
                     container.appendChild(article);
                 });
 
+                // Bind cursor hover to all dynamically created elements
                 if (window.matchMedia("(pointer: fine)").matches) {
                     const cursor = document.getElementById('custom-cursor');
                     document.querySelectorAll('.hover-target').forEach(t => {
@@ -224,18 +246,22 @@
                 }
             } catch (e) { 
                 console.error(e);
-                container.innerHTML = '<div class="loading-text">İçerikler Yüklenirken Bir Hata Oluştu.</div>'; 
+                container.innerHTML = '<div class="loading-text">İçerikler Yüklenirken Bir Hata Oluştu.</div>';
             }
         }
         loadWritings();
 
-        const closeModal = () => { document.getElementById('reading-modal').classList.remove('active'); document.body.style.overflow = 'auto'; }
+        const closeModal = () => {
+            document.getElementById('reading-modal').classList.remove('active');
+            document.body.style.overflow = 'auto';
+        };
         document.getElementById('close-reading').addEventListener('click', closeModal);
 
         const toggleMenu = () => { 
             const overlay = document.getElementById('overlay');
-            overlay.classList.toggle('active'); document.body.classList.toggle('no-scroll'); 
-            if(overlay.classList.contains('active')) document.getElementById('close-menu').focus();
+            overlay.classList.toggle('active');
+            document.body.classList.toggle('no-scroll');
+            if (overlay.classList.contains('active')) document.getElementById('close-menu').focus();
         };
         document.getElementById('open-menu').addEventListener('click', toggleMenu);
         document.getElementById('close-menu').addEventListener('click', toggleMenu);
@@ -243,14 +269,27 @@
 
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape') {
-                if(document.getElementById('reading-modal').classList.contains('active')) closeModal();
-                if(document.getElementById('overlay').classList.contains('active')) toggleMenu();
+                if (document.getElementById('reading-modal').classList.contains('active')) closeModal();
+                else if (document.getElementById('overlay').classList.contains('active')) toggleMenu();
             }
+        });
+
+        // Close modal when clicking outside the reading container
+        document.getElementById('reading-modal').addEventListener('click', (e) => {
+            if (e.target === document.getElementById('reading-modal')) closeModal();
         });
 
         if (window.matchMedia("(pointer: fine)").matches) {
             const cursor = document.getElementById('custom-cursor');
-            document.addEventListener('mousemove', e => { cursor.style.left = e.clientX + 'px'; cursor.style.top = e.clientY + 'px'; });
+            document.addEventListener('mousemove', e => {
+                cursor.style.left = e.clientX + 'px';
+                cursor.style.top = e.clientY + 'px';
+            });
+            // Bind cursor to static elements that exist on page load
+            document.querySelectorAll('.hover-target, button, a').forEach(t => {
+                t.addEventListener('mouseover', () => cursor.classList.add('hover'));
+                t.addEventListener('mouseout', () => cursor.classList.remove('hover'));
+            });
         }
     </script>
 </body>

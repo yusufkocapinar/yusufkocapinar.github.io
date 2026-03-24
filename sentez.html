@@ -24,7 +24,6 @@
         body { background-color: var(--bg-color); color: var(--text-main); font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
         body.no-scroll { overflow: hidden; }
 
-        /* KLAVYE ODAKLANMA (ACCESSIBILITY) */
         *:focus-visible { outline: 1px dashed var(--accent); outline-offset: 4px; }
 
         body::before { content: ""; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-image: url('data:image/svg+xml,<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><filter id="noiseFilter"><feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/></filter><rect width="100%" height="100%" filter="url(%23noiseFilter)" opacity="0.025"/></svg>'); pointer-events: none; z-index: 50; }
@@ -71,18 +70,25 @@
         .room-tag { font-family: var(--font-sans); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 4px; color: var(--accent); margin-bottom: 20px; display: block; }
         .room-title { font-family: var(--font-serif); font-size: clamp(3.5rem, 8vw, 6rem); font-weight: 400; line-height: 1; }
 
-        /* YENİ SENTEZ GRID TASARIMI */
         .project-grid { 
             display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); 
             gap: 40px; padding-bottom: 150px; 
         }
         
+        /* Already had 'forwards' — keeping it, adding stagger */
         .project-card { 
             background: rgba(255, 255, 255, 0.4); border: 1px solid var(--border-color); 
             padding: 40px; transition: var(--transition-premium); 
             display: flex; flex-direction: column; justify-content: space-between;
-            opacity: 0; transform: translateY(20px); animation: fadeUp 0.8s ease forwards;
+            opacity: 0; transform: translateY(20px);
+            animation: fadeUp 0.8s ease forwards;
         }
+        .project-card:nth-child(1) { animation-delay: 0.05s; }
+        .project-card:nth-child(2) { animation-delay: 0.15s; }
+        .project-card:nth-child(3) { animation-delay: 0.25s; }
+        .project-card:nth-child(4) { animation-delay: 0.35s; }
+        .project-card:nth-child(n+5) { animation-delay: 0.45s; }
+
         @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
         
         .project-card:hover { transform: translateY(-8px); border-color: rgba(179, 155, 120, 0.6); background: var(--card-bg); box-shadow: 0 15px 30px rgba(0,0,0,0.03); }
@@ -103,7 +109,6 @@
 
         .loading-text { text-align: center; padding: 100px 0; font-family: var(--font-sans); letter-spacing: 3px; color: var(--accent); text-transform: uppercase; grid-column: 1 / -1;}
 
-        /* MODAL EKRANI GÜNCELLEMELERİ (MOBİL İÇİN ÇARPI BÜYÜTÜLDÜ) */
         #reading-modal { position: fixed; top: 0; left: 0; width: 100%; height: 100vh; background: var(--bg-color); z-index: 9999; overflow-y: auto; display: none; opacity: 0; transition: opacity 0.4s ease; padding: 60px 4vw; }
         #reading-modal.active { display: block; opacity: 1; }
         .reading-container { max-width: 800px; margin: 0 auto; background: var(--card-bg); padding: 80px 60px; box-shadow: 0 20px 50px rgba(0,0,0,0.03); border: 1px solid var(--border-color); position: relative; }
@@ -121,7 +126,8 @@
             .header-controls { padding: 4px; gap: 0; border-radius: 40px;}
             .login-link { display: none !important; }
             .menu-toggle { padding: 8px 16px; font-size: 0.65rem; gap: 6px; }
-            /* Geri kalan bölüm sayfa içeriğine göre kalabilir */
+            .reading-container { padding: 50px 25px; }
+            #read-title { font-size: 2rem; }
         }
     </style>
 </head>
@@ -157,11 +163,11 @@
         </header>
 
         <section class="project-grid" id="dynamic-projects">
-            <div class="loading-text">Arşiv Taranıyor...</div>
+            <div class="loading-text"><i class="fas fa-circle-notch fa-spin"></i> Arşiv Taranıyor...</div>
         </section>
     </main>
 
-    <div id="reading-modal" role="dialog" aria-modal="true">
+    <div id="reading-modal" role="dialog" aria-modal="true" aria-labelledby="read-title">
         <div class="reading-container">
             <button id="close-reading" class="hover-target" tabindex="0">KAPAT ✕</button>
             <h2 id="read-title">Başlık</h2>
@@ -175,7 +181,8 @@
         import { getFirestore, collection, getDocs, query, orderBy } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
 
         const firebaseConfig = { apiKey: "AIzaSyCr4HhlythyRIfy_Xnb-IaWr0Th0TkUQi4", authDomain: "yk-blog-9720b.firebaseapp.com", projectId: "yk-blog-9720b", messagingSenderId: "863054301539", appId: "1:863054301539:web:4256589fbef613bd0e6b56" };
-        const app = initializeApp(firebaseConfig); const db = getFirestore(app);
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
 
         async function loadProjects() {
             const container = document.getElementById('dynamic-projects');
@@ -184,15 +191,22 @@
                 const snap = await getDocs(q);
                 container.innerHTML = '';
 
-                if(snap.empty) { container.innerHTML = '<div class="loading-text">Henüz kayıtlı bir proje bulunamadı.</div>'; return; }
+                if (snap.empty) {
+                    container.innerHTML = '<div class="loading-text">Henüz kayıtlı bir proje bulunamadı.</div>';
+                    return;
+                }
 
                 snap.forEach(doc => {
                     const data = doc.data();
                     const article = document.createElement('article');
                     article.className = 'project-card';
-                    article.setAttribute('tabindex', '0'); // Klavye ile odaklanılabilir
+                    article.setAttribute('tabindex', '0');
+                    article.setAttribute('role', 'button');
+                    article.setAttribute('aria-label', `Projeyi incele: ${data.title}`);
                     
-                    const linkHTML = data.link ? `<a href="${data.link}" target="_blank" tabindex="0" class="project-link hover-target"><i class="fas fa-external-link-alt"></i> Dış Bağlantı</a>` : '';
+                    const linkHTML = data.link
+                        ? `<a href="${data.link}" target="_blank" rel="noopener noreferrer" tabindex="0" class="project-link hover-target" onclick="event.stopPropagation()"><i class="fas fa-external-link-alt" aria-hidden="true"></i> Dış Bağlantı</a>`
+                        : '';
                     
                     article.innerHTML = `
                         <div>
@@ -217,20 +231,16 @@
                         document.getElementById('read-content').innerText = data.content || data.excerpt + "\n\n(Bu projenin tam detay metni arşivde bulunamadı.)";
                         document.body.style.overflow = 'hidden';
                         document.getElementById('reading-modal').classList.add('active');
-                        document.getElementById('close-reading').focus(); // Ekran okuyucu odaklanması
+                        document.getElementById('close-reading').focus();
                     };
 
-                    article.querySelector('.read-more').onclick = openModal; 
-                    article.querySelector('h2').onclick = openModal;
-                    
-                    // Klavye Enter ile açma desteği
-                    article.addEventListener('keydown', (e) => {
-                        if (e.key === 'Enter') openModal();
-                    });
-
+                    article.querySelector('.read-more').addEventListener('click', (e) => { e.stopPropagation(); openModal(); });
+                    article.querySelector('h2').addEventListener('click', openModal);
+                    article.addEventListener('keydown', (e) => { if (e.key === 'Enter') openModal(); });
                     container.appendChild(article);
                 });
 
+                // BUG FIX: Re-bind cursor after dynamic content is added
                 if (window.matchMedia("(pointer: fine)").matches) {
                     const cursor = document.getElementById('custom-cursor');
                     document.querySelectorAll('.hover-target').forEach(t => {
@@ -238,38 +248,51 @@
                         t.addEventListener('mouseout', () => cursor.classList.remove('hover'));
                     });
                 }
-            } catch (e) { container.innerHTML = '<div class="loading-text">Bağlantı Hatası.</div>'; }
+            } catch (e) {
+                console.error(e);
+                container.innerHTML = '<div class="loading-text">Bağlantı Hatası.</div>';
+            }
         }
         loadProjects();
 
-        // Kapatma Fonksiyonları
         const closeModal = () => {
             document.getElementById('reading-modal').classList.remove('active');
-            document.body.style.overflow = 'auto'; 
-        }
+            document.body.style.overflow = 'auto';
+        };
         document.getElementById('close-reading').addEventListener('click', closeModal);
 
-        const toggleMenu = () => { 
+        // Close modal when clicking outside reading-container
+        document.getElementById('reading-modal').addEventListener('click', (e) => {
+            if (e.target === document.getElementById('reading-modal')) closeModal();
+        });
+
+        const toggleMenu = () => {
             const overlay = document.getElementById('overlay');
-            overlay.classList.toggle('active'); 
-            document.body.classList.toggle('no-scroll'); 
-            if(overlay.classList.contains('active')) document.getElementById('close-menu').focus();
+            overlay.classList.toggle('active');
+            document.body.classList.toggle('no-scroll');
+            if (overlay.classList.contains('active')) document.getElementById('close-menu').focus();
         };
         document.getElementById('open-menu').addEventListener('click', toggleMenu);
         document.getElementById('close-menu').addEventListener('click', toggleMenu);
         document.querySelectorAll('.overlay-link').forEach(link => { link.addEventListener('click', toggleMenu); });
 
-        // KLAVYE (ESC) İLE KAPATMA
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape') {
-                if(document.getElementById('reading-modal').classList.contains('active')) closeModal();
-                if(document.getElementById('overlay').classList.contains('active')) toggleMenu();
+                if (document.getElementById('reading-modal').classList.contains('active')) closeModal();
+                else if (document.getElementById('overlay').classList.contains('active')) toggleMenu();
             }
         });
 
         if (window.matchMedia("(pointer: fine)").matches) {
             const cursor = document.getElementById('custom-cursor');
-            document.addEventListener('mousemove', e => { cursor.style.left = e.clientX + 'px'; cursor.style.top = e.clientY + 'px'; });
+            document.addEventListener('mousemove', e => {
+                cursor.style.left = e.clientX + 'px';
+                cursor.style.top = e.clientY + 'px';
+            });
+            document.querySelectorAll('.hover-target, button, a').forEach(t => {
+                t.addEventListener('mouseover', () => cursor.classList.add('hover'));
+                t.addEventListener('mouseout', () => cursor.classList.remove('hover'));
+            });
         }
     </script>
 </body>

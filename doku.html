@@ -65,9 +65,24 @@
         .room-title { font-family: var(--font-serif); font-size: clamp(3.5rem, 8vw, 6rem); font-weight: 400; margin-bottom: 10px; }
         .room-tag { font-size: 0.75rem; letter-spacing: 4px; color: var(--accent); text-transform: uppercase; }
 
-        /* YENİ GÖRSEL DOKU TASARIMI (Gri arka plan silindi, zarif duruş eklendi) */
+        /* LOADING STATE */
+        .gallery-loading { text-align: center; padding: 100px 0; font-family: var(--font-sans); letter-spacing: 3px; color: var(--accent); text-transform: uppercase; font-size: 0.8rem; }
+
         .gallery-container { columns: 2; column-gap: 40px; padding-bottom: 100px; }
-        .gallery-item { break-inside: avoid; margin-bottom: 60px; position: relative; display: block; outline: none; }
+        .gallery-item {
+            break-inside: avoid; margin-bottom: 60px; position: relative; display: block;
+            outline: none; opacity: 0; animation: fadeUp 0.8s ease forwards;
+        }
+        /* Staggered fade-in for gallery items */
+        .gallery-item:nth-child(1) { animation-delay: 0.05s; }
+        .gallery-item:nth-child(2) { animation-delay: 0.1s; }
+        .gallery-item:nth-child(3) { animation-delay: 0.15s; }
+        .gallery-item:nth-child(4) { animation-delay: 0.2s; }
+        .gallery-item:nth-child(5) { animation-delay: 0.25s; }
+        .gallery-item:nth-child(n+6) { animation-delay: 0.3s; }
+
+        @keyframes fadeUp { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
+
         .img-wrapper { overflow: hidden; position: relative; box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
         .gallery-img { width: 100%; display: block; transition: transform 0.8s cubic-bezier(0.25, 1, 0.5, 1); filter: grayscale(15%); }
         .gallery-item:hover .gallery-img, .gallery-item:focus-visible .gallery-img { transform: scale(1.03); filter: grayscale(0%); }
@@ -77,14 +92,19 @@
         .gallery-item:hover h3, .gallery-item:focus-visible h3 { color: var(--accent); }
         .gallery-info p { font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 2px; margin-top: 8px; }
 
-        #modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(245,245,243,0.98); z-index: 9999; display: none; align-items: center; justify-content: center; opacity: 0; transition: opacity 0.4s ease; padding: 20px;}
+        #modal {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(245,245,243,0.98); z-index: 9999;
+            display: none; align-items: center; justify-content: center;
+            opacity: 0; transition: opacity 0.4s ease; padding: 20px;
+        }
         #modal.active { display: flex; opacity: 1; }
-        #modal-content { text-align: center; max-width: 90%; max-height: 90vh; display: flex; flex-direction: column; align-items: center; justify-content: center; }
-        #modal-img { max-height: 70vh; max-width: 100%; box-shadow: 0 30px 60px rgba(0,0,0,0.15); margin-bottom: 25px; object-fit: contain; }
+        #modal-content { text-align: center; max-width: 90%; max-height: 90vh; display: flex; flex-direction: column; align-items: center; justify-content: center; pointer-events: none; }
+        #modal-img { max-height: 70vh; max-width: 100%; box-shadow: 0 30px 60px rgba(0,0,0,0.15); margin-bottom: 25px; object-fit: contain; pointer-events: auto; }
         #close-modal { position: absolute; top: 30px; right: 4vw; border: none; background: none; font-family: var(--font-sans); font-size: 0.85rem; letter-spacing: 3px; color: var(--text-main); transition: 0.3s; z-index: 10000; padding: 10px;}
         #close-modal:hover { color: #d9534f; }
-        #modal-title { font-family: var(--font-serif); font-size: 2.2rem; margin-bottom: 10px; font-weight: 400; color: var(--text-main); }
-        #modal-desc { font-family: var(--font-sans); font-size: 0.85rem; letter-spacing: 2px; color: var(--accent); text-transform: uppercase; }
+        #modal-title { font-family: var(--font-serif); font-size: 2.2rem; margin-bottom: 10px; font-weight: 400; color: var(--text-main); pointer-events: auto; }
+        #modal-desc { font-family: var(--font-sans); font-size: 0.85rem; letter-spacing: 2px; color: var(--accent); text-transform: uppercase; pointer-events: auto; }
 
         @media (max-width: 900px) {
             header.top-nav { padding: 15px 4vw; }
@@ -94,7 +114,7 @@
             .header-controls { padding: 4px; gap: 0; border-radius: 40px;}
             .login-link { display: none !important; }
             .menu-toggle { padding: 8px 16px; font-size: 0.65rem; gap: 6px; }
-            /* Geri kalan bölüm sayfa içeriğine göre kalabilir */
+            .gallery-container { columns: 1; }
         }
     </style>
 </head>
@@ -129,14 +149,16 @@
             <h1 class="room-title">Doku.</h1>
         </header>
 
+        <!-- BUG FIX: Added loading indicator (was missing, unlike other pages) -->
         <section class="gallery-container" id="dynamic-gallery">
-            </section>
+            <div class="gallery-loading"><i class="fas fa-circle-notch fa-spin"></i> Görsel Arşiv Yükleniyor...</div>
+        </section>
     </main>
 
-    <div id="modal" role="dialog" aria-modal="true">
+    <div id="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
         <button id="close-modal" class="hover-target" tabindex="0">KAPAT ✕</button>
         <div id="modal-content">
-            <img id="modal-img" src="" alt="Detaylı Görsel">
+            <img id="modal-img" src="" alt="">
             <h2 id="modal-title"></h2>
             <p id="modal-desc"></p>
         </div>
@@ -147,7 +169,8 @@
         import { getFirestore, collection, getDocs, query, orderBy } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
 
         const firebaseConfig = { apiKey: "AIzaSyCr4HhlythyRIfy_Xnb-IaWr0Th0TkUQi4", authDomain: "yk-blog-9720b.firebaseapp.com", projectId: "yk-blog-9720b", messagingSenderId: "863054301539", appId: "1:863054301539:web:4256589fbef613bd0e6b56" };
-        const app = initializeApp(firebaseConfig); const db = getFirestore(app);
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
 
         async function loadGallery() {
             const container = document.getElementById('dynamic-gallery');
@@ -156,34 +179,46 @@
                 const snap = await getDocs(q);
                 container.innerHTML = '';
 
+                if (snap.empty) {
+                    container.innerHTML = '<div class="gallery-loading">Galeriye henüz görsel eklenmedi.</div>';
+                    return;
+                }
+
                 snap.forEach(doc => {
                     const data = doc.data();
                     const itemDiv = document.createElement('div');
                     itemDiv.className = 'gallery-item hover-target';
-                    itemDiv.setAttribute('tabindex', '0'); // Klavye Desteği
+                    itemDiv.setAttribute('tabindex', '0');
+                    itemDiv.setAttribute('role', 'button');
+                    itemDiv.setAttribute('aria-label', `Görseli büyüt: ${data.title}`);
                     
                     const openModal = () => {
-                        document.getElementById('modal-img').src = data.imageUrl;
+                        const modalImg = document.getElementById('modal-img');
+                        modalImg.src = data.imageUrl;
+                        modalImg.alt = data.title;
                         document.getElementById('modal-title').innerText = data.title;
-                        document.getElementById('modal-desc').innerText = `${data.category || 'Genel'} — ${data.year || ''}`;
-                        document.body.style.overflow = 'hidden'; 
+                        document.getElementById('modal-desc').innerText = [data.category, data.year].filter(Boolean).join(' — ') || '';
+                        document.body.style.overflow = 'hidden';
                         document.getElementById('modal').classList.add('active');
                         document.getElementById('close-modal').focus();
                     };
 
-                    itemDiv.onclick = openModal;
-                    itemDiv.addEventListener('keydown', (e) => { if(e.key === 'Enter') openModal(); });
+                    itemDiv.addEventListener('click', openModal);
+                    itemDiv.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openModal(); } });
 
                     itemDiv.innerHTML = `
-                        <div class="img-wrapper"><img src="${data.imageUrl}" class="gallery-img"></div>
+                        <div class="img-wrapper">
+                            <img src="${data.imageUrl}" class="gallery-img" alt="${data.title}" loading="lazy">
+                        </div>
                         <div class="gallery-info">
                             <h3>${data.title}</h3>
-                            <p>${data.category || 'Genel'} — ${data.year || ''}</p>
+                            <p>${[data.category, data.year].filter(Boolean).join(' — ') || '&nbsp;'}</p>
                         </div>
                     `;
                     container.appendChild(itemDiv);
                 });
 
+                // BUG FIX: Re-bind cursor to all dynamically created elements
                 if (window.matchMedia("(pointer: fine)").matches) {
                     const cursor = document.getElementById('custom-cursor');
                     document.querySelectorAll('.hover-target').forEach(t => {
@@ -191,33 +226,53 @@
                         t.addEventListener('mouseout', () => cursor.classList.remove('hover'));
                     });
                 }
-            } catch (e) { console.error(e); }
+            } catch (e) {
+                console.error(e);
+                container.innerHTML = '<div class="gallery-loading" style="color:#d9534f;">Bağlantı Hatası.</div>';
+            }
         }
         loadGallery();
 
-        const closeModalFunc = () => { document.getElementById('modal').classList.remove('active'); document.body.style.overflow = 'auto'; }
+        const closeModalFunc = () => {
+            document.getElementById('modal').classList.remove('active');
+            document.body.style.overflow = 'auto';
+        };
+
         document.getElementById('close-modal').addEventListener('click', closeModalFunc);
 
-        const toggleMenu = () => { 
+        // BUG FIX: Close modal when clicking backdrop (outside modal-content)
+        document.getElementById('modal').addEventListener('click', (e) => {
+            if (e.target === document.getElementById('modal')) closeModalFunc();
+        });
+
+        const toggleMenu = () => {
             const overlay = document.getElementById('overlay');
-            overlay.classList.toggle('active'); document.body.classList.toggle('no-scroll'); 
-            if(overlay.classList.contains('active')) document.getElementById('close-menu').focus();
+            overlay.classList.toggle('active');
+            document.body.classList.toggle('no-scroll');
+            if (overlay.classList.contains('active')) document.getElementById('close-menu').focus();
         };
         document.getElementById('open-menu').addEventListener('click', toggleMenu);
         document.getElementById('close-menu').addEventListener('click', toggleMenu);
         document.querySelectorAll('.overlay-link').forEach(link => { link.addEventListener('click', toggleMenu); });
 
-        // ESC İLE KAPATMA
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape') {
-                if(document.getElementById('modal').classList.contains('active')) closeModalFunc();
-                if(document.getElementById('overlay').classList.contains('active')) toggleMenu();
+                if (document.getElementById('modal').classList.contains('active')) closeModalFunc();
+                else if (document.getElementById('overlay').classList.contains('active')) toggleMenu();
             }
         });
 
         if (window.matchMedia("(pointer: fine)").matches) {
             const cursor = document.getElementById('custom-cursor');
-            document.addEventListener('mousemove', e => { cursor.style.left = e.clientX + 'px'; cursor.style.top = e.clientY + 'px'; });
+            document.addEventListener('mousemove', e => {
+                cursor.style.left = e.clientX + 'px';
+                cursor.style.top = e.clientY + 'px';
+            });
+            // Bind to static elements on load
+            document.querySelectorAll('.hover-target, button, a').forEach(t => {
+                t.addEventListener('mouseover', () => cursor.classList.add('hover'));
+                t.addEventListener('mouseout', () => cursor.classList.remove('hover'));
+            });
         }
     </script>
 </body>
