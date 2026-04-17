@@ -22,7 +22,7 @@
         <section id="login-section">
             <h1 class="admin-heading">Yönetim Girişi</h1>
             <input type="email" id="email" placeholder="E-posta" class="form-input">
-            <input type="password" id="password" placeholder="Şifre" class="form-input">
+            <input type="password" id="password" placeholder="Şifre" class="form-input" onkeypress="if(event.key === 'Enter') girisYap()">
             <button onclick="girisYap()" class="btn-aksiyon btn-primary">Giriş Yap</button>
         </section>
 
@@ -78,7 +78,15 @@
         function girisYap() {
             const email = document.getElementById('email').value;
             const pass = document.getElementById('password').value;
-            auth.signInWithEmailAndPassword(email, pass).catch(err => alert("Hata: " + err.message));
+            
+            if(!email || !pass) {
+                alert("Lütfen e-posta ve şifrenizi girin.");
+                return;
+            }
+
+            auth.signInWithEmailAndPassword(email, pass).catch(err => {
+                alert("Giriş Başarısız!\nSebep: " + err.message + "\n\nNot: Lütfen Firebase Console üzerinden bu e-posta adresiyle kayıtlı bir kullanıcı olup olmadığını kontrol et.");
+            });
         }
 
         function yaziEkle() {
@@ -134,27 +142,6 @@
             if(confirm("Bu eseri arşivden kalıcı olarak silmek istediğine emin misin?")) {
                 await db.collection("perspektif").doc(id).delete();
             }
-        }
-
-        // TEMİZLİK SCRİPTİ (Sadece bir kez çalıştırılmalı)
-        async function veritabaniniTemizleVeTasi() {
-            const eskiKoleksiyonlar = ["sentez", "doku"];
-            for (const koleksiyon of eskiKoleksiyonlar) {
-                const snapshot = await db.collection(koleksiyon).get();
-                snapshot.forEach(async (doc) => {
-                    const veri = doc.data();
-                    if (veri.baslik === "21. Yaşımdan Notlar" || veri.title === "21. Yaşımdan Notlar") {
-                        await db.collection("perspektif").add({
-                            ...veri,
-                            isFeatured: true,
-                            eklenmeTarihi: veri.eklenmeTarihi || new Date()
-                        });
-                        console.log("💎 '21. Yaşımdan Notlar' taşındı.");
-                    }
-                    await db.collection(koleksiyon).doc(doc.id).delete();
-                });
-            }
-            console.log("🧹 Temizlik tamamlandı.");
         }
     </script>
 </body>

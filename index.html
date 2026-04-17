@@ -31,6 +31,13 @@
     <footer class="site-footer">
         <div class="footer-content">
             <span class="footer-logo">YK.</span>
+            
+            <div class="footer-social">
+                <a href="#" target="_blank" class="social-link">Instagram</a>
+                <a href="#" target="_blank" class="social-link">LinkedIn</a>
+                <a href="mailto:mail@adresin.com" class="social-link">E-posta</a>
+            </div>
+
             <p class="footer-text">© 2026 Yusuf Kocapınar. Tüm edebi hakları saklıdır.</p>
         </div>
     </footer>
@@ -70,7 +77,6 @@
         const yaziAkisiDOM = document.getElementById('yazi-akisi');
 
         function vitrinIcerikleriniGetir() {
-            // Yazıları eklenme tarihine göre en yeniden eskiye sırala
             db.collection("perspektif").orderBy("eklenmeTarihi", "desc").onSnapshot((snapshot) => {
                 yaziAkisiDOM.innerHTML = '';
                 
@@ -82,18 +88,15 @@
                 snapshot.forEach((doc) => {
                     const yazi = doc.data();
                     
-                    // Yıldızlı (isFeatured) içerikler için özel CSS sınıfı ve ikon
                     const isFeaturedClass = yazi.isFeatured ? "featured-post" : "";
                     const yildizIkon = yazi.isFeatured ? '<span class="featured-star">★</span>' : '';
                     
-                    // Tarih formatlama
                     let tarihStr = "";
                     if(yazi.eklenmeTarihi && yazi.eklenmeTarihi.toDate) {
                         const dateObj = yazi.eklenmeTarihi.toDate();
                         tarihStr = dateObj.toLocaleDateString('tr-TR', { year: 'numeric', month: 'long', day: 'numeric' });
                     }
 
-                    // Paragraf satır sonlarını HTML <p> etiketlerine çevirme
                     const formatliIcerik = (yazi.icerik || "").split('\n').map(p => p.trim() ? `<p>${p}</p>` : '').join('');
 
                     yaziAkisiDOM.innerHTML += `
@@ -111,7 +114,6 @@
             });
         }
 
-        // Sayfa yüklendiğinde akışı başlat
         vitrinIcerikleriniGetir();
     </script>
 </body>
