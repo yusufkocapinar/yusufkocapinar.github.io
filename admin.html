@@ -3,134 +3,156 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Yönetim | YK. Dijital Arşiv</title>
+    <title>YK. | Yönetim</title>
     <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    
+    <script src="https://www.gstatic.com/firebasejs/9.x.x/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.x.x/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.x.x/firebase-auth-compat.js"></script>
 </head>
 <body>
 
-    <header class="angular-header" style="position: static; margin-bottom: 50px;">
-        <div class="logo-container">
-            <a href="index.html" class="typo-logo">YK<span class="dot">.</span> Yönetim</a>
-        </div>
-        <nav class="nav-actions">
-            <a href="index.html" class="angular-btn" style="border: none;">Vitrine Dön</a>
-            <button id="logout-btn" class="angular-btn" style="display: none; border-color: #d9534f; color: #d9534f;">Çıkış Yap</button>
-        </nav>
+    <header class="smart-header">
+        <div class="logo">YK.</div>
+        <a href="index.html" class="btn-aksiyon">Vitrine Dön</a>
     </header>
 
-    <main class="container" style="margin-top: 0;">
-        
-        <div id="login-section" class="admin-view active">
-            <div class="feed-header"><h1 class="feed-title">Kimlik Doğrulama.</h1></div>
-            <form id="login-form">
-                <div class="input-group">
-                    <label>E-Posta</label>
-                    <input type="email" id="email" required>
-                </div>
-                <div class="input-group">
-                    <label>Şifre</label>
-                    <input type="password" id="password" required>
-                </div>
-                <button type="submit" class="angular-btn" style="width: 100%;">Kilidi Aç</button>
-                <div id="error-msg" style="color: #d9534f; font-size: 0.8rem; margin-top: 15px; text-align: center;"></div>
-            </form>
-        </div>
+    <main class="admin-container">
+        <section id="login-section">
+            <h1 class="admin-heading">Yönetim Girişi</h1>
+            <input type="email" id="email" placeholder="E-posta" class="form-input">
+            <input type="password" id="password" placeholder="Şifre" class="form-input">
+            <button onclick="girisYap()" class="btn-aksiyon btn-primary">Giriş Yap</button>
+        </section>
 
-        <div id="dashboard-section" class="admin-view">
-            <div class="feed-header"><h1 class="feed-title">Yeni İçerik Ekle.</h1></div>
-            <form id="post-form">
-                <div class="input-group">
-                    <label>Yazı Başlığı</label>
-                    <input type="text" id="p-title" required>
-                </div>
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
-                    <div class="input-group">
-                        <label>Tür</label>
-                        <select id="p-type"><option>Deneme</option><option>Şiir</option><option>Eleştiri</option></select>
-                    </div>
-                    <div class="input-group">
-                        <label>Tarih (Örn: Nisan 2026)</label>
-                        <input type="text" id="p-date" required>
-                    </div>
-                </div>
-                <div class="input-group">
-                    <label>Özet (Listede Görünecek)</label>
-                    <textarea id="p-excerpt" required style="min-height: 80px;"></textarea>
-                </div>
-                <div class="input-group">
-                    <label>Tam Metin</label>
-                    <textarea id="p-content" required style="min-height: 300px;"></textarea>
-                </div>
-                <button type="submit" class="angular-btn" style="width: 100%;">Arşive Kaydet</button>
-            </form>
-        </div>
+        <section id="dashboard-section" style="display: none;">
+            
+            <div class="admin-form-group">
+                <h2 class="admin-heading">Yeni Eser Ekle</h2>
+                <input type="text" id="yazi-baslik" placeholder="Başlık" class="form-input">
+                <textarea id="yazi-icerik" placeholder="Metin..." class="form-textarea"></textarea>
+                <button onclick="yaziEkle()" class="btn-aksiyon btn-primary">Yayınla</button>
+            </div>
 
+            <section id="icerik-yoneticisi" class="admin-section">
+                <h2 class="admin-heading">Arşiv Yöneticisi</h2>
+                <div class="table-header">
+                    <span>Yazı Başlığı</span>
+                    <span>Aksiyonlar</span>
+                </div>
+                <div id="admin-yazi-listesi">
+                    </div>
+            </section>
+        </section>
     </main>
 
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
-        import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
-        import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
+    <script>
+        // Firebase Yapılandırmanı Buraya Ekle
+        const firebaseConfig = {
+            // apiKey: "...",
+            // authDomain: "...",
+            // projectId: "...",
+        };
+        if (!firebase.apps.length) {
+            firebase.initializeApp(firebaseConfig);
+        }
+        const db = firebase.firestore();
+        const auth = firebase.auth();
 
-        const firebaseConfig = { apiKey: "AIzaSyCr4HhlythyRIfy_Xnb-IaWr0Th0TkUQi4", authDomain: "yk-blog-9720b.firebaseapp.com", projectId: "yk-blog-9720b" };
-        const app = initializeApp(firebaseConfig);
-        const auth = getAuth(app);
-        const db = getFirestore(app);
-
-        const loginSec = document.getElementById('login-section');
-        const dashSec = document.getElementById('dashboard-section');
-        const logoutBtn = document.getElementById('logout-btn');
-
-        // Oturum Kontrolü
-        onAuthStateChanged(auth, (user) => {
+        // AUTH KONTROLÜ
+        auth.onAuthStateChanged(user => {
             if (user) {
-                loginSec.classList.remove('active');
-                dashSec.classList.add('active');
-                logoutBtn.style.display = 'inline-block';
+                document.getElementById('login-section').style.display = 'none';
+                document.getElementById('dashboard-section').style.display = 'block';
+                icerikleriGetir();
             } else {
-                dashSec.classList.remove('active');
-                loginSec.classList.add('active');
-                logoutBtn.style.display = 'none';
+                document.getElementById('login-section').style.display = 'block';
+                document.getElementById('dashboard-section').style.display = 'none';
             }
         });
 
-        // Giriş Yapma
-        document.getElementById('login-form').addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const btn = e.target.querySelector('button');
-            btn.innerText = "Doğrulanıyor...";
-            try {
-                await signInWithEmailAndPassword(auth, document.getElementById('email').value, document.getElementById('password').value);
-            } catch (err) {
-                document.getElementById('error-msg').innerText = "Hatalı bilgi girdiniz.";
-                btn.innerText = "Kilidi Aç";
-            }
-        });
+        function girisYap() {
+            const email = document.getElementById('email').value;
+            const pass = document.getElementById('password').value;
+            auth.signInWithEmailAndPassword(email, pass).catch(err => alert("Hata: " + err.message));
+        }
 
-        // Çıkış Yapma
-        logoutBtn.addEventListener('click', () => signOut(auth));
-
-        // Yazı Gönderme
-        document.getElementById('post-form').addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const btn = e.target.querySelector('button');
-            const origText = btn.innerText;
-            btn.innerText = "Kaydediliyor...";
-            btn.disabled = true;
-            try {
-                await addDoc(collection(db, "perspektif"), {
-                    title: document.getElementById('p-title').value,
-                    type: document.getElementById('p-type').value,
-                    date: document.getElementById('p-date').value,
-                    excerpt: document.getElementById('p-excerpt').value,
-                    content: document.getElementById('p-content').value,
-                    createdAt: serverTimestamp()
+        function yaziEkle() {
+            const baslik = document.getElementById('yazi-baslik').value;
+            const icerik = document.getElementById('yazi-icerik').value;
+            
+            if(baslik && icerik) {
+                db.collection("perspektif").add({
+                    baslik: baslik,
+                    icerik: icerik,
+                    eklenmeTarihi: new Date(),
+                    isFeatured: false
+                }).then(() => {
+                    alert("Yazı eklendi.");
+                    document.getElementById('yazi-baslik').value = '';
+                    document.getElementById('yazi-icerik').value = '';
                 });
-                e.target.reset();
-                btn.innerText = "Başarıyla Eklendi!";
-            } catch (err) { btn.innerText = "Hata Oluştu!"; }
-            setTimeout(() => { btn.innerText = origText; btn.disabled = false; }, 2000);
-        });
+            }
+        }
+
+        // İÇERİK YÖNETİCİSİ FONKSİYONLARI
+        const yaziListesiDOM = document.getElementById('admin-yazi-listesi');
+
+        function icerikleriGetir() {
+            db.collection("perspektif").orderBy("eklenmeTarihi", "desc").onSnapshot((snapshot) => {
+                yaziListesiDOM.innerHTML = '';
+                snapshot.forEach((doc) => {
+                    const yazi = doc.data();
+                    const id = doc.id;
+                    const isFeaturedClass = yazi.isFeatured ? "yildizli" : "";
+                    const yildizİkon = yazi.isFeatured ? "★" : "☆";
+
+                    yaziListesiDOM.innerHTML += `
+                        <div class="admin-yazi-satiri ${isFeaturedClass}">
+                            <span class="yazi-baslik">${yazi.baslik || yazi.title || "Başlıksız"}</span>
+                            <div class="aksiyon-butonlari">
+                                <button onclick="yildizla('${id}', ${yazi.isFeatured})" class="btn-aksiyon btn-yildiz">${yildizİkon}</button>
+                                <button onclick="yaziSil('${id}')" class="btn-aksiyon btn-sil">Sil</button>
+                            </div>
+                        </div>
+                    `;
+                });
+            });
+        }
+
+        async function yildizla(id, mevcutDurum) {
+            await db.collection("perspektif").doc(id).update({
+                isFeatured: !mevcutDurum
+            });
+        }
+
+        async function yaziSil(id) {
+            if(confirm("Bu eseri arşivden kalıcı olarak silmek istediğine emin misin?")) {
+                await db.collection("perspektif").doc(id).delete();
+            }
+        }
+
+        // TEMİZLİK SCRİPTİ (Sadece bir kez çalıştırılmalı)
+        async function veritabaniniTemizleVeTasi() {
+            const eskiKoleksiyonlar = ["sentez", "doku"];
+            for (const koleksiyon of eskiKoleksiyonlar) {
+                const snapshot = await db.collection(koleksiyon).get();
+                snapshot.forEach(async (doc) => {
+                    const veri = doc.data();
+                    if (veri.baslik === "21. Yaşımdan Notlar" || veri.title === "21. Yaşımdan Notlar") {
+                        await db.collection("perspektif").add({
+                            ...veri,
+                            isFeatured: true,
+                            eklenmeTarihi: veri.eklenmeTarihi || new Date()
+                        });
+                        console.log("💎 '21. Yaşımdan Notlar' taşındı.");
+                    }
+                    await db.collection(koleksiyon).doc(doc.id).delete();
+                });
+            }
+            console.log("🧹 Temizlik tamamlandı.");
+        }
     </script>
 </body>
 </html>

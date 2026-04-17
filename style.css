@@ -1,95 +1,170 @@
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500&display=swap');
-
+/* GENEL AYARLAR & LÜKS TASARIM DİLİ */
 :root {
-  --bg-color: #FAFAFA; /* Kemik / Mermer Beyazı */
-  --text-main: #1A1A1A; /* Keskin Siyah */
-  --text-muted: #757575;
-  --border-color: #E0E0E0;
-  --font-serif: 'Playfair Display', serif;
-  --font-sans: 'Inter', sans-serif;
-  --transition: all 0.3s ease;
+    --bg-color: #f4f4f0; /* Mermer/Kemik Beyazı */
+    --text-color: #1a1a1a; /* Keskin Siyah */
+    --border-color: #1a1a1a;
 }
 
-* { margin: 0; padding: 0; box-sizing: border-box; }
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    border-radius: 0 !important; /* Yuvarlak hatları kesin olarak reddediyoruz */
+}
 
 body {
-  background-color: var(--bg-color);
-  color: var(--text-main);
-  font-family: var(--font-sans);
-  -webkit-font-smoothing: antialiased;
-  line-height: 1.6;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    font-family: 'Playfair Display', serif; /* Edebi Dergi Hissi */
+    line-height: 1.6;
 }
 
-/* KÖŞELİ HEADER MİMARİSİ */
-.angular-header {
-  position: fixed; top: 0; left: 0; width: 100%;
-  display: flex; justify-content: space-between; align-items: center;
-  padding: 1.5rem 4vw;
-  background-color: rgba(250, 250, 250, 0.95);
-  backdrop-filter: blur(10px);
-  border-bottom: 1px solid var(--border-color);
-  z-index: 1000;
-  transition: transform 0.4s ease; /* Smart Sticky Animasyonu */
+/* SMART STICKY HEADER */
+.smart-header {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem 2rem;
+    background-color: var(--bg-color);
+    border-bottom: 2px solid var(--border-color);
+    z-index: 1000;
+    transition: transform 0.3s ease-in-out;
 }
 
-.typo-logo {
-  font-family: var(--font-serif);
-  font-size: 2rem; font-weight: 700;
-  color: var(--text-main); text-decoration: none;
-  letter-spacing: -2px;
+.logo {
+    font-size: 2.5rem;
+    font-weight: 700;
+    letter-spacing: -1px;
 }
-.typo-logo .dot { color: var(--text-muted); }
 
-.nav-actions { display: flex; gap: 1rem; }
-.angular-btn {
-  font-family: var(--font-sans); font-size: 0.8rem;
-  text-transform: uppercase; letter-spacing: 1.5px;
-  padding: 0.6rem 1.5rem; background: transparent;
-  color: var(--text-main); border: 1px solid var(--text-main);
-  border-radius: 0; cursor: pointer; text-decoration: none;
-  transition: var(--transition); display: inline-block;
+/* BUTONLAR VE FORMLAR (MİMARİ DURUŞ) */
+.btn-aksiyon {
+    background: transparent;
+    border: 1px solid var(--border-color);
+    padding: 0.8rem 1.5rem;
+    cursor: pointer;
+    font-family: 'Courier New', Courier, monospace;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    font-weight: bold;
+    letter-spacing: 1px;
+    text-decoration: none;
+    color: var(--text-color);
+    transition: all 0.3s ease;
+    display: inline-block;
 }
-.angular-btn:hover { background: var(--text-main); color: var(--bg-color); }
 
-/* ANA AKIŞ (YAZILAR) */
-.container { max-width: 800px; margin: 150px auto 100px; padding: 0 4vw; }
-.feed-header { text-align: center; margin-bottom: 80px; border-bottom: 1px solid var(--border-color); padding-bottom: 40px;}
-.feed-title { font-family: var(--font-serif); font-size: 3rem; font-weight: 400; }
-
-.journal-item {
-  padding: 50px 0; border-bottom: 1px dashed var(--border-color);
-  cursor: pointer; transition: var(--transition);
+.btn-aksiyon:hover {
+    background-color: var(--text-color);
+    color: var(--bg-color);
 }
-.journal-item:last-child { border-bottom: none; }
-.journal-item:hover { transform: translateY(-5px); }
 
-.j-meta { font-size: 0.75rem; letter-spacing: 2px; color: var(--text-muted); text-transform: uppercase; margin-bottom: 15px; }
-.j-title { font-family: var(--font-serif); font-size: 2.2rem; font-weight: 400; margin-bottom: 15px; transition: var(--transition); }
-.journal-item:hover .j-title { font-style: italic; }
-.j-excerpt { font-weight: 300; color: var(--text-muted); margin-bottom: 20px; }
-
-.loading-text { text-align: center; padding: 100px 0; font-size: 0.8rem; letter-spacing: 3px; text-transform: uppercase; color: var(--text-muted); }
-
-/* OKUMA MODALI */
-.modal {
-  position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
-  background: var(--bg-color); z-index: 9999; overflow-y: auto;
-  display: none; opacity: 0; transition: opacity 0.4s ease; padding: 60px 4vw;
+.btn-primary {
+    background-color: var(--text-color);
+    color: var(--bg-color);
+    margin-top: 1rem;
 }
-.modal.active { display: block; opacity: 1; }
-.modal-content-wrap { max-width: 700px; margin: 0 auto; position: relative; }
-.close-btn { position: absolute; top: 0; right: 0; background: none; border: none; font-size: 0.8rem; letter-spacing: 2px; cursor: pointer; text-transform: uppercase;}
-.read-title { font-family: var(--font-serif); font-size: 3rem; font-weight: 400; margin: 40px 0 10px; }
-.read-text { font-size: 1.1rem; line-height: 2; font-weight: 300; white-space: pre-wrap; margin-top: 40px; }
 
-/* FORMLAR (ADMİN) */
-.admin-view { display: none; }
-.admin-view.active { display: block; }
-.input-group { margin-bottom: 25px; }
-.input-group label { display: block; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; color: var(--text-muted); }
-.input-group input, .input-group textarea, .input-group select {
-  width: 100%; padding: 12px; font-family: var(--font-sans); font-size: 1rem;
-  background: transparent; border: 1px solid var(--border-color);
-  border-radius: 0; color: var(--text-main); outline: none; transition: var(--transition);
+.btn-primary:hover {
+    background-color: transparent;
+    color: var(--text-color);
 }
-.input-group input:focus, .input-group textarea:focus { border-color: var(--text-main); }
+
+.form-input, .form-textarea {
+    width: 100%;
+    background: transparent;
+    border: 1px solid var(--border-color);
+    padding: 1rem;
+    font-family: inherit;
+    font-size: 1.1rem;
+    margin-bottom: 1rem;
+    color: var(--text-color);
+    outline: none;
+}
+
+.form-textarea {
+    min-height: 200px;
+    resize: vertical;
+}
+
+.form-input:focus, .form-textarea:focus {
+    border-width: 2px;
+}
+
+/* ADMİN PANELİ YERLEŞİMİ */
+.admin-container {
+    max-width: 800px;
+    margin: 8rem auto 4rem auto; /* Header'ın altında kalmasın diye margin-top */
+    padding: 0 2rem;
+}
+
+.admin-heading {
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 0.5rem;
+}
+
+.admin-section {
+    margin-top: 4rem;
+}
+
+/* İÇERİK YÖNETİCİSİ LİSTESİ */
+.table-header {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 2px solid var(--border-color);
+    padding-bottom: 0.5rem;
+    margin-bottom: 1rem;
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 0.9rem;
+    letter-spacing: 1px;
+}
+
+.admin-yazi-satiri {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.2rem 1rem;
+    border: 1px solid var(--border-color);
+    margin-bottom: 0.5rem;
+    background-color: transparent;
+    transition: all 0.3s ease;
+}
+
+.admin-yazi-satiri.yildizli {
+    background-color: var(--text-color);
+    color: var(--bg-color);
+}
+
+.yazi-baslik {
+    font-size: 1.2rem;
+}
+
+.aksiyon-butonlari {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.admin-yazi-satiri.yildizli .btn-aksiyon {
+    border-color: var(--bg-color);
+    color: var(--bg-color);
+}
+
+.admin-yazi-satiri.yildizli .btn-aksiyon:hover {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+}
+
+.btn-sil:hover {
+    background-color: #8b0000;
+    border-color: #8b0000;
+    color: var(--bg-color);
+}
