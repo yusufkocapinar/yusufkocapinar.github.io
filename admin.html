@@ -7,9 +7,9 @@
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
     
-    <script src="https://www.gstatic.com/firebasejs/9.x.x/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.x.x/firebase-firestore-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.x.x/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
 </head>
 <body>
 
@@ -60,6 +60,7 @@
         if (!firebase.apps.length) {
             firebase.initializeApp(firebaseConfig);
         }
+        
         const db = firebase.firestore();
         const auth = firebase.auth();
 
@@ -85,7 +86,7 @@
             }
 
             auth.signInWithEmailAndPassword(email, pass).catch(err => {
-                alert("Giriş Başarısız!\nSebep: " + err.message + "\n\nNot: Lütfen Firebase Console üzerinden bu e-posta adresiyle kayıtlı bir kullanıcı olup olmadığını kontrol et.");
+                alert("Giriş Başarısız!\nSebep: " + err.message);
             });
         }
 

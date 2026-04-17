@@ -7,8 +7,8 @@
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
     
-    <script src="https://www.gstatic.com/firebasejs/9.x.x/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.x.x/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
 </head>
 <body>
 
@@ -55,6 +55,7 @@
         if (!firebase.apps.length) {
             firebase.initializeApp(firebaseConfig);
         }
+        
         const db = firebase.firestore();
 
         // AKILLI (SMART STICKY) HEADER MANTIĞI
@@ -64,10 +65,8 @@
         window.addEventListener("scroll", function() {
             let currentScroll = window.pageYOffset || document.documentElement.scrollTop;
             if (currentScroll > lastScrollTop) {
-                // Aşağı kaydırırken gizle
                 header.style.transform = "translateY(-100%)";
             } else {
-                // Yukarı kaydırırken göster
                 header.style.transform = "translateY(0)";
             }
             lastScrollTop = currentScroll <= 0 ? 0 : currentScroll;
@@ -87,7 +86,6 @@
 
                 snapshot.forEach((doc) => {
                     const yazi = doc.data();
-                    
                     const isFeaturedClass = yazi.isFeatured ? "featured-post" : "";
                     const yildizIkon = yazi.isFeatured ? '<span class="featured-star">★</span>' : '';
                     
@@ -111,6 +109,9 @@
                         </article>
                     `;
                 });
+            }, (error) => {
+                console.error("Veritabanı okuma hatası: ", error);
+                yaziAkisiDOM.innerHTML = '<p class="loading-text">İçerikler yüklenirken bir hata oluştu.</p>';
             });
         }
 
