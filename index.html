@@ -5,95 +5,111 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Yusuf Kocapınar | Dijital Arşiv</title>
     <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    
+    <script src="https://www.gstatic.com/firebasejs/9.x.x/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.x.x/firebase-firestore-compat.js"></script>
 </head>
 <body>
 
-    <header id="main-header" class="angular-header">
-        <div class="logo-container">
-            <a href="index.html" class="typo-logo">YK<span class="dot">.</span></a>
-        </div>
-        <nav class="nav-actions">
-            <a href="admin.html" class="angular-btn">Giriş</a>
-        </nav>
+    <header class="smart-header" id="header">
+        <div class="logo">YK.</div>
+        <a href="admin.html" class="btn-aksiyon">Yönetim</a>
     </header>
 
-    <main class="container">
-        <div class="feed-header">
-            <h1 class="feed-title">Manifesto & Perspektif.</h1>
-            <p style="margin-top: 15px; color: #757575; font-weight: 300;">Düşünceler, denemeler ve edebi izler.</p>
-        </div>
-        <section id="feed">
-            <div class="loading-text"><i class="fas fa-circle-notch fa-spin"></i> Arşiv Taranıyor...</div>
+    <main class="vitrin-container">
+        <section class="hero-section">
+            <h1 class="hero-title">Manifesto & Perspektif.</h1>
+            <p class="hero-subtitle">Düşünceler, denemeler ve edebi izler.</p>
         </section>
+
+        <section id="yazi-akisi" class="yazi-akisi">
+            <div class="loading-text">Arşiv Taranıyor...</div>
+            </section>
     </main>
 
-    <div id="reading-modal" class="modal">
-        <div class="modal-content-wrap">
-            <button id="close-reading" class="close-btn">Kapat ✕</button>
-            <h2 id="read-title" class="read-title">Başlık</h2>
-            <div id="read-meta" class="j-meta" style="border-bottom: 1px solid #E0E0E0; padding-bottom: 20px;">Tarih - Tür</div>
-            <div id="read-content" class="read-text">Metin yükleniyor...</div>
+    <footer class="site-footer">
+        <div class="footer-content">
+            <span class="footer-logo">YK.</span>
+            <p class="footer-text">© 2026 Yusuf Kocapınar. Tüm edebi hakları saklıdır.</p>
         </div>
-    </div>
+    </footer>
 
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
-        import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
-
-        const firebaseConfig = { apiKey: "AIzaSyCr4HhlythyRIfy_Xnb-IaWr0Th0TkUQi4", authDomain: "yk-blog-9720b.firebaseapp.com", projectId: "yk-blog-9720b" };
-        const app = initializeApp(firebaseConfig);
-        const db = getFirestore(app);
-
-        // Smart Sticky Header Mantığı
-        let lastScroll = 0;
-        const header = document.getElementById('main-header');
-        window.addEventListener('scroll', () => {
-            const currentScroll = window.pageYOffset;
-            if (currentScroll <= 0) { header.style.transform = 'translateY(0)'; return; }
-            if (currentScroll > lastScroll) { header.style.transform = 'translateY(-100%)'; } 
-            else { header.style.transform = 'translateY(0)'; }
-            lastScroll = currentScroll;
-        });
-
-        // Verileri Çekme (Eski Perspektif koleksiyonunu ana metin havuzu yapıyoruz)
-        async function loadFeed() {
-            const container = document.getElementById('feed');
-            try {
-                const snap = await getDocs(collection(db, "perspektif"));
-                container.innerHTML = '';
-                if (snap.empty) { container.innerHTML = '<div class="loading-text">Henüz içerik yok.</div>'; return; }
-                
-                let items = [];
-                snap.forEach(doc => items.push({ id: doc.id, ...doc.data() }));
-                items.sort((a, b) => (b.createdAt?.toMillis() || 0) - (a.createdAt?.toMillis() || 0));
-
-                items.forEach(data => {
-                    const article = document.createElement('article');
-                    article.className = 'journal-item';
-                    article.innerHTML = `
-                        <div class="j-meta">${data.type || 'Deneme'} / ${data.date || ''}</div>
-                        <h2 class="j-title">${data.title}</h2>
-                        <p class="j-excerpt">${data.excerpt}</p>
-                        <span style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px; border-bottom: 1px solid #1A1A1A;">Okumaya Devam Et</span>
-                    `;
-                    article.addEventListener('click', () => {
-                        document.getElementById('read-title').innerText = data.title;
-                        document.getElementById('read-meta').innerText = `${data.date || ''} — ${data.type || 'Deneme'}`;
-                        document.getElementById('read-content').innerText = data.content || data.excerpt;
-                        document.getElementById('reading-modal').classList.add('active');
-                        document.body.style.overflow = 'hidden';
-                    });
-                    container.appendChild(article);
-                });
-            } catch (e) { container.innerHTML = '<div class="loading-text">Bağlantı Hatası.</div>'; }
+    <script>
+        // Firebase Yapılandırmanı Buraya Ekle
+        const firebaseConfig = {
+            // apiKey: "...",
+            // authDomain: "...",
+            // projectId: "...",
+        };
+        if (!firebase.apps.length) {
+            firebase.initializeApp(firebaseConfig);
         }
-        loadFeed();
+        const db = firebase.firestore();
 
-        document.getElementById('close-reading').addEventListener('click', () => {
-            document.getElementById('reading-modal').classList.remove('active');
-            document.body.style.overflow = 'auto';
-        });
+        // AKILLI (SMART STICKY) HEADER MANTIĞI
+        let lastScrollTop = 0;
+        const header = document.getElementById("header");
+        
+        window.addEventListener("scroll", function() {
+            let currentScroll = window.pageYOffset || document.documentElement.scrollTop;
+            if (currentScroll > lastScrollTop) {
+                // Aşağı kaydırırken gizle
+                header.style.transform = "translateY(-100%)";
+            } else {
+                // Yukarı kaydırırken göster
+                header.style.transform = "translateY(0)";
+            }
+            lastScrollTop = currentScroll <= 0 ? 0 : currentScroll;
+        }, false);
+
+        // İÇERİKLERİ VİTRİNE ÇEKME VE LİSTELEME
+        const yaziAkisiDOM = document.getElementById('yazi-akisi');
+
+        function vitrinIcerikleriniGetir() {
+            // Yazıları eklenme tarihine göre en yeniden eskiye sırala
+            db.collection("perspektif").orderBy("eklenmeTarihi", "desc").onSnapshot((snapshot) => {
+                yaziAkisiDOM.innerHTML = '';
+                
+                if (snapshot.empty) {
+                    yaziAkisiDOM.innerHTML = '<p class="loading-text">Henüz bir edebi iz bırakılmadı.</p>';
+                    return;
+                }
+
+                snapshot.forEach((doc) => {
+                    const yazi = doc.data();
+                    
+                    // Yıldızlı (isFeatured) içerikler için özel CSS sınıfı ve ikon
+                    const isFeaturedClass = yazi.isFeatured ? "featured-post" : "";
+                    const yildizIkon = yazi.isFeatured ? '<span class="featured-star">★</span>' : '';
+                    
+                    // Tarih formatlama
+                    let tarihStr = "";
+                    if(yazi.eklenmeTarihi && yazi.eklenmeTarihi.toDate) {
+                        const dateObj = yazi.eklenmeTarihi.toDate();
+                        tarihStr = dateObj.toLocaleDateString('tr-TR', { year: 'numeric', month: 'long', day: 'numeric' });
+                    }
+
+                    // Paragraf satır sonlarını HTML <p> etiketlerine çevirme
+                    const formatliIcerik = (yazi.icerik || "").split('\n').map(p => p.trim() ? `<p>${p}</p>` : '').join('');
+
+                    yaziAkisiDOM.innerHTML += `
+                        <article class="yazi-karti ${isFeaturedClass}">
+                            <header class="yazi-header">
+                                <h2 class="yazi-baslik">${yazi.baslik || yazi.title || "Başlıksız"} ${yildizIkon}</h2>
+                                <span class="yazi-tarih">${tarihStr}</span>
+                            </header>
+                            <div class="yazi-icerik">
+                                ${formatliIcerik}
+                            </div>
+                        </article>
+                    `;
+                });
+            });
+        }
+
+        // Sayfa yüklendiğinde akışı başlat
+        vitrinIcerikleriniGetir();
     </script>
 </body>
 </html>

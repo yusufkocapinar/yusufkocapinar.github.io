@@ -94,10 +94,10 @@ body {
     border-width: 2px;
 }
 
-/* ADMİN PANELİ YERLEŞİMİ */
+/* ADMİN PANELİ YERLEŞİMİ (admin.html için) */
 .admin-container {
     max-width: 800px;
-    margin: 8rem auto 4rem auto; /* Header'ın altında kalmasın diye margin-top */
+    margin: 8rem auto 4rem auto;
     padding: 0 2rem;
 }
 
@@ -114,7 +114,6 @@ body {
     margin-top: 4rem;
 }
 
-/* İÇERİK YÖNETİCİSİ LİSTESİ */
 .table-header {
     display: flex;
     justify-content: space-between;
@@ -144,7 +143,7 @@ body {
     color: var(--bg-color);
 }
 
-.yazi-baslik {
+.admin-yazi-satiri .yazi-baslik {
     font-size: 1.2rem;
 }
 
@@ -167,4 +166,135 @@ body {
     background-color: #8b0000;
     border-color: #8b0000;
     color: var(--bg-color);
+}
+
+
+/* ------------------------------------------- */
+/* ZİYARETÇİ VİTRİNİ VE AKIŞ TASARIMI (index.html) */
+/* ------------------------------------------- */
+
+.vitrin-container {
+    max-width: 800px;
+    margin: 10rem auto 4rem auto; /* Header boşluğu */
+    padding: 0 2rem;
+}
+
+.hero-section {
+    margin-bottom: 5rem;
+    border-bottom: 2px solid var(--border-color);
+    padding-bottom: 2rem;
+}
+
+.hero-title {
+    font-size: 3.5rem;
+    line-height: 1.1;
+    margin-bottom: 1rem;
+    letter-spacing: -1px;
+}
+
+.hero-subtitle {
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #555;
+}
+
+.yazi-akisi {
+    display: flex;
+    flex-direction: column;
+    gap: 4rem; /* Akış içerisindeki yazılar arası mesafe */
+}
+
+.yazi-karti {
+    border: 1px solid var(--border-color);
+    padding: 3rem 2.5rem;
+    background-color: transparent;
+    transition: transform 0.3s ease;
+}
+
+/* Öne Çıkan (Yıldızlı) İçerik - Zıt renklerle akışa entegre */
+.yazi-karti.featured-post {
+    background-color: var(--text-color);
+    color: var(--bg-color);
+    border-width: 2px;
+}
+
+.yazi-header {
+    margin-bottom: 2rem;
+}
+
+.yazi-karti .yazi-baslik {
+    font-size: 2.2rem;
+    line-height: 1.2;
+    margin-bottom: 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+}
+
+.featured-star {
+    font-size: 1.5rem;
+    color: var(--bg-color);
+}
+
+.yazi-tarih {
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #666;
+}
+
+/* Ters yüz edilmiş koddaki tarih rengi */
+.yazi-karti.featured-post .yazi-tarih {
+    color: #a0a0a0; 
+}
+
+.yazi-icerik p {
+    margin-bottom: 1.5rem;
+    font-size: 1.15rem;
+    text-align: justify;
+}
+
+.loading-text {
+    font-family: 'Courier New', Courier, monospace;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    text-align: center;
+    padding: 2rem;
+}
+
+/* MİMARİ FOOTER TASARIMI */
+.site-footer {
+    border-top: 2px solid var(--border-color);
+    margin-top: 8rem;
+    padding: 4rem 2rem;
+    background-color: var(--bg-color);
+    text-align: center;
+}
+
+.footer-content {
+    max-width: 800px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+}
+
+.footer-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+    font-weight: 700;
+    letter-spacing: -1px;
+    color: var(--text-color);
+}
+
+.footer-text {
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--text-color);
 }
