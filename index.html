@@ -26,6 +26,8 @@
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
+        html { scroll-behavior: smooth; }
+
         body {
             background-color: var(--bg-color);
             color: var(--text-main);
@@ -38,6 +40,7 @@
 
         body.no-scroll { overflow: hidden; }
 
+        /* Zarif Kumlanma (Noise) Efekti */
         body::before {
             content: ""; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background-image: url('data:image/svg+xml,<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><filter id="noiseFilter"><feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/></filter><rect width="100%" height="100%" filter="url(%23noiseFilter)" opacity="0.025"/></svg>');
@@ -60,130 +63,59 @@
 
         *:focus-visible { outline: 1px dashed var(--accent); outline-offset: 4px; }
 
-        .container { max-width: 1200px; margin: 0 auto; padding: 0 4vw; position: relative; z-index: 10; }
-        .blog-container { max-width: 800px; margin: 0 auto; padding: 0 4vw; position: relative; z-index: 10; }
+        .container { max-width: 850px; margin: 0 auto; padding: 0 5vw; position: relative; z-index: 10; }
 
-        header.top-nav {
-            position: fixed; top: 0; left: 0; width: 100%;
-            padding: 30px 4vw; z-index: 1000;
+        /* YÜZEN KAPSÜL MENÜ (FLOATING PILL) */
+        .pill-nav {
+            position: fixed; top: 25px; left: 50%; transform: translateX(-50%);
+            width: 90%; max-width: 650px; z-index: 1000;
+            background: rgba(245, 245, 243, 0.75);
+            backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(179, 155, 120, 0.2);
+            border-radius: 50px; padding: 12px 25px;
             display: flex; justify-content: space-between; align-items: center;
-            pointer-events: none; 
-            background: rgba(245, 245, 243, 0.6);
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
-            border-bottom: 1px solid rgba(179, 155, 120, 0.1);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.02);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.03);
             transition: var(--transition-premium);
         }
+        .pill-nav:hover { border-color: rgba(179, 155, 120, 0.5); background: rgba(245, 245, 243, 0.9); }
 
-        .brand-group {
-            display: flex; align-items: center; gap: 15px;
-            pointer-events: auto; transition: var(--transition-premium);
-        }
-        .brand-group:hover { transform: scale(1.02); }
+        .nav-logo { font-family: var(--font-signature); font-size: 1.8rem; color: var(--text-main); text-decoration: none; line-height: 1; transform: rotate(-3deg); }
         
-        .palestine-crest {
-            height: 45px; width: auto; 
-            stroke: var(--accent); stroke-width: 3; fill: none;
-            stroke-linecap: round; stroke-linejoin: round;
+        .nav-links { display: flex; gap: 25px; align-items: center; }
+        .nav-links a {
+            font-family: var(--font-sans); font-size: 0.7rem; text-transform: uppercase;
+            letter-spacing: 2px; color: var(--text-muted); text-decoration: none; transition: 0.3s;
         }
-
-        .logo-signature { 
-            font-family: var(--font-signature); font-size: 2.8rem; 
-            color: var(--text-main); text-decoration: none; line-height: 1;
-            transform: rotate(-3deg); padding-top: 10px;
-        }
-
-        .header-controls {
-            pointer-events: auto; background: rgba(245, 245, 243, 0.6);
-            border: 1px solid rgba(179, 155, 120, 0.3); border-radius: 50px;
-            display: flex; align-items: center; gap: 20px;
-            padding: 6px 6px 6px 25px; box-shadow: 0 10px 30px rgba(0,0,0,0.03);
-            transition: var(--transition-premium);
-        }
-        .header-controls:hover { border-color: var(--accent); background: rgba(245, 245, 243, 0.9); }
-
-        .login-link {
-            font-family: var(--font-sans); font-size: 0.75rem; 
-            text-transform: uppercase; letter-spacing: 2px; 
-            color: var(--text-muted); text-decoration: none; transition: 0.3s;
-        }
-        .login-link:hover { color: var(--accent); }
-
-        .menu-toggle {
-            background: var(--text-main); color: var(--bg-color);
-            border: none; border-radius: 40px; padding: 12px 25px;
-            font-family: var(--font-sans); font-size: 0.75rem; 
-            text-transform: uppercase; letter-spacing: 2px; 
-            display: flex; align-items: center; gap: 10px;
-            transition: var(--transition-premium); cursor: pointer;
-        }
-        .menu-toggle:hover { background: var(--accent); transform: scale(1.05); }
-
-        .menu-overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
-            background-color: var(--bg-color); z-index: 999;
-            display: flex; justify-content: center; align-items: center;
-            opacity: 0; visibility: hidden; clip-path: circle(0% at top right);
-            transition: opacity 0.6s ease, visibility 0.6s ease, clip-path 0.8s cubic-bezier(0.77, 0, 0.175, 1);
-        }
-        .menu-overlay.active { opacity: 1; visibility: visible; clip-path: circle(150% at top right); }
+        .nav-links a:hover { color: var(--accent); }
         
-        .overlay-close {
-            position: absolute; top: 30px; right: 4vw; font-family: var(--font-sans);
-            font-size: 0.85rem; text-transform: uppercase; letter-spacing: 2px;
-            color: var(--text-main); background: none; border: none; z-index: 1000; padding: 10px; cursor: pointer;
-        }
+        .nav-auth { color: var(--border-color); font-size: 0.9rem; transition: 0.3s; }
+        .nav-auth:hover { color: var(--accent); }
 
-        .overlay-nav { display: flex; flex-direction: column; gap: 40px; text-align: center; }
-        .overlay-link {
-            font-family: var(--font-serif); font-size: clamp(3rem, 6vw, 5rem);
-            color: var(--text-main); text-decoration: none; display: block;
-            transform: translateY(30px); opacity: 0; transition: var(--transition-premium);
-        }
-        .overlay-link span {
-            display: block; font-family: var(--font-sans); font-size: 0.9rem;
-            color: var(--text-muted); text-transform: uppercase; letter-spacing: 4px; margin-top: 10px;
-        }
-        .menu-overlay.active .overlay-link { transform: translateY(0); opacity: 1; }
-        .overlay-link:hover { color: var(--accent); }
-
+        /* HERO BÖLÜMÜ */
         main { margin-top: 150px; }
+        .hero { height: 60vh; display: flex; flex-direction: column; justify-content: center; align-items: center; }
+        .main-title { font-family: var(--font-serif); font-size: clamp(3rem, 8vw, 6rem); line-height: 1.1; font-weight: 400; letter-spacing: -1.5px; color: var(--text-main); text-align: center; }
+        .hero-desc { font-family: var(--font-sans); font-size: 0.9rem; color: var(--text-muted); margin-top: 25px; text-transform: uppercase; letter-spacing: 4px; text-align: center; }
 
-        .hero { height: calc(85vh - 150px); display: flex; flex-direction: column; justify-content: center; align-items: center; }
-        .main-title { font-family: var(--font-serif); font-size: clamp(3rem, 8vw, 7rem); line-height: 1.1; font-weight: 400; letter-spacing: -1.5px; color: var(--text-main); text-align: center; margin-top: 40px;}
-        .hero-desc { font-family: var(--font-sans); font-size: 1.1rem; color: var(--text-muted); margin-top: 30px; text-transform: uppercase; letter-spacing: 4px; text-align: center; }
-
-        section { padding: 80px 0; }
+        section { padding: 80px 0; border-top: 1px solid var(--border-color); }
+        section:first-of-type { border-top: none; padding-top: 0; }
+        
         .section-header { text-align: center; margin-bottom: 60px; }
-        .section-tag { font-family: var(--font-sans); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 3px; color: var(--accent); margin-bottom: 20px; display: block; }
+        .section-tag { font-family: var(--font-sans); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 3px; color: var(--accent); margin-bottom: 15px; display: block; }
         h2 { font-family: var(--font-serif); font-size: 2.5rem; font-weight: 400; color: var(--text-main); }
 
-        /* ABOUT SECTION */
-        .about-grid { display: grid; grid-template-columns: 1fr 1.5fr; gap: 80px; align-items: center; border-top: 1px solid var(--border-color); padding-top: 80px; margin-bottom: 60px; }
-        .about-quote { font-family: var(--font-serif); font-style: italic; font-size: 1.8rem; color: var(--accent); line-height: 1.4; border-left: 2px solid var(--accent); padding-left: 25px; }
-        .about-text { font-size: 1.1rem; line-height: 1.8; color: var(--text-muted); font-weight: 300; }
-        .about-text strong { color: var(--text-main); font-weight: 600; }
-        .about-name { font-family: var(--font-serif); font-size: 3rem; font-weight: 400; color: var(--text-main); margin-bottom: 20px; }
+        /* MANİFESTO / HAKKIMDA */
+        .about-quote { font-family: var(--font-serif); font-style: italic; font-size: 1.6rem; color: var(--accent); line-height: 1.5; border-left: 2px solid var(--accent); padding-left: 25px; margin-bottom: 40px; text-align: left;}
+        .about-text { font-size: 1.1rem; line-height: 1.9; color: var(--text-main); font-weight: 300; }
+        .about-text p { margin-bottom: 20px; }
+        .about-text strong { font-weight: 500; color: var(--accent); }
 
-        /* FEATURED / BENTO GRID */
-        .bento-grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: 30px; margin-bottom: 80px; }
-        .bento-item { background: var(--card-bg); padding: 50px; text-decoration: none; color: inherit; border: 1px solid var(--border-color); box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02); transition: var(--transition-premium); display: flex; flex-direction: column; justify-content: space-between; position: relative; overflow: hidden; cursor: pointer; outline: none; }
-        .bento-item:hover, .bento-item:focus-visible { transform: translateY(-8px); border-color: rgba(179, 155, 120, 0.4); box-shadow: 0 20px 40px rgba(0, 0, 0, 0.06); }
-        .item-8 { grid-column: span 8; min-height: 380px; }
-        .item-4 { grid-column: span 4; min-height: 380px; }
-        .item-meta { font-family: var(--font-sans); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 2px; color: var(--accent); margin-bottom: 15px; }
-        .item-title { font-family: var(--font-serif); font-size: 2rem; font-weight: 400; margin-bottom: 15px; line-height: 1.2; }
-        .item-desc { color: var(--text-muted); font-size: 0.95rem; font-weight: 300;}
-        .item-icon { position: absolute; bottom: 50px; right: 50px; font-size: 1.5rem; color: var(--border-color); transition: var(--transition-premium); }
-        .bento-item:hover .item-icon { color: var(--accent); transform: scale(1.1); }
-
-        /* LATEST WRITINGS / JOURNAL LIST */
-        .journal-list { padding-bottom: 100px; }
+        /* TEK SÜTUNLU KÜLLİYAT AKIŞI */
+        .journal-list { padding-bottom: 50px; }
         .journal-item { 
             text-align: center; padding: 60px 0; border-bottom: 1px dashed var(--border-color); 
             transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1);
-            cursor: pointer; outline: none;
+            cursor: pointer; outline: none; display: block; text-decoration: none;
         }
         .journal-item:last-child { border-bottom: none; }
         .journal-item:hover, .journal-item:focus-visible { transform: translateY(-5px); }
@@ -191,145 +123,157 @@
         .j-meta { font-family: var(--font-sans); font-size: 0.7rem; letter-spacing: 3px; color: var(--accent); margin-bottom: 20px; display: flex; justify-content: center; gap: 15px; align-items: center; text-transform: uppercase; }
         .j-meta span.sep { color: var(--border-color); }
         
-        .j-title { font-family: var(--font-serif); font-size: clamp(2rem, 4vw, 3rem); font-weight: 400; margin-bottom: 20px; line-height: 1.2; color: var(--text-main); transition: 0.3s; }
+        .j-title { font-family: var(--font-serif); font-size: clamp(1.8rem, 4vw, 2.8rem); font-weight: 400; margin-bottom: 20px; line-height: 1.2; color: var(--text-main); transition: 0.3s; }
         .journal-item:hover .j-title, .journal-item:focus-visible .j-title { color: var(--accent); font-style: italic; }
 
-        .j-excerpt { font-size: 1.05rem; line-height: 1.8; color: var(--text-muted); font-weight: 300; margin-bottom: 25px; max-width: 600px; margin-left: auto; margin-right: auto; }
+        .j-excerpt { font-size: 1.05rem; line-height: 1.8; color: var(--text-muted); font-weight: 300; margin-bottom: 25px; max-width: 650px; margin-left: auto; margin-right: auto; }
         
-        .read-more { display: inline-block; font-family: var(--font-sans); font-size: 0.7rem; letter-spacing: 2px; text-transform: uppercase; color: var(--text-main); border-bottom: 1px solid var(--accent); padding-bottom: 2px; font-weight: 600; transition: 0.3s; background: none; border-top: none; border-left: none; border-right: none; cursor: pointer;}
+        .read-more { display: inline-block; font-family: var(--font-sans); font-size: 0.7rem; letter-spacing: 2px; text-transform: uppercase; color: var(--text-main); border-bottom: 1px solid var(--accent); padding-bottom: 2px; font-weight: 600; transition: 0.3s; }
         .journal-item:hover .read-more { color: var(--accent); border-bottom-color: transparent; }
+
+        /* GERİ BİLDİRİM / İLETİŞİM PANELİ */
+        .feedback-wrapper { background: var(--card-bg); padding: 50px; border: 1px solid var(--border-color); box-shadow: 0 10px 40px rgba(0,0,0,0.02); text-align: center; }
+        .feedback-desc { font-size: 0.95rem; color: var(--text-muted); margin-bottom: 40px; font-weight: 300; }
+        
+        .form-group { margin-bottom: 25px; position: relative; }
+        .form-group input, .form-group textarea {
+            width: 100%; background: transparent; border: none; border-bottom: 1px solid rgba(179, 155, 120, 0.3);
+            padding: 12px 0; font-family: 'Inter', sans-serif; font-size: 1rem; color: var(--text-main);
+            outline: none; transition: var(--transition-premium); resize: none;
+        }
+        .form-group textarea { min-height: 100px; }
+        .form-group input:focus, .form-group textarea:focus { border-bottom-color: var(--accent); }
+        
+        .form-group label {
+            position: absolute; left: 0; top: 12px; font-family: var(--font-sans); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 2px; color: var(--text-muted); pointer-events: none; transition: var(--transition-premium);
+        }
+        .form-group input:focus ~ label, .form-group input:not(:placeholder-shown) ~ label,
+        .form-group textarea:focus ~ label, .form-group textarea:not(:placeholder-shown) ~ label {
+            top: -10px; font-size: 0.6rem; color: var(--accent);
+        }
+
+        .submit-btn {
+            background: transparent; border: 1px solid var(--accent); padding: 12px 35px;
+            font-family: var(--font-sans); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 2px;
+            color: var(--text-main); transition: var(--transition-premium); cursor: pointer; outline: none; margin-top: 10px;
+        }
+        .submit-btn:hover, .submit-btn:focus-visible { background: var(--accent); color: var(--card-bg); }
+        .form-message { margin-top: 20px; font-size: 0.85rem; font-weight: 500; height: 20px; }
 
         .fade-up { opacity: 0; transform: translateY(30px); transition: 1s ease-out; }
         .fade-up.visible { opacity: 1; transform: translateY(0); }
 
-        /* MODALS (READING & IMAGE) */
+        /* MODALS (PENCERELER) */
         .full-modal { position: fixed; top: 0; left: 0; width: 100%; height: 100vh; background: var(--bg-color); z-index: 9999; overflow-y: auto; display: none; opacity: 0; transition: opacity 0.4s ease; padding: 60px 4vw; }
         .full-modal.active { display: block; opacity: 1; }
         
         .reading-container { max-width: 800px; margin: 0 auto; background: var(--card-bg); padding: 80px 60px; box-shadow: 0 20px 50px rgba(0,0,0,0.03); border: 1px solid var(--border-color); position: relative; }
         .image-container { max-width: 90%; max-height: 90vh; margin: 0 auto; display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; top: 50%; transform: translateY(-50%);}
         
-        .close-modal-btn { position: absolute; top: 20px; right: 20px; background: none; border: none; font-family: var(--font-sans); font-size: 0.8rem; letter-spacing: 2px; color: var(--text-muted); transition: 0.3s; padding: 10px; cursor: pointer; z-index: 10000; }
-        .close-modal-btn:hover { color: #d9534f; }
+        .close-modal-btn { position: absolute; top: 20px; right: 20px; background: none; border: none; font-family: var(--font-sans); font-size: 0.8rem; letter-spacing: 2px; color: var(--text-muted); transition: 0.3s; padding: 10px; cursor: pointer; z-index: 10000; outline: none;}
+        .close-modal-btn:hover, .close-modal-btn:focus-visible { color: #d9534f; }
         
-        /* Typography for Reading Modal */
         #read-title { font-family: var(--font-serif); font-size: 2.8rem; margin-bottom: 10px; line-height: 1.2; font-weight: 400; color: var(--text-main); }
         #read-meta { font-family: var(--font-sans); font-size: 0.8rem; color: var(--accent); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 40px; display: block; border-bottom: 1px solid var(--border-color); padding-bottom: 20px; }
         #read-content { font-size: 1.15rem; line-height: 2; color: var(--text-main); font-weight: 300; white-space: pre-wrap; }
         
-        /* Typography for Image Modal */
         #img-display { max-height: 70vh; max-width: 100%; box-shadow: 0 30px 60px rgba(0,0,0,0.15); margin-bottom: 25px; object-fit: contain; }
         #img-title { font-family: var(--font-serif); font-size: 2.2rem; margin-bottom: 10px; font-weight: 400; color: var(--text-main); text-align: center;}
         #img-desc { font-family: var(--font-sans); font-size: 0.85rem; letter-spacing: 2px; color: var(--accent); text-transform: uppercase; text-align: center;}
 
         /* FOOTER */
-        .site-footer { border-top: 1px solid var(--border-color); padding: 60px 0; position: relative; z-index: 10; }
-        .footer-inner { display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 20px; }
-        .footer-socials { display: flex; gap: 35px; align-items: center; }
-        .footer-socials a { color: var(--text-main); font-size: 1.4rem; transition: var(--transition-premium); }
+        .site-footer { border-top: 1px solid var(--border-color); padding: 40px 0 60px 0; position: relative; z-index: 10; text-align: center; }
+        .footer-socials { display: flex; justify-content: center; gap: 30px; margin-bottom: 20px; }
+        .footer-socials a { color: var(--text-main); font-size: 1.2rem; transition: var(--transition-premium); }
         .footer-socials a:hover { color: var(--accent); transform: translateY(-3px); }
-        .footer-text { font-family: var(--font-sans); font-size: 0.7rem; letter-spacing: 4px; color: var(--text-muted); text-transform: uppercase; margin-top: 10px;}
+        .footer-text { font-family: var(--font-sans); font-size: 0.7rem; letter-spacing: 4px; color: var(--text-muted); text-transform: uppercase; }
 
-        @media (max-width: 900px) {
-            header.top-nav { padding: 15px 4vw; }
-            .brand-group { gap: 8px; }
-            .palestine-crest { height: 26px; }
-            .logo-signature { font-size: 1.6rem; padding-top: 5px; }
-            .header-controls { padding: 4px; gap: 0; border-radius: 40px;}
-            .login-link { display: none !important; }
-            .menu-toggle { padding: 8px 16px; font-size: 0.65rem; gap: 6px; }
-            main { margin-top: 100px; }
-            .hero { height: calc(100vh - 100px); }
-            .bento-item { grid-column: span 12; }
-            .about-grid { grid-template-columns: 1fr; gap: 40px; }
-            .about-quote { font-size: 1.5rem; }
-            .about-name { font-size: 2.2rem; }
+        @media (max-width: 768px) {
+            .pill-nav { width: 95%; padding: 12px 20px; top: 15px; }
+            .nav-links { gap: 15px; }
+            .nav-links a { font-size: 0.6rem; letter-spacing: 1px; }
+            .hero { height: 50vh; }
+            .feedback-wrapper { padding: 40px 20px; }
             .reading-container { padding: 50px 25px; border: none; box-shadow: none; background: transparent; }
             #read-title { font-size: 2rem; }
+            .j-title { font-size: 1.8rem; }
         }
     </style>
 </head>
 <body>
     <div id="custom-cursor"></div>
-    
-    <div class="menu-overlay" id="overlay" role="dialog" aria-modal="true" aria-label="Navigasyon Menüsü">
-        <button class="overlay-close hover-target" id="close-menu" tabindex="0">Kapat ✕</button>
-        <nav class="overlay-nav">
-            <a href="#about" class="overlay-link hover-target">Hakkımda <span>Manifesto</span></a>
-            <a href="#featured" class="overlay-link hover-target">Seçkiler <span>Öne Çıkanlar</span></a>
-            <a href="#latest" class="overlay-link hover-target">Külliyat <span>Son Yazılar & Güncellemeler</span></a>
-        </nav>
-    </div>
 
-    <header class="top-nav">
-        <div class="brand-group hover-target">
-            <svg class="palestine-crest" viewBox="0 0 100 200" title="Palestine">
-                <path d="M45,5 L60,25 C65,40 60,70 55,100 L40,185 C35,195 25,195 20,185 L10,120 C5,90 15,45 45,5 Z"/>
-            </svg>
-            <a href="#" class="logo-signature" id="scroll-top">Y. Kocapınar</a>
-        </div>
-        <div class="header-controls">
-            <a href="login.html" class="login-link hover-target">Giriş</a>
-            <button class="menu-toggle hover-target" id="open-menu" tabindex="0">Menü <i class="fas fa-bars"></i></button>
-        </div>
+    <header class="pill-nav hover-target">
+        <a href="#" class="nav-logo" title="Başa Dön">Y.K.</a>
+        <nav class="nav-links">
+            <a href="#about" class="hover-target">Manifesto</a>
+            <a href="#writings" class="hover-target">Külliyat</a>
+            <a href="#contact" class="hover-target">İletişim</a>
+        </nav>
+        <a href="login.html" class="nav-auth hover-target" title="Yönetim Paneli"><i class="fas fa-key"></i></a>
     </header>
 
     <main>
         <section class="hero container">
-            <div class="title-wrapper">
-                <h1 class="main-title fade-up">Digital<br>Archive.</h1>
-                <p class="hero-desc fade-up">Sentez &middot; Perspektif &middot; Doku</p>
+            <h1 class="main-title fade-up">Digital<br>Archive.</h1>
+            <p class="hero-desc fade-up">Estetik &middot; Felsefe &middot; Hakikat</p>
+        </section>
+
+        <section id="about" class="container fade-up">
+            <div class="section-header">
+                <span class="section-tag">Giriş</span>
+                <h2>Manifesto</h2>
+            </div>
+            <div class="about-quote" id="dynamic-quote">
+                <i class="fas fa-circle-notch fa-spin" aria-hidden="true"></i> Bekleniyor...
+            </div>
+            <div class="about-text" id="dynamic-about">
+                <i class="fas fa-circle-notch fa-spin" aria-hidden="true"></i> Metinler yükleniyor...
             </div>
         </section>
 
-        <section id="about" class="container" style="padding-top: 0;">
-            <div class="about-grid fade-up">
-                <div class="about-quote" id="dynamic-quote">
-                    <i class="fas fa-circle-notch fa-spin" aria-hidden="true"></i> Yükleniyor...
-                </div>
-                <div class="about-text">
-                    <h2 class="about-name">Yusuf Kocapınar</h2>
-                    <div id="dynamic-about">
-                        <i class="fas fa-circle-notch fa-spin" aria-hidden="true"></i> Yükleniyor...
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="featured" class="container">
-            <div class="section-header fade-up">
-                <span class="section-tag">Seçkiler</span>
-                <h2>Öne Çıkan Çalışmalar</h2>
-            </div>
-            <div class="bento-grid" id="dynamic-bento">
-                <div style="grid-column: span 12; text-align: center; color: var(--accent); padding: 40px; font-size: 0.85rem; letter-spacing: 2px; text-transform: uppercase;">
-                    <i class="fas fa-circle-notch fa-spin" aria-hidden="true"></i> Vitrin Güncelleniyor...
-                </div>
-            </div>
-        </section>
-
-        <section id="latest" class="blog-container">
-            <div class="section-header fade-up">
-                <span class="section-tag">Külliyat</span>
-                <h2>Son Yazılar & Güncellemeler</h2>
+        <section id="writings" class="container fade-up">
+            <div class="section-header">
+                <span class="section-tag">Arşiv</span>
+                <h2>Külliyat</h2>
             </div>
             <div class="journal-list" id="dynamic-latest">
                 <div style="text-align: center; color: var(--accent); padding: 40px; font-size: 0.85rem; letter-spacing: 2px; text-transform: uppercase;">
-                    <i class="fas fa-circle-notch fa-spin" aria-hidden="true"></i> Arşiv Taranıyor...
+                    <i class="fas fa-circle-notch fa-spin" aria-hidden="true"></i> Kayıtlar Aranıyor...
                 </div>
+            </div>
+        </section>
+
+        <section id="contact" class="container fade-up">
+            <div class="section-header">
+                <span class="section-tag">Açık Kapı</span>
+                <h2>Geri Bildirim</h2>
+            </div>
+            <div class="feedback-wrapper">
+                <p class="feedback-desc">Düşüncelerinizi, eleştirilerinizi veya sükûnetli bir selamınızı buradan iletebilirsiniz.</p>
+                <form id="contact-form" novalidate>
+                    <div class="form-group">
+                        <input type="text" id="fb-name" placeholder=" " required class="hover-target">
+                        <label for="fb-name">İsminiz / Mahlasınız</label>
+                    </div>
+                    <div class="form-group">
+                        <textarea id="fb-message" placeholder=" " required class="hover-target"></textarea>
+                        <label for="fb-message">Mesajınız</label>
+                    </div>
+                    <button type="submit" class="submit-btn hover-target" tabindex="0">Gönder <i class="fas fa-paper-plane" style="margin-left:5px;"></i></button>
+                    <div id="fb-status" class="form-message" role="alert"></div>
+                </form>
             </div>
         </section>
     </main>
 
-    <footer class="site-footer container">
-        <div class="footer-inner fade-up">
-            <div class="footer-socials">
-                <a href="mailto:yusufkocapinar92@gmail.com" class="hover-target" title="E-Posta Gönder"><i class="far fa-envelope"></i></a>
-                <a href="https://www.linkedin.com/in/yusufkocapinar" target="_blank" rel="noopener noreferrer" class="hover-target" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
-                <a href="https://instagram.com/kpyusufi" target="_blank" rel="noopener noreferrer" class="hover-target" title="Instagram"><i class="fab fa-instagram"></i></a>
-            </div>
-            <div class="footer-text">YK. Dijital Arşiv</div>
+    <footer class="site-footer container fade-up">
+        <div class="footer-socials">
+            <a href="mailto:yusufkocapinar92@gmail.com" class="hover-target" title="E-Posta Gönder"><i class="far fa-envelope"></i></a>
+            <a href="https://www.linkedin.com/in/yusufkocapinar" target="_blank" rel="noopener noreferrer" class="hover-target" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+            <a href="https://instagram.com/kpyusufi" target="_blank" rel="noopener noreferrer" class="hover-target" title="Instagram"><i class="fab fa-instagram"></i></a>
         </div>
+        <div class="footer-text">YK. Dijital Arşiv</div>
     </footer>
 
     <div id="text-modal" class="full-modal" role="dialog" aria-modal="true" aria-labelledby="read-title">
@@ -352,13 +296,13 @@
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
-        import { getFirestore, collection, getDocs, getDoc, doc } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
+        import { getFirestore, collection, getDocs, getDoc, doc, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
 
         const firebaseConfig = { apiKey: "AIzaSyCr4HhlythyRIfy_Xnb-IaWr0Th0TkUQi4", authDomain: "yk-blog-9720b.firebaseapp.com", projectId: "yk-blog-9720b", messagingSenderId: "863054301539", appId: "1:863054301539:web:4256589fbef613bd0e6b56" };
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
 
-        // MODAL LOGIC (Global scope for inline onclicks and keyboard events)
+        // PENCERE (MODAL) YÖNETİMİ
         window.closeModals = () => {
             document.getElementById('text-modal').classList.remove('active');
             document.getElementById('image-modal').classList.remove('active');
@@ -378,11 +322,7 @@
             } else {
                 const textModal = document.getElementById('text-modal');
                 document.getElementById('read-title').innerText = data.title;
-                
-                let metaText = data.collectionName === 'sentez' 
-                    ? `${data.category || 'Proje'} — ${data.year || ''}`
-                    : `${data.type || 'Deneme'} — ${data.date || ''}`;
-                
+                let metaText = data.collectionName === 'sentez' ? `${data.category || 'Proje'} — ${data.year || ''}` : `${data.type || 'Deneme'} — ${data.date || ''}`;
                 document.getElementById('read-meta').innerText = metaText;
                 document.getElementById('read-content').innerHTML = data.content || data.excerpt + "\n\n(Bu içeriğin tam metni arşivde bulunamadı.)";
                 textModal.classList.add('active');
@@ -390,31 +330,29 @@
             }
         }
 
-        // LOAD TEXTS
+        // SABİT METİNLERİ (MANIFESTO) ÇEKME
         const defaultQuote = '"Ben öyle bilirim ki, yaşamak berrak bir gökte çocuklar aşkına savaşmaktır."';
-        const defaultAbout = '<p style="margin-bottom: 20px;"><strong>Ben Yusuf.</strong> Hakikati aramanın, doğruyu bulmanın inceliğine meftunum.</p><p style="margin-bottom: 20px;">Hayatın sadece telaşlı döngülerden ibaret olmadığını görecek kadar yürüdüm. Bir selamın tebessüm ettiren samimiyetine, kelimelerin ağırlığına ve sükûnetin gücüne inanıyorum. Burası benim seyir defterim; yolum uzun, uçsuz, bucaksız...</p><p style="margin-bottom: 20px;">Yazdığım her bir satırda, işlediğim her bir mısrada, hatta hayatın en ufak detaylarında hep o asil duruşun peşindeyim. Savrulmadan; estetiği, zarafeti ve insan kalabilmenin o onurlu güzelliğini ıskalamadan yürümeye gayret ediyorum.</p><p>Çünkü en nihayetinde; bu namert, riyakâr ve zalim dünyanın ortasında tertemiz duruyorum hayata karşı. Seviyorum yaşamayı, hürriyeti ve kuşları.</p>';
+        const defaultAbout = '<p><strong>Ben Yusuf.</strong> Hakikati aramanın, doğruyu bulmanın inceliğine meftunum. Yazdığım her bir satırda, işlediğim her bir mısrada, hatta hayatın en ufak detaylarında hep o asil duruşun peşindeyim.</p>';
 
         async function loadDynamicTexts() {
             const quoteEl = document.getElementById('dynamic-quote');
             const aboutEl = document.getElementById('dynamic-about');
             try {
-                const docRef = doc(db, "settings", "home_page");
-                const docSnap = await getDoc(docRef);
+                const docSnap = await getDoc(doc(db, "settings", "home_page"));
                 if (docSnap.exists()) {
                     quoteEl.innerText = docSnap.data().quoteText || defaultQuote;
                     aboutEl.innerHTML = docSnap.data().aboutText || defaultAbout;
                 } else {
                     quoteEl.innerText = defaultQuote; aboutEl.innerHTML = defaultAbout;
                 }
-            } catch (error) {
+            } catch (e) {
                 quoteEl.innerText = defaultQuote; aboutEl.innerHTML = defaultAbout;
             }
         }
 
-        // LOAD UNIFIED ARCHIVE
-        async function loadUnifiedContent() {
-            const bentoContainer = document.getElementById('dynamic-bento');
-            const latestContainer = document.getElementById('dynamic-latest');
+        // KÜLLİYAT (TÜM İÇERİKLERİ TEK SÜTUNDA) ÇEKME
+        async function loadUnifiedFeed() {
+            const container = document.getElementById('dynamic-latest');
             try {
                 const collectionsToSearch = ['sentez', 'perspektif', 'doku'];
                 let allItems = [];
@@ -429,186 +367,127 @@
                     });
                 }
 
-                // Sort newest first
                 allItems.sort((a, b) => {
                     const timeA = a.createdAt ? a.createdAt.toMillis() : 0;
                     const timeB = b.createdAt ? b.createdAt.toMillis() : 0;
                     return timeB - timeA;
                 });
 
-                // Separate Featured and Latest
-                const featuredItems = allItems.filter(i => i.isFeatured).slice(0, 4);
-                // Exclude featured from latest feed to prevent duplicate visual weight, or show all. We will show all in Külliyat.
-                const latestItems = allItems.slice(0, 15); 
-
-                // RENDER FEATURED (BENTO GRID)
-                bentoContainer.innerHTML = '';
-                if (featuredItems.length === 0) {
-                    bentoContainer.innerHTML = '<div style="grid-column: span 12; text-align: center; color: var(--text-muted); font-size: 0.85rem; letter-spacing: 2px; text-transform: uppercase;">Henüz öne çıkarılan bir içerik yok.</div>';
-                } else {
-                    featuredItems.forEach((data, i) => {
-                        const gridClass = (i % 4 === 0 || i % 4 === 3) ? 'item-8' : 'item-4';
-                        let iconClass, metaText, descText;
-
-                        if (data.collectionName === 'sentez') {
-                            iconClass = (data.category && data.category.toLowerCase().includes('yazılım')) ? 'fa-code' : 'fa-microscope';
-                            metaText = data.category || 'Proje';
-                            descText = data.excerpt || '';
-                        } else if (data.collectionName === 'perspektif') {
-                            iconClass = 'fa-pen-nib';
-                            metaText = data.type || 'Yazı';
-                            descText = data.excerpt || '';
-                        } else if (data.collectionName === 'doku') {
-                            iconClass = 'fa-image';
-                            metaText = data.category || 'Görsel Arşiv';
-                            descText = data.desc || 'Tıklayarak inceleyin.';
-                        }
-
-                        if (data.year || data.date) metaText += ` — ${data.year || data.date}`;
-
-                        const card = document.createElement('div');
-                        card.className = `bento-item ${gridClass} fade-up hover-target visible`;
-                        card.setAttribute('tabindex', '0');
-                        card.innerHTML = `
-                            <div>
-                                <div class="item-meta">${metaText}</div>
-                                <h3 class="item-title">${data.title}</h3>
-                                <p class="item-desc">${descText}</p>
-                            </div>
-                            <div class="item-icon"><i class="fas ${iconClass}" aria-hidden="true"></i></div>
-                        `;
-                        card.addEventListener('click', () => openItemModal(data));
-                        card.addEventListener('keydown', (e) => { if (e.key === 'Enter') openItemModal(data); });
-                        bentoContainer.appendChild(card);
-                    });
+                container.innerHTML = '';
+                if (allItems.length === 0) {
+                    container.innerHTML = '<div style="text-align: center; color: var(--text-muted); font-size: 0.85rem; letter-spacing: 2px; text-transform: uppercase;">Arşiv henüz boş.</div>';
+                    return;
                 }
 
-                // RENDER LATEST (JOURNAL LIST / KÜLLİYAT)
-                latestContainer.innerHTML = '';
-                if (latestItems.length === 0) {
-                    latestContainer.innerHTML = '<div style="text-align: center; color: var(--text-muted); font-size: 0.85rem; letter-spacing: 2px; text-transform: uppercase;">Arşiv henüz boş.</div>';
-                } else {
-                    latestItems.forEach(data => {
-                        let metaRoom, metaTime, excerptText;
-                        
-                        if (data.collectionName === 'sentez') {
-                            metaRoom = data.category || 'Sentez'; metaTime = data.year || ''; excerptText = data.excerpt || '';
-                        } else if (data.collectionName === 'perspektif') {
-                            metaRoom = data.type || 'Perspektif'; metaTime = data.date || ''; excerptText = data.excerpt || '';
-                        } else if (data.collectionName === 'doku') {
-                            metaRoom = 'Doku (Galeri)'; metaTime = data.year || ''; excerptText = data.desc || 'Görsel içeriği incelemek için tıklayın.';
-                        }
+                allItems.forEach(data => {
+                    let metaRoom, metaTime, excerptText;
+                    if (data.collectionName === 'sentez') {
+                        metaRoom = data.category || 'Sentez'; metaTime = data.year || ''; excerptText = data.excerpt || '';
+                    } else if (data.collectionName === 'perspektif') {
+                        metaRoom = data.type || 'Perspektif'; metaTime = data.date || ''; excerptText = data.excerpt || '';
+                    } else if (data.collectionName === 'doku') {
+                        metaRoom = 'Doku (Galeri)'; metaTime = data.year || ''; excerptText = data.desc || 'Görseli incelemek için tıklayın.';
+                    }
 
-                        const article = document.createElement('article');
-                        article.className = 'journal-item hover-target fade-up visible';
-                        article.setAttribute('tabindex', '0');
-                        article.innerHTML = `
-                            <div class="j-meta">
-                                <span>${metaRoom}</span>
-                                <span class="sep">/</span>
-                                <span>${metaTime}</span>
-                            </div>
-                            <h2 class="j-title">${data.title}</h2>
-                            <p class="j-excerpt">${excerptText}</p>
-                            <span class="read-more" tabindex="-1" aria-hidden="true">${data.collectionName === 'doku' ? 'Görseli İncele' : 'İçeriği Oku'} &rarr;</span>
-                        `;
-                        article.addEventListener('click', () => openItemModal(data));
-                        article.addEventListener('keydown', (e) => { if (e.key === 'Enter') openItemModal(data); });
-                        latestContainer.appendChild(article);
-                    });
-                }
+                    const article = document.createElement('div');
+                    article.className = 'journal-item hover-target fade-up visible';
+                    article.setAttribute('tabindex', '0');
+                    article.innerHTML = `
+                        <div class="j-meta">
+                            <span>${metaRoom}</span>
+                            <span class="sep">/</span>
+                            <span>${metaTime}</span>
+                        </div>
+                        <h2 class="j-title">${data.title}</h2>
+                        <p class="j-excerpt">${excerptText}</p>
+                        <span class="read-more" tabindex="-1" aria-hidden="true">${data.collectionName === 'doku' ? 'Görseli İncele' : 'İçeriği Oku'} &rarr;</span>
+                    `;
+                    article.addEventListener('click', () => openItemModal(data));
+                    article.addEventListener('keydown', (e) => { if (e.key === 'Enter') openItemModal(data); });
+                    container.appendChild(article);
+                });
 
-                // Re-bind Custom Cursor
                 if (window.matchMedia("(pointer: fine)").matches) {
                     const cursor = document.getElementById('custom-cursor');
-                    document.querySelectorAll('.hover-target').forEach(t => {
+                    container.querySelectorAll('.hover-target').forEach(t => {
                         t.addEventListener('mouseover', () => cursor.classList.add('hover'));
                         t.addEventListener('mouseout', () => cursor.classList.remove('hover'));
                     });
                 }
-
             } catch (e) {
-                console.error(e);
-                bentoContainer.innerHTML = '<div style="grid-column: span 12; text-align: center; color: #d9534f; font-size: 0.85rem;">Bağlantı Hatası.</div>';
-                latestContainer.innerHTML = '<div style="text-align: center; color: #d9534f; font-size: 0.85rem;">Bağlantı Hatası.</div>';
+                container.innerHTML = '<div style="text-align: center; color: #d9534f; font-size: 0.85rem;">Bağlantı Hatası.</div>';
             }
         }
 
-        loadDynamicTexts();
-        loadUnifiedContent();
+        // İLETİŞİM FORMU (GERİ BİLDİRİM)
+        document.getElementById('contact-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const btn = e.target.querySelector('button');
+            const statusDiv = document.getElementById('fb-status');
+            const name = document.getElementById('fb-name').value.trim();
+            const message = document.getElementById('fb-message').value.trim();
 
+            if (!name || !message) {
+                statusDiv.textContent = 'Lütfen tüm alanları doldurun.';
+                statusDiv.style.color = '#d9534f';
+                return;
+            }
+
+            btn.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i>';
+            btn.disabled = true;
+            statusDiv.textContent = '';
+
+            try {
+                await addDoc(collection(db, "messages"), {
+                    name: name,
+                    message: message,
+                    createdAt: serverTimestamp()
+                });
+                e.target.reset();
+                statusDiv.textContent = 'Mesajınız ulaştı. Teşekkürler.';
+                statusDiv.style.color = '#4CAF50';
+                btn.innerHTML = 'İletildi <i class="fas fa-check"></i>';
+            } catch (err) {
+                statusDiv.textContent = 'Bir hata oluştu, lütfen tekrar deneyin.';
+                statusDiv.style.color = '#d9534f';
+                btn.innerHTML = 'Gönder <i class="fas fa-paper-plane"></i>';
+            }
+            setTimeout(() => { btn.innerHTML = 'Gönder <i class="fas fa-paper-plane"></i>'; btn.disabled = false; statusDiv.textContent = ''; }, 4000);
+        });
+
+        loadDynamicTexts();
+        loadUnifiedFeed();
     </script>
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            // Cursor Logic
+            // Özel İmleç (Custom Cursor)
             if (window.matchMedia("(pointer: fine)").matches) {
                 const cursor = document.getElementById('custom-cursor');
                 document.addEventListener('mousemove', e => {
                     cursor.style.left = e.clientX + 'px';
                     cursor.style.top = e.clientY + 'px';
                 });
-                document.querySelectorAll('.hover-target, button, a').forEach(t => {
+                document.querySelectorAll('.hover-target, button, a, input, textarea').forEach(t => {
                     t.addEventListener('mouseover', () => cursor.classList.add('hover'));
                     t.addEventListener('mouseout', () => cursor.classList.remove('hover'));
                 });
             }
 
-            // Scroll Animation Observer
+            // Scroll Görünüm Efekti
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
             }, { threshold: 0.1 });
             document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
 
-            // Menu Overlay Logic
-            const openBtn = document.getElementById('open-menu');
-            const closeBtn = document.getElementById('close-menu');
-            const overlay = document.getElementById('overlay');
-
-            const toggleMenu = () => {
-                const isOpen = overlay.classList.toggle('active');
-                document.body.classList.toggle('no-scroll');
-                if (isOpen) closeBtn.focus();
-            };
-
-            openBtn.addEventListener('click', toggleMenu);
-            closeBtn.addEventListener('click', toggleMenu);
-            
-            // Smooth Scroll for Overlay Links
-            document.querySelectorAll('.overlay-link').forEach(link => { 
-                link.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    toggleMenu();
-                    const targetId = link.getAttribute('href').substring(1);
-                    setTimeout(() => {
-                        document.getElementById(targetId).scrollIntoView({ behavior: 'smooth' });
-                    }, 400); // Wait for menu to start closing
-                }); 
-            });
-
-            // Logo Scroll to Top
-            document.getElementById('scroll-top').addEventListener('click', (e) => {
-                e.preventDefault();
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-            });
-
-            // Global Escape Key Logic
+            // ESC ve Dışa Tıklama ile Kapatma
             document.addEventListener('keydown', (e) => {
-                if (e.key === 'Escape') {
-                    if (document.getElementById('text-modal').classList.contains('active') || document.getElementById('image-modal').classList.contains('active')) {
-                        window.closeModals();
-                    } else if (overlay.classList.contains('active')) {
-                        toggleMenu();
-                    }
-                }
+                if (e.key === 'Escape') window.closeModals();
             });
 
-            // Click outside to close modals
             document.querySelectorAll('.full-modal').forEach(modal => {
                 modal.addEventListener('click', (e) => {
-                    if (e.target === modal || e.target.classList.contains('image-container')) {
-                        window.closeModals();
-                    }
+                    if (e.target === modal || e.target.classList.contains('image-container')) window.closeModals();
                 });
             });
         });
