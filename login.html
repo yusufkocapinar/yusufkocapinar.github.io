@@ -3,198 +3,82 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Giriş | YK. Dijital Arşiv</title>
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%2275%22 font-family=%22'Playfair Display', serif%22 font-size=%2280%22 font-weight=%22bold%22 fill=%22%232C2A29%22>YK.</text></svg>">
-    
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Tenor+Sans&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
+    <title>Giriş | Külliyat</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-color: #F5F5F3; --card-bg: #FFFFFF; --text-main: #2C2A29;      
-            --text-muted: #7A7A7A; --accent: #B39B78; --border-color: rgba(179, 155, 120, 0.4); 
-            --transition-premium: all 0.5s cubic-bezier(0.25, 1, 0.5, 1);
-            --font-serif: 'Playfair Display', serif; --font-sans: 'Tenor Sans', sans-serif;
+            --bg-color: #FAFAFA;
+            --text-main: #1A1A1A;
+            --text-muted: #666666;
+            --border-color: #EAEAEA;
         }
-
         * { margin: 0; padding: 0; box-sizing: border-box; }
-
-        @media (pointer: fine) {
-            * { cursor: none; }
-            #custom-cursor { position: fixed; width: 6px; height: 6px; background: var(--accent); border-radius: 50%; pointer-events: none; z-index: 10000; transform: translate(-50%, -50%); transition: width 0.3s, height 0.3s, opacity 0.3s; }
-            #custom-cursor.hover { width: 40px; height: 40px; background: rgba(179, 155, 120, 0.05); border: 1px solid var(--accent); opacity: 1; }
-        }
-        @media (pointer: coarse) {
-            #custom-cursor { display: none !important; }
-            * { cursor: auto !important; }
-        }
-
-        *:focus-visible { outline: 1px dashed var(--accent); outline-offset: 4px; }
-
         body {
             background-color: var(--bg-color); color: var(--text-main);
-            font-family: var(--font-sans); -webkit-font-smoothing: antialiased;
-            overflow-x: hidden; height: 100vh; display: flex; flex-direction: column;
+            font-family: 'Inter', sans-serif; display: flex; align-items: center;
+            justify-content: center; height: 100vh;
         }
-
-        body::before { content: ""; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-image: url('data:image/svg+xml,<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><filter id="noiseFilter"><feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/></filter><rect width="100%" height="100%" filter="url(%23noiseFilter)" opacity="0.025"/></svg>'); pointer-events: none; z-index: 50; }
-
-        nav { position: fixed; top: 0; left: 0; width: 100%; padding: 30px 4vw; z-index: 100; display: flex; justify-content: space-between; align-items: center; }
-        .logo { font-family: var(--font-serif); font-size: 1.5rem; font-weight: 700; letter-spacing: -0.5px; text-decoration: none; color: var(--text-main); }
-        .back-link { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px; color: var(--text-muted); text-decoration: none; display: flex; align-items: center; gap: 10px; transition: var(--transition-premium); }
-        .back-link:hover { color: var(--accent); gap: 15px; }
-
-        .auth-wrapper { flex: 1; display: flex; justify-content: center; align-items: center; padding: 0 4vw; z-index: 10; position: relative; }
+        .login-container { width: 100%; max-width: 400px; padding: 40px; }
+        h1 { font-size: 2rem; font-weight: 500; margin-bottom: 10px; letter-spacing: -1px; }
+        p { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 40px; line-height: 1.6; }
         
-        .auth-box {
-            background: var(--card-bg); padding: 60px 50px;
-            width: 100%; max-width: 420px;
-            border: 1px solid var(--border-color);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.03);
-        }
-
-        .auth-header { text-align: center; margin-bottom: 40px; }
-        .auth-icon { font-size: 1.5rem; color: var(--accent); margin-bottom: 20px; }
-        .auth-title { font-family: var(--font-serif); font-size: 2rem; font-weight: 400; color: var(--text-main); margin-bottom: 10px; }
-        .auth-subtitle { font-family: 'Inter', sans-serif; font-size: 0.9rem; color: var(--text-muted); font-weight: 300; }
-
-        .input-group { margin-bottom: 30px; position: relative; }
-        .input-group input {
-            width: 100%; padding: 10px 0;
-            background: transparent; border: none;
-            border-bottom: 1px solid rgba(179, 155, 120, 0.3);
-            font-family: 'Inter', sans-serif; font-size: 1rem; color: var(--text-main);
-            outline: none; transition: var(--transition-premium);
-        }
-        .input-group input:focus { border-bottom-color: var(--accent); }
-        .input-group label {
-            position: absolute; left: 0; top: 10px;
-            font-size: 0.85rem; text-transform: uppercase; letter-spacing: 2px; color: var(--text-muted);
-            pointer-events: none; transition: var(--transition-premium);
-        }
-        .input-group input:focus ~ label, .input-group input:valid ~ label {
-            top: -15px; font-size: 0.65rem; color: var(--accent);
-        }
-
-        .login-btn {
-            width: 100%; background: transparent; border: 1px solid var(--accent);
-            padding: 15px 0; font-family: var(--font-sans); font-size: 0.85rem;
-            text-transform: uppercase; letter-spacing: 2px; color: var(--accent);
-            transition: var(--transition-premium); margin-top: 10px;
-        }
-        .login-btn:hover { background: var(--accent); color: var(--card-bg); }
-        .login-btn:disabled { opacity: 0.6; pointer-events: none; }
-
-        .error-message {
-            color: #d9534f; font-family: 'Inter', sans-serif; font-size: 0.85rem;
-            text-align: center; margin-top: 15px;
-            min-height: 1.2em; /* Reserve space to prevent layout shift */
-        }
-
-        .fade-up { opacity: 0; transform: translateY(30px); transition: 1s ease-out; }
-        .fade-up.visible { opacity: 1; transform: translateY(0); }
-
-        @media (max-width: 480px) {
-            .auth-box { padding: 40px 25px; }
-        }
+        .input-group { margin-bottom: 25px; }
+        label { display: block; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px; color: var(--text-muted); margin-bottom: 10px; }
+        input { width: 100%; padding: 15px 0; border: none; border-bottom: 1px solid var(--border-color); background: transparent; font-size: 1rem; color: var(--text-main); outline: none; transition: border-color 0.3s; }
+        input:focus { border-bottom-color: var(--text-main); }
+        
+        button { width: 100%; background: var(--text-main); color: #fff; border: none; padding: 18px 0; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px; cursor: pointer; transition: opacity 0.3s; margin-top: 10px; }
+        button:hover { opacity: 0.8; }
+        
+        .error-msg { color: #D32F2F; font-size: 0.8rem; margin-top: 15px; text-align: center; min-height: 1.2em; }
+        .back { display: inline-block; margin-top: 40px; font-size: 0.8rem; color: var(--text-muted); text-decoration: none; text-transform: uppercase; letter-spacing: 1px; }
+        .back:hover { color: var(--text-main); }
     </style>
 </head>
 <body>
-    <div id="custom-cursor"></div>
 
-    <nav>
-        <a href="index.html" class="logo hover-target">YK.</a>
-        <a href="index.html" class="back-link hover-target"><i class="fas fa-long-arrow-alt-left"></i> Vitrine Dön</a>
-    </nav>
-
-    <main class="auth-wrapper">
-        <div class="auth-box fade-up">
-            <div class="auth-header">
-                <i class="fas fa-key auth-icon" aria-hidden="true"></i>
-                <h1 class="auth-title">Yönetim.</h1>
-                <p class="auth-subtitle">Arşive erişim sağlamak için kimlik doğrulayın.</p>
+    <div class="login-container">
+        <h1>Sisteme Giriş</h1>
+        <p>Arşivi yönetmek için yetkili kimliğinizi doğrulayın.</p>
+        
+        <form id="login-form">
+            <div class="input-group">
+                <label for="email">E-Posta</label>
+                <input type="email" id="email" required>
             </div>
+            <div class="input-group">
+                <label for="password">Şifre</label>
+                <input type="password" id="password" required>
+            </div>
+            <button type="submit" id="submit-btn">Doğrula</button>
+            <div class="error-msg" id="error-msg"></div>
+        </form>
+        
+        <a href="index.html" class="back">← Vitrine Dön</a>
+    </div>
 
-            <form id="login-form" novalidate>
-                <div class="input-group">
-                    <input type="email" id="email" autocomplete="email" required class="hover-target">
-                    <label for="email">E-Posta</label>
-                </div>
-                <div class="input-group">
-                    <input type="password" id="password" autocomplete="current-password" required class="hover-target">
-                    <label for="password">Şifre</label>
-                </div>
-                <button type="submit" class="login-btn hover-target">Kilidi Aç</button>
-                <div id="error-msg" class="error-message" role="alert" aria-live="polite"></div>
-            </form>
-        </div>
-    </main>
-
-    <!-- BUG FIX: Version unified to 10.8.1 (was 10.8.0). Real Firebase auth enabled. -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
         import { getAuth, signInWithEmailAndPassword, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
 
-        const firebaseConfig = {
-            apiKey: "AIzaSyCr4HhlythyRIfy_Xnb-IaWr0Th0TkUQi4",
-            authDomain: "yk-blog-9720b.firebaseapp.com",
-            projectId: "yk-blog-9720b",
-            messagingSenderId: "863054301539",
-            appId: "1:863054301539:web:4256589fbef613bd0e6b56"
-        };
-
+        const firebaseConfig = { apiKey: "AIzaSyCr4HhlythyRIfy_Xnb-IaWr0Th0TkUQi4", authDomain: "yk-blog-9720b.firebaseapp.com", projectId: "yk-blog-9720b", messagingSenderId: "863054301539", appId: "1:863054301539:web:4256589fbef613bd0e6b56" };
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
 
-        // If already logged in, skip login page
-        onAuthStateChanged(auth, (user) => {
-            if (user) window.location.href = 'admin.html';
-        });
-
-        // Custom cursor
-        if (window.matchMedia("(pointer: fine)").matches) {
-            const cursor = document.getElementById('custom-cursor');
-            document.addEventListener('mousemove', e => {
-                cursor.style.left = e.clientX + 'px';
-                cursor.style.top = e.clientY + 'px';
-            });
-            document.querySelectorAll('.hover-target, button, a, input').forEach(t => {
-                t.addEventListener('mouseover', () => cursor.classList.add('hover'));
-                t.addEventListener('mouseout', () => cursor.classList.remove('hover'));
-            });
-        }
-
-        setTimeout(() => document.querySelector('.auth-box').classList.add('visible'), 100);
-
-        const errorMessages = {
-            'auth/invalid-email': 'Geçersiz e-posta adresi.',
-            'auth/user-not-found': 'Bu e-posta ile kayıtlı kullanıcı bulunamadı.',
-            'auth/wrong-password': 'Hatalı şifre. Lütfen tekrar deneyin.',
-            'auth/invalid-credential': 'E-posta veya şifre hatalı.',
-            'auth/too-many-requests': 'Çok fazla başarısız deneme. Lütfen bekleyin.',
-            'auth/user-disabled': 'Bu hesap devre dışı bırakılmış.',
-        };
+        onAuthStateChanged(auth, (user) => { if (user) window.location.href = 'admin.html'; });
 
         document.getElementById('login-form').addEventListener('submit', async (e) => {
             e.preventDefault();
-            const btn = document.querySelector('.login-btn');
-            const errorDiv = document.getElementById('error-msg');
-            const email = document.getElementById('email').value.trim();
-            const password = document.getElementById('password').value;
-
-            errorDiv.textContent = '';
-            btn.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> Doğrulanıyor...';
-            btn.disabled = true;
-
+            const btn = document.getElementById('submit-btn');
+            const err = document.getElementById('error-msg');
+            btn.textContent = 'Bekleyin...'; btn.disabled = true; err.textContent = '';
+            
             try {
-                await signInWithEmailAndPassword(auth, email, password);
-                btn.innerHTML = '<i class="fas fa-check"></i> Giriş Başarılı';
+                await signInWithEmailAndPassword(auth, document.getElementById('email').value, document.getElementById('password').value);
                 window.location.href = 'admin.html';
             } catch (error) {
-                const msg = errorMessages[error.code] || 'Bir hata oluştu. Lütfen tekrar deneyin.';
-                errorDiv.textContent = msg;
-                btn.innerHTML = 'Kilidi Aç';
-                btn.disabled = false;
+                err.textContent = 'Kimlik doğrulama başarısız.';
+                btn.textContent = 'Doğrula'; btn.disabled = false;
             }
         });
     </script>
