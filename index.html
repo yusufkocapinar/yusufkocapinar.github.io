@@ -4,118 +4,438 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Yusuf Kocapınar | Dijital Arşiv</title>
-    <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
     
-    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%2275%22 font-family=%22'Playfair Display', serif%22 font-size=%2280%22 font-weight=%22bold%22 fill=%22%232C2A29%22>YK.</text></svg>">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:wght@400;600;700&family=Tenor+Sans&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        :root {
+            --bg-color: #F5F5F3;
+            --card-bg: #FFFFFF;         
+            --text-main: #2C2A29;      
+            --text-muted: #7A7A7A;
+            --accent: #B39B78;
+            --border-color: rgba(179, 155, 120, 0.2); 
+            --transition-premium: all 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+            --font-serif: 'Playfair Display', serif;
+            --font-sans: 'Tenor Sans', sans-serif;
+            --font-signature: 'Great Vibes', cursive;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: var(--font-sans);
+            line-height: 1.8;
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* BUG FIX: no-scroll was missing from index.html */
+        body.no-scroll { overflow: hidden; }
+
+        body::before {
+            content: ""; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background-image: url('data:image/svg+xml,<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><filter id="noiseFilter"><feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/></filter><rect width="100%" height="100%" filter="url(%23noiseFilter)" opacity="0.025"/></svg>');
+            pointer-events: none; z-index: 50;
+        }
+
+        @media (pointer: fine) {
+            * { cursor: none; }
+            #custom-cursor {
+                position: fixed; width: 6px; height: 6px; background: var(--accent);
+                border-radius: 50%; pointer-events: none; z-index: 10000;
+                transform: translate(-50%, -50%); transition: width 0.15s ease-out, height 0.15s ease-out, background 0.15s ease-out;
+            }
+            #custom-cursor.hover { width: 40px; height: 40px; background: rgba(179, 155, 120, 0.05); border: 1px solid var(--accent); opacity: 1; }
+        }
+        @media (pointer: coarse) {
+            #custom-cursor { display: none !important; }
+            * { cursor: auto !important; }
+        }
+
+        *:focus-visible { outline: 1px dashed var(--accent); outline-offset: 4px; }
+
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 4vw; position: relative; z-index: 10; }
+
+        header {
+            position: fixed; top: 0; left: 0; width: 100%;
+            padding: 30px 4vw; z-index: 1000;
+            display: flex; justify-content: space-between; align-items: center;
+            pointer-events: none; 
+            background: rgba(245, 245, 243, 0.6);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border-bottom: 1px solid rgba(179, 155, 120, 0.1);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.02);
+            transition: var(--transition-premium);
+        }
+
+        .brand-group {
+            display: flex; align-items: center; gap: 15px;
+            pointer-events: auto; transition: var(--transition-premium);
+        }
+        .brand-group:hover { transform: scale(1.02); }
+        
+        .palestine-crest {
+            height: 45px; width: auto; 
+            stroke: var(--accent); stroke-width: 3; fill: none;
+            stroke-linecap: round; stroke-linejoin: round;
+        }
+
+        .logo-signature { 
+            font-family: var(--font-signature); 
+            font-size: 2.8rem; 
+            color: var(--text-main); 
+            text-decoration: none; 
+            line-height: 1;
+            transform: rotate(-3deg);
+            padding-top: 10px;
+        }
+
+        .header-controls {
+            pointer-events: auto;
+            background: rgba(245, 245, 243, 0.6);
+            border: 1px solid rgba(179, 155, 120, 0.3);
+            border-radius: 50px;
+            display: flex; align-items: center; gap: 20px;
+            padding: 6px 6px 6px 25px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.03);
+            transition: var(--transition-premium);
+        }
+        .header-controls:hover { border-color: var(--accent); background: rgba(245, 245, 243, 0.9); }
+
+        .login-link {
+            font-family: var(--font-sans); font-size: 0.75rem; 
+            text-transform: uppercase; letter-spacing: 2px; 
+            color: var(--text-muted); text-decoration: none; 
+            transition: 0.3s;
+        }
+        .login-link:hover { color: var(--accent); }
+
+        .menu-toggle {
+            background: var(--text-main); color: var(--bg-color);
+            border: none; border-radius: 40px; padding: 12px 25px;
+            font-family: var(--font-sans); font-size: 0.75rem; 
+            text-transform: uppercase; letter-spacing: 2px; 
+            display: flex; align-items: center; gap: 10px;
+            transition: var(--transition-premium); cursor: pointer;
+        }
+        .menu-toggle:hover { background: var(--accent); transform: scale(1.05); }
+
+        .menu-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
+            background-color: var(--bg-color); z-index: 999;
+            display: flex; justify-content: center; align-items: center;
+            opacity: 0; visibility: hidden; clip-path: circle(0% at top right);
+            transition: opacity 0.6s ease, visibility 0.6s ease, clip-path 0.8s cubic-bezier(0.77, 0, 0.175, 1);
+        }
+        .menu-overlay.active { opacity: 1; visibility: visible; clip-path: circle(150% at top right); }
+        
+        .overlay-close {
+            position: absolute; top: 30px; right: 4vw; font-family: var(--font-sans);
+            font-size: 0.85rem; text-transform: uppercase; letter-spacing: 2px;
+            color: var(--text-main); background: none; border: none; z-index: 1000; padding: 10px; cursor: pointer;
+        }
+
+        .overlay-nav { display: flex; flex-direction: column; gap: 40px; text-align: center; }
+        .overlay-link {
+            font-family: var(--font-serif); font-size: clamp(3rem, 6vw, 5rem);
+            color: var(--text-main); text-decoration: none; display: block;
+            transform: translateY(30px); opacity: 0; transition: var(--transition-premium);
+        }
+        .overlay-link span {
+            display: block; font-family: var(--font-sans); font-size: 0.9rem;
+            color: var(--text-muted); text-transform: uppercase; letter-spacing: 4px; margin-top: 10px;
+        }
+        .menu-overlay.active .overlay-link { transform: translateY(0); opacity: 1; }
+        .overlay-link:hover { color: var(--accent); }
+
+        main { margin-top: 150px; }
+
+        .hero { height: calc(100vh - 150px); display: flex; flex-direction: column; justify-content: center; align-items: center; }
+        .main-title { font-family: var(--font-serif); font-size: clamp(3rem, 8vw, 7rem); line-height: 1.1; font-weight: 400; letter-spacing: -1.5px; color: var(--text-main); text-align: center; margin-top: 40px;}
+        .hero-desc { font-size: 1.1rem; color: var(--text-muted); font-weight: 300; margin-top: 30px; text-transform: uppercase; letter-spacing: 4px; text-align: center; }
+
+        section { padding: 120px 0; }
+        .section-header { text-align: center; margin-bottom: 80px; }
+        .section-tag { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 3px; color: var(--accent); margin-bottom: 20px; display: block; }
+        h2 { font-family: var(--font-serif); font-size: 2.5rem; font-weight: 400; color: var(--text-main); }
+
+        .about-grid { display: grid; grid-template-columns: 1fr 1.5fr; gap: 80px; align-items: center; border-top: 1px solid var(--border-color); padding-top: 80px; }
+        .about-quote { font-family: var(--font-serif); font-style: italic; font-size: 1.8rem; color: var(--accent); line-height: 1.4; border-left: 2px solid var(--accent); padding-left: 25px; }
+        .about-text { font-size: 1.1rem; line-height: 1.8; color: var(--text-muted); }
+        .about-text strong { color: var(--text-main); font-weight: 600; }
+        .about-name { font-family: var(--font-serif); font-size: 3rem; font-weight: 400; color: var(--text-main); margin-bottom: 20px; }
+
+        .bento-grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: 30px; }
+        .bento-item { background: var(--card-bg); padding: 50px; text-decoration: none; color: inherit; border: 1px solid var(--border-color); box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02); transition: var(--transition-premium); display: flex; flex-direction: column; justify-content: space-between; position: relative; overflow: hidden; }
+        .bento-item:hover { transform: translateY(-8px); border-color: rgba(179, 155, 120, 0.4); box-shadow: 0 20px 40px rgba(0, 0, 0, 0.06); }
+        .item-8 { grid-column: span 8; min-height: 380px; }
+        .item-4 { grid-column: span 4; min-height: 380px; }
+        .item-meta { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 2px; color: var(--accent); margin-bottom: 15px; }
+        .item-title { font-family: var(--font-serif); font-size: 2rem; font-weight: 400; margin-bottom: 15px; line-height: 1.2; }
+        .item-desc { color: var(--text-muted); font-size: 0.95rem; }
+        .item-icon { position: absolute; bottom: 50px; right: 50px; font-size: 1.5rem; color: var(--border-color); transition: var(--transition-premium); }
+        .bento-item:hover .item-icon { color: var(--accent); transform: scale(1.1); }
+
+        .fade-up { opacity: 0; transform: translateY(30px); transition: 1s ease-out; }
+        .fade-up.visible { opacity: 1; transform: translateY(0); }
+
+        .site-footer { border-top: 1px solid var(--border-color); padding: 60px 0; margin-top: 40px; position: relative; z-index: 10; }
+        .footer-inner { display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 20px; }
+        .footer-socials { display: flex; gap: 35px; align-items: center; }
+        .footer-socials a { color: var(--text-main); font-size: 1.4rem; transition: var(--transition-premium); }
+        .footer-socials a:hover { color: var(--accent); transform: translateY(-3px); }
+        .footer-text { font-family: var(--font-sans); font-size: 0.7rem; letter-spacing: 4px; color: var(--text-muted); text-transform: uppercase; margin-top: 10px;}
+
+        @media (max-width: 900px) {
+            header { padding: 15px 4vw; }
+            .brand-group { gap: 8px; }
+            .palestine-crest { height: 26px; }
+            .logo-signature { font-size: 1.6rem; padding-top: 5px; }
+            .header-controls { padding: 4px; gap: 0; border-radius: 40px;}
+            .login-link { display: none !important; }
+            .menu-toggle { padding: 8px 16px; font-size: 0.65rem; gap: 6px; }
+            main { margin-top: 100px; }
+            .hero { height: calc(100vh - 100px); }
+            .bento-item { grid-column: span 12; }
+            .about-grid { grid-template-columns: 1fr; gap: 40px; }
+            .about-quote { font-size: 1.5rem; }
+            .about-name { font-size: 2.2rem; }
+        }
+    </style>
 </head>
 <body>
+    <div id="custom-cursor"></div>
+    
+    <div class="menu-overlay" id="overlay" role="dialog" aria-modal="true" aria-label="Navigasyon Menüsü">
+        <button class="overlay-close hover-target" id="close-menu" tabindex="0">Kapat ✕</button>
+        <nav class="overlay-nav">
+            <a href="sentez.html" class="overlay-link hover-target">Sentez <span>Akademik Projeler & Kod</span></a>
+            <a href="perspektif.html" class="overlay-link hover-target">Perspektif <span>Entelektüel Denemeler</span></a>
+            <a href="doku.html" class="overlay-link hover-target">Doku <span>Sanat & Estetik</span></a>
+        </nav>
+    </div>
 
-    <header class="smart-header" id="header">
-        <div class="logo">YK.</div>
-        <a href="admin.html" class="btn-aksiyon">Yönetim</a>
+    <header>
+        <div class="brand-group hover-target">
+            <svg class="palestine-crest" viewBox="0 0 100 200" title="Palestine">
+                <path d="M45,5 L60,25 C65,40 60,70 55,100 L40,185 C35,195 25,195 20,185 L10,120 C5,90 15,45 45,5 Z"/>
+            </svg>
+            <a href="index.html" class="logo-signature">Y. Kocapınar</a>
+        </div>
+        <div class="header-controls">
+            <a href="login.html" class="login-link hover-target">Giriş</a>
+            <button class="menu-toggle hover-target" id="open-menu" tabindex="0" aria-expanded="false" aria-controls="overlay">Menü <i class="fas fa-bars"></i></button>
+        </div>
     </header>
 
-    <main class="vitrin-container">
-        <section class="hero-section">
-            <h1 class="hero-title">Manifesto & Perspektif.</h1>
-            <p class="hero-subtitle">Düşünceler, denemeler ve edebi izler.</p>
+    <main>
+        <section class="hero container">
+            <div class="title-wrapper">
+                <h1 class="main-title fade-up">Digital<br>Archive.</h1>
+                <p class="hero-desc fade-up">Sentez &middot; Perspektif &middot; Doku</p>
+            </div>
         </section>
 
-        <section id="yazi-akisi" class="yazi-akisi">
-            <div class="loading-text">Arşiv Taranıyor...</div>
-            </section>
+        <section id="about" class="container" style="padding-top: 0; padding-bottom: 80px;">
+            <div class="about-grid fade-up">
+                <div class="about-quote" id="dynamic-quote">
+                    <i class="fas fa-circle-notch fa-spin" aria-hidden="true"></i> Yükleniyor...
+                </div>
+                <div class="about-text">
+                    <h2 class="about-name">Yusuf Kocapınar</h2>
+                    <div id="dynamic-about">
+                        <i class="fas fa-circle-notch fa-spin" aria-hidden="true"></i> Yükleniyor...
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="projects" class="container" style="padding-top: 60px;">
+            <div class="section-header fade-up">
+                <span class="section-tag">Seçkiler</span>
+                <h2>Öne Çıkan Çalışmalar</h2>
+            </div>
+            <div class="bento-grid" id="dynamic-bento">
+                <div style="grid-column: span 12; text-align: center; color: var(--accent); padding: 40px; font-size: 0.85rem; letter-spacing: 2px; text-transform: uppercase;">
+                    <i class="fas fa-circle-notch fa-spin" aria-hidden="true"></i> Vitrin Güncelleniyor...
+                </div>
+            </div>
+        </section>
     </main>
 
-    <footer class="site-footer">
-        <div class="footer-content">
-            <span class="footer-logo">YK.</span>
-            
-            <div class="footer-social">
-                <a href="#" target="_blank" class="social-link">Instagram</a>
-                <a href="#" target="_blank" class="social-link">LinkedIn</a>
-                <a href="mailto:mail@adresin.com" class="social-link">E-posta</a>
+    <footer class="site-footer container">
+        <div class="footer-inner fade-up">
+            <div class="footer-socials">
+                <a href="mailto:yusufkocapinar92@gmail.com" class="hover-target" title="E-Posta Gönder"><i class="far fa-envelope"></i></a>
+                <a href="https://www.linkedin.com/in/yusufkocapinar" target="_blank" rel="noopener noreferrer" class="hover-target" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                <a href="https://instagram.com/kpyusufi" target="_blank" rel="noopener noreferrer" class="hover-target" title="Instagram"><i class="fab fa-instagram"></i></a>
             </div>
-
-            <p class="footer-text">© 2026 Yusuf Kocapınar. Tüm edebi hakları saklıdır.</p>
+            <div class="footer-text">YK. Dijital Arşiv</div>
         </div>
     </footer>
 
-    <script>
-        // Firebase Yapılandırması
-        const firebaseConfig = {
-            apiKey: "AIzaSyCr4HhlythyRIfy_Xnb-IaWr0Th0TkUQi4",
-            authDomain: "yk-blog-9720b.firebaseapp.com",
-            projectId: "yk-blog-9720b",
-            messagingSenderId: "863054301539",
-            appId: "1:863054301539:web:4256589fbef613bd0e6b56"
-        };
-        
-        if (!firebase.apps.length) {
-            firebase.initializeApp(firebaseConfig);
-        }
-        
-        const db = firebase.firestore();
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
+        import { getFirestore, collection, query, where, getDocs, getDoc, doc } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
 
-        // AKILLI (SMART STICKY) HEADER MANTIĞI
-        let lastScrollTop = 0;
-        const header = document.getElementById("header");
-        
-        window.addEventListener("scroll", function() {
-            let currentScroll = window.pageYOffset || document.documentElement.scrollTop;
-            if (currentScroll > lastScrollTop) {
-                header.style.transform = "translateY(-100%)";
-            } else {
-                header.style.transform = "translateY(0)";
+        const firebaseConfig = { apiKey: "AIzaSyCr4HhlythyRIfy_Xnb-IaWr0Th0TkUQi4", authDomain: "yk-blog-9720b.firebaseapp.com", projectId: "yk-blog-9720b", messagingSenderId: "863054301539", appId: "1:863054301539:web:4256589fbef613bd0e6b56" };
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        const defaultQuote = '"Ben öyle bilirim ki, yaşamak berrak bir gökte çocuklar aşkına savaşmaktır."';
+        const defaultAbout = '<p style="margin-bottom: 20px;"><strong>Ben Yusuf.</strong> Hakikati aramanın, doğruyu bulmanın inceliğine meftunum.</p><p style="margin-bottom: 20px;">Hayatın sadece telaşlı döngülerden ibaret olmadığını görecek kadar yürüdüm. Bir selamın tebessüm ettiren samimiyetine, kelimelerin ağırlığına ve sükûnetin gücüne inanıyorum. Burası benim seyir defterim; yolum uzun, uçsuz, bucaksız...</p><p style="margin-bottom: 20px;">Yazdığım her bir satırda, işlediğim her bir mısrada, hatta hayatın en ufak detaylarında hep o asil duruşun peşindeyim. Savrulmadan; estetiği, zarafeti ve insan kalabilmenin o onurlu güzelliğini ıskalamadan yürümeye gayret ediyorum.</p><p>Çünkü en nihayetinde; bu namert, riyakâr ve zalim dünyanın ortasında tertemiz duruyorum hayata karşı. Seviyorum yaşamayı, hürriyeti ve kuşları.</p>';
+
+        async function loadDynamicTexts() {
+            const quoteEl = document.getElementById('dynamic-quote');
+            const aboutEl = document.getElementById('dynamic-about');
+            try {
+                const docRef = doc(db, "settings", "home_page");
+                const docSnap = await getDoc(docRef);
+                if (docSnap.exists()) {
+                    const data = docSnap.data();
+                    quoteEl.innerText = data.quoteText || defaultQuote;
+                    aboutEl.innerHTML = data.aboutText || defaultAbout;
+                } else {
+                    quoteEl.innerText = defaultQuote;
+                    aboutEl.innerHTML = defaultAbout;
+                }
+            } catch (error) {
+                console.error(error);
+                quoteEl.innerText = defaultQuote;
+                aboutEl.innerHTML = defaultAbout;
             }
-            lastScrollTop = currentScroll <= 0 ? 0 : currentScroll;
-        }, false);
+        }
 
-        // İÇERİKLERİ VİTRİNE ÇEKME VE LİSTELEME
-        const yaziAkisiDOM = document.getElementById('yazi-akisi');
+        async function loadFeaturedProjects() {
+            const bentoContainer = document.getElementById('dynamic-bento');
+            try {
+                const collectionsToSearch = ['sentez', 'perspektif', 'doku'];
+                let allFeaturedItems = [];
 
-        function vitrinIcerikleriniGetir() {
-            db.collection("perspektif").orderBy("eklenmeTarihi", "desc").onSnapshot((snapshot) => {
-                yaziAkisiDOM.innerHTML = '';
-                
-                if (snapshot.empty) {
-                    yaziAkisiDOM.innerHTML = '<p class="loading-text">Henüz bir edebi iz bırakılmadı.</p>';
+                for (const collName of collectionsToSearch) {
+                    const q = query(collection(db, collName), where("isFeatured", "==", true));
+                    const snap = await getDocs(q);
+                    snap.forEach(d => {
+                        let data = d.data();
+                        data.id = d.id;
+                        data.collectionName = collName;
+                        allFeaturedItems.push(data);
+                    });
+                }
+
+                allFeaturedItems.sort((a, b) => b.createdAt.toMillis() - a.createdAt.toMillis());
+                const itemsToShow = allFeaturedItems.slice(0, 4);
+
+                bentoContainer.innerHTML = '';
+
+                if (itemsToShow.length === 0) {
+                    bentoContainer.innerHTML = '<div style="grid-column: span 12; text-align: center; color: var(--text-muted); font-size: 0.85rem; letter-spacing: 2px; text-transform: uppercase;">Henüz öne çıkarılan bir içerik yok. Admin panelinden yıldızlayabilirsiniz.</div>';
                     return;
                 }
 
-                snapshot.forEach((doc) => {
-                    const yazi = doc.data();
-                    const isFeaturedClass = yazi.isFeatured ? "featured-post" : "";
-                    const yildizIkon = yazi.isFeatured ? '<span class="featured-star">★</span>' : '';
-                    
-                    let tarihStr = "";
-                    if(yazi.eklenmeTarihi && yazi.eklenmeTarihi.toDate) {
-                        const dateObj = yazi.eklenmeTarihi.toDate();
-                        tarihStr = dateObj.toLocaleDateString('tr-TR', { year: 'numeric', month: 'long', day: 'numeric' });
+                itemsToShow.forEach((data, i) => {
+                    const gridClass = (i % 4 === 0 || i % 4 === 3) ? 'item-8' : 'item-4';
+                    let iconClass = 'fa-star';
+                    let linkHref = '#';
+                    let metaText = '';
+                    let descText = '';
+
+                    if (data.collectionName === 'sentez') {
+                        iconClass = (data.category && data.category.toLowerCase().includes('yazılım')) ? 'fa-code' : 'fa-microscope';
+                        linkHref = 'sentez.html';
+                        metaText = data.category || 'Proje';
+                        descText = data.excerpt || '';
+                    } else if (data.collectionName === 'perspektif') {
+                        iconClass = 'fa-pen-nib';
+                        linkHref = 'perspektif.html';
+                        metaText = data.type || 'Yazı';
+                        descText = data.excerpt || '';
+                    } else if (data.collectionName === 'doku') {
+                        iconClass = 'fa-image';
+                        linkHref = 'doku.html';
+                        metaText = data.category || 'Görsel Arşiv';
+                        descText = data.desc || 'Tıklayarak inceleyin.';
                     }
 
-                    const formatliIcerik = (yazi.icerik || "").split('\n').map(p => p.trim() ? `<p>${p}</p>` : '').join('');
+                    if (data.year) metaText += ` — ${data.year}`;
 
-                    yaziAkisiDOM.innerHTML += `
-                        <article class="yazi-karti ${isFeaturedClass}">
-                            <header class="yazi-header">
-                                <h2 class="yazi-baslik">${yazi.baslik || yazi.title || "Başlıksız"} ${yildizIkon}</h2>
-                                <span class="yazi-tarih">${tarihStr}</span>
-                            </header>
-                            <div class="yazi-icerik">
-                                ${formatliIcerik}
+                    bentoContainer.innerHTML += `
+                        <a href="${linkHref}" class="bento-item ${gridClass} fade-up hover-target visible">
+                            <div>
+                                <div class="item-meta">${metaText}</div>
+                                <h3 class="item-title">${data.title}</h3>
+                                <p class="item-desc">${descText}</p>
                             </div>
-                        </article>
+                            <div class="item-icon"><i class="fas ${iconClass}" aria-hidden="true"></i></div>
+                        </a>
                     `;
                 });
-            }, (error) => {
-                console.error("Veritabanı okuma hatası: ", error);
-                yaziAkisiDOM.innerHTML = '<p class="loading-text">İçerikler yüklenirken bir hata oluştu.</p>';
-            });
+
+                // Re-bind cursor to newly added bento items
+                if (window.matchMedia("(pointer: fine)").matches) {
+                    const cursor = document.getElementById('custom-cursor');
+                    document.querySelectorAll('.hover-target').forEach(t => {
+                        t.addEventListener('mouseover', () => cursor.classList.add('hover'));
+                        t.addEventListener('mouseout', () => cursor.classList.remove('hover'));
+                    });
+                }
+            } catch (e) {
+                console.error(e);
+                bentoContainer.innerHTML = '<div style="grid-column: span 12; text-align: center; color: #d9534f; font-size: 0.85rem;">Bağlantı Hatası.</div>';
+            }
         }
 
-        vitrinIcerikleriniGetir();
+        loadDynamicTexts();
+        loadFeaturedProjects();
+    </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            if (window.matchMedia("(pointer: fine)").matches) {
+                const cursor = document.getElementById('custom-cursor');
+                document.addEventListener('mousemove', e => {
+                    cursor.style.left = e.clientX + 'px';
+                    cursor.style.top = e.clientY + 'px';
+                });
+                document.querySelectorAll('.hover-target, button, a').forEach(t => {
+                    t.addEventListener('mouseover', () => cursor.classList.add('hover'));
+                    t.addEventListener('mouseout', () => cursor.classList.remove('hover'));
+                });
+            }
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+            }, { threshold: 0.1 });
+            document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+            const openBtn = document.getElementById('open-menu');
+            const closeBtn = document.getElementById('close-menu');
+            const overlay = document.getElementById('overlay');
+
+            const toggleMenu = () => {
+                const isOpen = overlay.classList.toggle('active');
+                document.body.classList.toggle('no-scroll');
+                openBtn.setAttribute('aria-expanded', isOpen);
+                if (isOpen) closeBtn.focus();
+            };
+
+            openBtn.addEventListener('click', toggleMenu);
+            closeBtn.addEventListener('click', toggleMenu);
+            document.querySelectorAll('.overlay-link').forEach(link => { link.addEventListener('click', toggleMenu); });
+
+            // Close menu with ESC
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && overlay.classList.contains('active')) toggleMenu();
+            });
+        });
     </script>
 </body>
 </html>
