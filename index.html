@@ -25,7 +25,6 @@
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
-
         html { scroll-behavior: smooth; }
 
         body {
@@ -36,11 +35,11 @@
             -webkit-font-smoothing: antialiased;
             overflow-x: hidden;
             position: relative;
+            padding-top: 80px; /* Header boşluğu */
         }
 
         body.no-scroll { overflow: hidden; }
 
-        /* Zarif Kumlanma (Noise) Efekti */
         body::before {
             content: ""; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background-image: url('data:image/svg+xml,<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><filter id="noiseFilter"><feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/></filter><rect width="100%" height="100%" filter="url(%23noiseFilter)" opacity="0.025"/></svg>');
@@ -65,53 +64,42 @@
 
         .container { max-width: 850px; margin: 0 auto; padding: 0 5vw; position: relative; z-index: 10; }
 
-        /* YÜZEN KAPSÜL MENÜ (FLOATING PILL) */
-        .pill-nav {
-            position: fixed; top: 25px; left: 50%; transform: translateX(-50%);
-            width: 90%; max-width: 650px; z-index: 1000;
-            background: rgba(245, 245, 243, 0.75);
-            backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(179, 155, 120, 0.2);
-            border-radius: 50px; padding: 12px 25px;
+        /* SABİT, TAM GENİŞLİK HEADER */
+        .fixed-header {
+            position: fixed; top: 0; left: 0; width: 100%; height: 80px;
+            background: rgba(245, 245, 243, 0.85);
+            backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
+            border-bottom: 1px solid var(--border-color);
             display: flex; justify-content: space-between; align-items: center;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.03);
-            transition: var(--transition-premium);
+            padding: 0 5vw; z-index: 1000; transition: var(--transition-premium);
         }
-        .pill-nav:hover { border-color: rgba(179, 155, 120, 0.5); background: rgba(245, 245, 243, 0.9); }
 
-        .nav-logo { font-family: var(--font-signature); font-size: 1.8rem; color: var(--text-main); text-decoration: none; line-height: 1; transform: rotate(-3deg); }
-        
-        .nav-links { display: flex; gap: 25px; align-items: center; }
-        .nav-links a {
-            font-family: var(--font-sans); font-size: 0.7rem; text-transform: uppercase;
+        .header-brand {
+            font-family: var(--font-signature); font-size: 2.2rem; 
+            color: var(--text-main); text-decoration: none; 
+            transform: rotate(-3deg);
+        }
+
+        .header-nav { display: flex; gap: 30px; align-items: center; }
+        .header-nav a {
+            font-family: var(--font-sans); font-size: 0.75rem; text-transform: uppercase;
             letter-spacing: 2px; color: var(--text-muted); text-decoration: none; transition: 0.3s;
         }
-        .nav-links a:hover { color: var(--accent); }
-        
-        .nav-auth { color: var(--border-color); font-size: 0.9rem; transition: 0.3s; }
-        .nav-auth:hover { color: var(--accent); }
+        .header-nav a:hover { color: var(--accent); }
 
-        /* HERO BÖLÜMÜ */
-        main { margin-top: 150px; }
-        .hero { height: 60vh; display: flex; flex-direction: column; justify-content: center; align-items: center; }
-        .main-title { font-family: var(--font-serif); font-size: clamp(3rem, 8vw, 6rem); line-height: 1.1; font-weight: 400; letter-spacing: -1.5px; color: var(--text-main); text-align: center; }
-        .hero-desc { font-family: var(--font-sans); font-size: 0.9rem; color: var(--text-muted); margin-top: 25px; text-transform: uppercase; letter-spacing: 4px; text-align: center; }
+        .auth-icon { color: var(--border-color); font-size: 1rem; transition: 0.3s; }
+        .auth-icon:hover { color: var(--accent); }
 
-        section { padding: 80px 0; border-top: 1px solid var(--border-color); }
-        section:first-of-type { border-top: none; padding-top: 0; }
-        
-        .section-header { text-align: center; margin-bottom: 60px; }
-        .section-tag { font-family: var(--font-sans); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 3px; color: var(--accent); margin-bottom: 15px; display: block; }
-        h2 { font-family: var(--font-serif); font-size: 2.5rem; font-weight: 400; color: var(--text-main); }
-
-        /* MANİFESTO / HAKKIMDA */
-        .about-quote { font-family: var(--font-serif); font-style: italic; font-size: 1.6rem; color: var(--accent); line-height: 1.5; border-left: 2px solid var(--accent); padding-left: 25px; margin-bottom: 40px; text-align: left;}
+        /* GİRİŞ (HAKKIMDA) BÖLÜMÜ */
+        .intro-section { padding: 100px 0 80px 0; border-bottom: 1px solid var(--border-color); }
+        .about-quote { font-family: var(--font-serif); font-style: italic; font-size: 1.6rem; color: var(--accent); line-height: 1.5; border-left: 2px solid var(--accent); padding-left: 25px; margin-bottom: 40px; }
         .about-text { font-size: 1.1rem; line-height: 1.9; color: var(--text-main); font-weight: 300; }
         .about-text p { margin-bottom: 20px; }
         .about-text strong { font-weight: 500; color: var(--accent); }
 
-        /* TEK SÜTUNLU KÜLLİYAT AKIŞI */
-        .journal-list { padding-bottom: 50px; }
+        /* KÜLLİYAT (LİSTE) BÖLÜMÜ */
+        .archive-section { padding: 80px 0 100px 0; }
+        
         .journal-item { 
             text-align: center; padding: 60px 0; border-bottom: 1px dashed var(--border-color); 
             transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1);
@@ -131,39 +119,10 @@
         .read-more { display: inline-block; font-family: var(--font-sans); font-size: 0.7rem; letter-spacing: 2px; text-transform: uppercase; color: var(--text-main); border-bottom: 1px solid var(--accent); padding-bottom: 2px; font-weight: 600; transition: 0.3s; }
         .journal-item:hover .read-more { color: var(--accent); border-bottom-color: transparent; }
 
-        /* GERİ BİLDİRİM / İLETİŞİM PANELİ */
-        .feedback-wrapper { background: var(--card-bg); padding: 50px; border: 1px solid var(--border-color); box-shadow: 0 10px 40px rgba(0,0,0,0.02); text-align: center; }
-        .feedback-desc { font-size: 0.95rem; color: var(--text-muted); margin-bottom: 40px; font-weight: 300; }
-        
-        .form-group { margin-bottom: 25px; position: relative; }
-        .form-group input, .form-group textarea {
-            width: 100%; background: transparent; border: none; border-bottom: 1px solid rgba(179, 155, 120, 0.3);
-            padding: 12px 0; font-family: 'Inter', sans-serif; font-size: 1rem; color: var(--text-main);
-            outline: none; transition: var(--transition-premium); resize: none;
-        }
-        .form-group textarea { min-height: 100px; }
-        .form-group input:focus, .form-group textarea:focus { border-bottom-color: var(--accent); }
-        
-        .form-group label {
-            position: absolute; left: 0; top: 12px; font-family: var(--font-sans); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 2px; color: var(--text-muted); pointer-events: none; transition: var(--transition-premium);
-        }
-        .form-group input:focus ~ label, .form-group input:not(:placeholder-shown) ~ label,
-        .form-group textarea:focus ~ label, .form-group textarea:not(:placeholder-shown) ~ label {
-            top: -10px; font-size: 0.6rem; color: var(--accent);
-        }
-
-        .submit-btn {
-            background: transparent; border: 1px solid var(--accent); padding: 12px 35px;
-            font-family: var(--font-sans); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 2px;
-            color: var(--text-main); transition: var(--transition-premium); cursor: pointer; outline: none; margin-top: 10px;
-        }
-        .submit-btn:hover, .submit-btn:focus-visible { background: var(--accent); color: var(--card-bg); }
-        .form-message { margin-top: 20px; font-size: 0.85rem; font-weight: 500; height: 20px; }
-
         .fade-up { opacity: 0; transform: translateY(30px); transition: 1s ease-out; }
         .fade-up.visible { opacity: 1; transform: translateY(0); }
 
-        /* MODALS (PENCERELER) */
+        /* PENCERELER (MODALS) */
         .full-modal { position: fixed; top: 0; left: 0; width: 100%; height: 100vh; background: var(--bg-color); z-index: 9999; overflow-y: auto; display: none; opacity: 0; transition: opacity 0.4s ease; padding: 60px 4vw; }
         .full-modal.active { display: block; opacity: 1; }
         
@@ -182,18 +141,15 @@
         #img-desc { font-family: var(--font-sans); font-size: 0.85rem; letter-spacing: 2px; color: var(--accent); text-transform: uppercase; text-align: center;}
 
         /* FOOTER */
-        .site-footer { border-top: 1px solid var(--border-color); padding: 40px 0 60px 0; position: relative; z-index: 10; text-align: center; }
+        .site-footer { border-top: 1px solid var(--border-color); padding: 60px 0; position: relative; z-index: 10; text-align: center; }
         .footer-socials { display: flex; justify-content: center; gap: 30px; margin-bottom: 20px; }
         .footer-socials a { color: var(--text-main); font-size: 1.2rem; transition: var(--transition-premium); }
         .footer-socials a:hover { color: var(--accent); transform: translateY(-3px); }
         .footer-text { font-family: var(--font-sans); font-size: 0.7rem; letter-spacing: 4px; color: var(--text-muted); text-transform: uppercase; }
 
         @media (max-width: 768px) {
-            .pill-nav { width: 95%; padding: 12px 20px; top: 15px; }
-            .nav-links { gap: 15px; }
-            .nav-links a { font-size: 0.6rem; letter-spacing: 1px; }
-            .hero { height: 50vh; }
-            .feedback-wrapper { padding: 40px 20px; }
+            .header-nav a { display: none; } /* Mobilde linkleri gizleyip sadeliği korur */
+            .intro-section { padding: 60px 0; }
             .reading-container { padding: 50px 25px; border: none; box-shadow: none; background: transparent; }
             #read-title { font-size: 2rem; }
             .j-title { font-size: 1.8rem; }
@@ -203,27 +159,17 @@
 <body>
     <div id="custom-cursor"></div>
 
-    <header class="pill-nav hover-target">
-        <a href="#" class="nav-logo" title="Başa Dön">Y.K.</a>
-        <nav class="nav-links">
-            <a href="#about" class="hover-target">Manifesto</a>
-            <a href="#writings" class="hover-target">Külliyat</a>
-            <a href="#contact" class="hover-target">İletişim</a>
+    <header class="fixed-header hover-target">
+        <a href="#" class="header-brand" title="Başa Dön">Yusuf Kocapınar</a>
+        <nav class="header-nav">
+            <a href="#about" class="hover-target">Hakkımda</a>
+            <a href="#archive" class="hover-target">Külliyat</a>
+            <a href="login.html" class="auth-icon hover-target" title="Yönetim Paneli"><i class="fas fa-key"></i></a>
         </nav>
-        <a href="login.html" class="nav-auth hover-target" title="Yönetim Paneli"><i class="fas fa-key"></i></a>
     </header>
 
     <main>
-        <section class="hero container">
-            <h1 class="main-title fade-up">Digital<br>Archive.</h1>
-            <p class="hero-desc fade-up">Estetik &middot; Felsefe &middot; Hakikat</p>
-        </section>
-
-        <section id="about" class="container fade-up">
-            <div class="section-header">
-                <span class="section-tag">Giriş</span>
-                <h2>Manifesto</h2>
-            </div>
+        <section id="about" class="intro-section container fade-up">
             <div class="about-quote" id="dynamic-quote">
                 <i class="fas fa-circle-notch fa-spin" aria-hidden="true"></i> Bekleniyor...
             </div>
@@ -232,37 +178,11 @@
             </div>
         </section>
 
-        <section id="writings" class="container fade-up">
-            <div class="section-header">
-                <span class="section-tag">Arşiv</span>
-                <h2>Külliyat</h2>
-            </div>
-            <div class="journal-list" id="dynamic-latest">
+        <section id="archive" class="archive-section container fade-up">
+            <div id="dynamic-latest">
                 <div style="text-align: center; color: var(--accent); padding: 40px; font-size: 0.85rem; letter-spacing: 2px; text-transform: uppercase;">
                     <i class="fas fa-circle-notch fa-spin" aria-hidden="true"></i> Kayıtlar Aranıyor...
                 </div>
-            </div>
-        </section>
-
-        <section id="contact" class="container fade-up">
-            <div class="section-header">
-                <span class="section-tag">Açık Kapı</span>
-                <h2>Geri Bildirim</h2>
-            </div>
-            <div class="feedback-wrapper">
-                <p class="feedback-desc">Düşüncelerinizi, eleştirilerinizi veya sükûnetli bir selamınızı buradan iletebilirsiniz.</p>
-                <form id="contact-form" novalidate>
-                    <div class="form-group">
-                        <input type="text" id="fb-name" placeholder=" " required class="hover-target">
-                        <label for="fb-name">İsminiz / Mahlasınız</label>
-                    </div>
-                    <div class="form-group">
-                        <textarea id="fb-message" placeholder=" " required class="hover-target"></textarea>
-                        <label for="fb-message">Mesajınız</label>
-                    </div>
-                    <button type="submit" class="submit-btn hover-target" tabindex="0">Gönder <i class="fas fa-paper-plane" style="margin-left:5px;"></i></button>
-                    <div id="fb-status" class="form-message" role="alert"></div>
-                </form>
             </div>
         </section>
     </main>
@@ -296,13 +216,12 @@
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
-        import { getFirestore, collection, getDocs, getDoc, doc, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
+        import { getFirestore, collection, getDocs, getDoc, doc } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
 
         const firebaseConfig = { apiKey: "AIzaSyCr4HhlythyRIfy_Xnb-IaWr0Th0TkUQi4", authDomain: "yk-blog-9720b.firebaseapp.com", projectId: "yk-blog-9720b", messagingSenderId: "863054301539", appId: "1:863054301539:web:4256589fbef613bd0e6b56" };
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
 
-        // PENCERE (MODAL) YÖNETİMİ
         window.closeModals = () => {
             document.getElementById('text-modal').classList.remove('active');
             document.getElementById('image-modal').classList.remove('active');
@@ -330,9 +249,8 @@
             }
         }
 
-        // SABİT METİNLERİ (MANIFESTO) ÇEKME
         const defaultQuote = '"Ben öyle bilirim ki, yaşamak berrak bir gökte çocuklar aşkına savaşmaktır."';
-        const defaultAbout = '<p><strong>Ben Yusuf.</strong> Hakikati aramanın, doğruyu bulmanın inceliğine meftunum. Yazdığım her bir satırda, işlediğim her bir mısrada, hatta hayatın en ufak detaylarında hep o asil duruşun peşindeyim.</p>';
+        const defaultAbout = '<p><strong>Ben Yusuf.</strong> Hakikati aramanın, doğruyu bulmanın inceliğine meftunum.</p>';
 
         async function loadDynamicTexts() {
             const quoteEl = document.getElementById('dynamic-quote');
@@ -350,7 +268,6 @@
             }
         }
 
-        // KÜLLİYAT (TÜM İÇERİKLERİ TEK SÜTUNDA) ÇEKME
         async function loadUnifiedFeed() {
             const container = document.getElementById('dynamic-latest');
             try {
@@ -374,123 +291,3 @@
                 });
 
                 container.innerHTML = '';
-                if (allItems.length === 0) {
-                    container.innerHTML = '<div style="text-align: center; color: var(--text-muted); font-size: 0.85rem; letter-spacing: 2px; text-transform: uppercase;">Arşiv henüz boş.</div>';
-                    return;
-                }
-
-                allItems.forEach(data => {
-                    let metaRoom, metaTime, excerptText;
-                    if (data.collectionName === 'sentez') {
-                        metaRoom = data.category || 'Sentez'; metaTime = data.year || ''; excerptText = data.excerpt || '';
-                    } else if (data.collectionName === 'perspektif') {
-                        metaRoom = data.type || 'Perspektif'; metaTime = data.date || ''; excerptText = data.excerpt || '';
-                    } else if (data.collectionName === 'doku') {
-                        metaRoom = 'Doku (Galeri)'; metaTime = data.year || ''; excerptText = data.desc || 'Görseli incelemek için tıklayın.';
-                    }
-
-                    const article = document.createElement('div');
-                    article.className = 'journal-item hover-target fade-up visible';
-                    article.setAttribute('tabindex', '0');
-                    article.innerHTML = `
-                        <div class="j-meta">
-                            <span>${metaRoom}</span>
-                            <span class="sep">/</span>
-                            <span>${metaTime}</span>
-                        </div>
-                        <h2 class="j-title">${data.title}</h2>
-                        <p class="j-excerpt">${excerptText}</p>
-                        <span class="read-more" tabindex="-1" aria-hidden="true">${data.collectionName === 'doku' ? 'Görseli İncele' : 'İçeriği Oku'} &rarr;</span>
-                    `;
-                    article.addEventListener('click', () => openItemModal(data));
-                    article.addEventListener('keydown', (e) => { if (e.key === 'Enter') openItemModal(data); });
-                    container.appendChild(article);
-                });
-
-                if (window.matchMedia("(pointer: fine)").matches) {
-                    const cursor = document.getElementById('custom-cursor');
-                    container.querySelectorAll('.hover-target').forEach(t => {
-                        t.addEventListener('mouseover', () => cursor.classList.add('hover'));
-                        t.addEventListener('mouseout', () => cursor.classList.remove('hover'));
-                    });
-                }
-            } catch (e) {
-                container.innerHTML = '<div style="text-align: center; color: #d9534f; font-size: 0.85rem;">Bağlantı Hatası.</div>';
-            }
-        }
-
-        // İLETİŞİM FORMU (GERİ BİLDİRİM)
-        document.getElementById('contact-form').addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const btn = e.target.querySelector('button');
-            const statusDiv = document.getElementById('fb-status');
-            const name = document.getElementById('fb-name').value.trim();
-            const message = document.getElementById('fb-message').value.trim();
-
-            if (!name || !message) {
-                statusDiv.textContent = 'Lütfen tüm alanları doldurun.';
-                statusDiv.style.color = '#d9534f';
-                return;
-            }
-
-            btn.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i>';
-            btn.disabled = true;
-            statusDiv.textContent = '';
-
-            try {
-                await addDoc(collection(db, "messages"), {
-                    name: name,
-                    message: message,
-                    createdAt: serverTimestamp()
-                });
-                e.target.reset();
-                statusDiv.textContent = 'Mesajınız ulaştı. Teşekkürler.';
-                statusDiv.style.color = '#4CAF50';
-                btn.innerHTML = 'İletildi <i class="fas fa-check"></i>';
-            } catch (err) {
-                statusDiv.textContent = 'Bir hata oluştu, lütfen tekrar deneyin.';
-                statusDiv.style.color = '#d9534f';
-                btn.innerHTML = 'Gönder <i class="fas fa-paper-plane"></i>';
-            }
-            setTimeout(() => { btn.innerHTML = 'Gönder <i class="fas fa-paper-plane"></i>'; btn.disabled = false; statusDiv.textContent = ''; }, 4000);
-        });
-
-        loadDynamicTexts();
-        loadUnifiedFeed();
-    </script>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            // Özel İmleç (Custom Cursor)
-            if (window.matchMedia("(pointer: fine)").matches) {
-                const cursor = document.getElementById('custom-cursor');
-                document.addEventListener('mousemove', e => {
-                    cursor.style.left = e.clientX + 'px';
-                    cursor.style.top = e.clientY + 'px';
-                });
-                document.querySelectorAll('.hover-target, button, a, input, textarea').forEach(t => {
-                    t.addEventListener('mouseover', () => cursor.classList.add('hover'));
-                    t.addEventListener('mouseout', () => cursor.classList.remove('hover'));
-                });
-            }
-
-            // Scroll Görünüm Efekti
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
-            }, { threshold: 0.1 });
-            document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
-
-            // ESC ve Dışa Tıklama ile Kapatma
-            document.addEventListener('keydown', (e) => {
-                if (e.key === 'Escape') window.closeModals();
-            });
-
-            document.querySelectorAll('.full-modal').forEach(modal => {
-                modal.addEventListener('click', (e) => {
-                    if (e.target === modal || e.target.classList.contains('image-container')) window.closeModals();
-                });
-            });
-        });
-    </script>
-</body>
-</html>
